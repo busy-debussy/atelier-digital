@@ -26,7 +26,7 @@ export default function ScrollForMore({ lang }) {
 
   return (
     <div
-      inert={visible ? undefined : ''}
+      inert={!visible}
       className={`fixed bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center motion-safe:transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       onMouseEnter={showTip}
       onMouseLeave={hideTip}
@@ -39,7 +39,7 @@ export default function ScrollForMore({ lang }) {
       </div>
 
       <button
-        onClick={() => window.scrollBy({ top: window.innerHeight * 0.8, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}
+        onClick={() => window.scrollBy({ top: window.innerHeight * 0.9, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}
         aria-label={label}
         className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-colors motion-safe:animate-bounce cursor-pointer"
       >

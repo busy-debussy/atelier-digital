@@ -10,6 +10,7 @@ import Resume from './pages/Resume';
 import Cookies from './pages/Cookies';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import NotFound from './pages/NotFound';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -42,6 +43,7 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
         <Route path="/cookies" element={<Cookies lang={lang} />} />
         <Route path="/privacy" element={<Privacy lang={lang} />} />
         <Route path="/terms" element={<Terms lang={lang} />} />
+        <Route path="*" element={<NotFound lang={lang} />} />
       </Routes></AnimatedRoutes>
     </div>
   );

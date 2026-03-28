@@ -70,15 +70,15 @@ export const color = {
 
   // Case study: UI Concept card accents (Sales Platform 9-up grid)
   uiConceptAccent: [
-    { bg: '#ffeeb3', fg: '#916404' },  // 1. Globe        yellow
-    { bg: '#ffe2ca', fg: '#994f00' },  // 2. Country      orange
-    { bg: '#ffd5d5', fg: '#962628' },  // 3. City/region  red
-    { bg: '#ffe9f9', fg: '#8f3575' },  // 4. Hero         pink
-    { bg: '#f4e5ff', fg: '#7a38ab' },  // 5. Project      purple
-    { bg: '#d7e2f6', fg: '#254c96' },  // 6. Tower        blue dark
-    { bg: '#e2ecff', fg: '#286dad' },  // 7. Tower floors blue light
-    { bg: '#daf5d3', fg: '#277a22' },  // 8. Unit         green dark
-    { bg: '#e9f5d3', fg: '#5e760f' },  // 9. Interiors    green light
+    { bg: '#ffeeb3', fg: '#916404', bgDark: '#2c2200', fgDark: '#ffd97d' },  // 1. Globe        yellow
+    { bg: '#ffe2ca', fg: '#994f00', bgDark: '#2c1800', fgDark: '#ffb870' },  // 2. Country      orange
+    { bg: '#ffd5d5', fg: '#962628', bgDark: '#2c0000', fgDark: '#ff9090' },  // 3. City/region  red
+    { bg: '#ffe9f9', fg: '#8f3575', bgDark: '#2c0022', fgDark: '#ffaaee' },  // 4. Hero         pink
+    { bg: '#f4e5ff', fg: '#7a38ab', bgDark: '#1c0035', fgDark: '#cc88ff' },  // 5. Project      purple
+    { bg: '#d7e2f6', fg: '#254c96', bgDark: '#001030', fgDark: '#88aaee' },  // 6. Tower        blue dark
+    { bg: '#e2ecff', fg: '#286dad', bgDark: '#00182c', fgDark: '#88ccff' },  // 7. Tower floors blue light
+    { bg: '#daf5d3', fg: '#277a22', bgDark: '#001c00', fgDark: '#88ee80' },  // 8. Unit         green dark
+    { bg: '#e9f5d3', fg: '#5e760f', bgDark: '#101c00', fgDark: '#b8e050' },  // 9. Interiors    green light
   ],
 
   // Case study: Launches timeline segments (Sales Platform)

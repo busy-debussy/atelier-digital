@@ -87,7 +87,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
   const btnCases  = lang === 'fr' ? 'Études de cas'            : 'Case studies';
 
   const pills = (lang === 'fr'
-    ? ['Jumeaux numériques', 'Design 3D', 'Accessibilité', 'Systèmes de design', 'Vibe-coding', 'Stratégie UX']
+    ? ['Digital twins', 'Design 3D', 'Accessibilité', 'Design systems', 'Vibe-coding', 'Stratégie UX']
     : ['Digital twins', '3D design', 'Accessibility', 'Design systems', 'Vibe-coding', 'UX strategy']
   );
   const words = subtitle.split(' ');
@@ -263,8 +263,12 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                         opacity: i < visiblePills ? 1 : 0,
                         transform: prefersReduced ? undefined : (i < visiblePills ? 'translateY(0px)' : 'translateY(8px)'),
                         transition: 'opacity 400ms cubic-bezier(0.22,1,0.36,1), transform 400ms cubic-bezier(0.22,1,0.36,1)',
-                        backgroundColor: hexToRgba(color.uiConceptAccent[i % color.uiConceptAccent.length].bg, 0.45),
-                        color: color.uiConceptAccent[i % color.uiConceptAccent.length].fg,
+                        backgroundColor: isDark
+                          ? color.uiConceptAccent[i % color.uiConceptAccent.length].bgDark
+                          : hexToRgba(color.uiConceptAccent[i % color.uiConceptAccent.length].bg, 0.45),
+                        color: isDark
+                          ? color.uiConceptAccent[i % color.uiConceptAccent.length].fgDark
+                          : color.uiConceptAccent[i % color.uiConceptAccent.length].fg,
                       }}
                     >
                       {pill}
@@ -293,7 +297,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                   e.preventDefault();
                   document.getElementById('case-studies')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
                 }}
-                className="px-6 py-3 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] active:opacity-80 text-[#0152EC] font-medium text-[15px] sm:text-[16px] rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
+                className="px-6 py-3 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] active:opacity-80 text-[#0152EC] dark:text-[#7aabff] font-medium text-[15px] sm:text-[16px] rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
               >
                 {btnCases}
               </a>
