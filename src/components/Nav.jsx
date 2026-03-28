@@ -14,7 +14,7 @@ import imgArrowRight   from '../assets/icons/icon-arrow-right-accent.svg';
 import imgHamburger    from '../assets/icons/icon-hamburger.svg';
 import imgClose        from '../assets/icons/icon-close.svg';
 
-// ── Translations ──────────────────────────────────────────────────────────────
+// Translations
 const T = {
   en: {
     projects:          'projects',
@@ -40,7 +40,7 @@ const T = {
   },
 };
 
-// ── Flags — local exports, fixed container so nav width never shifts ───────────
+// Flags, local exports, fixed container so nav width never shifts
 function Flag({ code }) {
   return (
     <div className="shrink-0 rounded-[6px] overflow-hidden" style={{ width: 24, height: 24, minWidth: 24 }}>
@@ -55,7 +55,7 @@ function Flag({ code }) {
   );
 }
 
-// ── Chevron helper ────────────────────────────────────────────────────────────
+// Chevron helper
 function Chevron({ isOpen, isDark }) {
   const useWhite = isDark !== isOpen;
   return (
@@ -70,7 +70,7 @@ function Chevron({ isOpen, isDark }) {
   );
 }
 
-// ── Portal position hook — calculates fixed coords from an anchor element ─────
+// Portal position hook, calculates fixed coords from an anchor element
 function usePortalPosition(anchorRef, { offsetTop = 11, align = 'left', offsetX = 0 } = {}) {
   const [style, setStyle] = useState({ visibility: 'hidden', position: 'fixed' });
   useLayoutEffect(() => {
@@ -92,7 +92,7 @@ function usePortalPosition(anchorRef, { offsetTop = 11, align = 'left', offsetX 
   return style;
 }
 
-// ── Tooltip ───────────────────────────────────────────────────────────────────
+// Tooltip
 function Tooltip({ label, isDark }) {
   const bg  = isDark ? '#f6f6f6' : '#1f1f1f';
   const txt = isDark ? '#1f1f1f' : '#f6f6f6';
@@ -117,7 +117,7 @@ function useDelayedTooltip(delay = 600) {
   return [visible, show, hide];
 }
 
-// ── DarkModeToggle ────────────────────────────────────────────────────────────
+// DarkModeToggle
 function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
   const [hovered, setHovered]           = useState(false);
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
@@ -164,7 +164,7 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
   );
 }
 
-// ── ProjectsButton ────────────────────────────────────────────────────────────
+// ProjectsButton
 function ProjectsButton({ isOpen, onClick, isDark, lang }) {
   return (
     <button
@@ -185,8 +185,7 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
   );
 }
 
-// ── ProjectsDropdown ──────────────────────────────────────────────────────────
-// Portal into document.body so backdrop-blur isn't clipped by the nav's stacking context.
+// ProjectsDropdown
 function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
   const portalStyle = usePortalPosition(anchorRef, { offsetTop: 11, offsetX: -14 });
   const items = [
@@ -230,8 +229,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
   );
 }
 
-// ── LanguageDropdown ──────────────────────────────────────────────────────────
-// Portal into document.body — same reason as ProjectsDropdown.
+// LanguageDropdown
 function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef }) {
   const portalStyle = usePortalPosition(anchorRef, { offsetTop: 11, align: 'right' });
   const other = lang === 'en' ? 'fr' : 'en';
@@ -258,7 +256,7 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
   );
 }
 
-// ── LanguageButton ────────────────────────────────────────────────────────────
+// LanguageButton
 function LanguageButton({ isOpen, onClick, onClose, lang, toggleLang, isDark, langDropdownRef }) {
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
   const containerRef = useRef(null);
@@ -274,7 +272,7 @@ function LanguageButton({ isOpen, onClick, onClose, lang, toggleLang, isDark, la
         aria-haspopup="menu"
         aria-expanded={isOpen}
         aria-controls={isOpen ? 'language-menu' : undefined}
-        aria-label={`${label} — change language`}
+        aria-label={`${label}, change language`}
         className={`flex items-center gap-2 h-8 px-3 rounded-[12px] cursor-pointer active:opacity-[0.33] transition-colors ${
           isOpen ? 'bg-[#161616] dark:bg-white' : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
         }`}
@@ -291,7 +289,7 @@ function LanguageButton({ isOpen, onClick, onClose, lang, toggleLang, isDark, la
   );
 }
 
-// ── NavLink — pressed state on active page ────────────────────────────────────
+// NavLink, pressed state on active page
 function NavLink({ to, label, currentPage }) {
   const [path, hash] = to.split('#');
   const handleClick = () => {
@@ -316,7 +314,7 @@ function NavLink({ to, label, currentPage }) {
   );
 }
 
-// ── DesktopTabletNav ──────────────────────────────────────────────────────────
+// DesktopTabletNav
 function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [langOpen,     setLangOpen]     = useState(false);
@@ -360,7 +358,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
       className="flex items-center pr-2 backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16]"
       style={{ gap: isTablet ? '32px' : '192px' }}
     >
-      <a href="/" onClick={handleLogoClick} aria-label="Atelier Digital — back to top" className="flex items-center p-2 rounded-3xl group">
+      <a href="/" onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-2 rounded-3xl group">
         <div className="flex items-center gap-1 py-1 pl-1 pr-3 rounded-[20px] group-hover:bg-black/[0.04] dark:group-hover:bg-white/[0.08] transition-colors active:opacity-[0.33]">
           <img src={imgLogo} alt="" width={24} height={24} className="shrink-0" />
           <span className="font-bold text-base leading-6 text-[#1f1f1f] dark:text-white whitespace-nowrap" style={{ letterSpacing:'-0.8px' }}>
@@ -398,7 +396,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
   );
 }
 
-// ── MobileNav ─────────────────────────────────────────────────────────────────
+// MobileNav
 function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
   const [menuOpen,     setMenuOpen]     = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(false);
@@ -430,7 +428,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
   return (
     <div className="w-full flex flex-col items-center gap-4">
       <div className="w-full flex items-center justify-between backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] pr-2">
-        <a href="/" onClick={handleLogoClick} aria-label="Atelier Digital — back to top" className="flex items-center p-1 rounded-3xl active:opacity-[0.33]">
+        <a href="/" onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-1 rounded-3xl active:opacity-[0.33]">
           <div className="flex items-center gap-1 pl-1 pr-4 py-1 rounded-[20px]">
             <img src={imgLogo} alt="" width={36} height={36} className="shrink-0" />
             <span className="font-bold text-base text-[#1f1f1f] dark:text-white whitespace-nowrap leading-4" style={{ letterSpacing:'-0.8px' }}>
@@ -538,7 +536,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
   );
 }
 
-// ── Nav (root) ────────────────────────────────────────────────────────────────
+// Nav (root)
 function Nav({ isDark, toggleDark, lang, toggleLang }) {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4 pointer-events-none">

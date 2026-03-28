@@ -3,7 +3,7 @@ import imgChevronLeft  from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight from '../assets/icons/icon-chevron-right.svg';
 import imgClose        from '../assets/icons/icon-close-sm.svg';
 
-// ── Carousel (big) logos ──────────────────────────────────────────────────────
+// Carousel (big) logos
 import imgGovUkLight  from '../assets/logos/clients/logo-uk-government-light.png';
 import imgGovUkDark   from '../assets/logos/clients/logo-uk-government-dark.png';
 import imgLgfLight      from '../assets/logos/clients/logo-lgf-light.png';
@@ -24,7 +24,7 @@ import imgEdinDark    from '../assets/logos/clients/logo-university-of-edinburgh
 import imgIbm         from '../assets/logos/clients/logo-ibm.png';
 import imgUke         from '../assets/logos/clients/logo-uke.png';
 
-// ── Modal (small) logos ───────────────────────────────────────────────────────
+// Modal (small) logos
 import imgGovUkSmallLight  from '../assets/logos/clients/logo-uk-government-light-small.png';
 import imgGovUkSmallDark   from '../assets/logos/clients/logo-uk-government-dark-small.png';
 import imgDstlSmallLight   from '../assets/logos/clients/logo-dstl-light-small.png';
@@ -41,7 +41,7 @@ import imgEdinSmallDark    from '../assets/logos/clients/logo-university-of-edin
 import imgIbmSmall         from '../assets/logos/clients/logo-ibm-small.png';
 import imgUkeSmall         from '../assets/logos/clients/logo-uke-small.png';
 
-// ── Logo data ─────────────────────────────────────────────────────────────────
+// Logo data
 const logos = [
   { logo: imgGovUkLight, logoDark: imgGovUkDark,  logoSmall: imgGovUkSmallLight,  logoSmallDark: imgGovUkSmallDark  },
   { logo: imgLgfLight,   logoDark: imgLgfDark,    logoSmall: imgLgfSmallLight,    logoSmallDark: imgLgfSmallDark    },
@@ -56,7 +56,7 @@ const logos = [
   { logo: imgUke,        logoDark: null,           logoSmall: imgUkeSmall,         logoSmallDark: null               },
 ];
 
-// ── Translations ──────────────────────────────────────────────────────────────
+// Translations
 const T = {
   en: {
     heading:  'Key collaborations',
@@ -98,7 +98,7 @@ const T = {
   },
 };
 
-// ── Nav button styles (same as other carousels) ───────────────────────────────
+// Nav button styles (same as other carousels)
 const navBtnClass      = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]';
 const modalNavBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-[0.15] disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70';
 const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]';
@@ -115,7 +115,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
 
-  // ── Carousel padding: centres the first logo on load ─────────────────────
+  // Carousel padding: centres the first logo on load
   const getCarouselPl = () => {
     if (typeof window === 'undefined') return '1.5rem';
     const vw = window.innerWidth;
@@ -141,7 +141,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
     };
   }, []);
 
-  // ── Step size per breakpoint ───────────────────────────────────────────────
+  // Step size per breakpoint
   const getStep = () => {
     if (typeof window === 'undefined') return 1;
     if (window.matchMedia('(min-width: 1024px)').matches) return 3;
@@ -149,7 +149,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
     return 1;
   };
 
-  // ── Scroll helpers ────────────────────────────────────────────────────────
+  // Scroll helpers
   const scrollToIndex = (index) => {
     const track = trackRef.current;
     if (!track) return;
@@ -176,7 +176,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
     setActiveIndex(closest);
   };
 
-  // ── Modal helpers ─────────────────────────────────────────────────────────
+  // Modal helpers
   const triggerRef     = useRef(null);
   const closeButtonRef = useRef(null);
 
@@ -224,7 +224,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
       {/* Carousel area: track + nav stacked; modal overlays both */}
       <div className="relative">
 
-        {/* ── Logo track ────────────────────────────────────────────────── */}
+        {/* Logo track */}
         <ul
           ref={trackRef}
           onScroll={handleScroll}
@@ -262,7 +262,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
           <li role="none" aria-hidden="true"><div className="shrink-0" style={{ width: carouselPl }} /></li>
         </ul>
 
-        {/* ── Normal nav — below track, reduced gap ─────────────────────── */}
+        {/* Normal nav, below track, reduced gap */}
         <div className={`flex items-center justify-end gap-2 sm:gap-3 lg:gap-4 mt-6 sm:mt-4 pr-6 sm:pr-28 lg:pr-52 ${activeModal !== null ? 'invisible' : ''}`}>
           <button
             onClick={() => scrollToIndex(Math.max(0, activeIndex - getStep()))}
@@ -282,7 +282,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
           </button>
         </div>
 
-        {/* ── Modal overlay ─────────────────────────────────────────────── */}
+        {/* Modal overlay */}
         {activeModal !== null && activeCollab && (
           <div
             ref={modalRef}
@@ -306,8 +306,8 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
             <div className="relative flex-1 flex flex-col gap-3 sm:gap-[14px] lg:gap-4 bg-white dark:bg-[#2a2a2a] rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] pt-5 sm:pt-7 lg:pt-9 pb-4 sm:pb-6 lg:pb-7 px-4 sm:px-10 lg:px-14 shadow-[0px_18px_20px_0px_rgba(0,0,0,0.06)]" style={{ animation: 'modal-in 0.3s cubic-bezier(0.22,1,0.36,1) both' }}>
 
               {/* Close button:
-                  mobile  — always black bg + white icon
-                  sm/lg   — no bg idle → circular black bg + white icon on hover */}
+                  mobile , always black bg + white icon
+                  sm/lg  , no bg idle → circular black bg + white icon on hover */}
               <button
                 ref={closeButtonRef}
                 onClick={closeModal}

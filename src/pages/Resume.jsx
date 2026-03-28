@@ -563,7 +563,7 @@ function SummarySection({ t }) {
 function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
   const anyOpen = openDrawers.some(Boolean);
   return (
-    <li className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] border border-[#d6d6d6] dark:border-[#2a2a2a] overflow-hidden">
+    <li className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] bg-white dark:bg-[#141414] border border-[#d6d6d6] dark:border-[#2a2a2a] overflow-hidden">
 
       <div className="px-4 sm:px-5 lg:px-6 pt-2 sm:pt-3 lg:pt-3.5 pb-0">
         <p className="text-[14px] sm:text-[16px] lg:text-[18px] font-medium leading-snug text-black dark:text-[#f6f6f6]">{card.company}</p>
@@ -617,7 +617,7 @@ function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
                 </button>
                 <div
                   id={`exp-drawer-${cardIdx}-${di}`}
-                  inert={openDrawers[di] ? undefined : ""}
+                  inert={!openDrawers[di]}
                   className={`grid transition-[grid-template-rows] duration-300 ease-out ${openDrawers[di] ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
                 >
                   <div className="overflow-hidden">
@@ -641,27 +641,10 @@ function ExperienceSection({ t }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const isProgrammaticRef = useRef(false);
   const scrollTimerRef = useRef(null);
-  const [displayedPeriod, setDisplayedPeriod] = useState(cards[0]?.period ?? '');
-  const [periodVisible, setPeriodVisible] = useState(true);
-  const periodT1 = useRef(null);
-  const periodT2 = useRef(null);
   const [openDrawers, setOpenDrawers] = useState(() =>
     cards.map(card => card.drawers.map(() => false))
   );
 
-  // Date fades on its own rhythm — delay before fade-out, swap text while invisible, then fade in
-  useEffect(() => {
-    clearTimeout(periodT1.current);
-    clearTimeout(periodT2.current);
-    periodT1.current = setTimeout(() => {
-      setPeriodVisible(false);
-      periodT2.current = setTimeout(() => {
-        setDisplayedPeriod(cards[activeIndex]?.period ?? '');
-        requestAnimationFrame(() => setPeriodVisible(true));
-      }, 200);
-    }, 150);
-    return () => { clearTimeout(periodT1.current); clearTimeout(periodT2.current); };
-  }, [activeIndex]);
   const getCarouselPl = () => {
     if (typeof window === 'undefined') return '1.5rem';
     const vw = window.innerWidth;
@@ -718,6 +701,20 @@ function ExperienceSection({ t }) {
     setActiveIndex(closest);
   };
 
+  const getDateOffset = () => {
+    if (typeof window === 'undefined') return 0;
+    const n = cards.length;
+    if (activeIndex !== 0 && activeIndex !== n - 1) return 0;
+    const vw = window.innerWidth;
+    let cardW;
+    if (window.matchMedia('(min-width: 1024px)').matches) cardW = 536;
+    else if (window.matchMedia('(min-width: 640px)').matches) cardW = 488;
+    else return 0;
+    const pl = parseFloat(carouselPl);
+    if (isNaN(pl)) return 0;
+    return activeIndex === 0 ? pl + cardW / 2 - vw / 2 : vw / 2 - pl - cardW / 2;
+  };
+
   const toggleDrawer = (ci, di) => {
     setOpenDrawers(prev =>
       prev.map((card, i) =>
@@ -762,8 +759,11 @@ function ExperienceSection({ t }) {
         </ul>
       </div>
 
-      <p className={`mt-2 text-[13px] sm:text-[14px] font-medium text-[#5c5c5c] dark:text-[#adadad] text-center transition-opacity duration-200 ${periodVisible ? 'opacity-100' : 'opacity-0'}`}>
-        {displayedPeriod}
+      <p
+        className="mt-2 text-[13px] sm:text-[14px] font-medium text-[#5c5c5c] dark:text-[#adadad] text-center transition-transform duration-300"
+        style={{ transform: `translateX(${getDateOffset()}px)` }}
+      >
+        {cards[activeIndex]?.period}
       </p>
 
       <div className="flex items-center justify-end gap-2 sm:gap-3 lg:gap-4 mt-4 sm:mt-5 lg:mt-6 pr-6 sm:pr-28 lg:pr-52">
@@ -992,7 +992,7 @@ function ExpertiseSection({ t }) {
 function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
   const anyOpen = openDrawers.some(Boolean);
   return (
-    <li className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] border border-[#d6d6d6] dark:border-[#2a2a2a] overflow-hidden">
+    <li className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] bg-white dark:bg-[#141414] border border-[#d6d6d6] dark:border-[#2a2a2a] overflow-hidden">
 
       <div className="px-4 sm:px-5 lg:px-6 pt-2 sm:pt-3 lg:pt-3.5 pb-0">
         <p className="text-[14px] sm:text-[16px] lg:text-[18px] font-medium leading-snug text-black dark:text-[#f6f6f6]">{card.institution}</p>
@@ -1041,7 +1041,7 @@ function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
             </button>
             <div
               id={`edu-drawer-${cardIdx}-${di}`}
-              inert={openDrawers[di] ? undefined : ""}
+              inert={!openDrawers[di]}
               className={`grid transition-[grid-template-rows] duration-300 ease-out ${openDrawers[di] ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
             >
               <div className="overflow-hidden">
@@ -1063,26 +1063,9 @@ function EducationSection({ t }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const isProgrammaticRef = useRef(false);
   const scrollTimerRef = useRef(null);
-  const [displayedPeriod, setDisplayedPeriod] = useState(cards[0]?.period ?? '');
-  const [periodVisible, setPeriodVisible] = useState(true);
-  const periodT1 = useRef(null);
-  const periodT2 = useRef(null);
   const [openDrawers, setOpenDrawers] = useState(() =>
     cards.map(card => card.drawers.map(() => false))
   );
-
-  useEffect(() => {
-    clearTimeout(periodT1.current);
-    clearTimeout(periodT2.current);
-    periodT1.current = setTimeout(() => {
-      setPeriodVisible(false);
-      periodT2.current = setTimeout(() => {
-        setDisplayedPeriod(cards[activeIndex]?.period ?? '');
-        requestAnimationFrame(() => setPeriodVisible(true));
-      }, 200);
-    }, 150);
-    return () => { clearTimeout(periodT1.current); clearTimeout(periodT2.current); };
-  }, [activeIndex]);
 
   const getCarouselPl = () => {
     if (typeof window === 'undefined') return '1.5rem';
@@ -1140,6 +1123,20 @@ function EducationSection({ t }) {
     setActiveIndex(closest);
   };
 
+  const getDateOffset = () => {
+    if (typeof window === 'undefined') return 0;
+    const n = cards.length;
+    if (activeIndex !== 0 && activeIndex !== n - 1) return 0;
+    const vw = window.innerWidth;
+    let cardW;
+    if (window.matchMedia('(min-width: 1024px)').matches) cardW = 536;
+    else if (window.matchMedia('(min-width: 640px)').matches) cardW = 488;
+    else return 0;
+    const pl = parseFloat(carouselPl);
+    if (isNaN(pl)) return 0;
+    return activeIndex === 0 ? pl + cardW / 2 - vw / 2 : vw / 2 - pl - cardW / 2;
+  };
+
   const toggleDrawer = (ci, di) => {
     setOpenDrawers(prev =>
       prev.map((card, i) =>
@@ -1178,8 +1175,11 @@ function EducationSection({ t }) {
         </ul>
       </div>
 
-      <p className={`mt-2 text-[13px] sm:text-[14px] font-medium text-[#5c5c5c] dark:text-[#adadad] text-center transition-opacity duration-200 ${periodVisible ? 'opacity-100' : 'opacity-0'}`}>
-        {displayedPeriod}
+      <p
+        className="mt-2 text-[13px] sm:text-[14px] font-medium text-[#5c5c5c] dark:text-[#adadad] text-center transition-transform duration-300"
+        style={{ transform: `translateX(${getDateOffset()}px)` }}
+      >
+        {cards[activeIndex]?.period}
       </p>
 
       <div className="flex items-center justify-end gap-2 sm:gap-3 lg:gap-4 mt-4 sm:mt-5 lg:mt-6 pr-6 sm:pr-28 lg:pr-52">
@@ -1234,7 +1234,7 @@ function CertificationCard({ card }) {
         className="relative [transform-style:preserve-3d] motion-safe:transition-transform motion-safe:duration-500"
         style={{ transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
       >
-        <div inert={flipped ? '' : undefined} className="flex flex-col items-center pt-3 sm:pt-[14px] lg:pt-4 pb-5 sm:pb-5 lg:pb-6 px-3 sm:px-[14px] lg:px-4 bg-white dark:bg-[#1f1f1f] rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] border border-[#d6d6d6] dark:border-[#2a2a2a] [backface-visibility:hidden]">
+        <div inert={flipped} className="flex flex-col items-center pt-3 sm:pt-[14px] lg:pt-4 pb-5 sm:pb-5 lg:pb-6 px-3 sm:px-[14px] lg:px-4 bg-white dark:bg-[#1f1f1f] rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] border border-[#d6d6d6] dark:border-[#2a2a2a] [backface-visibility:hidden]">
           <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-white dark:bg-[#1f1f1f] flex items-center justify-center mb-2 sm:mb-[10px] lg:mb-3 overflow-hidden shrink-0">
             {card.icon
               ? <img src={card.icon} alt="" className={`w-full h-full object-contain${isSvg ? ' dark:brightness-0 dark:invert' : ''}`} />
@@ -1244,7 +1244,7 @@ function CertificationCard({ card }) {
           <p className="text-[15px] sm:text-[16px] lg:text-[18px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-snug">{nameEl}</p>
         </div>
 
-        <div inert={flipped ? undefined : ''} className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-[#141414] rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] border border-[#d6d6d6] dark:border-[#2a2a2a] [backface-visibility:hidden] [transform:rotateY(180deg)]">
+        <div inert={!flipped} className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-[#141414] rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] border border-[#d6d6d6] dark:border-[#2a2a2a] [backface-visibility:hidden] [transform:rotateY(180deg)]">
           <p className="text-[15px] sm:text-[16px] lg:text-[18px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6] text-center leading-snug px-4">{card.issuer}</p>
         </div>
       </div>

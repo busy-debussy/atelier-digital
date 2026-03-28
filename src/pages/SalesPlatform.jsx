@@ -1409,7 +1409,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
       <div
         id={`${id}-content`}
         className={`grid overflow-hidden motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} ${contentBgClass}`}
-        inert={open ? undefined : ""}
+        inert={!open}
       >
         <div ref={contentRef} className="overflow-hidden min-h-0">
           <div className={contentBgClass}>

@@ -12,12 +12,12 @@ import imgBgSales      from '../assets/photos/photo-cgi-interactive-platform.png
 import imgBgXR         from '../assets/photos/photo-xr-experiences.png';
 import imgBgTwin       from '../assets/photos/photo-digital-twins.png';
 
-// ── Nav button styles (mirrors other carousels) ───────────────────────────────
+// Nav button styles (mirrors other carousels)
 const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70';
 const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]';
 const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]';
 
-// ── Data ──────────────────────────────────────────────────────────────────────
+// Data
 const T = {
   en: {
     heading:       'Case studies',
@@ -101,7 +101,7 @@ const T = {
   },
 };
 
-// ── Card ──────────────────────────────────────────────────────────────────────
+// Card
 function CsCard({ card, t }) {
   const [showRestricted, setShowRestricted] = useState(false);
 
@@ -155,7 +155,7 @@ function CsCard({ card, t }) {
         </div>
       </div>
 
-      {/* Restricted access overlay — hover (desktop) + state (touch) */}
+      {/* Restricted access overlay, hover (desktop) + state (touch) */}
       {card.cta === 'locked' && (
         <div
           className="absolute inset-0 flex flex-col items-center justify-center gap-4 sm:gap-5 bg-black/[0.82] backdrop-blur-[8px] opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto p-6"
@@ -200,7 +200,7 @@ function CsCard({ card, t }) {
   );
 }
 
-// ── Section ───────────────────────────────────────────────────────────────────
+// Section
 function CaseStudies({ lang }) {
   const t = T[lang] ?? T.en;
   const cards = t.cards;
@@ -304,7 +304,7 @@ function CaseStudies({ lang }) {
         <li role="none" aria-hidden="true"><div className="shrink-0" style={{ width: carouselPl }} /></li>
       </ul>
 
-      {/* Nav — mobile/tablet only */}
+      {/* Nav, mobile/tablet only */}
       <div className="lg:hidden flex items-center justify-end gap-2 sm:gap-3 mt-4 sm:mt-5 pr-6 sm:pr-28">
         <button
           onClick={() => scrollToCard(Math.max(0, activeIndex - getStep()))}
