@@ -1378,7 +1378,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
   };
 
   return (
-    <section id={id} aria-labelledby={headingId}>
+    <section id={id} aria-labelledby={headingId} className="overflow-hidden">
 
       {/* Header row — fully clickable */}
       <div className={open && openHeaderBgClass ? openHeaderBgClass : headerBgClass}>

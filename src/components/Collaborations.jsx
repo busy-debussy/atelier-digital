@@ -184,7 +184,18 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
   const closeModal = () => { setActiveModal(null); triggerRef.current?.focus(); };
   const navigateModal = (i) => { setActiveModal(i); scrollToIndex(i); };
 
-  const modalRef = useRef(null);
+  const modalRef     = useRef(null);
+  const touchStartX  = useRef(null);
+
+  const handleTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
+  const handleTouchEnd   = (e) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 50) return;
+    if (dx < 0 && activeModal < collaborators.length - 1) navigateModal(activeModal + 1);
+    if (dx > 0 && activeModal > 0) navigateModal(activeModal - 1);
+  };
 
   // Move focus to close button when modal opens
   useEffect(() => {
@@ -290,6 +301,8 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
             aria-modal="true"
             aria-label={activeCollab.name}
             className="absolute inset-x-0 top-0 h-[152px] sm:h-[176px] lg:h-[200px] flex items-center px-4 sm:px-6 lg:px-8 gap-3 sm:gap-4 lg:gap-6 sm:max-w-3xl lg:max-w-4xl sm:mx-auto"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
 
             <div style={{ animation: 'modal-in 0.25s cubic-bezier(0.22,1,0.36,1) 0.35s both' }}>
