@@ -297,7 +297,7 @@ function CaseStudies({ lang }) {
         ref={trackRef}
         onScroll={handleScroll}
         className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
-        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '12px', paddingBottom: '12px', touchAction: 'pan-x' }}
+        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '12px', paddingBottom: '12px', touchAction: 'pan-x pan-y' }}
         aria-label={t.heading}
       >
         {cards.map((card, i) => <CsCard key={i} card={card} t={t} />)}

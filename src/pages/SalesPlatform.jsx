@@ -5,6 +5,7 @@ import imgHero           from '../assets/photos/photo-cgi-sales-platform-hero.pn
 import imgChevronUp      from '../assets/icons/icon-chevron-up.svg';
 import imgChevronLeft    from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight   from '../assets/icons/icon-chevron-right.svg';
+import imgClose          from '../assets/icons/icon-close.svg';
 import imgClientLogo     from '../assets/projects/sales-platform/logo-client.svg';
 import imgToolFigma        from '../assets/logos/tools/logo-figma.png';
 import imgToolIllustrator  from '../assets/logos/tools/logo-adobe-illustrator.png';
@@ -748,11 +749,101 @@ const CONCEPTS_SLIDES = {
   ],
 };
 
+// ── Lightbox ──────────────────────────────────────────────────────────────────
+function Lightbox({ slides, initialIndex, lang, onClose }) {
+  const [index, setIndex] = useState(initialIndex);
+  const touchStartX = useRef(null);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft')  setIndex(i => Math.max(0, i - 1));
+      if (e.key === 'ArrowRight') setIndex(i => Math.min(slides.length - 1, i + 1));
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [slides.length, onClose]);
+
+  const handleTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
+  const handleTouchEnd   = (e) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 50) return;
+    if (dx < 0) setIndex(i => Math.min(slides.length - 1, i + 1));
+    if (dx > 0) setIndex(i => Math.max(0, i - 1));
+  };
+
+  const slide = slides[index];
+  const closeLbl = lang === 'fr' ? 'Fermer' : 'Close';
+  const prevLbl  = lang === 'fr' ? 'Image précédente' : 'Previous image';
+  const nextLbl  = lang === 'fr' ? 'Image suivante'   : 'Next image';
+
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={lang === 'fr' ? 'Image en plein écran' : 'Fullscreen image'}
+      className="fixed inset-0 z-[400] flex items-center justify-center"
+      style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.92)' }}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0" onClick={onClose} />
+
+      {/* Image */}
+      <img
+        src={slide.desktop ?? slide.mobile}
+        alt={lang === 'fr' ? `Image ${index + 1} sur ${slides.length}` : `Image ${index + 1} of ${slides.length}`}
+        draggable="false"
+        className="relative z-10 max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl"
+      />
+
+      {/* Counter */}
+      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-[13px] font-medium text-white/60 tabular-nums pointer-events-none">
+        {index + 1} / {slides.length}
+      </span>
+
+      {/* Close */}
+      <button
+        onClick={onClose}
+        aria-label={closeLbl}
+        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+      >
+        <img src={imgClose} alt="" width={20} height={20} className="brightness-0 invert" />
+      </button>
+
+      {/* Prev */}
+      <button
+        onClick={() => setIndex(i => Math.max(0, i - 1))}
+        disabled={index === 0}
+        aria-label={prevLbl}
+        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+      >
+        <img src={imgChevronLeft} alt="" width={20} height={20} className="brightness-0 invert" />
+      </button>
+
+      {/* Next */}
+      <button
+        onClick={() => setIndex(i => Math.min(slides.length - 1, i + 1))}
+        disabled={index === slides.length - 1}
+        aria-label={nextLbl}
+        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+      >
+        <img src={imgChevronRight} alt="" width={20} height={20} className="brightness-0 invert" />
+      </button>
+    </div>,
+    document.body
+  );
+}
+
 function ConceptsCarousel({ lang, isDark }) {
   const slides = CONCEPTS_SLIDES[lang] ?? CONCEPTS_SLIDES.en;
   const titles = CONCEPTS_TITLES[lang] ?? CONCEPTS_TITLES.en;
   const trackRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
   const isProgrammaticRef = useRef(false);
   const scrollTimerRef = useRef(null);
 
@@ -806,17 +897,20 @@ function ConceptsCarousel({ lang, isDark }) {
           if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollToSlide(Math.max(0, activeIndex - 1)); }
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
         }}
-        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-xl sm:rounded-2xl lg:rounded-3xl touch-pan-x focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-xl sm:rounded-2xl lg:rounded-3xl touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
         style={{ scrollbarWidth: 'none' }}
       >
         {slides.map((slide, i) => (
-          <picture key={i} className="w-full shrink-0 snap-start">
-            <source media="(min-width: 1024px)" srcSet={slide.desktop} />
-            <source media="(min-width: 640px)"  srcSet={slide.tablet} />
-            <img src={slide.mobile} alt={lang === 'fr' ? `Concept CGI, diapositive ${i + 1} sur ${slides.length}` : `CGI concept, slide ${i + 1} of ${slides.length}`} draggable="false" className="w-full h-auto" />
-          </picture>
+          <button key={i} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Concept CGI ${i + 1}` : `Expand: CGI concept ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <picture>
+              <source media="(min-width: 1024px)" srcSet={slide.desktop} />
+              <source media="(min-width: 640px)"  srcSet={slide.tablet} />
+              <img src={slide.mobile} alt={lang === 'fr' ? `Concept CGI, diapositive ${i + 1} sur ${slides.length}` : `CGI concept, slide ${i + 1} of ${slides.length}`} draggable="false" className="w-full h-auto" />
+            </picture>
+          </button>
         ))}
       </div>
+      {lightboxIndex !== null && <Lightbox slides={slides} initialIndex={lightboxIndex} lang={lang} onClose={() => setLightboxIndex(null)} />}
 
       <div className="flex flex-col gap-2">
         <div className="sm:hidden">
@@ -951,6 +1045,7 @@ function WireframesCarousel({ lang, isDark }) {
   const titles = VIEW_SLIDE_TITLES[lang] ?? VIEW_SLIDE_TITLES.en;
   const trackRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
 
   const isProgrammaticRef = useRef(false);
   const scrollTimerRef = useRef(null);
@@ -1005,16 +1100,19 @@ function WireframesCarousel({ lang, isDark }) {
           if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollToSlide(Math.max(0, activeIndex - 1)); }
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
         }}
-        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory touch-pan-x focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
         style={{ scrollbarWidth: 'none' }}
       >
         {slides.map((slide, i) => (
-          <picture key={i} className="w-full shrink-0 snap-start">
-            <source media="(min-width: 640px)" srcSet={slide.desktop} />
-            <img src={slide.mobile} alt={lang === 'fr' ? `Maquette filaire, diapositive ${i + 1} sur ${slides.length}` : `Wireframe mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" className="w-full h-auto" />
-          </picture>
+          <button key={i} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Maquette filaire ${i + 1}` : `Expand: wireframe ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <picture>
+              <source media="(min-width: 640px)" srcSet={slide.desktop} />
+              <img src={slide.mobile} alt={lang === 'fr' ? `Maquette filaire, diapositive ${i + 1} sur ${slides.length}` : `Wireframe mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" className="w-full h-auto" />
+            </picture>
+          </button>
         ))}
       </div>
+      {lightboxIndex !== null && <Lightbox slides={slides} initialIndex={lightboxIndex} lang={lang} onClose={() => setLightboxIndex(null)} />}
 
       <div className="flex flex-col gap-2">
         <div className="sm:hidden">
@@ -1106,6 +1204,7 @@ function HifiCarousel({ lang, isDark }) {
   const titles = VIEW_SLIDE_TITLES[lang] ?? VIEW_SLIDE_TITLES.en;
   const trackRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
 
   const isProgrammaticRef = useRef(false);
   const scrollTimerRef = useRef(null);
@@ -1161,18 +1260,21 @@ function HifiCarousel({ lang, isDark }) {
             if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollToSlide(Math.max(0, activeIndex - 1)); }
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
           }}
-          className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-xl sm:rounded-2xl lg:rounded-3xl touch-pan-x focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+          className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-xl sm:rounded-2xl lg:rounded-3xl touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
           style={{ scrollbarWidth: 'none' }}
         >
           {slides.map((slide, i) => (
-            <picture key={i} className="w-full shrink-0 snap-start">
-              <source media="(min-width: 1024px)" srcSet={slide.desktop} />
-              <source media="(min-width: 640px)" srcSet={slide.tablet} />
-              <img src={slide.mobile} alt={`High-fidelity mock-up slide ${i + 1} of ${slides.length}`} draggable="false" className="w-full h-auto" />
-            </picture>
+            <button key={i} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Maquette haute-fidélité ${i + 1}` : `Expand: high-fidelity mock-up ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+              <picture>
+                <source media="(min-width: 1024px)" srcSet={slide.desktop} />
+                <source media="(min-width: 640px)" srcSet={slide.tablet} />
+                <img src={slide.mobile} alt={lang === 'fr' ? `Maquette haute-fidélité, diapositive ${i + 1} sur ${slides.length}` : `High-fidelity mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" className="w-full h-auto" />
+              </picture>
+            </button>
           ))}
         </div>
       </div>
+      {lightboxIndex !== null && <Lightbox slides={slides} initialIndex={lightboxIndex} lang={lang} onClose={() => setLightboxIndex(null)} />}
 
       <div className="flex flex-col gap-2">
         <div className="sm:hidden">

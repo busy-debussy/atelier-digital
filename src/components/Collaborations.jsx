@@ -245,7 +245,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
             overflowY: 'visible',
             scrollbarWidth: 'none',
             paddingLeft: carouselPl,
-            touchAction: 'pan-x',
+            touchAction: 'pan-x pan-y',
           }}
           aria-label={t.heading}
         >

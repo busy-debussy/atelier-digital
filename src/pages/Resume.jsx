@@ -746,7 +746,7 @@ function ExperienceSection({ t }) {
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCard(Math.min(cards.length - 1, activeIndex + 1)); }
           }}
           className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
-          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x' }}
+          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x pan-y' }}
         >
           {cards.map((card, ci) => (
             <ExperienceCard
@@ -953,7 +953,7 @@ function ExpertiseSection({ t }) {
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCard(Math.min(cards.length - 1, activeIndex + 1)); }
           }}
           className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
-          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x' }}
+          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x pan-y' }}
         >
           {cards.map((card, ci) => (
             <ExpertiseCard key={ci} card={card} />
@@ -1169,7 +1169,7 @@ function EducationSection({ t }) {
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCard(Math.min(cards.length - 1, activeIndex + 1)); }
           }}
           className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
-          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x' }}
+          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x pan-y' }}
         >
           {cards.map((card, ci) => (
             <EducationCard key={ci} cardIdx={ci} card={card} openDrawers={openDrawers[ci]} onToggle={(di) => toggleDrawer(ci, di)} />
@@ -1328,7 +1328,7 @@ function SkillsCertSection({ t }) {
                 if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCertPage(Math.min(certPages.length - 1, activePage + 1)); }
               }}
               className="flex overflow-x-auto snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
-              style={{ scrollbarWidth: 'none', touchAction: 'pan-x' }}
+              style={{ scrollbarWidth: 'none', touchAction: 'pan-x pan-y' }}
             >
               {certPages.map((page, pi) => (
                 <li key={pi} className="w-full shrink-0 snap-start flex gap-3">
