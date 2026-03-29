@@ -35,7 +35,7 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
         {lang === 'fr' ? 'Aller au contenu principal' : 'Skip to main content'}
       </a>
       <Nav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} />
-      {(pathname === '/resume' || pathname === '/projects/sales-platform') && <ScrollForMore lang={lang} />}
+      {(pathname === '/resume' || pathname === '/projects/sales-platform') && <ScrollForMore lang={lang} scrollTarget={pathname === '/resume' ? 'summary-bio' : undefined} />}
       <AnimatedRoutes><Routes>
         <Route path="/" element={<Home lang={lang} isDark={isDark} enableDark={() => setIsDark(true)} />} />
         <Route path="/projects/sales-platform" element={<SalesPlatform lang={lang} isDark={isDark} />} />

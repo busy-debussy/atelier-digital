@@ -1,253 +1,253 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Footer from '../components/Footer';
-import imgHero           from '../assets/photos/photo-cgi-sales-platform-hero.png';
+import imgHero           from '../assets/photos/photo-cgi-sales-platform-hero.webp';
 import imgChevronUp      from '../assets/icons/icon-chevron-up.svg';
 import imgChevronLeft    from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight   from '../assets/icons/icon-chevron-right.svg';
 import imgClose          from '../assets/icons/icon-close.svg';
 import imgClientLogo     from '../assets/projects/sales-platform/logo-client.svg';
-import imgToolFigma        from '../assets/logos/tools/logo-figma.png';
-import imgToolIllustrator  from '../assets/logos/tools/logo-adobe-illustrator.png';
-import imgToolPhotoshop    from '../assets/logos/tools/logo-adobe-photoshop.png';
-import imgToolDaVinci      from '../assets/logos/tools/logo-davinci-resolve.png';
-import imgToolConfluence   from '../assets/logos/tools/logo-atlassian-confluence.png';
-import imgToolJira         from '../assets/logos/tools/logo-atlassian-jira.png';
-import imgTool3dsMax       from '../assets/logos/tools/logo-autodesk-3dsmax.png';
-import imgToolMiro         from '../assets/logos/tools/logo-miro.png';
-import imgToolVSCode       from '../assets/logos/tools/logo-visual-studio-code.png';
+import imgToolFigma        from '../assets/logos/tools/logo-figma.webp';
+import imgToolIllustrator  from '../assets/logos/tools/logo-adobe-illustrator.webp';
+import imgToolPhotoshop    from '../assets/logos/tools/logo-adobe-photoshop.webp';
+import imgToolDaVinci      from '../assets/logos/tools/logo-davinci-resolve.webp';
+import imgToolConfluence   from '../assets/logos/tools/logo-atlassian-confluence.webp';
+import imgToolJira         from '../assets/logos/tools/logo-atlassian-jira.webp';
+import imgTool3dsMax       from '../assets/logos/tools/logo-autodesk-3dsmax.webp';
+import imgToolMiro         from '../assets/logos/tools/logo-miro.webp';
+import imgToolVSCode       from '../assets/logos/tools/logo-visual-studio-code.webp';
 import imgToolUnreal       from '../assets/logos/tools/logo-unreal-engine.svg';
-import imgUserflowDesktopLightEn from '../assets/projects/sales-platform/userflow/desktop-light-en.png';
-import imgUserflowTabletLightEn  from '../assets/projects/sales-platform/userflow/tablet-light-en.png';
-import imgUserflowMobileLightEn  from '../assets/projects/sales-platform/userflow/mobile-light-en.png';
-import imgUserflowDesktopDarkEn  from '../assets/projects/sales-platform/userflow/desktop-dark-en.png';
-import imgUserflowTabletDarkEn   from '../assets/projects/sales-platform/userflow/tablet-dark-en.png';
-import imgUserflowMobileDarkEn   from '../assets/projects/sales-platform/userflow/mobile-dark-en.png';
-import imgUserflowDesktopLightFr from '../assets/projects/sales-platform/userflow/desktop-light-fr.png';
-import imgUserflowTabletLightFr  from '../assets/projects/sales-platform/userflow/tablet-light-fr.png';
-import imgUserflowMobileLightFr  from '../assets/projects/sales-platform/userflow/mobile-light-fr.png';
-import imgUserflowDesktopDarkFr  from '../assets/projects/sales-platform/userflow/desktop-dark-fr.png';
-import imgUserflowTabletDarkFr   from '../assets/projects/sales-platform/userflow/tablet-dark-fr.png';
-import imgUserflowMobileDarkFr   from '../assets/projects/sales-platform/userflow/mobile-dark-fr.png';
-import imgUiCard01 from '../assets/projects/sales-platform/ui-cards/card-01.png';
-import imgUiCard02 from '../assets/projects/sales-platform/ui-cards/card-02.png';
-import imgUiCard03 from '../assets/projects/sales-platform/ui-cards/card-03.png';
-import imgUiCard04 from '../assets/projects/sales-platform/ui-cards/card-04.png';
-import imgUiCard05 from '../assets/projects/sales-platform/ui-cards/card-05.png';
-import imgUiCard06 from '../assets/projects/sales-platform/ui-cards/card-06.png';
-import imgUiCard07 from '../assets/projects/sales-platform/ui-cards/card-07.png';
-import imgUiCard08 from '../assets/projects/sales-platform/ui-cards/card-08.png';
-import imgUiCard09 from '../assets/projects/sales-platform/ui-cards/card-09.png';
-import imgConcepts01DesktopEn from '../assets/projects/sales-platform/concepts/slide-01-desktop-en.png';
-import imgConcepts02DesktopEn from '../assets/projects/sales-platform/concepts/slide-02-desktop-en.png';
-import imgConcepts03DesktopEn from '../assets/projects/sales-platform/concepts/slide-03-desktop-en.png';
-import imgConcepts04DesktopEn from '../assets/projects/sales-platform/concepts/slide-04-desktop-en.png';
-import imgConcepts05DesktopEn from '../assets/projects/sales-platform/concepts/slide-05-desktop-en.png';
-import imgConcepts01TabletEn  from '../assets/projects/sales-platform/concepts/slide-01-tablet-en.png';
-import imgConcepts02TabletEn  from '../assets/projects/sales-platform/concepts/slide-02-tablet-en.png';
-import imgConcepts03TabletEn  from '../assets/projects/sales-platform/concepts/slide-03-tablet-en.png';
-import imgConcepts04TabletEn  from '../assets/projects/sales-platform/concepts/slide-04-tablet-en.png';
-import imgConcepts05TabletEn  from '../assets/projects/sales-platform/concepts/slide-05-tablet-en.png';
-import imgConcepts01MobileEn  from '../assets/projects/sales-platform/concepts/slide-01-mobile-en.png';
-import imgConcepts02MobileEn  from '../assets/projects/sales-platform/concepts/slide-02-mobile-en.png';
-import imgConcepts03MobileEn  from '../assets/projects/sales-platform/concepts/slide-03-mobile-en.png';
-import imgConcepts04MobileEn  from '../assets/projects/sales-platform/concepts/slide-04-mobile-en.png';
-import imgConcepts05MobileEn  from '../assets/projects/sales-platform/concepts/slide-05-mobile-en.png';
-import imgConcepts01DesktopFr from '../assets/projects/sales-platform/concepts/slide-01-desktop-fr.png';
-import imgConcepts02DesktopFr from '../assets/projects/sales-platform/concepts/slide-02-desktop-fr.png';
-import imgConcepts03DesktopFr from '../assets/projects/sales-platform/concepts/slide-03-desktop-fr.png';
-import imgConcepts04DesktopFr from '../assets/projects/sales-platform/concepts/slide-04-desktop-fr.png';
-import imgConcepts05DesktopFr from '../assets/projects/sales-platform/concepts/slide-05-desktop-fr.png';
-import imgConcepts01TabletFr  from '../assets/projects/sales-platform/concepts/slide-01-tablet-fr.png';
-import imgConcepts02TabletFr  from '../assets/projects/sales-platform/concepts/slide-02-tablet-fr.png';
-import imgConcepts03TabletFr  from '../assets/projects/sales-platform/concepts/slide-03-tablet-fr.png';
-import imgConcepts04TabletFr  from '../assets/projects/sales-platform/concepts/slide-04-tablet-fr.png';
-import imgConcepts05TabletFr  from '../assets/projects/sales-platform/concepts/slide-05-tablet-fr.png';
-import imgConcepts01MobileFr  from '../assets/projects/sales-platform/concepts/slide-01-mobile-fr.png';
-import imgConcepts02MobileFr  from '../assets/projects/sales-platform/concepts/slide-02-mobile-fr.png';
-import imgConcepts03MobileFr  from '../assets/projects/sales-platform/concepts/slide-03-mobile-fr.png';
-import imgConcepts04MobileFr  from '../assets/projects/sales-platform/concepts/slide-04-mobile-fr.png';
-import imgConcepts05MobileFr  from '../assets/projects/sales-platform/concepts/slide-05-mobile-fr.png';
-import imgWf01DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-01-desktop-en-light.png';
-import imgWf02DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-02-desktop-en-light.png';
-import imgWf03DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-03-desktop-en-light.png';
-import imgWf04DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-04-desktop-en-light.png';
-import imgWf05DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-05-desktop-en-light.png';
-import imgWf06DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-06-desktop-en-light.png';
-import imgWf07DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-07-desktop-en-light.png';
-import imgWf08DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-08-desktop-en-light.png';
-import imgWf09DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-09-desktop-en-light.png';
-import imgWf01DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-01-desktop-en-dark.png';
-import imgWf02DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-02-desktop-en-dark.png';
-import imgWf03DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-03-desktop-en-dark.png';
-import imgWf04DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-04-desktop-en-dark.png';
-import imgWf05DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-05-desktop-en-dark.png';
-import imgWf06DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-06-desktop-en-dark.png';
-import imgWf07DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-07-desktop-en-dark.png';
-import imgWf08DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-08-desktop-en-dark.png';
-import imgWf09DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-09-desktop-en-dark.png';
-import imgWf01DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-01-desktop-fr-light.png';
-import imgWf02DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-02-desktop-fr-light.png';
-import imgWf03DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-03-desktop-fr-light.png';
-import imgWf04DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-04-desktop-fr-light.png';
-import imgWf05DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-05-desktop-fr-light.png';
-import imgWf06DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-06-desktop-fr-light.png';
-import imgWf07DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-07-desktop-fr-light.png';
-import imgWf08DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-08-desktop-fr-light.png';
-import imgWf09DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-09-desktop-fr-light.png';
-import imgWf01DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-01-desktop-fr-dark.png';
-import imgWf02DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-02-desktop-fr-dark.png';
-import imgWf03DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-03-desktop-fr-dark.png';
-import imgWf04DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-04-desktop-fr-dark.png';
-import imgWf05DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-05-desktop-fr-dark.png';
-import imgWf06DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-06-desktop-fr-dark.png';
-import imgWf07DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-07-desktop-fr-dark.png';
-import imgWf08DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-08-desktop-fr-dark.png';
-import imgWf09DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-09-desktop-fr-dark.png';
-import imgWf01MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-01-mobile-en-light.png';
-import imgWf02MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-02-mobile-en-light.png';
-import imgWf03MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-03-mobile-en-light.png';
-import imgWf04MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-04-mobile-en-light.png';
-import imgWf05MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-05-mobile-en-light.png';
-import imgWf06MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-06-mobile-en-light.png';
-import imgWf07MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-07-mobile-en-light.png';
-import imgWf08MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-08-mobile-en-light.png';
-import imgWf09MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-09-mobile-en-light.png';
-import imgWf01MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-01-mobile-en-dark.png';
-import imgWf02MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-02-mobile-en-dark.png';
-import imgWf03MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-03-mobile-en-dark.png';
-import imgWf04MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-04-mobile-en-dark.png';
-import imgWf05MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-05-mobile-en-dark.png';
-import imgWf06MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-06-mobile-en-dark.png';
-import imgWf07MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-07-mobile-en-dark.png';
-import imgWf08MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-08-mobile-en-dark.png';
-import imgWf09MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-09-mobile-en-dark.png';
-import imgWf01MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-01-mobile-fr-light.png';
-import imgWf02MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-02-mobile-fr-light.png';
-import imgWf03MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-03-mobile-fr-light.png';
-import imgWf04MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-04-mobile-fr-light.png';
-import imgWf05MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-05-mobile-fr-light.png';
-import imgWf06MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-06-mobile-fr-light.png';
-import imgWf07MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-07-mobile-fr-light.png';
-import imgWf08MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-08-mobile-fr-light.png';
-import imgWf09MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-09-mobile-fr-light.png';
-import imgWf01MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-01-mobile-fr-dark.png';
-import imgWf02MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-02-mobile-fr-dark.png';
-import imgWf03MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-03-mobile-fr-dark.png';
-import imgWf04MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-04-mobile-fr-dark.png';
-import imgWf05MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-05-mobile-fr-dark.png';
-import imgWf06MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-06-mobile-fr-dark.png';
-import imgWf07MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-07-mobile-fr-dark.png';
-import imgWf08MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-08-mobile-fr-dark.png';
-import imgWf09MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-09-mobile-fr-dark.png';
-import imgHifi01DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide01-desktop-en-light.png';
-import imgHifi02DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide02-desktop-en-light.png';
-import imgHifi03DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide03-desktop-en-light.png';
-import imgHifi04DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide04-desktop-en-light.png';
-import imgHifi05DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide05-desktop-en-light.png';
-import imgHifi06DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide06-desktop-en-light.png';
-import imgHifi07DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide07-desktop-en-light.png';
-import imgHifi08DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide08-desktop-en-light.png';
-import imgHifi09DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide09-desktop-en-light.png';
-import imgHifi01DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide01-desktop-en-dark.png';
-import imgHifi02DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide02-desktop-en-dark.png';
-import imgHifi03DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide03-desktop-en-dark.png';
-import imgHifi04DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide04-desktop-en-dark.png';
-import imgHifi05DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide05-desktop-en-dark.png';
-import imgHifi06DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide06-desktop-en-dark.png';
-import imgHifi07DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide07-desktop-en-dark.png';
-import imgHifi08DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide08-desktop-en-dark.png';
-import imgHifi09DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide09-desktop-en-dark.png';
-import imgHifi01DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide01-desktop-fr-light.png';
-import imgHifi02DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide02-desktop-fr-light.png';
-import imgHifi03DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide03-desktop-fr-light.png';
-import imgHifi04DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide04-desktop-fr-light.png';
-import imgHifi05DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide05-desktop-fr-light.png';
-import imgHifi06DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide06-desktop-fr-light.png';
-import imgHifi07DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide07-desktop-fr-light.png';
-import imgHifi08DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide08-desktop-fr-light.png';
-import imgHifi09DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide09-desktop-fr-light.png';
-import imgHifi01DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide01-desktop-fr-dark.png';
-import imgHifi02DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide02-desktop-fr-dark.png';
-import imgHifi03DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide03-desktop-fr-dark.png';
-import imgHifi04DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide04-desktop-fr-dark.png';
-import imgHifi05DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide05-desktop-fr-dark.png';
-import imgHifi06DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide06-desktop-fr-dark.png';
-import imgHifi07DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide07-desktop-fr-dark.png';
-import imgHifi08DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide08-desktop-fr-dark.png';
-import imgHifi09DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide09-desktop-fr-dark.png';
-import imgHifi01TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide01-tablet-en-light.png';
-import imgHifi02TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide02-tablet-en-light.png';
-import imgHifi03TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide03-tablet-en-light.png';
-import imgHifi04TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide04-tablet-en-light.png';
-import imgHifi05TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide05-tablet-en-light.png';
-import imgHifi06TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide06-tablet-en-light.png';
-import imgHifi07TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide07-tablet-en-light.png';
-import imgHifi08TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide08-tablet-en-light.png';
-import imgHifi09TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide09-tablet-en-light.png';
-import imgHifi01TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide01-tablet-en-dark.png';
-import imgHifi02TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide02-tablet-en-dark.png';
-import imgHifi03TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide03-tablet-en-dark.png';
-import imgHifi04TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide04-tablet-en-dark.png';
-import imgHifi05TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide05-tablet-en-dark.png';
-import imgHifi06TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide06-tablet-en-dark.png';
-import imgHifi07TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide07-tablet-en-dark.png';
-import imgHifi08TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide08-tablet-en-dark.png';
-import imgHifi09TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide09-tablet-en-dark.png';
-import imgHifi01TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide01-tablet-fr-light.png';
-import imgHifi02TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide02-tablet-fr-light.png';
-import imgHifi03TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide03-tablet-fr-light.png';
-import imgHifi04TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide04-tablet-fr-light.png';
-import imgHifi05TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide05-tablet-fr-light.png';
-import imgHifi06TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide06-tablet-fr-light.png';
-import imgHifi07TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide07-tablet-fr-light.png';
-import imgHifi08TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide08-tablet-fr-light.png';
-import imgHifi09TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide09-tablet-fr-light.png';
-import imgHifi01TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide01-tablet-fr-dark.png';
-import imgHifi02TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide02-tablet-fr-dark.png';
-import imgHifi03TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide03-tablet-fr-dark.png';
-import imgHifi04TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide04-tablet-fr-dark.png';
-import imgHifi05TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide05-tablet-fr-dark.png';
-import imgHifi06TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide06-tablet-fr-dark.png';
-import imgHifi07TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide07-tablet-fr-dark.png';
-import imgHifi08TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide08-tablet-fr-dark.png';
-import imgHifi09TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide09-tablet-fr-dark.png';
-import imgHifi01MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide01-mobile-en-light.png';
-import imgHifi02MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide02-mobile-en-light.png';
-import imgHifi03MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide03-mobile-en-light.png';
-import imgHifi04MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide04-mobile-en-light.png';
-import imgHifi05MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide05-mobile-en-light.png';
-import imgHifi06MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide06-mobile-en-light.png';
-import imgHifi07MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide07-mobile-en-light.png';
-import imgHifi08MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide08-mobile-en-light.png';
-import imgHifi09MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide09-mobile-en-light.png';
-import imgHifi01MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide01-mobile-en-dark.png';
-import imgHifi02MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide02-mobile-en-dark.png';
-import imgHifi03MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide03-mobile-en-dark.png';
-import imgHifi04MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide04-mobile-en-dark.png';
-import imgHifi05MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide05-mobile-en-dark.png';
-import imgHifi06MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide06-mobile-en-dark.png';
-import imgHifi07MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide07-mobile-en-dark.png';
-import imgHifi08MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide08-mobile-en-dark.png';
-import imgHifi09MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide09-mobile-en-dark.png';
-import imgHifi01MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide01-mobile-fr-light.png';
-import imgHifi02MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide02-mobile-fr-light.png';
-import imgHifi03MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide03-mobile-fr-light.png';
-import imgHifi04MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide04-mobile-fr-light.png';
-import imgHifi05MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide05-mobile-fr-light.png';
-import imgHifi06MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide06-mobile-fr-light.png';
-import imgHifi07MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide07-mobile-fr-light.png';
-import imgHifi08MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide08-mobile-fr-light.png';
-import imgHifi09MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide09-mobile-fr-light.png';
-import imgHifi01MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide01-mobile-fr-dark.png';
-import imgHifi02MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide02-mobile-fr-dark.png';
-import imgHifi03MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide03-mobile-fr-dark.png';
-import imgHifi04MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide04-mobile-fr-dark.png';
-import imgHifi05MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide05-mobile-fr-dark.png';
-import imgHifi06MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide06-mobile-fr-dark.png';
-import imgHifi07MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide07-mobile-fr-dark.png';
-import imgHifi08MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide08-mobile-fr-dark.png';
-import imgHifi09MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide09-mobile-fr-dark.png';
+import imgUserflowDesktopLightEn from '../assets/projects/sales-platform/userflow/desktop-light-en.webp';
+import imgUserflowTabletLightEn  from '../assets/projects/sales-platform/userflow/tablet-light-en.webp';
+import imgUserflowMobileLightEn  from '../assets/projects/sales-platform/userflow/mobile-light-en.webp';
+import imgUserflowDesktopDarkEn  from '../assets/projects/sales-platform/userflow/desktop-dark-en.webp';
+import imgUserflowTabletDarkEn   from '../assets/projects/sales-platform/userflow/tablet-dark-en.webp';
+import imgUserflowMobileDarkEn   from '../assets/projects/sales-platform/userflow/mobile-dark-en.webp';
+import imgUserflowDesktopLightFr from '../assets/projects/sales-platform/userflow/desktop-light-fr.webp';
+import imgUserflowTabletLightFr  from '../assets/projects/sales-platform/userflow/tablet-light-fr.webp';
+import imgUserflowMobileLightFr  from '../assets/projects/sales-platform/userflow/mobile-light-fr.webp';
+import imgUserflowDesktopDarkFr  from '../assets/projects/sales-platform/userflow/desktop-dark-fr.webp';
+import imgUserflowTabletDarkFr   from '../assets/projects/sales-platform/userflow/tablet-dark-fr.webp';
+import imgUserflowMobileDarkFr   from '../assets/projects/sales-platform/userflow/mobile-dark-fr.webp';
+import imgUiCard01 from '../assets/projects/sales-platform/ui-cards/card-01.webp';
+import imgUiCard02 from '../assets/projects/sales-platform/ui-cards/card-02.webp';
+import imgUiCard03 from '../assets/projects/sales-platform/ui-cards/card-03.webp';
+import imgUiCard04 from '../assets/projects/sales-platform/ui-cards/card-04.webp';
+import imgUiCard05 from '../assets/projects/sales-platform/ui-cards/card-05.webp';
+import imgUiCard06 from '../assets/projects/sales-platform/ui-cards/card-06.webp';
+import imgUiCard07 from '../assets/projects/sales-platform/ui-cards/card-07.webp';
+import imgUiCard08 from '../assets/projects/sales-platform/ui-cards/card-08.webp';
+import imgUiCard09 from '../assets/projects/sales-platform/ui-cards/card-09.webp';
+import imgConcepts01DesktopEn from '../assets/projects/sales-platform/concepts/slide-01-desktop-en.webp';
+import imgConcepts02DesktopEn from '../assets/projects/sales-platform/concepts/slide-02-desktop-en.webp';
+import imgConcepts03DesktopEn from '../assets/projects/sales-platform/concepts/slide-03-desktop-en.webp';
+import imgConcepts04DesktopEn from '../assets/projects/sales-platform/concepts/slide-04-desktop-en.webp';
+import imgConcepts05DesktopEn from '../assets/projects/sales-platform/concepts/slide-05-desktop-en.webp';
+import imgConcepts01TabletEn  from '../assets/projects/sales-platform/concepts/slide-01-tablet-en.webp';
+import imgConcepts02TabletEn  from '../assets/projects/sales-platform/concepts/slide-02-tablet-en.webp';
+import imgConcepts03TabletEn  from '../assets/projects/sales-platform/concepts/slide-03-tablet-en.webp';
+import imgConcepts04TabletEn  from '../assets/projects/sales-platform/concepts/slide-04-tablet-en.webp';
+import imgConcepts05TabletEn  from '../assets/projects/sales-platform/concepts/slide-05-tablet-en.webp';
+import imgConcepts01MobileEn  from '../assets/projects/sales-platform/concepts/slide-01-mobile-en.webp';
+import imgConcepts02MobileEn  from '../assets/projects/sales-platform/concepts/slide-02-mobile-en.webp';
+import imgConcepts03MobileEn  from '../assets/projects/sales-platform/concepts/slide-03-mobile-en.webp';
+import imgConcepts04MobileEn  from '../assets/projects/sales-platform/concepts/slide-04-mobile-en.webp';
+import imgConcepts05MobileEn  from '../assets/projects/sales-platform/concepts/slide-05-mobile-en.webp';
+import imgConcepts01DesktopFr from '../assets/projects/sales-platform/concepts/slide-01-desktop-fr.webp';
+import imgConcepts02DesktopFr from '../assets/projects/sales-platform/concepts/slide-02-desktop-fr.webp';
+import imgConcepts03DesktopFr from '../assets/projects/sales-platform/concepts/slide-03-desktop-fr.webp';
+import imgConcepts04DesktopFr from '../assets/projects/sales-platform/concepts/slide-04-desktop-fr.webp';
+import imgConcepts05DesktopFr from '../assets/projects/sales-platform/concepts/slide-05-desktop-fr.webp';
+import imgConcepts01TabletFr  from '../assets/projects/sales-platform/concepts/slide-01-tablet-fr.webp';
+import imgConcepts02TabletFr  from '../assets/projects/sales-platform/concepts/slide-02-tablet-fr.webp';
+import imgConcepts03TabletFr  from '../assets/projects/sales-platform/concepts/slide-03-tablet-fr.webp';
+import imgConcepts04TabletFr  from '../assets/projects/sales-platform/concepts/slide-04-tablet-fr.webp';
+import imgConcepts05TabletFr  from '../assets/projects/sales-platform/concepts/slide-05-tablet-fr.webp';
+import imgConcepts01MobileFr  from '../assets/projects/sales-platform/concepts/slide-01-mobile-fr.webp';
+import imgConcepts02MobileFr  from '../assets/projects/sales-platform/concepts/slide-02-mobile-fr.webp';
+import imgConcepts03MobileFr  from '../assets/projects/sales-platform/concepts/slide-03-mobile-fr.webp';
+import imgConcepts04MobileFr  from '../assets/projects/sales-platform/concepts/slide-04-mobile-fr.webp';
+import imgConcepts05MobileFr  from '../assets/projects/sales-platform/concepts/slide-05-mobile-fr.webp';
+import imgWf01DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-01-desktop-en-light.webp';
+import imgWf02DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-02-desktop-en-light.webp';
+import imgWf03DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-03-desktop-en-light.webp';
+import imgWf04DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-04-desktop-en-light.webp';
+import imgWf05DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-05-desktop-en-light.webp';
+import imgWf06DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-06-desktop-en-light.webp';
+import imgWf07DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-07-desktop-en-light.webp';
+import imgWf08DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-08-desktop-en-light.webp';
+import imgWf09DesktopEnLight from '../assets/projects/sales-platform/wireframes/slide-09-desktop-en-light.webp';
+import imgWf01DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-01-desktop-en-dark.webp';
+import imgWf02DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-02-desktop-en-dark.webp';
+import imgWf03DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-03-desktop-en-dark.webp';
+import imgWf04DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-04-desktop-en-dark.webp';
+import imgWf05DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-05-desktop-en-dark.webp';
+import imgWf06DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-06-desktop-en-dark.webp';
+import imgWf07DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-07-desktop-en-dark.webp';
+import imgWf08DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-08-desktop-en-dark.webp';
+import imgWf09DesktopEnDark  from '../assets/projects/sales-platform/wireframes/slide-09-desktop-en-dark.webp';
+import imgWf01DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-01-desktop-fr-light.webp';
+import imgWf02DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-02-desktop-fr-light.webp';
+import imgWf03DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-03-desktop-fr-light.webp';
+import imgWf04DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-04-desktop-fr-light.webp';
+import imgWf05DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-05-desktop-fr-light.webp';
+import imgWf06DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-06-desktop-fr-light.webp';
+import imgWf07DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-07-desktop-fr-light.webp';
+import imgWf08DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-08-desktop-fr-light.webp';
+import imgWf09DesktopFrLight from '../assets/projects/sales-platform/wireframes/slide-09-desktop-fr-light.webp';
+import imgWf01DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-01-desktop-fr-dark.webp';
+import imgWf02DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-02-desktop-fr-dark.webp';
+import imgWf03DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-03-desktop-fr-dark.webp';
+import imgWf04DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-04-desktop-fr-dark.webp';
+import imgWf05DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-05-desktop-fr-dark.webp';
+import imgWf06DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-06-desktop-fr-dark.webp';
+import imgWf07DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-07-desktop-fr-dark.webp';
+import imgWf08DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-08-desktop-fr-dark.webp';
+import imgWf09DesktopFrDark  from '../assets/projects/sales-platform/wireframes/slide-09-desktop-fr-dark.webp';
+import imgWf01MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-01-mobile-en-light.webp';
+import imgWf02MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-02-mobile-en-light.webp';
+import imgWf03MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-03-mobile-en-light.webp';
+import imgWf04MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-04-mobile-en-light.webp';
+import imgWf05MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-05-mobile-en-light.webp';
+import imgWf06MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-06-mobile-en-light.webp';
+import imgWf07MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-07-mobile-en-light.webp';
+import imgWf08MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-08-mobile-en-light.webp';
+import imgWf09MobileEnLight  from '../assets/projects/sales-platform/wireframes/slide-09-mobile-en-light.webp';
+import imgWf01MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-01-mobile-en-dark.webp';
+import imgWf02MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-02-mobile-en-dark.webp';
+import imgWf03MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-03-mobile-en-dark.webp';
+import imgWf04MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-04-mobile-en-dark.webp';
+import imgWf05MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-05-mobile-en-dark.webp';
+import imgWf06MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-06-mobile-en-dark.webp';
+import imgWf07MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-07-mobile-en-dark.webp';
+import imgWf08MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-08-mobile-en-dark.webp';
+import imgWf09MobileEnDark   from '../assets/projects/sales-platform/wireframes/slide-09-mobile-en-dark.webp';
+import imgWf01MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-01-mobile-fr-light.webp';
+import imgWf02MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-02-mobile-fr-light.webp';
+import imgWf03MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-03-mobile-fr-light.webp';
+import imgWf04MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-04-mobile-fr-light.webp';
+import imgWf05MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-05-mobile-fr-light.webp';
+import imgWf06MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-06-mobile-fr-light.webp';
+import imgWf07MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-07-mobile-fr-light.webp';
+import imgWf08MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-08-mobile-fr-light.webp';
+import imgWf09MobileFrLight  from '../assets/projects/sales-platform/wireframes/slide-09-mobile-fr-light.webp';
+import imgWf01MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-01-mobile-fr-dark.webp';
+import imgWf02MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-02-mobile-fr-dark.webp';
+import imgWf03MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-03-mobile-fr-dark.webp';
+import imgWf04MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-04-mobile-fr-dark.webp';
+import imgWf05MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-05-mobile-fr-dark.webp';
+import imgWf06MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-06-mobile-fr-dark.webp';
+import imgWf07MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-07-mobile-fr-dark.webp';
+import imgWf08MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-08-mobile-fr-dark.webp';
+import imgWf09MobileFrDark   from '../assets/projects/sales-platform/wireframes/slide-09-mobile-fr-dark.webp';
+import imgHifi01DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide01-desktop-en-light.webp';
+import imgHifi02DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide02-desktop-en-light.webp';
+import imgHifi03DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide03-desktop-en-light.webp';
+import imgHifi04DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide04-desktop-en-light.webp';
+import imgHifi05DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide05-desktop-en-light.webp';
+import imgHifi06DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide06-desktop-en-light.webp';
+import imgHifi07DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide07-desktop-en-light.webp';
+import imgHifi08DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide08-desktop-en-light.webp';
+import imgHifi09DesktopEnLight from '../assets/projects/sales-platform/hifi/hifi-slide09-desktop-en-light.webp';
+import imgHifi01DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide01-desktop-en-dark.webp';
+import imgHifi02DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide02-desktop-en-dark.webp';
+import imgHifi03DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide03-desktop-en-dark.webp';
+import imgHifi04DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide04-desktop-en-dark.webp';
+import imgHifi05DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide05-desktop-en-dark.webp';
+import imgHifi06DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide06-desktop-en-dark.webp';
+import imgHifi07DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide07-desktop-en-dark.webp';
+import imgHifi08DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide08-desktop-en-dark.webp';
+import imgHifi09DesktopEnDark  from '../assets/projects/sales-platform/hifi/hifi-slide09-desktop-en-dark.webp';
+import imgHifi01DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide01-desktop-fr-light.webp';
+import imgHifi02DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide02-desktop-fr-light.webp';
+import imgHifi03DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide03-desktop-fr-light.webp';
+import imgHifi04DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide04-desktop-fr-light.webp';
+import imgHifi05DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide05-desktop-fr-light.webp';
+import imgHifi06DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide06-desktop-fr-light.webp';
+import imgHifi07DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide07-desktop-fr-light.webp';
+import imgHifi08DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide08-desktop-fr-light.webp';
+import imgHifi09DesktopFrLight from '../assets/projects/sales-platform/hifi/hifi-slide09-desktop-fr-light.webp';
+import imgHifi01DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide01-desktop-fr-dark.webp';
+import imgHifi02DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide02-desktop-fr-dark.webp';
+import imgHifi03DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide03-desktop-fr-dark.webp';
+import imgHifi04DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide04-desktop-fr-dark.webp';
+import imgHifi05DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide05-desktop-fr-dark.webp';
+import imgHifi06DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide06-desktop-fr-dark.webp';
+import imgHifi07DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide07-desktop-fr-dark.webp';
+import imgHifi08DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide08-desktop-fr-dark.webp';
+import imgHifi09DesktopFrDark  from '../assets/projects/sales-platform/hifi/hifi-slide09-desktop-fr-dark.webp';
+import imgHifi01TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide01-tablet-en-light.webp';
+import imgHifi02TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide02-tablet-en-light.webp';
+import imgHifi03TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide03-tablet-en-light.webp';
+import imgHifi04TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide04-tablet-en-light.webp';
+import imgHifi05TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide05-tablet-en-light.webp';
+import imgHifi06TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide06-tablet-en-light.webp';
+import imgHifi07TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide07-tablet-en-light.webp';
+import imgHifi08TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide08-tablet-en-light.webp';
+import imgHifi09TabletEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide09-tablet-en-light.webp';
+import imgHifi01TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide01-tablet-en-dark.webp';
+import imgHifi02TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide02-tablet-en-dark.webp';
+import imgHifi03TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide03-tablet-en-dark.webp';
+import imgHifi04TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide04-tablet-en-dark.webp';
+import imgHifi05TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide05-tablet-en-dark.webp';
+import imgHifi06TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide06-tablet-en-dark.webp';
+import imgHifi07TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide07-tablet-en-dark.webp';
+import imgHifi08TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide08-tablet-en-dark.webp';
+import imgHifi09TabletEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide09-tablet-en-dark.webp';
+import imgHifi01TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide01-tablet-fr-light.webp';
+import imgHifi02TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide02-tablet-fr-light.webp';
+import imgHifi03TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide03-tablet-fr-light.webp';
+import imgHifi04TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide04-tablet-fr-light.webp';
+import imgHifi05TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide05-tablet-fr-light.webp';
+import imgHifi06TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide06-tablet-fr-light.webp';
+import imgHifi07TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide07-tablet-fr-light.webp';
+import imgHifi08TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide08-tablet-fr-light.webp';
+import imgHifi09TabletFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide09-tablet-fr-light.webp';
+import imgHifi01TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide01-tablet-fr-dark.webp';
+import imgHifi02TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide02-tablet-fr-dark.webp';
+import imgHifi03TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide03-tablet-fr-dark.webp';
+import imgHifi04TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide04-tablet-fr-dark.webp';
+import imgHifi05TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide05-tablet-fr-dark.webp';
+import imgHifi06TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide06-tablet-fr-dark.webp';
+import imgHifi07TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide07-tablet-fr-dark.webp';
+import imgHifi08TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide08-tablet-fr-dark.webp';
+import imgHifi09TabletFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide09-tablet-fr-dark.webp';
+import imgHifi01MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide01-mobile-en-light.webp';
+import imgHifi02MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide02-mobile-en-light.webp';
+import imgHifi03MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide03-mobile-en-light.webp';
+import imgHifi04MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide04-mobile-en-light.webp';
+import imgHifi05MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide05-mobile-en-light.webp';
+import imgHifi06MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide06-mobile-en-light.webp';
+import imgHifi07MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide07-mobile-en-light.webp';
+import imgHifi08MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide08-mobile-en-light.webp';
+import imgHifi09MobileEnLight  from '../assets/projects/sales-platform/hifi/hifi-slide09-mobile-en-light.webp';
+import imgHifi01MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide01-mobile-en-dark.webp';
+import imgHifi02MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide02-mobile-en-dark.webp';
+import imgHifi03MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide03-mobile-en-dark.webp';
+import imgHifi04MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide04-mobile-en-dark.webp';
+import imgHifi05MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide05-mobile-en-dark.webp';
+import imgHifi06MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide06-mobile-en-dark.webp';
+import imgHifi07MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide07-mobile-en-dark.webp';
+import imgHifi08MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide08-mobile-en-dark.webp';
+import imgHifi09MobileEnDark   from '../assets/projects/sales-platform/hifi/hifi-slide09-mobile-en-dark.webp';
+import imgHifi01MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide01-mobile-fr-light.webp';
+import imgHifi02MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide02-mobile-fr-light.webp';
+import imgHifi03MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide03-mobile-fr-light.webp';
+import imgHifi04MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide04-mobile-fr-light.webp';
+import imgHifi05MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide05-mobile-fr-light.webp';
+import imgHifi06MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide06-mobile-fr-light.webp';
+import imgHifi07MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide07-mobile-fr-light.webp';
+import imgHifi08MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide08-mobile-fr-light.webp';
+import imgHifi09MobileFrLight  from '../assets/projects/sales-platform/hifi/hifi-slide09-mobile-fr-light.webp';
+import imgHifi01MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide01-mobile-fr-dark.webp';
+import imgHifi02MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide02-mobile-fr-dark.webp';
+import imgHifi03MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide03-mobile-fr-dark.webp';
+import imgHifi04MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide04-mobile-fr-dark.webp';
+import imgHifi05MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide05-mobile-fr-dark.webp';
+import imgHifi06MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide06-mobile-fr-dark.webp';
+import imgHifi07MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide07-mobile-fr-dark.webp';
+import imgHifi08MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide08-mobile-fr-dark.webp';
+import imgHifi09MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi-slide09-mobile-fr-dark.webp';
 
 // ── Hero ──────────────────────────────────────────────────────────────────────
 const HERO = {
@@ -418,7 +418,7 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false }) {
       >
         {icon
           ? <img src={icon} alt="" className={`w-full h-full object-cover${darkInvert ? ' dark:invert' : ''}`} />
-          : <span className="text-[7px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-tight px-[2px]" aria-hidden="true">{name}</span>
+          : <span className="text-[7px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-tight px-[2px]">{name}</span>
         }
       </button>
     </div>
@@ -631,7 +631,7 @@ const DEFINE = {
       subsections: [
         {
           h4: "Integrating 3D without compromising performance",
-          body: <><p>Unreal Engine's <strong>real-time rendering</strong> offered impressive lighting quality improvements, approaching that of traditionally rendered CG images (e.g. 3dsMax + VRay).</p><p>We imported city-scale 3D datasets into Unreal and tested <strong>Pixel-streaming</strong> for real-time web playback.</p><p><span aria-hidden="true">🛑</span> Two major challenges emerged:</p><ul className="list-disc list-inside space-y-1"><li>Long <strong>loading times</strong> for large 3D datasets (several minutes).</li><li>High streaming <strong>costs per user</strong>, making it unfeasible at scale.</li></ul><p><span aria-hidden="true">✅</span> To provide browser-based access to large 3D scenes, <strong>pre-rendering images</strong> from Unreal would be a better <strong>short-term solution</strong>, while <strong>Pixel-streaming</strong> could be reserved for <strong>exclusive audiences</strong>.</p></>,
+          body: <><p>Unreal Engine's <strong>real-time rendering</strong> offered impressive lighting quality improvements, approaching that of traditionally rendered CG images (e.g. 3dsMax + VRay).</p><p>We imported city-scale 3D datasets into Unreal and tested <strong>Pixel-streaming</strong> for real-time web playback.</p><p><span role="img" aria-label="Stop">🛑</span> Two major challenges emerged:</p><ul className="list-disc list-inside space-y-1"><li>Long <strong>loading times</strong> for large 3D datasets (several minutes).</li><li>High streaming <strong>costs per user</strong>, making it unfeasible at scale.</li></ul><p><span role="img" aria-label="Solution">✅</span> To provide browser-based access to large 3D scenes, <strong>pre-rendering images</strong> from Unreal would be a better <strong>short-term solution</strong>, while <strong>Pixel-streaming</strong> could be reserved for <strong>exclusive audiences</strong>.</p></>,
         },
       ],
     },
@@ -664,7 +664,7 @@ const DEFINE = {
       subsections: [
         {
           h4: "Intégration 3D sans compromettre les perfs",
-          body: <><p>Le rendu en <strong>temps réel</strong> d'Unreal Engine offrait une qualité d'éclairage se rapprochant des images de synthèse traditionnelles (3dsMax + VRay par exemple).</p><p>Nous avons importé les données 3D d'une ville dans Unreal et testé le <strong>Pixel-streaming</strong> pour une lecture en temps réel dans le navigateur.</p><p><span aria-hidden="true">🛑</span> Deux défis majeurs sont apparus :</p><ul className="list-disc list-inside space-y-1"><li>Les temps de <strong>chargement</strong> trop longs pour de larges projets 3D (plusieurs minutes).</li><li>Les <strong>coûts de streaming élevés par utilisateur</strong>, rendant cela non viable à grande échelle.</li></ul><p><span aria-hidden="true">✅</span> Pour offrir un accès à de grandes scènes 3D dans le navigateur, le <strong>pré-rendu d'images</strong> depuis Unreal serait une meilleure <strong>solution à court terme</strong>, tandis que le <strong>Pixel-streaming</strong> pourrait être réservé à un <strong>public exclusif</strong>.</p></>,
+          body: <><p>Le rendu en <strong>temps réel</strong> d'Unreal Engine offrait une qualité d'éclairage se rapprochant des images de synthèse traditionnelles (3dsMax + VRay par exemple).</p><p>Nous avons importé les données 3D d'une ville dans Unreal et testé le <strong>Pixel-streaming</strong> pour une lecture en temps réel dans le navigateur.</p><p><span role="img" aria-label="Stop">🛑</span> Deux défis majeurs sont apparus :</p><ul className="list-disc list-inside space-y-1"><li>Les temps de <strong>chargement</strong> trop longs pour de larges projets 3D (plusieurs minutes).</li><li>Les <strong>coûts de streaming élevés par utilisateur</strong>, rendant cela non viable à grande échelle.</li></ul><p><span role="img" aria-label="Solution">✅</span> Pour offrir un accès à de grandes scènes 3D dans le navigateur, le <strong>pré-rendu d'images</strong> depuis Unreal serait une meilleure <strong>solution à court terme</strong>, tandis que le <strong>Pixel-streaming</strong> pourrait être réservé à un <strong>public exclusif</strong>.</p></>,
         },
       ],
     },
@@ -755,6 +755,12 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
   const touchStartX = useRef(null);
 
   useEffect(() => {
+    const appShell = document.getElementById('app-shell');
+    if (appShell) appShell.inert = true;
+    return () => { if (appShell) appShell.inert = false; };
+  }, []);
+
+  useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowLeft')  setIndex(i => Math.max(0, i - 1));
@@ -795,7 +801,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
       {/* Image */}
       <img
         src={slide.desktop ?? slide.mobile}
-        alt={lang === 'fr' ? `Image ${index + 1} sur ${slides.length}` : `Image ${index + 1} of ${slides.length}`}
+        alt={lang === 'fr' ? `Diapositive ${index + 1} sur ${slides.length}` : `Slide ${index + 1} of ${slides.length}`}
         draggable="false"
         className="relative z-10 max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl"
       />
@@ -1410,7 +1416,7 @@ const EMPHASISE = {
       title:   'Who is the platform for?',
       body: <>
         <p>The user base was identified through client alignment sessions.</p>
-        <p><span aria-hidden="true">💡</span>Findings: <strong>internal stakeholders</strong> (sales agents) and <strong>external users</strong> (homeowners, investors).</p>
+        <p><span role="img" aria-label="Insight">💡</span>Findings: <strong>internal stakeholders</strong> (sales agents) and <strong>external users</strong> (homeowners, investors).</p>
       </>,
     },
     goal: {
@@ -1420,14 +1426,14 @@ const EMPHASISE = {
     },
     market: {
       eyebrow: 'The market',
-      body:    <><p>We conducted a <strong>competitors analysis</strong> to gain a better understanding of the sector’s landscape, industry standards, and opportunities to surpass both client and user expectations.</p><p>The real-estate market would benefit a more engaging way to present and sell properties. Our vision was to create a <strong>user-centric</strong>, <strong>3D-first</strong> experience that allows users to explore unbuilt spaces interactively, transitioning seamlessly from a global view to interior views.</p><p><span aria-hidden="true">📋</span>Prerequisites:</p><ul className="list-disc list-inside space-y-1"><li>Scalability <strong>from a macro</strong>, globe view, <strong>to micro</strong> interior views.</li><li><strong>3D computer-generated</strong> imagery to enhance immersion, navigation and UX clarity.</li></ul></>,
+      body:    <><p>We conducted a <strong>competitors analysis</strong> to gain a better understanding of the sector’s landscape, industry standards, and opportunities to surpass both client and user expectations.</p><p>The real-estate market would benefit a more engaging way to present and sell properties. Our vision was to create a <strong>user-centric</strong>, <strong>3D-first</strong> experience that allows users to explore unbuilt spaces interactively, transitioning seamlessly from a global view to interior views.</p><p><span role="img" aria-label="Prerequisites">📋</span>Prerequisites:</p><ul className="list-disc list-inside space-y-1"><li>Scalability <strong>from a macro</strong>, globe view, <strong>to micro</strong> interior views.</li><li><strong>3D computer-generated</strong> imagery to enhance immersion, navigation and UX clarity.</li></ul></>,
     },
   },
   fr: {
     audience: {
       eyebrow: "L'audience",
       title:   'À qui s’adresse la plateforme ?',
-      body:    <><p>La base d’utilisateurs de la plateforme a été définie lors de sessions d'alignement avec le client.</p> <p><span aria-hidden="true">💡</span>Ce qu’on a appris : </p> <p> Deux groupes, les <strong>parties prenantes internes</strong> (agents commerciaux) et les <strong>utilisateurs externes</strong> (propriétaires, investisseurs).</p></>,
+      body:    <><p>La base d’utilisateurs de la plateforme a été définie lors de sessions d'alignement avec le client.</p> <p><span role="img" aria-label="Insight">💡</span>Ce qu’on a appris : </p> <p> Deux groupes, les <strong>parties prenantes internes</strong> (agents commerciaux) et les <strong>utilisateurs externes</strong> (propriétaires, investisseurs).</p></>,
     },
     goal: {
       eyebrow: "L'objectif",
@@ -1436,7 +1442,7 @@ const EMPHASISE = {
     },
     market: {
       eyebrow: 'Le marché',
-      body:    <><p>Nous avons mené une <strong>analyse concurentielle</strong> afin de mieux comprendre le secteur, les normes, et les opportunités pour dépasser les attentes du client et des utilisateurs.</p><p>Le marché bénéficierait d’une maniére plus engageante de présenter et vendre des biens. Notre vision était de créer une <strong>expérience 3D centrée sur l’utilisateur</strong>, permettant d’explorer des bien non-construits, en passant de manière fluide d’une vue globale à des vues intérieures.</p><p><span aria-hidden="true">📋</span> Prérequis :</p><ul className="list-disc list-inside space-y-1"><li>Passer d’une échelle <strong>macro</strong> (vue globale) <strong>à micro</strong> (vues intérieures).</li><li>Une <strong>imagerie 3D</strong> pour améliorer l’immersion, la clarté de l’expérience utilisateur.</li></ul></>,
+      body:    <><p>Nous avons mené une <strong>analyse concurentielle</strong> afin de mieux comprendre le secteur, les normes, et les opportunités pour dépasser les attentes du client et des utilisateurs.</p><p>Le marché bénéficierait d’une maniére plus engageante de présenter et vendre des biens. Notre vision était de créer une <strong>expérience 3D centrée sur l’utilisateur</strong>, permettant d’explorer des bien non-construits, en passant de manière fluide d’une vue globale à des vues intérieures.</p><p><span role="img" aria-label="Prerequisites">📋</span> Prérequis :</p><ul className="list-disc list-inside space-y-1"><li>Passer d’une échelle <strong>macro</strong> (vue globale) <strong>à micro</strong> (vues intérieures).</li><li>Une <strong>imagerie 3D</strong> pour améliorer l’immersion, la clarté de l’expérience utilisateur.</li></ul></>,
     },
   },
 };

@@ -1,25 +1,25 @@
 import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import imgPortrait     from '../assets/photos/portrait.png';
+import imgPortrait     from '../assets/photos/portrait.webp';
 import imgSend         from '../assets/icons/icon-send.svg';
 import imgLinkedIn     from '../assets/icons/icon-linkedin.svg';
 import imgChevronDown       from '../assets/icons/icon-chevron-down.svg';
 import imgChevronLeft       from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight      from '../assets/icons/icon-chevron-right.svg';
-import imgLogoSoluisLight   from '../assets/logos/employers/logo-soluis-light.png';
-import imgLogoSoluisDark    from '../assets/logos/employers/logo-soluis-dark.png';
-import imgLogoHoloxica      from '../assets/logos/employers/logo-holoxica-light.png';
-import imgLogoHoloxicaDark  from '../assets/logos/employers/logo-holoxica-dark.png';
-import imgLogoShootPost     from '../assets/logos/employers/logo-shoot-and-post.png';
-import imgLogoCreativeMode  from '../assets/logos/employers/logo-creative-mode.png';
-import imgLogoEdinburghNapierLight from '../assets/logos/education/logo-edinburgh-napier-light.png';
-import imgLogoEdinburghNapierDark  from '../assets/logos/education/logo-edinburgh-napier-dark.png';
-import imgLogoUnivTours            from '../assets/logos/education/logo-universite-de-tours.png';
-import imgLogoIutDeBlois           from '../assets/logos/education/logo-iut-de-blois.png';
-import imgLogoBenjaminFranklinLight from '../assets/logos/education/logo-lycee-benjamin-franklin-light.png';
-import imgLogoBenjaminFranklinDark  from '../assets/logos/education/logo-lycee-benjamin-franklin-dark.png';
-import imgLogoGlasgow              from '../assets/logos/education/logo-glasgow-university.png';
-import imgLogoGoogle               from '../assets/logos/education/logo-google.png';
+import imgLogoSoluisLight   from '../assets/logos/employers/logo-soluis-light.webp';
+import imgLogoSoluisDark    from '../assets/logos/employers/logo-soluis-dark.webp';
+import imgLogoHoloxica      from '../assets/logos/employers/logo-holoxica-light.webp';
+import imgLogoHoloxicaDark  from '../assets/logos/employers/logo-holoxica-dark.webp';
+import imgLogoShootPost     from '../assets/logos/employers/logo-shoot-and-post.webp';
+import imgLogoCreativeMode  from '../assets/logos/employers/logo-creative-mode.webp';
+import imgLogoEdinburghNapierLight from '../assets/logos/education/logo-edinburgh-napier-light.webp';
+import imgLogoEdinburghNapierDark  from '../assets/logos/education/logo-edinburgh-napier-dark.webp';
+import imgLogoUnivTours            from '../assets/logos/education/logo-universite-de-tours.webp';
+import imgLogoIutDeBlois           from '../assets/logos/education/logo-iut-de-blois.webp';
+import imgLogoBenjaminFranklinLight from '../assets/logos/education/logo-lycee-benjamin-franklin-light.webp';
+import imgLogoBenjaminFranklinDark  from '../assets/logos/education/logo-lycee-benjamin-franklin-dark.webp';
+import imgLogoGlasgow              from '../assets/logos/education/logo-glasgow-university.webp';
+import imgLogoGoogle               from '../assets/logos/education/logo-google.webp';
 import imgIconAward                from '../assets/icons/icon-award.svg';
 import imgIconTouch      from '../assets/icons/expertise-touch.svg';
 import imgIconVector     from '../assets/icons/expertise-vector.svg';
@@ -27,19 +27,19 @@ import imgIcon3D         from '../assets/icons/expertise-3d.svg';
 import imgIconMedia      from '../assets/icons/expertise-media.svg';
 import imgIconManagement from '../assets/icons/expertise-management.svg';
 import imgIconData       from '../assets/icons/expertise-data.svg';
-import imgToolFigma        from '../assets/logos/tools/logo-figma.png';
-import imgToolXD           from '../assets/logos/tools/logo-adobe-xd.png';
-import imgToolBezi         from '../assets/logos/tools/logo-bezi.png';
-import imgToolIllustrator  from '../assets/logos/tools/logo-adobe-illustrator.png';
-import imgToolPhotoshop    from '../assets/logos/tools/logo-adobe-photoshop.png';
-import imgTool3dsMax       from '../assets/logos/tools/logo-autodesk-3dsmax.png';
-import imgToolDaVinci      from '../assets/logos/tools/logo-davinci-resolve.png';
-import imgToolAfterEffects from '../assets/logos/tools/logo-adobe-after-effects.png';
-import imgToolConfluence   from '../assets/logos/tools/logo-atlassian-confluence.png';
-import imgToolJira         from '../assets/logos/tools/logo-atlassian-jira.png';
-import imgToolMiro         from '../assets/logos/tools/logo-miro.png';
+import imgToolFigma        from '../assets/logos/tools/logo-figma.webp';
+import imgToolXD           from '../assets/logos/tools/logo-adobe-xd.webp';
+import imgToolBezi         from '../assets/logos/tools/logo-bezi.webp';
+import imgToolIllustrator  from '../assets/logos/tools/logo-adobe-illustrator.webp';
+import imgToolPhotoshop    from '../assets/logos/tools/logo-adobe-photoshop.webp';
+import imgTool3dsMax       from '../assets/logos/tools/logo-autodesk-3dsmax.webp';
+import imgToolDaVinci      from '../assets/logos/tools/logo-davinci-resolve.webp';
+import imgToolAfterEffects from '../assets/logos/tools/logo-adobe-after-effects.webp';
+import imgToolConfluence   from '../assets/logos/tools/logo-atlassian-confluence.webp';
+import imgToolJira         from '../assets/logos/tools/logo-atlassian-jira.webp';
+import imgToolMiro         from '../assets/logos/tools/logo-miro.webp';
 import imgToolNotion       from '../assets/logos/tools/logo-notion.svg';
-import imgToolGAnalytics   from '../assets/logos/tools/logo-google-analytics.png';
+import imgToolGAnalytics   from '../assets/logos/tools/logo-google-analytics.webp';
 import imgToolClaude       from '../assets/logos/tools/logo-claude.svg';
 import Collaborations from '../components/Collaborations';
 import Contact from '../components/Contact';
@@ -501,7 +501,7 @@ function SummarySection({ t }) {
   const btnLabel = 'font-medium text-[18px] sm:text-[20px] text-[#1f1f1f] dark:text-[#f6f6f6] whitespace-nowrap';
 
   return (
-    <section id="summary" className={`${divider} scroll-mt-24 py-16`}>
+    <section id="summary" className={`${divider} scroll-mt-24 pt-8 pb-16 sm:py-16`}>
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
 
         {/* ── Left column: photo + buttons ───────────────────────────── */}
@@ -547,7 +547,7 @@ function SummarySection({ t }) {
             David V.
           </p>
 
-          <div className={`flex flex-col gap-6 ${bodyMuted}`}>
+          <div id="summary-bio" className={`flex flex-col gap-6 ${bodyMuted}`}>
             {t.bio.map((para, i) => para && <p key={i}>{para}</p>)}
           </div>
         </div>

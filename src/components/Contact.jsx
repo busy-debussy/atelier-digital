@@ -2,13 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import imgChevronLeft  from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight from '../assets/icons/icon-chevron-right.svg';
-import imgSendLight     from '../assets/contact/action-send-email-light.png';
-import imgSendDark      from '../assets/contact/action-send-email-dark.png';
-import imgDocLight      from '../assets/contact/action-view-document-light.png';
-import imgDocDark       from '../assets/contact/action-view-document-dark.png';
-import imgLinkedInLight from '../assets/contact/qr-linkedin-light.png';
-import imgLinkedInDark  from '../assets/contact/qr-linkedin-dark.png';
-import imgPortrait      from '../assets/photos/portrait.png';
+import imgSendLight     from '../assets/contact/action-send-email-light.webp';
+import imgSendDark      from '../assets/contact/action-send-email-dark.webp';
+import imgDocLight      from '../assets/contact/action-view-document-light.webp';
+import imgDocDark       from '../assets/contact/action-view-document-dark.webp';
+import imgLinkedInLight from '../assets/contact/qr-linkedin-light.webp';
+import imgLinkedInDark  from '../assets/contact/qr-linkedin-dark.webp';
+import imgPortrait      from '../assets/photos/portrait.webp';
 
 // ── Styles ────────────────────────────────────────────────────────────────────
 const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70';

@@ -60,10 +60,9 @@ function CookieBanner({ lang }) {
         {t.message}{' '}
         <Link
           to="/cookies"
-          aria-label={t.learnMore}
           className="underline hover:opacity-60 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7aabff] dark:focus-visible:ring-[#0152EC] rounded-sm text-[#f6f6f6] dark:text-[#1f1f1f]"
         >
-          {t.learnMoreShort}
+          {t.learnMore}
         </Link>
       </p>
       <div className="flex items-center gap-2">

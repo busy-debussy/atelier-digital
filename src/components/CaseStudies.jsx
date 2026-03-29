@@ -8,9 +8,9 @@ import imgLockLg       from '../assets/icons/icon-lock-lg.svg';
 import imgIconAR       from '../assets/icons/icon-ar.svg';
 import imgIconWeb      from '../assets/icons/icon-responsive.svg';
 import imgIconTwin     from '../assets/icons/icon-inputs.svg';
-import imgBgSales      from '../assets/photos/photo-cgi-interactive-platform.png';
-import imgBgXR         from '../assets/photos/photo-xr-experiences.png';
-import imgBgTwin       from '../assets/photos/photo-digital-twins.png';
+import imgBgSales      from '../assets/photos/photo-cgi-interactive-platform.webp';
+import imgBgXR         from '../assets/photos/photo-xr-experiences.webp';
+import imgBgTwin       from '../assets/photos/photo-digital-twins.webp';
 
 // Nav button styles (mirrors other carousels)
 const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70';
@@ -178,7 +178,7 @@ function CsCard({ card, t }) {
     </>
   );
 
-  const liClass = 'relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] rounded-[28px] sm:rounded-[32px] overflow-hidden group snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer';
+  const liClass = 'relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] rounded-[28px] sm:rounded-[32px] overflow-hidden group snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer bg-[#111]';
 
   if (card.cta === 'go') {
     return (

@@ -6,7 +6,7 @@ const T = {
   fr: 'Défiler pour voir plus',
 };
 
-export default function ScrollForMore({ lang }) {
+export default function ScrollForMore({ lang, scrollTarget }) {
   const [visible, setVisible]       = useState(true);
   const [tipVisible, setTipVisible] = useState(false);
   const timerRef                    = useRef(null);
@@ -39,7 +39,15 @@ export default function ScrollForMore({ lang }) {
       </div>
 
       <button
-        onClick={() => window.scrollBy({ top: window.innerHeight * 0.9, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}
+        onClick={() => {
+          const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const mobile = window.matchMedia('(max-width: 639px)').matches;
+          if (scrollTarget && mobile) {
+            document.getElementById(scrollTarget)?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'center' });
+          } else {
+            window.scrollBy({ top: window.innerHeight * 0.9, behavior: reduced ? 'instant' : 'smooth' });
+          }
+        }}
         aria-label={label}
         className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-colors motion-safe:animate-bounce cursor-pointer"
       >

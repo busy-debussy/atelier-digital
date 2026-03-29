@@ -168,6 +168,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
 
   useEffect(() => {
     if (!showSubtitle) return;
+    if (skipAnim) return;
     let w = 0;
     const iv = setInterval(() => {
       w++;
@@ -180,6 +181,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
   // After subtitle done: mount H3+pills container → stagger pills → buttons
   useEffect(() => {
     if (visibleWords < words.length) return;
+    if (skipAnim) return;
     t(() => {
       setShowH3(true); // mounts H3 + pills container (pills all opacity-0)
       t(() => {
@@ -208,7 +210,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
         <div>
           <h1
             aria-label={heading}
-            className="text-5xl md:text-7xl font-bold tracking-tight text-[#1f1f1f] dark:text-[#f6f6f6]"
+            className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.15] md:leading-none text-[#1f1f1f] dark:text-[#f6f6f6]"
           >
             <span>
               {displayed}
@@ -245,7 +247,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
 
         {/* H3 + Pills + Buttons, all mounted together so space is reserved upfront */}
         {showH3 && (
-          <div className="mt-16 sm:mt-20 flex flex-col items-center gap-5 sm:gap-6">
+          <div className="mt-10 sm:mt-20 flex flex-col items-center gap-5 sm:gap-6">
             <FadeIn instant={skipAnim}>
               <div className="border border-black/[0.08] dark:border-white/[0.08] rounded-3xl px-6 py-5 flex flex-col items-center gap-4 max-w-lg">
                 <h3 className="text-[14px] sm:text-[15px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad]">
@@ -295,7 +297,9 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                 href="#case-studies"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('case-studies')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+                  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                  const mobile = window.matchMedia('(max-width: 639px)').matches;
+                  document.getElementById('case-studies')?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: mobile ? 'center' : 'start' });
                 }}
                 className="px-6 py-3 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] active:opacity-80 text-[#0152EC] dark:text-[#7aabff] font-medium text-[15px] sm:text-[16px] rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
               >
