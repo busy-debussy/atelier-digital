@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const T = {
@@ -19,6 +20,9 @@ const T = {
 
 export default function NotFound({ lang }) {
   const t = T[lang] ?? T.en;
+  useEffect(() => {
+    document.title = lang === 'fr' ? 'Page introuvable • Atelier Digital' : 'Page not found • Atelier Digital';
+  }, [lang]);
 
   return (
     <main
