@@ -30,7 +30,7 @@ function AnimatedRoutes({ children }) {
 function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
   const { pathname } = useLocation();
   return (
-    <div className="min-h-screen bg-white dark:bg-[#141414] text-gray-900 dark:text-white">
+    <div id="app-shell" className="min-h-screen bg-white dark:bg-[#141414] text-gray-900 dark:text-white">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-[#1f1f1f] focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">
         {lang === 'fr' ? 'Aller au contenu principal' : 'Skip to main content'}
       </a>
