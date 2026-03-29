@@ -113,7 +113,7 @@ const scrollToSection = (id) => {
 
 function SecondaryNav({ sections, activeId }) {
   return (
-    <nav aria-label="Page sections" className="hidden md:block sticky top-16 self-start w-44 shrink-0 pt-28">
+    <nav aria-label="Page sections" className="hidden md:block sticky top-16 self-start z-10 w-44 shrink-0 pt-28">
       <ol className="space-y-2">
         {sections.map((s) => {
           const isActive = activeId === s.id;

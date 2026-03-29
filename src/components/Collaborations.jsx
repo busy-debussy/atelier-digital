@@ -64,17 +64,17 @@ const T = {
     navPrev:  'View previous collaborator',
     navNext:  'View next collaborator',
     collaborators: [
-      { name: 'Government of the United Kingdom',              description: 'We contributed to improve simulated environments by automating the creation of <b>human digital twins</b>.' },
-      { name: 'Looking Glass Factory',                         description: 'We delivered <b>real-time</b> solutions in terrain mapping, and <b>medical imaging</> via a suite of enterprise apps running on 3D light-field displays.' },
-      { name: 'Defence Science and Technology Laboratory',     description: 'A holographic <b>telexistence system</b> enabling <b>remote operations</b> in hazardous environments.' },
-      { name: 'Jaguar Land Rover',                             description: 'We partnered with Jaguar Land Rover to bring holographic innovations that <b>enhance car safety</b>.' },
-      { name: 'Nokia',                                         description: 'A 5G-powered real-time <b>3D telepresence</b> system, featuring 3D capture and light-field displays for lifelike human connections.' },
-      { name: 'Public Investment Funds',                       description: 'We engaged investors by revealing a mega construction project through <b>immersive</b> AR and VR experiences. (Magic Leap 2, Meta Quest Pro)' },
-      { name: 'Etisalat',                                      description: 'A <b>3D telemedicine</b> platform showcasing <b>healthcare innovations</b> to 100,000+ attendees.' },
-      { name: 'European Organization for Nuclear Research',    description: 'We celebrated the Higgs Boson discovery by recreating the collision event in a <b>digital hologram</b>.' },
-      { name: 'The University of Edinburgh',                   description: 'Together with an anatomy professor, we created a <b>life-size hologram</b> to support the teaching of the <b>human body</b>.' },
-      { name: 'IBM',                                           description: 'We aimed to reshape the future of digital interactions, by teaming up with IBM, to build an <b>AI-powered</b> 3D Avatar.' },
-      { name: 'University Hospital Hamburg',                   description: 'We supported surgical training with a leading academic hospital by designing a series of 3D <b>eye surgery animations</b>.' },
+      { name: 'Government of the United Kingdom',              description: 'We contributed to improve simulated environments by automating the creation of <strong>human digital twins</strong>.' },
+      { name: 'Looking Glass Factory',                         description: 'We delivered <strong>real-time</strong> solutions in terrain mapping, and <strong>medical imaging</strong> via a suite of enterprise apps running on 3D light-field displays.' },
+      { name: 'Defence Science and Technology Laboratory',     description: 'A holographic <strong>telexistence system</strong> enabling <strong>remote operations</strong> in hazardous environments.' },
+      { name: 'Jaguar Land Rover',                             description: 'We partnered with Jaguar Land Rover to bring holographic innovations that <strong>enhance car safety</strong>.' },
+      { name: 'Nokia',                                         description: 'A 5G-powered real-time <strong>3D telepresence</strong> system, featuring 3D capture and light-field displays for lifelike human connections.' },
+      { name: 'Public Investment Funds',                       description: 'We engaged investors by revealing a mega construction project through <strong>immersive</strong> AR and VR experiences. (Magic Leap 2, Meta Quest Pro)' },
+      { name: 'Etisalat',                                      description: 'A <strong>3D telemedicine</strong> platform showcasing <strong>healthcare innovations</strong> to 100,000+ attendees.' },
+      { name: 'European Organization for Nuclear Research',    description: 'We celebrated the Higgs Boson discovery by recreating the collision event in a <strong>digital hologram</strong>.' },
+      { name: 'The University of Edinburgh',                   description: 'Together with an anatomy professor, we created a <strong>life-size hologram</strong> to support the teaching of the <strong>human body</strong>.' },
+      { name: 'IBM',                                           description: 'We aimed to reshape the future of digital interactions, by teaming up with IBM, to build an <strong>AI-powered</strong> 3D Avatar.' },
+      { name: 'University Hospital Hamburg',                   description: 'We supported surgical training with a leading academic hospital by designing a series of 3D <strong>eye surgery animations</strong>.' },
     ],
   },
   fr: {
@@ -83,26 +83,26 @@ const T = {
     navPrev:  'Voir le collaborateur précédent',
     navNext:  'Voir le collaborateur suivant',
     collaborators: [
-      { name: 'Gouvernement du Royaume-Uni',                        description: 'Nous avons contribué à améliorer des environnements simulés en automatisant la création de <b>jumeaux numériques humains</b>.' },
-      { name: 'Looking Glass Factory',                              description: 'Une suite d’applis pro pour écrans 3D, offrant des <b>solutions en temps réel</b> pour la cartographie et l’imagerie médicale.' },
-      { name: 'Laboratoire de science et technologie de défense',   description: 'Un système de <b>télé-existence holographique</b> pour des <b>opérations à distance</b> dans des environnements dangereux.' },
-      { name: 'Jaguar Land Rover',                                  description: 'En collaboration avec Jaguar Land Rover, nous avons développé des innovations pour <b>renforcer la sécurité des véhicules</b>. ' },
-      { name: 'Nokia',                                              description: 'Un <b>système de télé-présence</b> 3D en temps réel, propulsé par la 5G, avec capture 3D et écrans volumétriques pour rapprocher les gens.' },
-      { name: "Fonds public d'investissement",                      description: 'Nous avons présenté un méga-projet à des investisseurs via des expériences 3D en <b>réalité augmentée</b> (Magic Leap 2) et en <b>réalité virtuelle</b>.' },
-      { name: 'Etisalat',                                           description: 'Une <b>plateforme de télé-médecine</b> 3D présentant des <b>innovations de santé</b> lors d’un événement rassemblant plus de 100k participants.' },
-      { name: "Organisation européenne pour la recherche nucléaire", description: 'Nous avons rendu hommage à la découverte du boson de Higgs en recréant l’événement de collision dans un <b>hologramme</b>.' },
-      { name: "Université d'Édimbourg",                             description: 'Avec un professeur d’anatomie, nous avons créé un <b>hologramme grandeur nature</b> pour aider l’enseignement du <b>corps humain</b>.' },
-      { name: 'IBM',                                                description: 'Nous avons tenté d’améliorer le futur des intéractions, avec IBM, en créant un avatar 3D <b>propulsé par l’IA</b>.' },
-      { name: "Centre hospitalier universitaire de Hambourg",       description: 'Nous avons soutenu la formation chirurgicale, avec un hôpital universitaire, en concevant une série d’animations 3D de <b>chirurgies oculaires</b>.' },
+      { name: 'Gouvernement du Royaume-Uni',                        description: 'Nous avons contribué à améliorer des environnements simulés en automatisant la création de <strong>jumeaux numériques humains</strong>.' },
+      { name: 'Looking Glass Factory',                              description: 'Une suite d’applis pro pour écrans 3D, offrant des <strong>solutions en temps réel</strong> pour la cartographie et l’imagerie médicale.' },
+      { name: 'Laboratoire de science et technologie de défense',   description: 'Un système de <strong>télé-existence holographique</strong> pour des <strong>opérations à distance</strong> dans des environnements dangereux.' },
+      { name: 'Jaguar Land Rover',                                  description: 'En collaboration avec Jaguar Land Rover, nous avons développé des innovations pour <strong>renforcer la sécurité des véhicules</strong>. ' },
+      { name: 'Nokia',                                              description: 'Un <strong>système de télé-présence</strong> 3D en temps réel, propulsé par la 5G, avec capture 3D et écrans volumétriques pour rapprocher les gens.' },
+      { name: "Fonds public d'investissement",                      description: 'Nous avons présenté un méga-projet à des investisseurs via des expériences 3D en <strong>réalité augmentée</strong> (Magic Leap 2) et en <strong>réalité virtuelle</strong>.' },
+      { name: 'Etisalat',                                           description: 'Une <strong>plateforme de télé-médecine</strong> 3D présentant des <strong>innovations de santé</strong> lors d’un événement rassemblant plus de 100k participants.' },
+      { name: "Organisation européenne pour la recherche nucléaire", description: 'Nous avons rendu hommage à la découverte du boson de Higgs en recréant l’événement de collision dans un <strong>hologramme</strong>.' },
+      { name: "Université d'Édimbourg",                             description: 'Avec un professeur d’anatomie, nous avons créé un <strong>hologramme grandeur nature</strong> pour aider l’enseignement du <strong>corps humain</strong>.' },
+      { name: 'IBM',                                                description: 'Nous avons tenté d’améliorer le futur des intéractions, avec IBM, en créant un avatar 3D <strong>propulsé par l’IA</strong>.' },
+      { name: "Centre hospitalier universitaire de Hambourg",       description: 'Nous avons soutenu la formation chirurgicale, avec un hôpital universitaire, en concevant une série d’animations 3D de <strong>chirurgies oculaires</strong>.' },
     ],
   },
 };
 
 // Nav button styles (same as other carousels)
-const navBtnClass      = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]';
-const modalNavBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-[0.15] disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70';
-const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]';
-const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]';
+const navBtnClass      = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none cursor-pointer active:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]';
+const modalNavBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-[0.15] disabled:cursor-default disabled:pointer-events-none cursor-pointer active:opacity-70';
+const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-hover:brightness-100 dark:brightness-100 dark:group-hover:brightness-0 transition-[filter]';
+const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-hover:brightness-0 group-hover:invert dark:brightness-0 dark:invert dark:group-hover:brightness-100 dark:group-hover:invert-0 transition-[filter]';
 
 const LOGO_W = { mobile: 152, sm: 176, lg: 200 };
 
@@ -241,6 +241,25 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
     prevActiveModalRef.current = activeModal;
   }, [activeModal]);
 
+  // Hide background content from assistive tech while modal is open
+  useEffect(() => {
+    if (activeModal === null) return;
+    const section = document.getElementById('collaborators');
+    if (!section) return;
+    const inerted = [];
+    let node = section;
+    while (node.parentElement && node !== document.body) {
+      Array.from(node.parentElement.children).forEach(sibling => {
+        if (sibling !== node && !sibling.hasAttribute('inert')) {
+          sibling.setAttribute('inert', '');
+          inerted.push(sibling);
+        }
+      });
+      node = node.parentElement;
+    }
+    return () => inerted.forEach(el => el.removeAttribute('inert'));
+  }, [activeModal]);
+
   useEffect(() => {
     if (activeModal === null) return;
     const onKey = (e) => {
@@ -265,7 +284,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
       aria-labelledby="collab-heading"
       className="scroll-mt-24 py-16"
     >
-      <div className="max-w-5xl mx-auto px-6 mb-12 sm:mb-14 lg:mb-16">
+      <div {...(activeModal !== null ? { inert: '' } : {})} className="max-w-5xl mx-auto px-6 mb-12 sm:mb-14 lg:mb-16">
         <h2 id="collab-heading" className="text-[24px] sm:text-[28px] lg:text-[30px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
           {t.heading}
         </h2>
@@ -278,6 +297,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
         <ul
           ref={trackRef}
           onScroll={handleScroll}
+          {...(activeModal !== null ? { inert: '' } : {})}
           className={`relative flex gap-8 snap-x snap-mandatory transition-[opacity,filter] duration-300 ${activeModal !== null ? 'opacity-[0.1] blur-sm' : 'opacity-100 blur-none'}`}
           style={{
             overflowX: 'auto',
@@ -314,7 +334,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
         </ul>
 
         {/* Normal nav, below track, reduced gap */}
-        <div className={`flex items-center justify-end gap-2 sm:gap-3 lg:gap-4 mt-6 sm:mt-4 pr-6 sm:pr-28 lg:pr-52 ${activeModal !== null ? 'invisible' : ''}`}>
+        <div {...(activeModal !== null ? { inert: '' } : {})} className={`flex items-center justify-end gap-2 sm:gap-3 lg:gap-4 mt-6 sm:mt-4 pr-6 sm:pr-28 lg:pr-52 ${activeModal !== null ? 'invisible' : ''}`}>
           <button
             onClick={() => scrollToIndex(Math.max(0, activeIndex - getStep()))}
             disabled={activeIndex === 0}
@@ -363,13 +383,13 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                 ref={closeButtonRef}
                 onClick={closeModal}
                 aria-label={t.close}
-                className="group absolute top-3 right-3 lg:top-4 lg:right-4 z-10 flex items-center justify-center p-1.5 sm:p-2 rounded-full bg-[#1f1f1f] sm:bg-transparent sm:hover:bg-[#1f1f1f] dark:bg-[#2a2a2a] sm:dark:bg-transparent sm:dark:hover:bg-[#f6f6f6] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+                className="group absolute top-3 right-3 lg:top-4 lg:right-4 z-10 flex items-center justify-center p-1.5 sm:p-2 rounded-full bg-[#1f1f1f] hover:bg-[#f6f6f6] dark:bg-[#f6f6f6] dark:hover:bg-[#2a2a2a] transition-[background-color] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
               >
                 <img
                   src={imgClose}
                   alt=""
                   width={16} height={16}
-                  className="sm:w-5 sm:h-5 brightness-0 invert sm:brightness-100 sm:invert-0 sm:group-hover:brightness-0 sm:group-hover:invert sm:dark:brightness-0 sm:dark:invert sm:dark:group-hover:brightness-100 sm:dark:group-hover:invert-0 transition-[filter]"
+                  className="sm:w-5 sm:h-5 brightness-0 invert group-hover:invert-0 dark:invert-0 dark:group-hover:invert transition-[filter] duration-150"
                 />
               </button>
 
@@ -377,6 +397,9 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
               <div
                 ref={modalTrackRef}
                 onScroll={handleModalScroll}
+                role="group"
+                aria-label={collaborators[activeModal]?.name}
+                tabIndex={0}
                 className="flex h-full"
                 style={{ overflowX: 'auto', scrollbarWidth: 'none', scrollSnapType: 'x mandatory', touchAction: 'pan-x' }}
               >
@@ -386,7 +409,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                     className="shrink-0 w-full h-full flex flex-col justify-between sm:justify-normal gap-2 sm:gap-[14px] lg:gap-4 pt-4 sm:pt-7 lg:pt-9 pb-4 sm:pb-6 lg:pb-7 px-4 sm:px-10 lg:px-14"
                     style={{ scrollSnapAlign: 'start' }}
                   >
-                    <p className="text-[15px] sm:text-[16px] lg:text-[17px] leading-[28px] sm:leading-[30px] lg:leading-[34px] text-[#5c5c5c] dark:text-[#adadad] pr-7 sm:pr-8">
+                    <p className="text-[15px] sm:text-[16px] lg:text-[17px] leading-[28px] sm:leading-[30px] lg:leading-[34px] text-[#5c5c5c] dark:text-[#adadad] [&_strong]:text-[#1f1f1f] dark:[&_strong]:text-[#f6f6f6] pr-7 sm:pr-8">
                       <span dangerouslySetInnerHTML={{ __html: collab.description }} />
                     </p>
                     <div className="flex items-center gap-2 sm:gap-3">

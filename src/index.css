@@ -2,9 +2,19 @@
 
 @custom-variant dark (&:is(.dark *));
 
-html, body {
+html {
+  background-color: #ffffff;
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+html.dark {
+  background-color: #141414;
+}
+
+body {
+  scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 * {

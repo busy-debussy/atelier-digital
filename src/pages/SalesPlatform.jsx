@@ -789,11 +789,13 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
   const [index, setIndex] = useState(initialIndex);
   const indexRef = useRef(initialIndex);
   const trackRef = useRef(null);
+  const dialogRef = useRef(null);
 
   useEffect(() => {
-    const appShell = document.getElementById('app-shell');
-    if (appShell) appShell.inert = true;
-    return () => { if (appShell) appShell.inert = false; };
+    const dialog = dialogRef.current;
+    const hidden = Array.from(document.body.children).filter(el => el !== dialog);
+    hidden.forEach(el => el.setAttribute('inert', ''));
+    return () => hidden.forEach(el => el.removeAttribute('inert'));
   }, []);
 
   // Scroll to initial slide instantly on mount
@@ -837,6 +839,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
 
   return createPortal(
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-label={lang === 'fr' ? 'Image en plein écran' : 'Fullscreen image'}
@@ -847,6 +850,9 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
       <div
         ref={trackRef}
         onScroll={handleScroll}
+        role="group"
+        aria-label={lang === 'fr' ? 'Diapositives' : 'Slides'}
+        tabIndex={0}
         className="w-full h-full flex"
         style={{ overflowX: 'auto', overflowY: 'hidden', scrollbarWidth: 'none', scrollSnapType: 'x mandatory', touchAction: 'pan-x' }}
       >
