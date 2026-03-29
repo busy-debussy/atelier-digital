@@ -258,7 +258,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                   {pills.map((pill, i) => (
                     <li
                       key={pill}
-                      className="px-4 py-2 rounded-full text-[14px] sm:text-[15px] font-medium text-center"
+                      className="px-2 py-1 sm:px-4 sm:py-2 rounded-full text-[10px] sm:text-[15px] font-medium flex items-center justify-center"
                       style={{
                         opacity: i < visiblePills ? 1 : 0,
                         transform: prefersReduced ? undefined : (i < visiblePills ? 'translateY(0px)' : 'translateY(8px)'),
