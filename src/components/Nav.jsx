@@ -447,6 +447,11 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
         </button>
       </div>
 
+      {menuOpen && createPortal(
+        <div aria-hidden="true" className="fixed inset-0 z-[49]" onClick={() => setMenuOpen(false)} />,
+        document.body
+      )}
+
       {menuOpen && (
         <div className="w-full backdrop-blur-[8px] bg-white/[0.88] dark:bg-black/[0.88] border border-black/[0.16] dark:border-white/[0.16] rounded-[32px] overflow-hidden">
           <ol className="flex flex-col gap-2 p-4">
