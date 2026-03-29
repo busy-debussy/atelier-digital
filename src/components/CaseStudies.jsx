@@ -69,8 +69,8 @@ const T = {
     cards: [
       {
         bg:           imgBgSales,
-        title:        'Une plateforme interactive',
-        subtitle:     'boostant les ventes de 20%',
+        title:        'Une plateforme web',
+        subtitle:     'booste les ventes de 20%',
         primaryChip:  { label: 'Web app', icon: imgIconWeb },
         secondaryChips: [{ label: 'React' }],
         tint:         'blue',
@@ -79,8 +79,8 @@ const T = {
       },
       {
         bg:           imgBgXR,
-        title:        'Expériences XR partagées',
-        subtitle:     'engageant le public',
+        title:        'Des expériences XR',
+        subtitle:     'engagent le public',
         primaryChip:  { label: 'Réalité augmentée', icon: imgIconAR },
         secondaryChips: [{ label: 'Unity' }, { label: 'Unreal' }],
         tint:         null,
@@ -89,8 +89,8 @@ const T = {
       },
       {
         bg:           imgBgTwin,
-        title:        'Jumeaux numériques en temps réel',
-        subtitle:     'accélérant les mégaprojets',
+        title:        'Des jumeaux numériques',
+        subtitle:     'accélérent la macro-ingénierie',
         primaryChip:  { label: 'Jumeau numérique', icon: imgIconTwin },
         secondaryChips: [{ label: 'Unreal Engine' }],
         tint:         null,

@@ -85,11 +85,11 @@ const T = {
     collaborators: [
       { name: 'Gouvernement du Royaume-Uni',                        description: 'Nous avons contribué à améliorer des environnements simulés en automatisant la création de <b>jumeaux numériques humains</b>.' },
       { name: 'Looking Glass Factory',                              description: 'Une suite d’applis pro pour écrans 3D, offrant des <b>solutions en temps réel</b> pour la cartographie et l’imagerie médicale.' },
-      { name: 'Laboratoire de science et technologie de défense',   description: 'Un système de <b>téléexistence holographique</b> pour des <b>opérations à distance</b> dans des environnements dangereux.' },
+      { name: 'Laboratoire de science et technologie de défense',   description: 'Un système de <b>télé-existence holographique</b> pour des <b>opérations à distance</b> dans des environnements dangereux.' },
       { name: 'Jaguar Land Rover',                                  description: 'En collaboration avec Jaguar Land Rover, nous avons développé des innovations pour <b>renforcer la sécurité des véhicules</b>. ' },
-      { name: 'Nokia',                                              description: 'Un <b>système de téléprésence</b> 3D en temps réel, propulsé par la 5G, avec capture 3D et écrans volumétriques pour rapprocher les gens.' },
+      { name: 'Nokia',                                              description: 'Un <b>système de télé-présence</b> 3D en temps réel, propulsé par la 5G, avec capture 3D et écrans volumétriques pour rapprocher les gens.' },
       { name: "Fonds public d'investissement",                      description: 'Nous avons présenté un méga-projet à des investisseurs via des expériences 3D en <b>réalité augmentée</b> (Magic Leap 2) et en <b>réalité virtuelle</b>.' },
-      { name: 'Etisalat',                                           description: 'Une <b>plateforme de télémédecine</b> 3D présentant des <b>innovations de santé</b> lors d’un événement rassemblant plus de 100 000 participants.' },
+      { name: 'Etisalat',                                           description: 'Une <b>plateforme de télé-médecine</b> 3D présentant des <b>innovations de santé</b> lors d’un événement rassemblant plus de 100k participants.' },
       { name: "Organisation européenne pour la recherche nucléaire", description: 'Nous avons rendu hommage à la découverte du boson de Higgs en recréant l’événement de collision dans un <b>hologramme</b>.' },
       { name: "Université d'Édimbourg",                             description: 'Avec un professeur d’anatomie, nous avons créé un <b>hologramme grandeur nature</b> pour aider l’enseignement du <b>corps humain</b>.' },
       { name: 'IBM',                                                description: 'Nous avons tenté d’améliorer le futur des intéractions, avec IBM, en créant un avatar 3D <b>propulsé par l’IA</b>.' },
@@ -177,36 +177,77 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
   };
 
   // Modal helpers
-  const triggerRef     = useRef(null);
-  const closeButtonRef = useRef(null);
+  const triggerRef          = useRef(null);
+  const closeButtonRef      = useRef(null);
+  const modalRef            = useRef(null);
+  const modalTrackRef       = useRef(null);
+  const modalIndexRef       = useRef(null);
+  const modalJustOpenedRef  = useRef(false);
+  const modalScrollTimer    = useRef(null);
+  const prevActiveModalRef  = useRef(null);
 
-  const openModal  = (i, triggerEl) => { triggerRef.current = triggerEl; setActiveModal(i); scrollToIndex(i); };
-  const closeModal = () => { setActiveModal(null); triggerRef.current?.focus(); };
-  const navigateModal = (i) => { setActiveModal(i); scrollToIndex(i); };
-
-  const modalRef     = useRef(null);
-  const touchStartX  = useRef(null);
-
-  const handleTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
-  const handleTouchEnd   = (e) => {
-    if (touchStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    touchStartX.current = null;
-    if (Math.abs(dx) < 50) return;
-    if (dx < 0 && activeModal < collaborators.length - 1) navigateModal(activeModal + 1);
-    if (dx > 0 && activeModal > 0) navigateModal(activeModal - 1);
+  const openModal = (i, triggerEl) => {
+    triggerRef.current = triggerEl;
+    modalJustOpenedRef.current = true;
+    modalIndexRef.current = i;
+    setActiveModal(i);
+    scrollToIndex(i);
+  };
+  const closeModal = () => {
+    setActiveModal(null);
+    modalIndexRef.current = null;
+    triggerRef.current?.focus();
+  };
+  const navigateModal = (i) => {
+    const track = modalTrackRef.current;
+    if (track) track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+    modalIndexRef.current = i;
+    setActiveModal(i);
+    scrollToIndex(i);
   };
 
-  // Move focus to close button when modal opens
+  const handleModalScroll = () => {
+    const track = modalTrackRef.current;
+    if (!track) return;
+    clearTimeout(modalScrollTimer.current);
+    modalScrollTimer.current = setTimeout(() => {
+      const i = Math.round(track.scrollLeft / track.clientWidth);
+      if (i !== modalIndexRef.current) {
+        modalIndexRef.current = i;
+        setActiveModal(i);
+        scrollToIndex(i);
+      }
+    }, 80);
+  };
+
+  // Scroll modal track to the right slide on open (instant)
   useEffect(() => {
-    if (activeModal === null) return;
-    const raf = requestAnimationFrame(() => closeButtonRef.current?.focus());
+    if (activeModal === null || !modalJustOpenedRef.current) return;
+    modalJustOpenedRef.current = false;
+    const raf = requestAnimationFrame(() => {
+      const track = modalTrackRef.current;
+      if (track) track.scrollTo({ left: activeModal * track.clientWidth, behavior: 'instant' });
+    });
     return () => cancelAnimationFrame(raf);
+  }, [activeModal]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Move focus to close button only when modal first opens (null → number)
+  useEffect(() => {
+    if (activeModal === null) { prevActiveModalRef.current = null; return; }
+    if (prevActiveModalRef.current === null) {
+      const raf = requestAnimationFrame(() => closeButtonRef.current?.focus());
+      return () => cancelAnimationFrame(raf);
+    }
+    prevActiveModalRef.current = activeModal;
   }, [activeModal]);
 
   useEffect(() => {
     if (activeModal === null) return;
-    const onKey      = (e) => { if (e.key === 'Escape') closeModal(); };
+    const onKey = (e) => {
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft')  navigateModal(Math.max(0, modalIndexRef.current - 1));
+      if (e.key === 'ArrowRight') navigateModal(Math.min(collaborators.length - 1, modalIndexRef.current + 1));
+    };
     const onMouseDown = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) closeModal();
     };
@@ -216,9 +257,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
       document.removeEventListener('keydown', onKey);
       document.removeEventListener('mousedown', onMouseDown);
     };
-  }, [activeModal]);
-
-  const activeCollab = activeModal !== null ? collaborators[activeModal] : null;
+  }, [activeModal]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section
@@ -295,17 +334,14 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
         </div>
 
         {/* Modal overlay */}
-        {activeModal !== null && activeCollab && (
+        {activeModal !== null && (
           <div
             ref={modalRef}
             role="dialog"
             aria-modal="true"
-            aria-label={activeCollab.name}
-            className="absolute inset-x-0 top-0 h-[152px] sm:h-[176px] lg:h-[200px] flex items-center px-4 sm:px-6 lg:px-8 gap-3 sm:gap-4 lg:gap-6 sm:max-w-3xl lg:max-w-4xl sm:mx-auto"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
+            aria-label={collaborators[activeModal]?.name}
+            className="absolute inset-x-0 top-0 h-[240px] sm:h-[176px] lg:h-[200px] flex items-center px-2 sm:px-6 lg:px-8 gap-2 sm:gap-4 lg:gap-6 sm:max-w-3xl lg:max-w-4xl sm:mx-auto"
           >
-
             <div style={{ animation: 'modal-in 0.25s cubic-bezier(0.22,1,0.36,1) 0.35s both' }}>
               <button
                 onClick={() => navigateModal(Math.max(0, activeModal - 1))}
@@ -317,43 +353,59 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
               </button>
             </div>
 
-            <div className="relative flex-1 flex flex-col gap-3 sm:gap-[14px] lg:gap-4 bg-white dark:bg-[#2a2a2a] rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] pt-5 sm:pt-7 lg:pt-9 pb-4 sm:pb-6 lg:pb-7 px-4 sm:px-10 lg:px-14 shadow-[0px_18px_20px_0px_rgba(0,0,0,0.06)]" style={{ animation: 'modal-in 0.3s cubic-bezier(0.22,1,0.36,1) both' }}>
-
-              {/* Close button:
-                  mobile , always black bg + white icon
-                  sm/lg  , no bg idle → circular black bg + white icon on hover */}
+            {/* Card wrapper: shadow + rounded corners, overflow-hidden clips the sliding track */}
+            <div
+              className="relative flex-1 self-stretch overflow-hidden rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] bg-white dark:bg-[#2a2a2a] shadow-[0px_18px_20px_0px_rgba(0,0,0,0.06)]"
+              style={{ animation: 'modal-in 0.3s cubic-bezier(0.22,1,0.36,1) both' }}
+            >
+              {/* Close button — sits above the track */}
               <button
                 ref={closeButtonRef}
                 onClick={closeModal}
                 aria-label={t.close}
-                className="group absolute top-3 right-3 sm:top-3 sm:right-3 lg:top-4 lg:right-4 flex items-center justify-center p-1.5 sm:p-2 lg:p-2 rounded-full bg-[#1f1f1f] sm:bg-transparent sm:hover:bg-[#1f1f1f] dark:bg-[#2a2a2a] sm:dark:bg-transparent sm:dark:hover:bg-[#f6f6f6] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+                className="group absolute top-3 right-3 lg:top-4 lg:right-4 z-10 flex items-center justify-center p-1.5 sm:p-2 rounded-full bg-[#1f1f1f] sm:bg-transparent sm:hover:bg-[#1f1f1f] dark:bg-[#2a2a2a] sm:dark:bg-transparent sm:dark:hover:bg-[#f6f6f6] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
               >
                 <img
                   src={imgClose}
                   alt=""
                   width={16} height={16}
-                  className="sm:w-5 sm:h-5 lg:w-5 lg:h-5 brightness-0 invert sm:brightness-100 sm:invert-0 sm:group-hover:brightness-0 sm:group-hover:invert sm:dark:brightness-0 sm:dark:invert sm:dark:group-hover:brightness-100 sm:dark:group-hover:invert-0 transition-[filter]"
+                  className="sm:w-5 sm:h-5 brightness-0 invert sm:brightness-100 sm:invert-0 sm:group-hover:brightness-0 sm:group-hover:invert sm:dark:brightness-0 sm:dark:invert sm:dark:group-hover:brightness-100 sm:dark:group-hover:invert-0 transition-[filter]"
                 />
               </button>
 
-              <p className="text-[15px] sm:text-[16px] lg:text-[17px] leading-[28px] sm:leading-[30px] lg:leading-[34px] text-[#5c5c5c] dark:text-[#adadad] pr-7 sm:pr-8">
-                <span dangerouslySetInnerHTML={{ __html: activeCollab.description }} />
-              </p>
-
-              <div className="flex items-center gap-2 sm:gap-3">
-                {activeCollab.logoSmall ? (
-                  <>
-                    <img src={activeCollab.logoSmall} alt="" className={`w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0 ${activeCollab.logoSmallDark ? 'dark:hidden' : ''}`} />
-                    {activeCollab.logoSmallDark && <img src={activeCollab.logoSmallDark} alt="" className="hidden dark:block w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0" />}
-                  </>
-                ) : (
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 bg-[#f6f6f6] dark:bg-[#2a2a2a] rounded-[8px] sm:rounded-[10px] lg:rounded-[12px] shrink-0 flex items-center justify-center overflow-hidden">
-                    <span className="text-[6px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-tight px-[2px]">{activeCollab.name}</span>
+              {/* Horizontal scroll-snap track — one card per collaborator */}
+              <div
+                ref={modalTrackRef}
+                onScroll={handleModalScroll}
+                className="flex h-full"
+                style={{ overflowX: 'auto', scrollbarWidth: 'none', scrollSnapType: 'x mandatory', touchAction: 'pan-x' }}
+              >
+                {collaborators.map((collab, i) => (
+                  <div
+                    key={i}
+                    className="shrink-0 w-full h-full flex flex-col justify-between sm:justify-normal gap-2 sm:gap-[14px] lg:gap-4 pt-4 sm:pt-7 lg:pt-9 pb-4 sm:pb-6 lg:pb-7 px-4 sm:px-10 lg:px-14"
+                    style={{ scrollSnapAlign: 'start' }}
+                  >
+                    <p className="text-[15px] sm:text-[16px] lg:text-[17px] leading-[28px] sm:leading-[30px] lg:leading-[34px] text-[#5c5c5c] dark:text-[#adadad] pr-7 sm:pr-8">
+                      <span dangerouslySetInnerHTML={{ __html: collab.description }} />
+                    </p>
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      {collab.logoSmall ? (
+                        <>
+                          <img src={collab.logoSmall} alt="" className={`w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0 ${collab.logoSmallDark ? 'dark:hidden' : ''}`} />
+                          {collab.logoSmallDark && <img src={collab.logoSmallDark} alt="" className="hidden dark:block w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0" />}
+                        </>
+                      ) : (
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 bg-[#f6f6f6] dark:bg-[#2a2a2a] rounded-[8px] sm:rounded-[10px] lg:rounded-[12px] shrink-0 flex items-center justify-center overflow-hidden">
+                          <span className="text-[6px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-tight px-[2px]">{collab.name}</span>
+                        </div>
+                      )}
+                      <span className="text-[12px] sm:text-[14px] lg:text-[15px] font-semibold text-[#1f1f1f] dark:text-[#f6f6f6]">
+                        {collab.name}
+                      </span>
+                    </div>
                   </div>
-                )}
-                <span className="text-[12px] sm:text-[14px] lg:text-[15px] font-semibold text-[#1f1f1f] dark:text-[#f6f6f6]">
-                  {activeCollab.name}
-                </span>
+                ))}
               </div>
             </div>
 

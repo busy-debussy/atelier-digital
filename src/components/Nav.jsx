@@ -399,7 +399,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
 // MobileNav
 function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
   const [menuOpen,     setMenuOpen]     = useState(false);
-  const [projectsOpen, setProjectsOpen] = useState(false);
+  const [projectsOpen, setProjectsOpen] = useState(true);
   const location  = useLocation();
   const navigate  = useNavigate();
   const currentPage = location.pathname;

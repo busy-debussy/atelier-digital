@@ -265,8 +265,8 @@ const HERO = {
     title: 'Une plateforme de vente digitale pour des projets immobiliers de luxe',
     stats: [
       { prefix: '',  countTo: 8,  decimals: 0, suffix: ' Mds €', label: 'de ventes générées'           },
-      { prefix: '+', countTo: 20, decimals: 0, suffix: ' %',      label: 'de hausse des ventes en un an' },
-      { prefix: '',  countTo: 48, decimals: 0, suffix: 'h',       label: 'pour vendre le 1er lancement'  },
+      { prefix: '+', countTo: 20, decimals: 0, suffix: ' %',      label: 'd’augmentation en un an' },
+      { prefix: '',  countTo: 48, decimals: 0, suffix: 'h',       label: 'pour tout vendre'  },
     ],
   },
 };
@@ -312,10 +312,10 @@ function Hero({ lang }) {
         draggable="false"
       />
 
-      {/* Gradient overlay — darkens bottom for text legibility */}
+      {/* Gradient overlay, darkens bottom for text legibility */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
 
-      {/* Main content — bottom */}
+      {/* Main content, bottom */}
       <div className="relative z-10 mt-auto max-w-5xl mx-auto w-full px-6 sm:px-8 lg:px-10 pb-24 sm:pb-28 lg:pb-24 flex flex-col gap-6 sm:gap-8">
 
         <p className="text-[13px] sm:text-[14px] font-semibold tracking-widest uppercase text-white">
@@ -331,7 +331,7 @@ function Hero({ lang }) {
             const finalValue = s.decimals > 0 ? s.countTo.toFixed(s.decimals) : s.countTo;
             return (
               <li key={i} className="flex flex-col gap-1">
-                <span className="text-[28px] sm:text-[36px] lg:text-[44px] font-bold leading-tight text-white tabular-nums">
+                <span className="text-[28px] sm:text-[36px] lg:text-[44px] font-bold leading-tight text-white tabular-nums whitespace-nowrap">
                   <span className="sr-only">{s.prefix}{finalValue}{s.suffix}</span>
                   <span><AnimatedStat prefix={s.prefix} countTo={s.countTo} decimals={s.decimals} suffix={s.suffix} /></span>
                 </span>
@@ -382,38 +382,29 @@ function TileBody({ children }) {
   );
 }
 
-// ── Tool icon with tooltip (same as Resume) ───────────────────────────────────
-function ToolIcon({ name, icon, darkInvert = false, circle = false }) {
-  const [visible, setVisible] = useState(false);
-  const btnRef = useRef(null);
+// ── Tool icon with tooltip ────────────────────────────────────────────────────
+const AUTO_HIDE_DELAY = 3000;
+
+function ToolIcon({ name, icon, darkInvert = false, circle = false, isActive, onActivate, onDeactivate }) {
   const tooltipId = `tooltip-${name.replace(/\s+/g, '-').toLowerCase()}`;
-
-  useEffect(() => {
-    if (!visible) return;
-    const handler = (e) => { if (btnRef.current && !btnRef.current.contains(e.target)) setVisible(false); };
-    document.addEventListener('pointerdown', handler);
-    return () => document.removeEventListener('pointerdown', handler);
-  }, [visible]);
-
   return (
     <div className="relative flex flex-col items-center">
       <div
         id={tooltipId}
         role="tooltip"
-        className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${visible ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${isActive ? 'opacity-100' : 'opacity-0'}`}
       >
         <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[12px] font-semibold px-2 py-[3px] rounded-[6px] whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
         <div className="w-0 h-0 border-l-[4px] border-r-[4px] border-t-[4px] border-l-transparent border-r-transparent border-t-[#1f1f1f] dark:border-t-[#f6f6f6]" />
       </div>
       <button
-        ref={btnRef}
         aria-label={name}
-        aria-describedby={tooltipId}
-        onMouseEnter={() => { if (!window.matchMedia('(pointer: coarse)').matches) setVisible(true); }}
-        onMouseLeave={() => { if (!window.matchMedia('(pointer: coarse)').matches) setVisible(false); }}
-        onFocus={() => setVisible(true)}
-        onBlur={() => setVisible(false)}
-        onClick={() => { if (window.matchMedia('(pointer: coarse)').matches) setVisible(v => !v); }}
+        aria-describedby={isActive ? tooltipId : undefined}
+        onMouseEnter={() => { if (!window.matchMedia('(pointer: coarse)').matches) onActivate(false); }}
+        onMouseLeave={() => { if (!window.matchMedia('(pointer: coarse)').matches) onDeactivate(); }}
+        onFocus={() => onActivate(false)}
+        onBlur={() => onDeactivate()}
+        onClick={() => isActive ? onDeactivate() : onActivate(true)}
         className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex items-center justify-center shrink-0 overflow-hidden bg-[#f6f6f6] dark:bg-[#2a2a2a] shadow-[1px_1px_8px_0px_rgba(0,0,0,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1f1f] dark:focus-visible:outline-[#f6f6f6] ${circle ? 'rounded-full' : 'rounded-[8px] sm:rounded-[10px] lg:rounded-[12px]'}`}
       >
         {icon
@@ -422,6 +413,52 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false }) {
         }
       </button>
     </div>
+  );
+}
+
+function ToolsGrid({ label }) {
+  const [activeName, setActiveName] = useState(null);
+  const autoHideRef  = useRef(null);
+  const containerRef = useRef(null);
+
+  const activate = (name, withTimer) => {
+    clearTimeout(autoHideRef.current);
+    setActiveName(name);
+    if (withTimer) autoHideRef.current = setTimeout(() => setActiveName(null), AUTO_HIDE_DELAY);
+  };
+
+  const deactivate = () => {
+    clearTimeout(autoHideRef.current);
+    setActiveName(null);
+  };
+
+  useEffect(() => {
+    if (!activeName) return;
+    const handler = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) deactivate();
+    };
+    document.addEventListener('pointerdown', handler);
+    return () => document.removeEventListener('pointerdown', handler);
+  }, [activeName]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => () => clearTimeout(autoHideRef.current), []);
+
+  return (
+    <ul ref={containerRef} role="list" aria-label={label} className="list-none grid grid-cols-5 md:grid-cols-10 lg:grid-cols-4 mt-3 sm:mt-0 gap-x-3 gap-y-8 md:gap-x-2 md:gap-y-4 lg:gap-x-3 lg:gap-y-6">
+      {CONTEXT_TOOLS.map(tool => (
+        <li key={tool.name}>
+          <ToolIcon
+            name={tool.name}
+            icon={tool.icon}
+            darkInvert={tool.darkInvert}
+            circle={tool.circle}
+            isActive={activeName === tool.name}
+            onActivate={(withTimer) => activate(tool.name, withTimer)}
+            onDeactivate={deactivate}
+          />
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -437,7 +474,7 @@ const CONTEXT_INDUSTRY = {
   footnote: { en: '*client\'s revenues YoY, before the platform.',   fr: "*chiffre d'affaires annuel du client, avant la plateforme." },
 };
 const CONTEXT_BODIES = {
-  // index matches eyebrows array (0 = client — body handled inline, 1 = industry — handled inline)
+  // index matches eyebrows array (0 = client, body handled inline, 1 = industry, handled inline)
   mission:      { en: <>From concept to completion, our mission is to <strong>supercharge property sales</strong> by providing an <strong>interactive 3D experience</strong> of spaces before they are built.</>, fr: <>Du concept à la production, <strong>booster les ventes</strong> en offrant une <strong>expérience interactive 3D</strong> des lieux avant la construction des villas et appartements.</> },
   stakeholders: { en: <ul className="space-y-1 list-disc list-inside"><li>The client’s <strong>digital team</strong> & <strong>architects</strong>.</li><li>Our product team, project manager, and dev, studio, design, marketing and customer success teams.</li></ul>, fr: <ul className="space-y-1 list-disc list-inside"><li>L’<strong>équipe client digitale</strong> et <strong>architectes</strong>.</li><li>Nos chef de produit, de projet, et nos équipes dev, studio, design, marketing, et customer success.</li></ul> },
   myRole: {
@@ -450,7 +487,7 @@ const CONTEXT_BODIES = {
     },
     fr: {
       stats: [
-        { value: "15 semaines", label: "jusqu’au premier lancement" },
+        { value: "15 semaines", label: "jusqu’au 1er lancement" },
         { value: "10 projets",   label: "la premi\u00e8re ann\u00e9e" },
       ],
       body: <>En tant que <strong>Senior <abbr title="User Experience / User Interface" className="no-underline">UX/UI</abbr> Designer</strong> et <strong>responsable de l&apos;équipe design</strong>, j&apos;ai dirigé une équipe de 4 designers, couvrant l&apos;UX, l&apos;UI, le design d&apos;interaction et le graphisme, du concept initial jusqu&apos;aux lancements successifs.</>,
@@ -511,9 +548,9 @@ function ContextContent({ lang }) {
           <TileEyebrow>{eyebrows[4]}</TileEyebrow>
           <div className="flex items-start gap-8 sm:gap-12 shrink-0">
             {CONTEXT_BODIES.myRole[l].stats.map((s, i) => (
-              <div key={i} className="flex flex-col items-end gap-0.5">
+              <div key={i} className="flex flex-col items-start sm:items-end gap-0.5">
                 <span className="text-[28px] sm:text-[32px] lg:text-[36px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">{s.value}</span>
-                <span className="text-[13px] sm:text-[14px] text-[#5c5c5c] dark:text-[#adadad] text-right">{s.label}</span>
+                <span className="text-[13px] sm:text-[14px] text-[#5c5c5c] dark:text-[#adadad] text-left sm:text-right">{s.label}</span>
               </div>
             ))}
           </div>
@@ -525,9 +562,7 @@ function ContextContent({ lang }) {
         <Tile>
           <TileEyebrow>{eyebrows[5]}</TileEyebrow>
           {/* mobile: 5×2 · tablet (md): 10×1 · desktop (lg): 4×3 */}
-          <ul role="list" aria-label={eyebrows[5]} className="list-none grid grid-cols-5 md:grid-cols-10 lg:grid-cols-4 mt-3 sm:mt-0 gap-x-3 gap-y-8 md:gap-x-2 md:gap-y-4 lg:gap-x-3 lg:gap-y-6">
-            {CONTEXT_TOOLS.map(tool => <li key={tool.name}><ToolIcon name={tool.name} icon={tool.icon} darkInvert={tool.darkInvert} circle={tool.circle} /></li>)}
-          </ul>
+          <ToolsGrid label={eyebrows[5]} />
         </Tile>
         <Tile><TileEyebrow>{eyebrows[6]}</TileEyebrow><TileBody>{CONTEXT_BODIES.team[l]}</TileBody></Tile>
       </div>
@@ -540,22 +575,22 @@ const IMPACT = {
   en: {
     outcome: {
       eyebrow: "Outcome",
-      body: <><p>Following validation and user testing within our development environment, we successfully launched the first two projects — both of which <strong>sold out within the first 48 hours</strong> of release.</p><p>Building on that momentum, project delivery accelerated. And by the end of our first year of collaboration, the platform contributed to a <strong>20% YoY increase</strong> in sales, generating <strong>£6.8 Billions</strong>.</p></>,
+      body: <><p>Following validation and user testing within our development environment, we successfully launched the first two projects, both of which <strong>sold out within the first 48 hours</strong> of release.</p><p>Building on that momentum, project delivery accelerated. And by the end of our first year of collaboration, the platform contributed to a <strong>20% YoY increase</strong> in sales, generating <strong>£6.8 Billions</strong>.</p></>,
     },
     retrospective: {
       eyebrow: "Retrospective",
-      body: <><p><strong>Strong coordination</strong> between internal and external stakeholders was crucial to the successful launch of the initial project and to scaling subsequent deliveries.</p><p>The design team played a pivotal role in aligning stakeholders, shaping <strong>strategic decisions</strong>, and contributing to <strong>automation efforts</strong> that streamlined the pace of future launches.</p><p>A huge credit goes to our <strong>cross-functional team</strong> — project managers, product owners, QA testers, developers, artists, engineers, and designers — who consistently delivered <strong>high-volume</strong>, <strong>high-impact</strong> projects at an accelerated pace. This was achieved while simultaneously supporting parallel initiatives for other clients, including those involving <strong>cutting-edge</strong> XR technologies and <strong>digital twin solutions</strong>.</p><p>This project reaffirmed the power of <strong>collaborative iteration</strong> and the importance of early alignment between development and design teams.</p><p>Throughout the project, several <strong>trade-offs</strong> were made, carefully balancing user needs, business priorities, and technical constraints. Happy to discuss these in more detail.</p></>
+      body: <><p><strong>Strong coordination</strong> between internal and external stakeholders was crucial to the successful launch of the initial project and to scaling subsequent deliveries.</p><p>The design team played a pivotal role in aligning stakeholders, shaping <strong>strategic decisions</strong>, and contributing to <strong>automation efforts</strong> that streamlined the pace of future launches.</p><p>A huge credit goes to our <strong>cross-functional team</strong> project managers, product owners, QA testers, developers, artists, engineers, and designers, who consistently delivered <strong>high-volume</strong>, <strong>high-impact</strong> projects at an accelerated pace. This was achieved while simultaneously supporting parallel initiatives for other clients, including those involving <strong>cutting-edge</strong> XR technologies and <strong>digital twin solutions</strong>.</p><p>This project reaffirmed the power of <strong>collaborative iteration</strong> and the importance of early alignment between development and design teams.</p><p>Throughout the project, several <strong>trade-offs</strong> were made, carefully balancing user needs, business priorities, and technical constraints. Happy to discuss these in more detail.</p></>
 ,
     },
   },
   fr: {
     outcome: {
       eyebrow: "Bilan",
-      body: <><p>Après validation et tests utilisateurs dans notre environnement de développement, nous avons lancé avec succès les deux premiers projets — tous deux <strong>vendus intégralement dans les 48 premières heures</strong> suivant leur lancement. 🚀</p><p>Portés par cette dynamique, les livraisons de projets se sont accélérées. À la fin de notre première année de collaboration, la plateforme avait contribué à une <strong>augmentation des ventes de 20 %</strong>, générant plus de <strong>8 milliards d'euros</strong> de chiffre d'affaires.</p></>,
+      body: <><p>Après validation et tests utilisateurs dans notre environnement de développement, nous avons lancé avec succès les deux premiers projets, tous deux <strong>vendus intégralement dans les 48 premières heures</strong> suivant leur lancement. 🚀</p><p>Portés par cette dynamique, les livraisons de projets se sont accélérées. À la fin de notre première année de collaboration, la plateforme avait contribué à une <strong>augmentation des ventes de 20 %</strong>, générant plus de <strong>8 milliards d'euros</strong> de chiffre d'affaires.</p></>,
     },
     retrospective: {
       eyebrow: "Rétrospective",
-      body: <><p><strong>Une coordination étroite</strong> entre les parties prenantes internes et externes a été essentielle au lancement réussi du projet initial ainsi qu'à la montée en puissance des projets suivants.</p><p>L'équipe design a joué un rôle clé dans l'alignement des parties prenantes, l'orientation des <strong>décisions stratégiques</strong>, et la contribution aux <strong>efforts d'automatisation</strong> qui ont permis d'accélérer le rythme des lancements futurs.</p><p>Un grand bravo à notre équipe pluridisciplinaire — chefs de projet, responsables produit, testeurs qualité, développeurs, artistes, ingénieurs et designers — qui ont livré de manière constante des projets à <strong>fort volume</strong> et à <strong>fort impact</strong>, à un rythme soutenu. Cela a été accompli tout en soutenant en parallèle d'autres initiatives pour d'autres clients, notamment dans les domaines de la <strong>technologie XR</strong> et des solutions de <strong>jumeaux numériques</strong>.</p><p>Ce projet a réaffirmé la puissance de l'<strong>itération collaborative</strong> et souligné l'importance d'un alignement entre les équipes de développement et de design dès le début.</p><p>Tout au long du projet, plusieurs <strong>compromis</strong> ont été nécessaires, en équilibrant soigneusement les besoins des utilisateurs, les priorités métier et les contraintes techniques. Je serais ravi d'en parler plus en détail.</p></>
+      body: <><p><strong>Une coordination étroite</strong> entre les parties prenantes internes et externes a été essentielle au lancement réussi du projet initial ainsi qu'à la montée en puissance des projets suivants.</p><p>L'équipe design a joué un rôle clé dans l'alignement des parties prenantes, l'orientation des <strong>décisions stratégiques</strong>, et la contribution aux <strong>efforts d'automatisation</strong> qui ont permis d'accélérer le rythme des lancements futurs.</p><p>Un grand bravo à notre équipe pluridisciplinaire, chefs de projet, responsables produit, testeurs qualité, développeurs, artistes, ingénieurs et designers, qui ont livré de manière constante des projets à <strong>fort volume</strong> et à <strong>fort impact</strong>, à un rythme soutenu. Cela a été accompli tout en soutenant en parallèle d'autres initiatives pour d'autres clients, notamment dans les domaines de la <strong>technologie XR</strong> et des solutions de <strong>jumeaux numériques</strong>.</p><p>Ce projet a réaffirmé la puissance de l'<strong>itération collaborative</strong> et souligné l'importance d'un alignement entre les équipes de développement et de design dès le début.</p><p>Tout au long du projet, plusieurs <strong>compromis</strong> ont été nécessaires, en équilibrant soigneusement les besoins des utilisateurs, les priorités métier et les contraintes techniques. Je serais ravi d'en parler plus en détail.</p></>
 ,
     },
   },
@@ -673,7 +708,7 @@ const DEFINE = {
       subsections: [
         {
           h4: "Échéances strictes",
-          body: <>La nature du marché impliquait que les lancements de projets aient des <strong>délais stricts</strong>. Le client s'attendait à <strong>vendre de nombreux logements dès le jour du lancement</strong> — chaque logement (~1000 par projet) devait être terminé et visible dans l'application dès le premier jour.</>,
+          body: <>La nature du marché impliquait que les lancements de projets aient des <strong>délais stricts</strong>. Le client s'attendait à <strong>vendre de nombreux logements dès le jour du lancement</strong>, chaque logement (~1000 par projet) devait être terminé et visible dans l'application dès le premier jour.</>,
         },
         {
           h4: "MVP",
@@ -681,7 +716,7 @@ const DEFINE = {
         },
         {
           h4: "Itérations incrémentales",
-          body: <>Le calendrier de projets pour l'année allait <strong>accélérer</strong> — il était prévu que de nouveaux <strong>défis en termes de conception et de développement</strong> accompagnent certains projets. Une fois le premier projet lancé, nous introduirions des fonctionnalités pour <strong>répondre aux objectifs priorisés des utilisateurs et du client</strong>.</>,
+          body: <>Le calendrier de projets pour l'année allait <strong>accélérer</strong>, il était prévu que de nouveaux <strong>défis en termes de conception et de développement</strong> accompagnent certains projets. Une fois le premier projet lancé, nous introduirions des fonctionnalités pour <strong>répondre aux objectifs priorisés des utilisateurs et du client</strong>.</>,
         },
         { h4: "Chronologie des lancements", body: null },
       ],
@@ -752,7 +787,8 @@ const CONCEPTS_SLIDES = {
 // ── Lightbox ──────────────────────────────────────────────────────────────────
 function Lightbox({ slides, initialIndex, lang, onClose }) {
   const [index, setIndex] = useState(initialIndex);
-  const touchStartX = useRef(null);
+  const indexRef = useRef(initialIndex);
+  const trackRef = useRef(null);
 
   useEffect(() => {
     const appShell = document.getElementById('app-shell');
@@ -760,27 +796,41 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
     return () => { if (appShell) appShell.inert = false; };
   }, []);
 
+  // Scroll to initial slide instantly on mount
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const raf = requestAnimationFrame(() => {
+      track.scrollTo({ left: initialIndex * track.clientWidth, behavior: 'instant' });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const scrollToSlide = (i) => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+    indexRef.current = i;
+    setIndex(i);
+  };
+
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft')  setIndex(i => Math.max(0, i - 1));
-      if (e.key === 'ArrowRight') setIndex(i => Math.min(slides.length - 1, i + 1));
+      if (e.key === 'ArrowLeft')  scrollToSlide(Math.max(0, indexRef.current - 1));
+      if (e.key === 'ArrowRight') scrollToSlide(Math.min(slides.length - 1, indexRef.current + 1));
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [slides.length, onClose]);
+  }, [slides.length, onClose]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
-  const handleTouchEnd   = (e) => {
-    if (touchStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    touchStartX.current = null;
-    if (Math.abs(dx) < 50) return;
-    if (dx < 0) setIndex(i => Math.min(slides.length - 1, i + 1));
-    if (dx > 0) setIndex(i => Math.max(0, i - 1));
+  const handleScroll = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    const i = Math.round(track.scrollLeft / track.clientWidth);
+    if (i !== indexRef.current) { indexRef.current = i; setIndex(i); }
   };
 
-  const slide = slides[index];
   const closeLbl = lang === 'fr' ? 'Fermer' : 'Close';
   const prevLbl  = lang === 'fr' ? 'Image précédente' : 'Previous image';
   const nextLbl  = lang === 'fr' ? 'Image suivante'   : 'Next image';
@@ -790,21 +840,33 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
       role="dialog"
       aria-modal="true"
       aria-label={lang === 'fr' ? 'Image en plein écran' : 'Fullscreen image'}
-      className="fixed inset-0 z-[400] flex items-center justify-center"
+      className="fixed inset-0 z-[400]"
       style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.92)' }}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
     >
-      {/* Backdrop */}
-      <div className="absolute inset-0" onClick={onClose} />
-
-      {/* Image */}
-      <img
-        src={slide.desktop ?? slide.mobile}
-        alt={lang === 'fr' ? `Diapositive ${index + 1} sur ${slides.length}` : `Slide ${index + 1} of ${slides.length}`}
-        draggable="false"
-        className="relative z-10 max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl"
-      />
+      {/* Slide track */}
+      <div
+        ref={trackRef}
+        onScroll={handleScroll}
+        className="w-full h-full flex"
+        style={{ overflowX: 'auto', overflowY: 'hidden', scrollbarWidth: 'none', scrollSnapType: 'x mandatory', touchAction: 'pan-x' }}
+      >
+        {slides.map((slide, i) => (
+          <div
+            key={i}
+            className="shrink-0 w-full h-full flex items-center justify-center"
+            style={{ scrollSnapAlign: 'start' }}
+            onClick={onClose}
+          >
+            <img
+              src={slide.desktop ?? slide.mobile}
+              alt={lang === 'fr' ? `Diapositive ${i + 1} sur ${slides.length}` : `Slide ${i + 1} of ${slides.length}`}
+              draggable="false"
+              className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        ))}
+      </div>
 
       {/* Counter */}
       <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-[13px] font-medium text-white/60 tabular-nums pointer-events-none">
@@ -822,7 +884,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
 
       {/* Prev */}
       <button
-        onClick={() => setIndex(i => Math.max(0, i - 1))}
+        onClick={() => scrollToSlide(Math.max(0, index - 1))}
         disabled={index === 0}
         aria-label={prevLbl}
         className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
@@ -832,7 +894,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
 
       {/* Next */}
       <button
-        onClick={() => setIndex(i => Math.min(slides.length - 1, i + 1))}
+        onClick={() => scrollToSlide(Math.min(slides.length - 1, index + 1))}
         disabled={index === slides.length - 1}
         aria-label={nextLbl}
         className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
@@ -1489,7 +1551,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
   return (
     <section id={id} aria-labelledby={headingId} className="overflow-hidden">
 
-      {/* Header row — fully clickable */}
+      {/* Header row, fully clickable */}
       <div className={open && openHeaderBgClass ? openHeaderBgClass : headerBgClass}>
       <button
         ref={btnRef}
@@ -1568,7 +1630,7 @@ function SalesPlatform({ lang, isDark }) {
 
       <Hero lang={lang} />
 
-      <main id="main-content" lang={lang} aria-label={lang === 'fr' ? 'Étude de cas — Plateforme web' : 'Sales Platform case study'} tabIndex={-1}>
+      <main id="main-content" lang={lang} aria-label={lang === 'fr' ? 'Étude de cas, Plateforme web' : 'Sales Platform case study'} tabIndex={-1}>
         {sections.map(({ id, title }) => (
           <Section
             key={id} id={id} title={title} lang={lang}

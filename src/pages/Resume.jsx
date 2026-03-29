@@ -318,7 +318,7 @@ const T = {
       {
         title:       'Prototypage',
         icon:        imgIconTouch,
-        description: <>Plus de 4 ans d'expérience conception de <B>parcours utilisateurs</B>, <B>maquettes</B>, et <B>prototypes</B> de grande fidélité pour mobile, web, réalité étendue et <B>jumeaux numériques</B>.</>,
+        description: <>Plus de 4 ans d'expérience conception de <B>parcours utilisateurs</B>, <B>maquettes</B>, et <B>prototypes</B> de pour mobile, web, réalité étendue et <B>jumeaux numériques</B>.</>,
         tools: [
           { name: 'Figma',      icon: imgToolFigma },
           { name: 'Claude Code', icon: imgToolClaude, noBg: true },
@@ -338,7 +338,7 @@ const T = {
       {
         title:       'Graphisme 3D',
         icon:        imgIcon3D,
-        description: <>Plus de 10 ans d'expérience en modélisation et animation de contenu 3D pour l'imagerie médicale, la visualisation scientifique, la construction, l'architecture, et autre.</>,
+        description: <>10 ans d'expérience en modélisation et animation de contenu 3D pour l'imagerie médicale, la visualisation scientifique, la construction, l'architecture, et autre.</>,
         tools: [
           { name: 'Autodesk 3DS Max', icon: imgTool3dsMax },
         ],
@@ -355,7 +355,7 @@ const T = {
       {
         title:       'Management',
         icon:        imgIconManagement,
-        description: <>4 années de <B>collaboration</B> avec des équipes inter-fonctionnelles (développeurs, manageurs, parties prenantes) sur des projets de <B>développement logiciel</B> Agile.</>,
+        description: <>4 années de <B>collaboration</B> avec des équipes inter-fonctionnelles (dév, MPs, parties prenantes) sur des projets de <B>développement logiciel</B> Agile.</>,
         tools: [
           { name: 'Atlassian Confluence', icon: imgToolConfluence },
           { name: 'Atlassian Jira',       icon: imgToolJira },

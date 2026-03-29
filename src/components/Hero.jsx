@@ -204,7 +204,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
 
   return (
     <section aria-label={lang === 'fr' ? 'Présentation' : 'Introduction'} className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 pb-24">
-      <div className="flex flex-col items-center gap-0">
+      <div className="flex flex-col items-center gap-0 -mt-0 sm:mt-0">
 
         {/* H1, typed heading */}
         <div>
