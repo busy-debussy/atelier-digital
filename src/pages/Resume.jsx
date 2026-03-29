@@ -306,7 +306,7 @@ const T = {
       { name: 'Google UX Designer Pro',    nameParts: ['Google UX', 'Designer Pro'], issuer: 'Google',                icon: imgLogoGoogle },
       { name: 'Google Digital Marketing',                                             issuer: 'Google',                icon: imgLogoGoogle },
       { name: 'Biomedical Visualisation',                                             issuer: 'University of Glasgow', icon: imgLogoGlasgow },
-      { name: 'Excellence en Holographie',                                            issuer: 'International Hologram Manufacturers Association', icon: imgIconAward },
+      { name: 'Excellence en Holographie',                                            issuer: 'International Hologram Manufacturers Association', icon: imgIconAward,   svgIcon: true },
     ],
     bio: [
       <>Architecte du numérique, fort de douze années d'expérience dans <B>l'innovation</B> tout en <B>graphisme 2D et 3D</B>, je conçois des produits <B>intuitifs</B>.</>,
@@ -618,7 +618,8 @@ function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
                 <div
                   id={`exp-drawer-${cardIdx}-${di}`}
                   inert={!openDrawers[di]}
-                  className={`grid transition-[grid-template-rows] duration-300 ease-out ${openDrawers[di] ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+                  onClick={() => onToggle(di)}
+                  className={`grid transition-[grid-template-rows] duration-300 ease-out cursor-pointer ${openDrawers[di] ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
                 >
                   <div className="overflow-hidden">
                     <p className="px-4 sm:px-5 lg:px-6 pb-4 sm:pb-5 text-[16px] sm:text-[17px] lg:text-[18px] leading-relaxed text-[#262626] dark:text-[#adadad]">
@@ -745,7 +746,7 @@ function ExperienceSection({ t }) {
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCard(Math.min(cards.length - 1, activeIndex + 1)); }
           }}
           className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
-          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl }}
+          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x' }}
         >
           {cards.map((card, ci) => (
             <ExperienceCard
@@ -952,7 +953,7 @@ function ExpertiseSection({ t }) {
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCard(Math.min(cards.length - 1, activeIndex + 1)); }
           }}
           className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
-          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl }}
+          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x' }}
         >
           {cards.map((card, ci) => (
             <ExpertiseCard key={ci} card={card} />
@@ -1042,7 +1043,8 @@ function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
             <div
               id={`edu-drawer-${cardIdx}-${di}`}
               inert={!openDrawers[di]}
-              className={`grid transition-[grid-template-rows] duration-300 ease-out ${openDrawers[di] ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+              onClick={() => onToggle(di)}
+              className={`grid transition-[grid-template-rows] duration-300 ease-out cursor-pointer ${openDrawers[di] ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
             >
               <div className="overflow-hidden">
                 <p className="px-4 sm:px-5 lg:px-6 pb-4 sm:pb-5 text-[16px] sm:text-[17px] lg:text-[18px] leading-relaxed text-[#262626] dark:text-[#adadad]">
@@ -1167,7 +1169,7 @@ function EducationSection({ t }) {
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCard(Math.min(cards.length - 1, activeIndex + 1)); }
           }}
           className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
-          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl }}
+          style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x' }}
         >
           {cards.map((card, ci) => (
             <EducationCard key={ci} cardIdx={ci} card={card} openDrawers={openDrawers[ci]} onToggle={(di) => toggleDrawer(ci, di)} />
@@ -1326,7 +1328,7 @@ function SkillsCertSection({ t }) {
                 if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCertPage(Math.min(certPages.length - 1, activePage + 1)); }
               }}
               className="flex overflow-x-auto snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
-              style={{ scrollbarWidth: 'none' }}
+              style={{ scrollbarWidth: 'none', touchAction: 'pan-x' }}
             >
               {certPages.map((page, pi) => (
                 <li key={pi} className="w-full shrink-0 snap-start flex gap-3">

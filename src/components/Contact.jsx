@@ -24,7 +24,7 @@ const T = {
     emailCard: {
       icon: imgSendLight, iconDark: imgSendDark,
       title: 'Hit my inbox',
-      description: 'Let’s explore how we can achieve great things together.',
+      description: 'Let’s discuss how we can achieve great things together.',
       buttonLabel: 'Message',
       action: { type: 'email', href: 'mailto:d@AtelierDigital.co.uk' },
     },
@@ -250,7 +250,7 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
         ref={trackRef}
         onScroll={handleScroll}
         className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
-        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '12px', paddingBottom: '12px' }}
+        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '12px', paddingBottom: '12px', touchAction: 'pan-x' }}
         aria-label={t.heading}
       >
         {cards.map((card, i) => <ContactCard key={i} card={card} glass={noBg} />)}

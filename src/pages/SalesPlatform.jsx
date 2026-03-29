@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Footer from '../components/Footer';
 import imgHero           from '../assets/photos/photo-cgi-sales-platform-hero.png';
 import imgChevronUp      from '../assets/icons/icon-chevron-up.svg';
