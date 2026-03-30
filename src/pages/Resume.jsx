@@ -519,7 +519,7 @@ function SummarySection({ t, lang }) {
 
           <ul className="flex flex-col gap-4 sm:gap-3 w-56" aria-label="Contact and download">
             <li>
-              <a data-spring href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(lang === 'fr' ? 'Prise de contact' : 'Getting in touch')}`} className={`${btnBase} w-full`}>
+              <a data-spring tabIndex={0} href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(lang === 'fr' ? 'Prise de contact' : 'Getting in touch')}`} className={`${btnBase} w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]`}>
                 <img src={imgSend} alt="" width={24} height={24} className="shrink-0 dark:invert" />
                 <span className={btnLabel}>{t.sendEmail}</span>
               </a>
@@ -535,6 +535,7 @@ function SummarySection({ t, lang }) {
                 href="https://drive.google.com/uc?export=download&id=1lYUG7b85P9nuI5KAIs16Zbxf0S8dyXpZ"
                 target="_blank"
                 rel="noopener noreferrer"
+                tabIndex={0}
                 aria-label={lang === 'fr' ? 'Télécharger PDF via Google Drive' : 'Download PDF via Google Drive'}
                 data-spring
                 className="w-full flex items-center justify-center py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[18px] sm:text-[20px] rounded-2xl border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0152EC]"
@@ -609,7 +610,7 @@ function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
                   className="w-full flex items-center justify-between px-4 sm:px-5 lg:px-6 py-3 sm:py-3.5 lg:py-4 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
                 >
                   <span className="text-[18px] sm:text-[20px] lg:text-[24px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6]">{drawer.label}</span>
-                  <span className="shrink-0 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-colors hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] group">
+                  <span data-spring className="shrink-0 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-colors hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] group">
                     <img
                       src={imgChevronDown}
                       alt=""
@@ -831,6 +832,8 @@ function ToolIcon({ name, icon, noBg, darkInvert }) {
         aria-label={name}
         onMouseEnter={() => { if (!window.matchMedia('(pointer: coarse)').matches) setVisible(true); }}
         onMouseLeave={() => { if (!window.matchMedia('(pointer: coarse)').matches) setVisible(false); }}
+        onFocus={() => setVisible(true)}
+        onBlur={() => setVisible(false)}
         onClick={() => { if (window.matchMedia('(pointer: coarse)').matches) setVisible(v => !v); }}
         className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex items-center justify-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${noBg ? 'rounded-lg' : 'rounded-[8px] sm:rounded-[10px] lg:rounded-[12px] overflow-hidden bg-[#f6f6f6] dark:bg-[#2a2a2a] shadow-[1px_1px_8px_0px_rgba(0,0,0,0.08)]'}`}
       >
@@ -1038,7 +1041,7 @@ function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
               className="w-full flex items-center justify-between px-4 sm:px-5 lg:px-6 py-3 sm:py-3.5 lg:py-4 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
             >
               <span className="text-[18px] sm:text-[20px] lg:text-[24px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6]">{drawer.label}</span>
-              <span className="shrink-0 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-colors hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] group">
+              <span data-spring className="shrink-0 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-colors hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] group">
                 <img
                   src={imgChevronDown}
                   alt=""
@@ -1233,6 +1236,7 @@ function CertificationCard({ card }) {
 
   return (
     <div
+      data-spring
       role="button"
       tabIndex={0}
       aria-pressed={flipped}

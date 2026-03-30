@@ -27,9 +27,9 @@ const T = {
     home:              'home',
     'dark mode':       'dark mode',
     'back to top':     'back to top',
-    'go home':         'go to home page',
+    'go home':         'go home',
     'tip projects':    'open menu',
-    'tip resume':      'view CV',
+    'tip resume':      'view my CV',
     'tip talk':        'contact details',
   },
   fr: {
@@ -45,8 +45,8 @@ const T = {
     'back to top':     'retour en haut',
     'go home':         "aller à l'accueil",
     'tip projects':    'ouvrir le menu',
-    'tip resume':      'voir le CV',
-    'tip talk':        'coordonnées',
+    'tip resume':      'voir mon CV',
+    'tip talk':        'échangeons',
   },
 };
 
@@ -108,7 +108,7 @@ function Tooltip({ label, isDark, offset = 8 }) {
   const txt = isDark ? '#1f1f1f' : '#f6f6f6';
   return (
     <div style={{ top: `calc(100% + ${offset}px)` }} className="absolute left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center">
-      <svg width="12" height="6" viewBox="0 0 12 6" className="shrink-0 relative z-[1]" style={{ display:'block', marginBottom:'-1px' }}>
+      <svg width="12" height="6" viewBox="0 0 12 6" aria-hidden="true" className="shrink-0 relative z-[1]" style={{ display:'block', marginBottom:'-1px' }}>
         <path d={`M0,6 L5.2,0.9 Q6,0 6.8,0.9 L12,6 Z`} fill={bg} />
       </svg>
       <div style={{ background: bg, color: txt }} className="relative z-0 text-[15px] font-semibold leading-4 px-3 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
@@ -210,6 +210,14 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
     { key: 'extended reality', to: null,                       locked: true  },
     { key: 'holograms',        to: null,                       locked: true  },
   ];
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      dropdownRef.current?.querySelector('[role="menuitem"]:not([aria-disabled="true"])')?.focus();
+    }, 0);
+    return () => clearTimeout(id);
+  }, [dropdownRef]);
+
   return createPortal(
     <div
       id="projects-menu"
@@ -223,7 +231,17 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
         {items.map(({ key, to, locked }) => (
           <li key={key} role="none" className={locked ? 'opacity-[0.32]' : ''}>
             {to ? (
-              <Link to={to} onClick={onClose} role="menuitem" className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors">
+              <Link
+                to={to}
+                onClick={onClose}
+                role="menuitem"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') { e.preventDefault(); onClose(); anchorRef?.current?.querySelector('button')?.focus(); }
+                  else if (e.key === 'Tab') { onClose(); }
+                }}
+                className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
+              >
                 <div className="size-6 shrink-0 flex items-center justify-center">
                   <img src={imgArrowRight} alt="" width={16} height={16} style={{ transform:'none' }} />
                 </div>
@@ -250,6 +268,14 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
   const portalStyle = usePortalPosition(anchorRef, { offsetTop: 11, align: 'right' });
   const other = lang === 'en' ? 'fr' : 'en';
   const handleSelect = () => { toggleLang(); onClose(); };
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      dropdownRef.current?.querySelector('[role="menuitem"]')?.focus();
+    }, 0);
+    return () => clearTimeout(id);
+  }, [dropdownRef]);
+
   return createPortal(
     <div
       id="language-menu"
@@ -261,7 +287,16 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
     >
       <ul role="none" className="p-2">
         <li role="none">
-          <button role="menuitem" onClick={handleSelect} className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer transition-colors whitespace-nowrap">
+          <button
+            role="menuitem"
+            tabIndex={0}
+            onClick={handleSelect}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') { e.preventDefault(); onClose(); anchorRef?.current?.querySelector('button')?.focus(); }
+              else if (e.key === 'Tab') { onClose(); }
+            }}
+            className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
+          >
             <Flag code={other === 'en' ? 'gb' : 'fr'} />
             <span className="font-semibold text-base leading-6 text-[#1f1f1f] dark:text-white">{other === 'en' ? 'GB' : 'FR'}</span>
           </button>
@@ -322,10 +357,11 @@ function NavLink({ to, label, currentPage, tooltip, isDark }) {
     <li className="relative">
       <Link
         to={to}
+        tabIndex={0}
         onClick={handleClick}
         onMouseEnter={showTip}
         onMouseLeave={hideTip}
-        className={`flex items-center justify-center h-8 px-4 rounded-[12px] transition-colors ${
+        className={`flex items-center justify-center h-8 px-4 rounded-[12px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
           isActive
             ? 'bg-[#161616] dark:bg-white'
             : 'active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
@@ -389,11 +425,12 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
         <a
           data-spring
           href="/"
+          tabIndex={0}
           onClick={handleLogoClick}
           aria-label="Atelier Digital, back to top"
           onMouseEnter={showLogoTip}
           onMouseLeave={hideLogoTip}
-          className="flex items-center p-2 rounded-3xl group"
+          className="flex items-center p-2 rounded-3xl group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
         >
           <div className="flex items-center gap-1 py-1 pl-1 pr-3 rounded-[20px] group-hover:bg-black/[0.04] dark:group-hover:bg-white/[0.08] transition-colors">
             <img src={imgLogo} alt="" width={24} height={24} className="shrink-0" />
@@ -466,7 +503,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
   return (
     <div className="w-full flex flex-col items-center gap-4">
       <div className="w-full flex items-center justify-between backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] pr-2">
-        <a data-spring href="/" onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-1 rounded-3xl">
+        <a data-spring href="/" tabIndex={0} onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-1 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]">
           <div className="flex items-center gap-1 pl-1 pr-4 py-1 rounded-[20px]">
             <img src={imgLogo} alt="" width={36} height={36} className="shrink-0" />
             <span className="font-bold text-base text-[#1f1f1f] dark:text-white whitespace-nowrap leading-4" style={{ letterSpacing:'-0.8px' }}>

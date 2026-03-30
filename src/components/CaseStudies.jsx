@@ -26,6 +26,7 @@ const T = {
     restricted:    'Restricted access',
     restrictedBody:'Get in touch to learn more\nabout this project.',
     restrictedCta: 'email',
+    viewCaseStudy: 'view case study',
     cards: [
       {
         bg:           imgBgSales,
@@ -68,6 +69,7 @@ const T = {
     restricted:    'Accès restreint',
     restrictedBody:'Prenez contact pour en savoir plus\nsur ce projet.',
     restrictedCta: 'envoyer un email',
+    viewCaseStudy: "voir l'étude de cas",
     cards: [
       {
         bg:           imgBgSales,
@@ -187,12 +189,21 @@ function CsCard({ card, t }) {
 
   if (card.cta === 'go') {
     return (
-      <li data-spring className="relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer">
+      <li data-spring className="group/card relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer">
         {/* Inner wrapper carries overflow-hidden so the spring scale on the li isn't clipped */}
         <div className="absolute inset-0 rounded-[28px] sm:rounded-[32px] overflow-hidden group bg-[#fff]">
           {inner}
         </div>
         <Link to={card.href} className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white rounded-[28px] sm:rounded-[32px]" aria-label={card.title} />
+        {/* Tooltip below the arrow button — outside overflow-hidden, triggered by group/card hover */}
+        <div className="absolute top-full right-3 sm:right-3.5 lg:right-4 pt-2 z-20 pointer-events-none opacity-0 group-hover/card:opacity-100 group-hover/card:delay-[600ms] transition-opacity duration-200 flex flex-col items-end">
+          <svg width="12" height="6" viewBox="0 0 12 6" aria-hidden="true" className="shrink-0 relative z-[1] mr-3 sm:mr-3.5 lg:mr-4" style={{ display: 'block', marginBottom: '-1px' }}>
+            <path d="M0,6 L5.2,0.9 Q6,0 6.8,0.9 L12,6 Z" className="fill-[#1f1f1f] dark:fill-[#f6f6f6]" />
+          </svg>
+          <div className="relative z-0 bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-semibold leading-4 px-3 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+            {t.viewCaseStudy}
+          </div>
+        </div>
       </li>
     );
   }
@@ -313,7 +324,7 @@ function CaseStudies({ lang }) {
         ref={trackRef}
         onScroll={handleScroll}
         className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
-        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '28px', paddingBottom: '28px', touchAction: 'pan-x pan-y' }}
+        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '28px', paddingBottom: '52px', touchAction: 'pan-x pan-y' }}
         aria-label={t.heading}
       >
         {cards.map((card, i) => <CsCard key={i} card={card} t={t} />)}

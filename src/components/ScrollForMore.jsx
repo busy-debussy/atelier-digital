@@ -3,7 +3,7 @@ import imgChevronDown from '../assets/icons/icon-chevron-down.svg';
 
 const T = {
   en: 'Scroll for more',
-  fr: 'Défiler pour voir plus',
+  fr: 'Faire défiler',
 };
 
 export default function ScrollForMore({ lang, scrollTarget }) {

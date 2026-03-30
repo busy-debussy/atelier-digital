@@ -33,7 +33,7 @@ const T = {
       title: 'Paper version',
       description: 'View a print-friendly A4-size version of this résumé.',
       buttonLabel: 'Download PDF',
-      action: { type: 'download', href: '/cv.pdf' },
+      action: { type: 'download', href: 'https://drive.google.com/uc?export=download&id=1lYUG7b85P9nuI5KAIs16Zbxf0S8dyXpZ' },
     },
     resumeCard: {
       icon: imgPortrait, iconDark: imgPortrait,
@@ -66,7 +66,7 @@ const T = {
       title: 'Version papier',
       description: 'Lire la version A4 imprimable de ce curriculum vitae.',
       buttonLabel: 'Télécharger PDF',
-      action: { type: 'download', href: '/cv.pdf' },
+      action: { type: 'download', href: 'https://drive.google.com/uc?export=download&id=1lYUG7b85P9nuI5KAIs16Zbxf0S8dyXpZ' },
     },
     resumeCard: {
       icon: imgPortrait, iconDark: imgPortrait,
@@ -86,20 +86,20 @@ const T = {
 };
 
 // ── Card button ───────────────────────────────────────────────────────────────
-const btnClass = 'block w-full py-3 sm:py-[14px] lg:py-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[20px] sm:text-[22px] lg:text-[24px] leading-6 sm:leading-7 lg:leading-8 text-center transition-colors border border-[#5289f2] after:absolute after:inset-0 after:content-[\'\']';
+const btnClass = 'block w-full py-3 sm:py-[14px] lg:py-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[20px] sm:text-[22px] lg:text-[24px] leading-6 sm:leading-7 lg:leading-8 text-center transition-colors border border-[#5289f2] after:absolute after:inset-0 after:content-[\'\'] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0152EC]';
 
 const liHref = () => ['https://www.link','edin.com','/in/','dav','idvi','all','ard'].join('');
 
 function CardButton({ action, label }) {
   if (action.type === 'email')
-    return <a href={action.href} className={btnClass}>{label}</a>;
+    return <a tabIndex={0} href={action.href} className={btnClass}>{label}</a>;
   if (action.type === 'download')
-    return <a href={action.href} download aria-label={`${label} (direct)`} className={btnClass}>{label}</a>;
+    return <a tabIndex={0} href={action.href} download aria-label={`${label} (direct)`} className={btnClass}>{label}</a>;
   if (action.type === 'link')
-    return <Link to={action.href} className={btnClass}>{label}</Link>;
+    return <Link tabIndex={0} to={action.href} className={btnClass}>{label}</Link>;
   if (action.type === 'linkedin')
     return <button onClick={() => window.open(liHref(), '_blank', 'noopener,noreferrer')} className={`${btnClass} cursor-pointer`}>{label}<span className="sr-only">{' (opens in new tab)'}</span></button>;
-  return <a href={action.href} target="_blank" rel="noopener noreferrer" className={btnClass}>{label}</a>;
+  return <a tabIndex={0} href={action.href} target="_blank" rel="noopener noreferrer" className={btnClass}>{label}</a>;
 }
 
 // ── Single card ───────────────────────────────────────────────────────────────
@@ -249,6 +249,11 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
       <ul
         ref={trackRef}
         onScroll={handleScroll}
+        onFocus={(e) => {
+          const items = Array.from(trackRef.current?.children ?? []).filter(c => !c.getAttribute('aria-hidden'));
+          const idx = items.findIndex(c => c.contains(e.target));
+          if (idx >= 0) scrollToCard(idx);
+        }}
         className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
         style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '28px', paddingBottom: '28px', touchAction: 'pan-x pan-y' }}
         aria-label={t.heading}

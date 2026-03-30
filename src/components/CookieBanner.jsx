@@ -95,9 +95,14 @@ function CookieBanner({ lang }) {
       >
         <span className="text-[16px] leading-none">🍪</span>
       </button>
-      <span className="pointer-events-none absolute bottom-full left-0 mb-2 px-2.5 py-1 rounded-lg bg-white dark:bg-[#1f1f1f] border border-black/[0.08] dark:border-white/[0.08] shadow-sm text-[12px] font-medium text-[#1f1f1f] dark:text-[#f6f6f6] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-        {t.label}
-      </span>
+      <div className="pointer-events-none absolute bottom-[calc(100%+8px)] left-0 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200 flex flex-col items-start">
+        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[15px] font-semibold leading-4 px-3 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+          {t.label}
+        </div>
+        <svg width="12" height="6" viewBox="0 0 12 6" aria-hidden="true" className="shrink-0 ml-3" style={{ display: 'block', marginTop: '-1px' }}>
+          <path d="M0,0 L5.2,5.1 Q6,6 6.8,5.1 L12,0 Z" className="fill-[#1f1f1f] dark:fill-[#f6f6f6]" />
+        </svg>
+      </div>
     </div>
   );
 
