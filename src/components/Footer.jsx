@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import imgLockIcon   from '../assets/icons/icon-lock-sm.svg';
 import imgArrowRight from '../assets/icons/icon-arrow-right-accent.svg';
 
@@ -74,11 +74,13 @@ function Locked({ label }) {
   );
 }
 
-function ObfuscatedEmail() {
+function ObfuscatedEmail({ lang }) {
   const u = 'd', d = 'AtelierDigital.co.uk';
+  const subject = lang === 'fr' ? 'Prise de contact' : 'Getting in touch';
   return (
     <button
-      onClick={() => window.location.href = `mailto:${u}@${d}`}
+      data-spring
+      onClick={() => window.location.href = `mailto:${u}@${d}?subject=${encodeURIComponent(subject)}`}
       className={`${muted} ${hover} ${row} text-left cursor-pointer`}
     >
       <span className="sr-only">Send an email to David</span>
@@ -91,11 +93,19 @@ function Footer({ lang }) {
   const t = T[lang];
   const year = new Date().getFullYear();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  // Delay hash-link navigation so the spring press animation is visible before the page scrolls
+  const delayedNav = (to) => (e) => {
+    e.preventDefault();
+    setTimeout(() => navigate(to), 140);
+  };
 
   const legalLink = (to, label) => {
     const isActive = pathname === to;
     return (
       <Link
+        data-spring
         to={to}
         onClick={() => { if (isActive) window.scrollTo({ top: 0, behavior: 'smooth' }); }}
         className={`px-4 py-1 rounded-lg transition-colors ${
@@ -120,10 +130,10 @@ function Footer({ lang }) {
             <ul className="flex flex-col sm:flex-row gap-6 sm:gap-10 lg:gap-16">
 
               <li className="flex flex-col">
-                <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row}`}>{t.home}</Link>
+                <Link data-spring to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row}`}>{t.home}</Link>
                 <ul>
-                  <li><a href="/#case-studies" className={`${muted} ${hover} ${row}`}>{t.caseStudies}</a></li>
-                  <li><a href="/#collaborators" className={`${muted} ${hover} ${row}`}>{t.collaborators}</a></li>
+                  <li><Link data-spring to="/#case-studies" onClick={delayedNav('/#case-studies')} className={`${muted} ${hover} ${row}`}>{t.caseStudies}</Link></li>
+                  <li><Link data-spring to="/#collaborators" onClick={delayedNav('/#collaborators')} className={`${muted} ${hover} ${row}`}>{t.collaborators}</Link></li>
                 </ul>
               </li>
 
@@ -132,7 +142,7 @@ function Footer({ lang }) {
                 <ul>
                   <li><Locked label={t.digitalTwins} /></li>
                   <li>
-                    <Link to="/projects/sales-platform" onClick={() => { if (pathname === '/projects/sales-platform') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`flex items-center gap-1 ${muted} ${hover} ${row}`}>
+                    <Link data-spring to="/projects/sales-platform" onClick={() => { if (pathname === '/projects/sales-platform') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`flex items-center gap-1 ${muted} ${hover} ${row}`}>
                       <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
                       {t.salesPlatform}
                     </Link>
@@ -143,11 +153,11 @@ function Footer({ lang }) {
               </li>
 
               <li className="flex flex-col">
-                <Link to="/resume" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row}`}>{t.resume}</Link>
+                <Link data-spring to="/resume" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row}`}>{t.resume}</Link>
                 <ul>
-                  <li><a href="/resume#experience" className={`${muted} ${hover} ${row}`}>{t.experience}</a></li>
-                  <li><a href="/resume#expertise"  className={`${muted} ${hover} ${row}`}>{t.expertise}</a></li>
-                  <li><a href="/resume#education"  className={`${muted} ${hover} ${row}`}>{t.education}</a></li>
+                  <li><Link data-spring to="/resume#experience" onClick={delayedNav('/resume#experience')} className={`${muted} ${hover} ${row}`}>{t.experience}</Link></li>
+                  <li><Link data-spring to="/resume#expertise"  onClick={delayedNav('/resume#expertise')}  className={`${muted} ${hover} ${row}`}>{t.expertise}</Link></li>
+                  <li><Link data-spring to="/resume#education"  onClick={delayedNav('/resume#education')}  className={`${muted} ${hover} ${row}`}>{t.education}</Link></li>
                 </ul>
               </li>
 
@@ -160,9 +170,9 @@ function Footer({ lang }) {
             </h2>
             <ul className="flex flex-col">
               <li className={`${strong} ${row}`}>David V.</li>
-              <li><ObfuscatedEmail /></li>
-              <li><a href="https://maps.google.com/?q=55.9527025,-3.2038472" target="_blank" rel="noopener noreferrer" className={`${muted} ${hover} ${row}`}>{t.location}</a></li>
-              <li><a href="https://www.atelierdigital.co.uk" target="_blank" rel="noopener noreferrer" className={`${muted} ${hover} ${row}`}>www.AtelierDigital.co.uk</a></li>
+              <li><ObfuscatedEmail lang={lang} /></li>
+              <li><a data-spring href="https://maps.google.com/?q=55.9527025,-3.2038472" target="_blank" rel="noopener noreferrer" className={`${muted} ${hover} ${row}`}>{t.location}</a></li>
+              <li><a data-spring href="https://www.atelierdigital.co.uk" target="_blank" rel="noopener noreferrer" className={`${muted} ${hover} ${row}`}>www.AtelierDigital.co.uk</a></li>
             </ul>
           </div>
 

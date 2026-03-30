@@ -26,7 +26,7 @@ const T = {
       title: 'Hit my inbox',
       description: 'Let’s discuss how we can achieve great things together.',
       buttonLabel: 'Message',
-      action: { type: 'email', href: 'mailto:d@AtelierDigital.co.uk' },
+      action: { type: 'email', href: `mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent('Getting in touch')}` },
     },
     pdfCard: {
       icon: imgPortrait, iconDark: imgPortrait,
@@ -59,7 +59,7 @@ const T = {
       title: 'Échangeons',
       description: "Explorons ce que nous pouvons construire ensemble.",
       buttonLabel: 'Envoyer un email',
-      action: { type: 'email', href: 'mailto:d@AtelierDigital.co.uk' },
+      action: { type: 'email', href: `mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent('Prise de contact')}` },
     },
     pdfCard: {
       icon: imgPortrait, iconDark: imgPortrait,
@@ -92,14 +92,14 @@ const liHref = () => ['https://www.link','edin.com','/in/','dav','idvi','all','a
 
 function CardButton({ action, label }) {
   if (action.type === 'email')
-    return <a data-spring href={action.href} className={btnClass}>{label}</a>;
+    return <a href={action.href} className={btnClass}>{label}</a>;
   if (action.type === 'download')
-    return <a data-spring href={action.href} download aria-label={`${label} (direct)`} className={btnClass}>{label}</a>;
+    return <a href={action.href} download aria-label={`${label} (direct)`} className={btnClass}>{label}</a>;
   if (action.type === 'link')
-    return <Link data-spring to={action.href} className={btnClass}>{label}</Link>;
+    return <Link to={action.href} className={btnClass}>{label}</Link>;
   if (action.type === 'linkedin')
-    return <button data-spring onClick={() => window.open(liHref(), '_blank', 'noopener,noreferrer')} className={`${btnClass} cursor-pointer`}>{label}<span className="sr-only">{' (opens in new tab)'}</span></button>;
-  return <a data-spring href={action.href} target="_blank" rel="noopener noreferrer" className={btnClass}>{label}</a>;
+    return <button onClick={() => window.open(liHref(), '_blank', 'noopener,noreferrer')} className={`${btnClass} cursor-pointer`}>{label}<span className="sr-only">{' (opens in new tab)'}</span></button>;
+  return <a href={action.href} target="_blank" rel="noopener noreferrer" className={btnClass}>{label}</a>;
 }
 
 // ── Single card ───────────────────────────────────────────────────────────────
@@ -108,7 +108,7 @@ function ContactCard({ card, glass }) {
     ? 'backdrop-blur-[16px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)]'
     : 'bg-white dark:bg-[#141414]';
   return (
-    <li className={`relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] flex flex-col snap-center rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] ${cardBg} p-8 sm:p-9 lg:p-10 gap-8 sm:gap-9 lg:gap-10 motion-safe:transition-transform duration-200 motion-safe:hover:scale-[1.03] cursor-pointer`}>
+    <li data-spring className={`relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] flex flex-col snap-center rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] ${cardBg} p-8 sm:p-9 lg:p-10 gap-8 sm:gap-9 lg:gap-10 motion-safe:transition-transform duration-200 motion-safe:hover:scale-[1.03] cursor-pointer`}>
 
       <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
 
@@ -250,7 +250,7 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
         ref={trackRef}
         onScroll={handleScroll}
         className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
-        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '12px', paddingBottom: '12px', touchAction: 'pan-x pan-y' }}
+        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '28px', paddingBottom: '28px', touchAction: 'pan-x pan-y' }}
         aria-label={t.heading}
       >
         {cards.map((card, i) => <ContactCard key={i} card={card} glass={noBg} />)}

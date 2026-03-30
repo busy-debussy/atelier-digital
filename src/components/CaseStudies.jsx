@@ -12,7 +12,7 @@ import imgBgSales      from '../assets/photos/photo-cgi-interactive-platform.web
 import imgBgXR         from '../assets/photos/photo-xr-experiences.webp';
 import imgBgTwin       from '../assets/photos/photo-digital-twins.webp';
 
-// Nav button styles (mirrors other carousels)
+// Nav button styles
 const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer';
 const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]';
 const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]';
@@ -46,6 +46,7 @@ const T = {
         tint:         null,
         cta:          'locked',
         href:         null,
+        mailSubject:  'XR experiences — enquiry',
       },
       {
         bg:           imgBgTwin,
@@ -56,6 +57,7 @@ const T = {
         tint:         null,
         cta:          'locked',
         href:         null,
+        mailSubject:  'Digital twins — enquiry',
       },
     ],
   },
@@ -86,6 +88,7 @@ const T = {
         tint:         null,
         cta:          'locked',
         href:         null,
+        mailSubject:  "Expériences XR — plus d'infos",
       },
       {
         bg:           imgBgTwin,
@@ -96,6 +99,7 @@ const T = {
         tint:         null,
         cta:          'locked',
         href:         null,
+        mailSubject:  "Jumeaux numériques — plus d'infos",
       },
     ],
   },
@@ -167,7 +171,7 @@ function CsCard({ card, t }) {
             <p className="text-[14px] sm:text-[16px] lg:text-[18px] text-[#d6d6d6] leading-relaxed whitespace-pre-line">{t.restrictedBody}</p>
           </div>
           <a
-            href="mailto:d@AtelierDigital.co.uk"
+            href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(card.mailSubject)}`}
             onClick={(e) => e.stopPropagation()}
             data-spring
             className="mt-2 px-5 py-1.5 sm:px-6 sm:py-2 bg-[#0152ec] border border-[#5289f2] rounded-full text-white font-medium text-[14px] sm:text-[16px] hover:bg-[#0142cc] transition-colors"
@@ -179,22 +183,33 @@ function CsCard({ card, t }) {
     </>
   );
 
-  const liClass = 'relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] rounded-[28px] sm:rounded-[32px] overflow-hidden group snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer bg-[#111]';
+  const liClass = 'relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] rounded-[28px] sm:rounded-[32px] overflow-hidden group snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer bg-[#fff]';
 
   if (card.cta === 'go') {
     return (
-      <li className={liClass}>
-        {inner}
-        {/* Stretched link covers the full card */}
+      <li data-spring className="relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer">
+        {/* Inner wrapper carries overflow-hidden so the spring scale on the li isn't clipped */}
+        <div className="absolute inset-0 rounded-[28px] sm:rounded-[32px] overflow-hidden group bg-[#fff]">
+          {inner}
+        </div>
         <Link to={card.href} className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white rounded-[28px] sm:rounded-[32px]" aria-label={card.title} />
       </li>
     );
   }
 
+  const handleCardClick = () => {
+    if (window.matchMedia('(min-width: 640px)').matches) {
+      window.location.href = `mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(card.mailSubject)}`;
+    } else {
+      setShowRestricted(v => !v);
+    }
+  };
+
   return (
     <li
+      data-spring
       className={liClass}
-      onClick={() => setShowRestricted(v => !v)}
+      onClick={handleCardClick}
     >
       {inner}
     </li>
@@ -298,7 +313,7 @@ function CaseStudies({ lang }) {
         ref={trackRef}
         onScroll={handleScroll}
         className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
-        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '12px', paddingBottom: '12px', touchAction: 'pan-x pan-y' }}
+        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '28px', paddingBottom: '28px', touchAction: 'pan-x pan-y' }}
         aria-label={t.heading}
       >
         {cards.map((card, i) => <CsCard key={i} card={card} t={t} />)}

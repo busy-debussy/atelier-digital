@@ -321,6 +321,8 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
             overflowY: 'visible',
             scrollbarWidth: 'none',
             paddingLeft: carouselPl,
+            paddingTop: '20px',
+            paddingBottom: '20px',
             touchAction: 'pan-x pan-y',
           }}
           aria-label={t.heading}
@@ -328,10 +330,11 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
           {collaborators.map((collab, i) => (
             <li key={i} className="shrink-0 snap-center" style={{ scrollSnapStop: 'always' }}>
               <button
+                data-spring
                 onClick={(e) => openModal(i, e.currentTarget)}
                 aria-label={collab.name}
                 aria-haspopup="dialog"
-                className="w-[152px] h-[152px] sm:w-[176px] sm:h-[176px] lg:w-[200px] lg:h-[200px] flex items-center justify-center cursor-pointer motion-safe:transition-transform duration-200 sm:hover:scale-[1.06] active:scale-[0.97] rounded-[28px] sm:rounded-none border border-[#e0e0e0] dark:border-[#2a2a2a] sm:border-0 bg-white dark:bg-[#1f1f1f] sm:bg-transparent sm:dark:bg-transparent p-3 sm:p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
+                className="w-[152px] h-[152px] sm:w-[176px] sm:h-[176px] lg:w-[200px] lg:h-[200px] flex items-center justify-center cursor-pointer motion-safe:transition-transform duration-200 sm:hover:scale-[1.06] rounded-[28px] sm:rounded-none border border-[#e0e0e0] dark:border-[#2a2a2a] sm:border-0 bg-white dark:bg-[#1f1f1f] sm:bg-transparent sm:dark:bg-transparent p-3 sm:p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
               >
                 {collab.logo ? (
                   <>
@@ -383,6 +386,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
           >
             <div style={{ animation: 'modal-in 0.25s cubic-bezier(0.22,1,0.36,1) 0.35s both' }}>
               <button
+                data-spring
                 onClick={() => navigateModal(Math.max(0, activeModal - 1))}
                 disabled={activeModal === 0}
                 aria-label={t.navPrev}
@@ -395,10 +399,11 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
             {/* Card wrapper: shadow + rounded corners, overflow-hidden clips the sliding track */}
             <div
               className="relative flex-1 self-stretch overflow-hidden rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] bg-white dark:bg-[#2a2a2a] shadow-[0px_18px_20px_0px_rgba(0,0,0,0.06)]"
-              style={{ animation: 'modal-in 0.3s cubic-bezier(0.22,1,0.36,1) both' }}
+              style={{ animation: 'modal-card-in 0.5s cubic-bezier(0.34,1.56,0.64,1) both' }}
             >
               {/* Close button — sits above the track */}
               <button
+                data-spring
                 ref={closeButtonRef}
                 onClick={closeModal}
                 aria-label={t.close}
@@ -453,6 +458,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
 
             <div style={{ animation: 'modal-in 0.25s cubic-bezier(0.22,1,0.36,1) 0.35s both' }}>
               <button
+                data-spring
                 onClick={() => navigateModal(Math.min(collaborators.length - 1, activeModal + 1))}
                 disabled={activeModal === collaborators.length - 1}
                 aria-label={t.navNext}

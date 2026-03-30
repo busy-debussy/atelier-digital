@@ -250,6 +250,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
           <div className="mt-10 sm:mt-20 flex flex-col items-center gap-5 sm:gap-6">
             <FadeIn instant={skipAnim}>
               <Link
+                data-spring
                 to="/resume#experience"
                 className="group block border border-black/[0.08] dark:border-white/[0.08] hover:border-black/[0.18] dark:hover:border-white/[0.18] rounded-3xl px-6 py-5 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_20px_rgba(255,255,255,0.04)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2 cursor-pointer"
               >

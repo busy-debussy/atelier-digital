@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.3] — 2026-03-30
+
+### UI refinements
+- **Nav** — Résumé button shows filled active state (black/white) when on the résumé page
+- **Nav** — Logo tooltip: "back to top" on home page, "go to home page" on all other pages
+- **Nav** — Tooltips added to Projects, Résumé, and Let's talk buttons (desktop/tablet); tooltip Y offset unified across all nav items
+- **Footer** — Spring press effect on all sitemap and contact detail links; hash links use a 140 ms navigation delay so the animation is visible before the page scrolls
+- **Footer** — Spring press effect on Privacy, Cookies, and Terms buttons
+- **Case studies** — Locked cards (tablet/desktop) open mailto on click instead of toggling the restricted overlay; mobile toggle behaviour unchanged
+
+### Content
+- **Mailto** — Pre-composed subjects on all mailto links: card-specific for locked case study cards ("XR experiences — enquiry", "Digital twins — enquiry", with French variants); "Getting in touch" / "Prise de contact" for all generic contact buttons
+
+---
+
 ## [1.1.2] — 2026-03-30
 
 ### UI refinements

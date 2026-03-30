@@ -26,6 +26,11 @@ const T = {
     "let's talk":      "let's talk",
     home:              'home',
     'dark mode':       'dark mode',
+    'back to top':     'back to top',
+    'go home':         'go to home page',
+    'tip projects':    'open menu',
+    'tip resume':      'view CV',
+    'tip talk':        'contact details',
   },
   fr: {
     projects:          'projets',
@@ -37,6 +42,11 @@ const T = {
     "let's talk":      'coordonnées',
     home:              'accueil',
     'dark mode':       'mode sombre',
+    'back to top':     'retour en haut',
+    'go home':         "aller à l'accueil",
+    'tip projects':    'ouvrir le menu',
+    'tip resume':      'voir le CV',
+    'tip talk':        'coordonnées',
   },
 };
 
@@ -93,11 +103,11 @@ function usePortalPosition(anchorRef, { offsetTop = 11, align = 'left', offsetX 
 }
 
 // Tooltip
-function Tooltip({ label, isDark }) {
+function Tooltip({ label, isDark, offset = 8 }) {
   const bg  = isDark ? '#f6f6f6' : '#1f1f1f';
   const txt = isDark ? '#1f1f1f' : '#f6f6f6';
   return (
-    <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center">
+    <div style={{ top: `calc(100% + ${offset}px)` }} className="absolute left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center">
       <svg width="12" height="6" viewBox="0 0 12 6" className="shrink-0 relative z-[1]" style={{ display:'block', marginBottom:'-1px' }}>
         <path d={`M0,6 L5.2,0.9 Q6,0 6.8,0.9 L12,6 Z`} fill={bg} />
       </svg>
@@ -159,29 +169,35 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
           </>
         )}
       </button>
-      {tooltipVisible && <Tooltip label={T[lang]['dark mode'] ?? 'dark mode'} isDark={isDark} />}
+      {tooltipVisible && <Tooltip label={T[lang]['dark mode'] ?? 'dark mode'} isDark={isDark} offset={16} />}
     </div>
   );
 }
 
 // ProjectsButton
 function ProjectsButton({ isOpen, onClick, isDark, lang }) {
+  const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
   return (
-    <button
-      onClick={onClick}
-      aria-haspopup="menu"
-      aria-expanded={isOpen}
-      aria-controls={isOpen ? 'projects-menu' : undefined}
-      aria-label={isOpen ? `Close ${T[lang].projects} menu` : `Open ${T[lang].projects} menu`}
-      className={`flex items-center justify-center gap-2 h-8 w-[106px] rounded-[12px] cursor-pointer active:opacity-[0.33] transition-colors ${
-        isOpen ? 'bg-[#161616] dark:bg-white' : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
-      }`}
-    >
-      <span className={`font-medium text-base leading-6 whitespace-nowrap ${isOpen ? 'text-white dark:text-[#161616]' : 'text-black dark:text-white'}`}>
-        {T[lang].projects}
-      </span>
-      <Chevron isOpen={isOpen} isDark={isDark} />
-    </button>
+    <div className="relative">
+      <button
+        onClick={() => { hideTip(); onClick(); }}
+        onMouseEnter={showTip}
+        onMouseLeave={hideTip}
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        aria-controls={isOpen ? 'projects-menu' : undefined}
+        aria-label={isOpen ? `Close ${T[lang].projects} menu` : `Open ${T[lang].projects} menu`}
+        className={`flex items-center justify-center gap-2 h-8 w-[106px] rounded-[12px] cursor-pointer active:opacity-[0.33] transition-colors ${
+          isOpen ? 'bg-[#161616] dark:bg-white' : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
+        }`}
+      >
+        <span className={`font-medium text-base leading-6 whitespace-nowrap ${isOpen ? 'text-white dark:text-[#161616]' : 'text-black dark:text-white'}`}>
+          {T[lang].projects}
+        </span>
+        <Chevron isOpen={isOpen} isDark={isDark} />
+      </button>
+      {tooltipVisible && !isOpen && <Tooltip label={T[lang]['tip projects']} isDark={isDark} offset={16} />}
+    </div>
   );
 }
 
@@ -283,16 +299,19 @@ function LanguageButton({ isOpen, onClick, onClose, lang, toggleLang, isDark, la
         </span>
         <Chevron isOpen={isOpen} isDark={isDark} />
       </button>
-      {tooltipVisible && !isOpen && <Tooltip label="languages" isDark={isDark} />}
+      {tooltipVisible && !isOpen && <Tooltip label="languages" isDark={isDark} offset={16} />}
       {isOpen && <LanguageDropdown lang={lang} toggleLang={toggleLang} onClose={onClose} dropdownRef={langDropdownRef} anchorRef={containerRef} />}
     </div>
   );
 }
 
 // NavLink, pressed state on active page
-function NavLink({ to, label, currentPage }) {
+function NavLink({ to, label, currentPage, tooltip, isDark }) {
   const [path, hash] = to.split('#');
+  const isActive = currentPage === path && !hash;
+  const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
   const handleClick = () => {
+    hideTip();
     if (hash && currentPage === path) {
       document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' });
     } else if (currentPage === path && !hash) {
@@ -300,16 +319,23 @@ function NavLink({ to, label, currentPage }) {
     }
   };
   return (
-    <li>
+    <li className="relative">
       <Link
         to={to}
         onClick={handleClick}
-        className="flex items-center justify-center h-8 px-4 rounded-[12px] transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"
+        onMouseEnter={showTip}
+        onMouseLeave={hideTip}
+        className={`flex items-center justify-center h-8 px-4 rounded-[12px] transition-colors ${
+          isActive
+            ? 'bg-[#161616] dark:bg-white'
+            : 'active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
+        }`}
       >
-        <span className="font-medium text-base leading-6 whitespace-nowrap text-black dark:text-white">
+        <span className={`font-medium text-base leading-6 whitespace-nowrap ${isActive ? 'text-white dark:text-[#161616]' : 'text-black dark:text-white'}`}>
           {label}
         </span>
       </Link>
+      {tooltipVisible && tooltip && <Tooltip label={tooltip} isDark={isDark} offset={16} />}
     </li>
   );
 }
@@ -321,6 +347,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
   const location  = useLocation();
   const navigate  = useNavigate();
   const currentPage = location.pathname;
+  const [logoTipVisible, showLogoTip, hideLogoTip] = useDelayedTooltip(600);
   const navRef              = useRef(null);
   const projectsBtnRef      = useRef(null);
   const projectsDropdownRef = useRef(null);
@@ -358,14 +385,25 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
       className="flex items-center pr-2 backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16]"
       style={{ gap: isTablet ? '32px' : '192px' }}
     >
-      <a href="/" onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-2 rounded-3xl group">
-        <div className="flex items-center gap-1 py-1 pl-1 pr-3 rounded-[20px] group-hover:bg-black/[0.04] dark:group-hover:bg-white/[0.08] transition-colors active:opacity-[0.33]">
-          <img src={imgLogo} alt="" width={24} height={24} className="shrink-0" />
-          <span className="font-bold text-base leading-6 text-[#1f1f1f] dark:text-white whitespace-nowrap" style={{ letterSpacing:'-0.8px' }}>
-            ATELIER DIGITAL
-          </span>
-        </div>
-      </a>
+      <div className="relative">
+        <a
+          data-spring
+          href="/"
+          onClick={handleLogoClick}
+          aria-label="Atelier Digital, back to top"
+          onMouseEnter={showLogoTip}
+          onMouseLeave={hideLogoTip}
+          className="flex items-center p-2 rounded-3xl group"
+        >
+          <div className="flex items-center gap-1 py-1 pl-1 pr-3 rounded-[20px] group-hover:bg-black/[0.04] dark:group-hover:bg-white/[0.08] transition-colors">
+            <img src={imgLogo} alt="" width={24} height={24} className="shrink-0" />
+            <span className="font-bold text-base leading-6 text-[#1f1f1f] dark:text-white whitespace-nowrap" style={{ letterSpacing:'-0.8px' }}>
+              ATELIER DIGITAL
+            </span>
+          </div>
+        </a>
+        {logoTipVisible && <Tooltip label={currentPage === '/' ? T[lang]['back to top'] : T[lang]['go home']} isDark={isDark} />}
+      </div>
 
       <ol className={`flex items-center ${isTablet ? 'gap-2' : 'gap-4'}`}>
         <li className="relative" ref={projectsBtnRef}>
@@ -375,8 +413,8 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
           )}
         </li>
 
-        <NavLink to="/resume"  label={T[lang].résumé}       currentPage={currentPage} />
-        <NavLink to="/resume#contact" label={T[lang]["let's talk"]} currentPage={currentPage} />
+        <NavLink to="/resume"         label={T[lang].résumé}       currentPage={currentPage} tooltip={T[lang]['tip resume']} isDark={isDark} />
+        <NavLink to="/resume#contact" label={T[lang]["let's talk"]} currentPage={currentPage} tooltip={T[lang]['tip talk']}   isDark={isDark} />
 
         <li role="none" aria-hidden="true"><div className="w-px h-4 bg-black/[0.12] dark:bg-white/[0.12] shrink-0" /></li>
 
@@ -428,7 +466,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
   return (
     <div className="w-full flex flex-col items-center gap-4">
       <div className="w-full flex items-center justify-between backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] pr-2">
-        <a href="/" onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-1 rounded-3xl active:opacity-[0.33]">
+        <a data-spring href="/" onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-1 rounded-3xl">
           <div className="flex items-center gap-1 pl-1 pr-4 py-1 rounded-[20px]">
             <img src={imgLogo} alt="" width={36} height={36} className="shrink-0" />
             <span className="font-bold text-base text-[#1f1f1f] dark:text-white whitespace-nowrap leading-4" style={{ letterSpacing:'-0.8px' }}>

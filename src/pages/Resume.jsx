@@ -519,7 +519,7 @@ function SummarySection({ t, lang }) {
 
           <ul className="flex flex-col gap-4 sm:gap-3 w-56" aria-label="Contact and download">
             <li>
-              <a data-spring href="mailto:d@atelierdigital.co.uk" className={`${btnBase} w-full`}>
+              <a data-spring href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(lang === 'fr' ? 'Prise de contact' : 'Getting in touch')}`} className={`${btnBase} w-full`}>
                 <img src={imgSend} alt="" width={24} height={24} className="shrink-0 dark:invert" />
                 <span className={btnLabel}>{t.sendEmail}</span>
               </a>
