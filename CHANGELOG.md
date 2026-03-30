@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1] — 2026-03-30
+
+### Bug fixes
+- **Resume** — Fixed blank page caused by `lang` prop missing from `SummarySection`
+
+---
+
 ## [1.1.0] — 2026-03-30
 
 ### New features

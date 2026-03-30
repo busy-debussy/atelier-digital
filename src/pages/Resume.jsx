@@ -499,7 +499,7 @@ const bodyMuted = 'text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-
 
 // ── Summary ────────────────────────────────────────────────────────────────────
 
-function SummarySection({ t }) {
+function SummarySection({ t, lang }) {
   const btnBase = 'flex items-center justify-center gap-2 px-3 py-2 rounded-2xl transition-colors bg-[#f6f6f6] dark:bg-white/[0.07] sm:bg-transparent sm:dark:bg-transparent hover:bg-black/[0.04] dark:hover:bg-white/[0.08]';
   const btnLabel = 'font-medium text-[18px] sm:text-[20px] text-[#1f1f1f] dark:text-[#f6f6f6] whitespace-nowrap';
 
@@ -1408,7 +1408,7 @@ function Resume({ lang }) {
           </div>
 
           {/* 1. Summary */}
-          <SummarySection t={t} />
+          <SummarySection t={t} lang={lang} />
 
         </div>
 
