@@ -99,8 +99,8 @@ const T = {
 };
 
 // Nav button styles (same as other carousels)
-const navBtnClass      = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none cursor-pointer active:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]';
-const modalNavBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-[0.15] disabled:cursor-default disabled:pointer-events-none cursor-pointer active:opacity-70';
+const navBtnClass      = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]';
+const modalNavBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-[0.15] disabled:cursor-default disabled:pointer-events-none cursor-pointer';
 const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-hover:brightness-100 dark:brightness-100 dark:group-hover:brightness-0 transition-[filter]';
 const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-hover:brightness-0 group-hover:invert dark:brightness-0 dark:invert dark:group-hover:brightness-100 dark:group-hover:invert-0 transition-[filter]';
 
@@ -353,6 +353,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
         {/* Normal nav, below track, reduced gap */}
         <div {...(activeModal !== null ? { inert: '' } : {})} className={`flex items-center justify-end gap-2 sm:gap-3 lg:gap-4 mt-6 sm:mt-4 pr-6 sm:pr-28 lg:pr-52 ${activeModal !== null ? 'invisible' : ''}`}>
           <button
+            data-spring
             onClick={() => scrollToIndex(Math.max(0, activeIndex - getStep()))}
             disabled={activeIndex === 0}
             aria-label={t.navPrev}
@@ -361,6 +362,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
             <img src={imgChevronLeft} alt="" width={20} height={20} className={chevL} />
           </button>
           <button
+            data-spring
             onClick={() => scrollToIndex(Math.min(collaborators.length - 1, activeIndex + getStep()))}
             disabled={activeIndex === collaborators.length - 1}
             aria-label={t.navNext}

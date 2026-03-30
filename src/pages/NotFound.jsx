@@ -62,7 +62,8 @@ export default function NotFound({ lang }) {
       {/* CTA */}
       <Link
         to="/"
-        className="px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] active:opacity-80 text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
+        data-spring
+        className="px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
       >
         {t.cta}
       </Link>

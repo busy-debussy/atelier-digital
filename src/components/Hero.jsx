@@ -298,13 +298,15 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                   const mobile = window.matchMedia('(max-width: 639px)').matches;
                   document.getElementById('case-studies')?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: mobile ? 'center' : 'start' });
                 }}
-                className="px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] active:scale-[1.05] sm:active:scale-[0.95] active:opacity-75 text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-[background-color,transform,opacity] duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
+                data-spring
+                className="px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
               >
                 {btnCases}
               </a>
               <Link
                 to="/resume"
-                className="px-6 py-3 active:scale-[1.05] sm:active:scale-[0.95] active:opacity-75 text-[#0152EC] hover:text-[#0142cc] dark:text-[#7aabff] dark:hover:text-[#9ec0ff] font-medium text-[15px] sm:text-[16px] rounded-full transition-[color,transform,opacity] duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
+                data-spring
+                className="px-6 py-3 text-[#0152EC] hover:text-[#0142cc] dark:text-[#7aabff] dark:hover:text-[#9ec0ff] font-medium text-[15px] sm:text-[16px] rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
               >
                 {btnCV}
               </Link>

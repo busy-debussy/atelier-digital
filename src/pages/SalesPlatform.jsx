@@ -887,6 +887,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
       <button
         onClick={onClose}
         aria-label={closeLbl}
+        data-spring
         className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
       >
         <img src={imgClose} alt="" width={20} height={20} className="brightness-0 invert" />
@@ -894,6 +895,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
 
       {/* Prev */}
       <button
+        data-spring
         onClick={() => scrollToSlide(Math.max(0, index - 1))}
         disabled={index === 0}
         aria-label={prevLbl}
@@ -904,6 +906,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
 
       {/* Next */}
       <button
+        data-spring
         onClick={() => scrollToSlide(Math.min(slides.length - 1, index + 1))}
         disabled={index === slides.length - 1}
         aria-label={nextLbl}
@@ -1010,10 +1013,10 @@ function ConceptsCarousel({ lang, isDark }) {
             ); })}
           </div>
           <div className="flex items-center gap-2 sm:gap-3 justify-self-end">
-            <button onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
               <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter] forced-colors:brightness-[unset]" />
             </button>
-            <button onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
               <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter] forced-colors:brightness-[unset] forced-colors:invert-0" />
             </button>
           </div>
@@ -1212,10 +1215,10 @@ function WireframesCarousel({ lang, isDark }) {
             ); })}
           </div>
           <div className="flex items-center gap-2 sm:gap-3 justify-self-end">
-            <button onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
               <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter] forced-colors:brightness-[unset]" />
             </button>
-            <button onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
               <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter] forced-colors:brightness-[unset] forced-colors:invert-0" />
             </button>
           </div>
@@ -1374,10 +1377,10 @@ function HifiCarousel({ lang, isDark }) {
             ); })}
           </div>
           <div className="flex items-center gap-2 sm:gap-3 justify-self-end">
-            <button onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
               <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter] forced-colors:brightness-[unset]" />
             </button>
-            <button onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
               <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter] forced-colors:brightness-[unset] forced-colors:invert-0" />
             </button>
           </div>

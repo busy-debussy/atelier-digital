@@ -105,7 +105,6 @@ const T = {
           { name: 'Figma',      icon: imgToolFigma },
           { name: 'Claude Code', icon: imgToolClaude, noBg: true },
           { name: 'GitHub',     icon: imgToolGitHub, noBg: true, darkInvert: true },
-          { name: 'Adobe XD',  icon: imgToolXD },
           { name: 'Bezi',      icon: imgToolBezi },
         ],
       },
@@ -325,7 +324,6 @@ const T = {
           { name: 'Figma',      icon: imgToolFigma },
           { name: 'Claude Code', icon: imgToolClaude, noBg: true },
           { name: 'GitHub',     icon: imgToolGitHub, noBg: true, darkInvert: true },
-          { name: 'Adobe XD',  icon: imgToolXD },
           { name: 'Bezi',      icon: imgToolBezi },
         ],
       },
@@ -521,13 +519,13 @@ function SummarySection({ t, lang }) {
 
           <ul className="flex flex-col gap-4 sm:gap-3 w-56" aria-label="Contact and download">
             <li>
-              <a href="mailto:d@atelierdigital.co.uk" className={`${btnBase} w-full`}>
+              <a data-spring href="mailto:d@atelierdigital.co.uk" className={`${btnBase} w-full`}>
                 <img src={imgSend} alt="" width={24} height={24} className="shrink-0 dark:invert" />
                 <span className={btnLabel}>{t.sendEmail}</span>
               </a>
             </li>
             <li>
-              <button onClick={() => window.open(['https://www.link','edin.com','/in/','dav','idvi','all','ard'].join(''), '_blank', 'noopener,noreferrer')} aria-label={`${t.connect} — LinkedIn`} className={`${btnBase} w-full cursor-pointer`}>
+              <button data-spring onClick={() => window.open(['https://www.link','edin.com','/in/','dav','idvi','all','ard'].join(''), '_blank', 'noopener,noreferrer')} aria-label={`${t.connect} — LinkedIn`} className={`${btnBase} w-full cursor-pointer`}>
                 <img src={imgLinkedIn} alt="" width={24} height={24} className="shrink-0 dark:invert" />
                 <span className={btnLabel}>{t.connect}</span>
               </button>
@@ -538,6 +536,7 @@ function SummarySection({ t, lang }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={lang === 'fr' ? 'Télécharger PDF via Google Drive' : 'Download PDF via Google Drive'}
+                data-spring
                 className="w-full flex items-center justify-center py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[18px] sm:text-[20px] rounded-2xl border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0152EC]"
               >
                 {t.downloadPdf}
@@ -775,8 +774,9 @@ function ExperienceSection({ t }) {
         <button
           onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
           disabled={activeIndex === 0}
+          data-spring
           aria-label={t.navPrev}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70"
+          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
         >
           <img
             src={imgChevronLeft}
@@ -787,8 +787,9 @@ function ExperienceSection({ t }) {
         <button
           onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + 1))}
           disabled={activeIndex === cards.length - 1}
+          data-spring
           aria-label={t.navNext}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70"
+          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
         >
           <img
             src={imgChevronRight}
@@ -969,8 +970,9 @@ function ExpertiseSection({ t }) {
         <button
           onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
           disabled={activeIndex === 0}
+          data-spring
           aria-label={t.xpNavPrev}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70"
+          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
         >
           <img src={imgChevronLeft} alt="" width={20} height={20}
             className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]"
@@ -979,8 +981,9 @@ function ExpertiseSection({ t }) {
         <button
           onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + 1))}
           disabled={activeIndex === cards.length - 1}
+          data-spring
           aria-label={t.xpNavNext}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70"
+          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
         >
           <img src={imgChevronRight} alt="" width={20} height={20}
             className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]"
@@ -1192,8 +1195,9 @@ function EducationSection({ t }) {
         <button
           onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
           disabled={activeIndex === 0}
+          data-spring
           aria-label={t.eduNavPrev}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70"
+          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
         >
           <img src={imgChevronLeft} alt="" width={20} height={20}
             className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]"
@@ -1202,8 +1206,9 @@ function EducationSection({ t }) {
         <button
           onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + 1))}
           disabled={activeIndex === cards.length - 1}
+          data-spring
           aria-label={t.eduNavNext}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70"
+          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
         >
           <img src={imgChevronRight} alt="" width={20} height={20}
             className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]"
@@ -1348,8 +1353,9 @@ function SkillsCertSection({ t }) {
               <button
                 onClick={() => scrollToCertPage(Math.max(0, activePage - 1))}
                 disabled={activePage === 0}
+                data-spring
                 aria-label={t.certNavPrev}
-                className="group p-2 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70"
+                className="group p-2 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
               >
                 <img src={imgChevronLeft} alt="" width={20} height={20}
                   className="brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]"
@@ -1358,8 +1364,9 @@ function SkillsCertSection({ t }) {
               <button
                 onClick={() => scrollToCertPage(Math.min(certPages.length - 1, activePage + 1))}
                 disabled={activePage === certPages.length - 1}
+                data-spring
                 aria-label={t.certNavNext}
-                className="group p-2 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70"
+                className="group p-2 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
               >
                 <img src={imgChevronRight} alt="" width={20} height={20}
                   className="group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]"

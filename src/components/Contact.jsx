@@ -11,7 +11,7 @@ import imgLinkedInDark  from '../assets/contact/qr-linkedin-dark.webp';
 import imgPortrait      from '../assets/photos/portrait.webp';
 
 // ── Styles ────────────────────────────────────────────────────────────────────
-const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70';
+const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer';
 const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]';
 const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]';
 
@@ -86,20 +86,20 @@ const T = {
 };
 
 // ── Card button ───────────────────────────────────────────────────────────────
-const btnClass = 'block w-full py-3 sm:py-[14px] lg:py-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-[#0152EC] hover:bg-[#0142cc] active:opacity-80 text-white font-medium text-[20px] sm:text-[22px] lg:text-[24px] leading-6 sm:leading-7 lg:leading-8 text-center transition-colors border border-[#5289f2] after:absolute after:inset-0 after:content-[\'\']';
+const btnClass = 'block w-full py-3 sm:py-[14px] lg:py-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[20px] sm:text-[22px] lg:text-[24px] leading-6 sm:leading-7 lg:leading-8 text-center transition-colors border border-[#5289f2] after:absolute after:inset-0 after:content-[\'\']';
 
 const liHref = () => ['https://www.link','edin.com','/in/','dav','idvi','all','ard'].join('');
 
 function CardButton({ action, label }) {
   if (action.type === 'email')
-    return <a href={action.href} className={btnClass}>{label}</a>;
+    return <a data-spring href={action.href} className={btnClass}>{label}</a>;
   if (action.type === 'download')
-    return <a href={action.href} download aria-label={`${label} (direct)`} className={btnClass}>{label}</a>;
+    return <a data-spring href={action.href} download aria-label={`${label} (direct)`} className={btnClass}>{label}</a>;
   if (action.type === 'link')
-    return <Link to={action.href} className={btnClass}>{label}</Link>;
+    return <Link data-spring to={action.href} className={btnClass}>{label}</Link>;
   if (action.type === 'linkedin')
-    return <button onClick={() => window.open(liHref(), '_blank', 'noopener,noreferrer')} className={`${btnClass} cursor-pointer`}>{label}<span className="sr-only">{' (opens in new tab)'}</span></button>;
-  return <a href={action.href} target="_blank" rel="noopener noreferrer" className={btnClass}>{label}</a>;
+    return <button data-spring onClick={() => window.open(liHref(), '_blank', 'noopener,noreferrer')} className={`${btnClass} cursor-pointer`}>{label}<span className="sr-only">{' (opens in new tab)'}</span></button>;
+  return <a data-spring href={action.href} target="_blank" rel="noopener noreferrer" className={btnClass}>{label}</a>;
 }
 
 // ── Single card ───────────────────────────────────────────────────────────────
@@ -260,6 +260,7 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
       {/* Nav — mobile/tablet only; desktop never needs it */}
       <div className="lg:hidden flex items-center justify-end gap-2 sm:gap-3 mt-4 sm:mt-5 pr-6 sm:pr-28">
         <button
+          data-spring
           onClick={() => scrollToCard(Math.max(0, activeIndex - getStep()))}
           disabled={activeIndex === 0}
           aria-label={t.navPrev}
@@ -268,6 +269,7 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
           <img src={imgChevronLeft} alt="" width={20} height={20} className={chevL} />
         </button>
         <button
+          data-spring
           onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + getStep()))}
           disabled={activeIndex === cards.length - 1}
           aria-label={t.navNext}

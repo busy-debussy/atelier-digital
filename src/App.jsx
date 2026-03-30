@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { initSpringPress } from './utils/springPress';
 import { GA_ID, loadGoogleAnalytics, loadContentsquare } from './analytics';
 import Nav from './components/Nav';
 import ScrollForMore from './components/ScrollForMore';
@@ -52,6 +53,8 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
 function App() {
   const [isDark, setIsDark] = useState(false);
   const [lang, setLang] = useState('en');
+
+  useEffect(() => initSpringPress(), []);
 
   useEffect(() => {
     if (isDark) {

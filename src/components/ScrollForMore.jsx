@@ -49,6 +49,7 @@ export default function ScrollForMore({ lang, scrollTarget }) {
           }
         }}
         aria-label={label}
+        data-spring
         className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-colors motion-safe:animate-bounce cursor-pointer"
       >
         <img

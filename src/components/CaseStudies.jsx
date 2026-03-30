@@ -13,7 +13,7 @@ import imgBgXR         from '../assets/photos/photo-xr-experiences.webp';
 import imgBgTwin       from '../assets/photos/photo-digital-twins.webp';
 
 // Nav button styles (mirrors other carousels)
-const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer enabled:active:opacity-70';
+const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer';
 const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]';
 const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]';
 
@@ -169,7 +169,8 @@ function CsCard({ card, t }) {
           <a
             href="mailto:d@AtelierDigital.co.uk"
             onClick={(e) => e.stopPropagation()}
-            className="mt-2 px-5 py-1.5 sm:px-6 sm:py-2 bg-[#0152ec] border border-[#5289f2] rounded-full text-white font-medium text-[14px] sm:text-[16px] transition-colors hover:bg-[#0142cc]"
+            data-spring
+            className="mt-2 px-5 py-1.5 sm:px-6 sm:py-2 bg-[#0152ec] border border-[#5289f2] rounded-full text-white font-medium text-[14px] sm:text-[16px] hover:bg-[#0142cc] transition-colors"
           >
             {t.restrictedCta}
           </a>
@@ -307,6 +308,7 @@ function CaseStudies({ lang }) {
       {/* Nav, mobile/tablet only */}
       <div className="lg:hidden flex items-center justify-end gap-2 sm:gap-3 mt-4 sm:mt-5 pr-6 sm:pr-28">
         <button
+          data-spring
           onClick={() => scrollToCard(Math.max(0, activeIndex - getStep()))}
           disabled={activeIndex === 0}
           aria-label={t.navPrev}
@@ -315,6 +317,7 @@ function CaseStudies({ lang }) {
           <img src={imgChevronLeft} alt="" width={20} height={20} className={chevL} />
         </button>
         <button
+          data-spring
           onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + getStep()))}
           disabled={activeIndex === cards.length - 1}
           aria-label={t.navNext}

@@ -436,7 +436,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
             </span>
           </div>
         </a>
-        <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} className="flex items-center p-[6px] active:opacity-[0.33]">
+        <button data-spring onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} className="flex items-center p-[6px]">
           <img
             src={menuOpen ? imgClose : imgHamburger}
             alt=""

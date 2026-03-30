@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2] — 2026-03-30
+
+### UI refinements
+- **Micro-interactions** — Replaced CSS `active:` scale with a JS spring-press system: fast snap on press (120ms ease-out), bouncy spring release (500ms overshoot). Mobile scales up, desktop scales down. Applied to all CTAs, carousel nav buttons, scroll-down, cookie, and hamburger buttons
+- **Resume** — Removed Adobe XD from Prototyping expertise card
+
+---
+
 ## [1.1.1] — 2026-03-30
 
 ### Bug fixes
