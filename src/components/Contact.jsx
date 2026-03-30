@@ -94,7 +94,7 @@ function CardButton({ action, label }) {
   if (action.type === 'email')
     return <a href={action.href} className={btnClass}>{label}</a>;
   if (action.type === 'download')
-    return <a href={action.href} download className={btnClass}>{label}</a>;
+    return <a href={action.href} download aria-label={`${label} (direct)`} className={btnClass}>{label}</a>;
   if (action.type === 'link')
     return <Link to={action.href} className={btnClass}>{label}</Link>;
   if (action.type === 'linkedin')

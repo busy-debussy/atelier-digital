@@ -31,6 +31,7 @@ export default function NotFound({ lang }) {
     >
       {/* Giant 404 */}
       <div className="relative mb-6">
+        <span className="sr-only">{t.code}</span>
         <span
           aria-hidden="true"
           className="block text-[160px] sm:text-[220px] lg:text-[280px] font-bold leading-none tracking-tighter text-black/[0.04] dark:text-white/[0.04] pointer-events-none"
@@ -38,7 +39,7 @@ export default function NotFound({ lang }) {
         >
           {t.code}
         </span>
-        <span className="absolute inset-0 flex items-center justify-center text-[72px] sm:text-[96px] lg:text-[120px] font-bold leading-none tracking-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
+        <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center text-[72px] sm:text-[96px] lg:text-[120px] font-bold leading-none tracking-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
           {t.code}
         </span>
       </div>

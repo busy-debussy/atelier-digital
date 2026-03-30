@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Footer from '../components/Footer';
 import imgHero           from '../assets/photos/photo-cgi-sales-platform-hero.webp';
+import imgHeroMobile     from '../assets/photos/photo-cgi-sales-platform-mobile.webp';
 import imgChevronUp      from '../assets/icons/icon-chevron-up.svg';
 import imgChevronLeft    from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight   from '../assets/icons/icon-chevron-right.svg';
@@ -305,12 +306,15 @@ function Hero({ lang }) {
     <section aria-labelledby="hero-heading" lang={lang} className="relative min-h-screen flex flex-col overflow-hidden">
 
       {/* Background image */}
-      <img
-        src={imgHero}
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover object-center"
-        draggable="false"
-      />
+      <picture className="absolute inset-0 w-full h-full">
+        <source media="(min-width: 640px)" srcSet={imgHero} />
+        <img
+          src={imgHeroMobile}
+          alt=""
+          className="w-full h-full object-cover object-center"
+          draggable="false"
+        />
+      </picture>
 
       {/* Gradient overlay, darkens bottom for text legibility */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
@@ -979,7 +983,7 @@ function ConceptsCarousel({ lang, isDark }) {
             <picture>
               <source media="(min-width: 1024px)" srcSet={slide.desktop} />
               <source media="(min-width: 640px)"  srcSet={slide.tablet} />
-              <img src={slide.mobile} alt={lang === 'fr' ? `Concept CGI, diapositive ${i + 1} sur ${slides.length}` : `CGI concept, slide ${i + 1} of ${slides.length}`} draggable="false" className="w-full h-auto" />
+              <img src={slide.mobile} alt={lang === 'fr' ? `Concept CGI, diapositive ${i + 1} sur ${slides.length}` : `CGI concept, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto" />
             </picture>
           </button>
         ))}
@@ -1181,7 +1185,7 @@ function WireframesCarousel({ lang, isDark }) {
           <button key={i} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Maquette filaire ${i + 1}` : `Expand: wireframe ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
             <picture>
               <source media="(min-width: 640px)" srcSet={slide.desktop} />
-              <img src={slide.mobile} alt={lang === 'fr' ? `Maquette filaire, diapositive ${i + 1} sur ${slides.length}` : `Wireframe mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" className="w-full h-auto" />
+              <img src={slide.mobile} alt={lang === 'fr' ? `Maquette filaire, diapositive ${i + 1} sur ${slides.length}` : `Wireframe mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto" />
             </picture>
           </button>
         ))}
@@ -1342,7 +1346,7 @@ function HifiCarousel({ lang, isDark }) {
               <picture>
                 <source media="(min-width: 1024px)" srcSet={slide.desktop} />
                 <source media="(min-width: 640px)" srcSet={slide.tablet} />
-                <img src={slide.mobile} alt={lang === 'fr' ? `Maquette haute-fidélité, diapositive ${i + 1} sur ${slides.length}` : `High-fidelity mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" className="w-full h-auto" />
+                <img src={slide.mobile} alt={lang === 'fr' ? `Maquette haute-fidélité, diapositive ${i + 1} sur ${slides.length}` : `High-fidelity mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto" />
               </picture>
             </button>
           ))}
@@ -1418,7 +1422,7 @@ function UiConceptCard({ card, isDark }) {
     <div className="rounded-xl sm:rounded-2xl overflow-hidden">
       <div className="aspect-[8/5] overflow-hidden">
         {card.img
-          ? <img src={card.img} alt={card.title} draggable="false" className="w-full h-full object-cover" />
+          ? <img src={card.img} alt={card.title} draggable="false" loading="lazy" className="w-full h-full object-cover" />
           : <div className="w-full h-full bg-[#e0e0e0] dark:bg-[#2a2a2a]" />
         }
       </div>

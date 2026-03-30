@@ -249,7 +249,10 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
         {showH3 && (
           <div className="mt-10 sm:mt-20 flex flex-col items-center gap-5 sm:gap-6">
             <FadeIn instant={skipAnim}>
-              <div className="border border-black/[0.08] dark:border-white/[0.08] rounded-3xl px-6 py-5 flex flex-col items-center gap-4 max-w-lg">
+              <Link
+                to="/resume#experience"
+                className="group block border border-black/[0.08] dark:border-white/[0.08] hover:border-black/[0.18] dark:hover:border-white/[0.18] rounded-3xl px-6 py-5 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_20px_rgba(255,255,255,0.04)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2 cursor-pointer"
+              >
                 <h3 className="text-[14px] sm:text-[15px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad]">
                   {expLabel}
                 </h3>
@@ -277,7 +280,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Link>
             </FadeIn>
             <div
               className="mt-8 sm:mt-10 flex gap-3"
@@ -287,12 +290,6 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                 transition: 'opacity 500ms cubic-bezier(0.22,1,0.36,1), transform 500ms cubic-bezier(0.22,1,0.36,1)',
               }}
             >
-              <Link
-                to="/resume"
-                className="px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] active:opacity-80 text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
-              >
-                {btnCV}
-              </Link>
               <a
                 href="#case-studies"
                 onClick={(e) => {
@@ -301,10 +298,16 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                   const mobile = window.matchMedia('(max-width: 639px)').matches;
                   document.getElementById('case-studies')?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: mobile ? 'center' : 'start' });
                 }}
-                className="px-6 py-3 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] active:opacity-80 text-[#0152EC] dark:text-[#7aabff] font-medium text-[15px] sm:text-[16px] rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
+                className="px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] active:opacity-80 text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
               >
                 {btnCases}
               </a>
+              <Link
+                to="/resume"
+                className="px-6 py-3 active:opacity-80 text-[#0152EC] hover:text-[#0142cc] dark:text-[#7aabff] dark:hover:text-[#9ec0ff] font-medium text-[15px] sm:text-[16px] rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
+              >
+                {btnCV}
+              </Link>
             </div>
           </div>
         )}

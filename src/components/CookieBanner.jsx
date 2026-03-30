@@ -90,7 +90,7 @@ function CookieBanner({ lang }) {
         aria-label={t.label}
         className="w-9 h-9 flex items-center justify-center rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] hover:scale-110 transition-transform cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
       >
-        <span aria-hidden="true" className="text-[16px] leading-none">🍪</span>
+        <span className="text-[16px] leading-none">🍪</span>
       </button>
       <span className="pointer-events-none absolute bottom-full left-0 mb-2 px-2.5 py-1 rounded-lg bg-white dark:bg-[#1f1f1f] border border-black/[0.08] dark:border-white/[0.08] shadow-sm text-[12px] font-medium text-[#1f1f1f] dark:text-[#f6f6f6] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150">
         {t.label}

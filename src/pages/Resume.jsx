@@ -41,6 +41,7 @@ import imgToolMiro         from '../assets/logos/tools/logo-miro.webp';
 import imgToolNotion       from '../assets/logos/tools/logo-notion.svg';
 import imgToolGAnalytics   from '../assets/logos/tools/logo-google-analytics.webp';
 import imgToolClaude       from '../assets/logos/tools/logo-claude.svg';
+import imgToolGitHub       from '../assets/logos/tools/logo-github.svg';
 import Collaborations from '../components/Collaborations';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
@@ -103,6 +104,7 @@ const T = {
         tools: [
           { name: 'Figma',      icon: imgToolFigma },
           { name: 'Claude Code', icon: imgToolClaude, noBg: true },
+          { name: 'GitHub',     icon: imgToolGitHub, noBg: true, darkInvert: true },
           { name: 'Adobe XD',  icon: imgToolXD },
           { name: 'Bezi',      icon: imgToolBezi },
         ],
@@ -322,6 +324,7 @@ const T = {
         tools: [
           { name: 'Figma',      icon: imgToolFigma },
           { name: 'Claude Code', icon: imgToolClaude, noBg: true },
+          { name: 'GitHub',     icon: imgToolGitHub, noBg: true, darkInvert: true },
           { name: 'Adobe XD',  icon: imgToolXD },
           { name: 'Bezi',      icon: imgToolBezi },
         ],
@@ -534,6 +537,7 @@ function SummarySection({ t }) {
                 href="https://drive.google.com/uc?export=download&id=1lYUG7b85P9nuI5KAIs16Zbxf0S8dyXpZ"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={lang === 'fr' ? 'Télécharger PDF via Google Drive' : 'Download PDF via Google Drive'}
                 className="w-full flex items-center justify-center py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[18px] sm:text-[20px] rounded-2xl border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0152EC]"
               >
                 {t.downloadPdf}
@@ -577,8 +581,8 @@ function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
       <div className={`flex-1 flex items-center justify-center px-4 sm:px-5 lg:px-6 transition-opacity duration-300 ease-out ${anyOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         {card.logo ? (
           <>
-            <img src={card.logo} alt={card.company} className={`max-h-[66px] sm:max-h-[96px] lg:max-h-[104px] w-full object-contain ${card.logoDark ? 'dark:hidden' : ''}`} />
-            {card.logoDark && <img src={card.logoDark} alt={card.company} className="hidden dark:block max-h-[66px] sm:max-h-[96px] lg:max-h-[104px] w-full object-contain" />}
+            <img src={card.logo} alt={card.company} loading="lazy" width="300" height="104" className={`max-h-[66px] sm:max-h-[96px] lg:max-h-[104px] w-full object-contain ${card.logoDark ? 'dark:hidden' : ''}`} />
+            {card.logoDark && <img src={card.logoDark} alt={card.company} loading="lazy" width="300" height="104" className="hidden dark:block max-h-[66px] sm:max-h-[96px] lg:max-h-[104px] w-full object-contain" />}
           </>
         ) : (
           <span className="text-[18px] sm:text-[20px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6]">{card.company}</span>
@@ -830,7 +834,7 @@ function ToolIcon({ name, icon, noBg, darkInvert }) {
         className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex items-center justify-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${noBg ? 'rounded-lg' : 'rounded-[8px] sm:rounded-[10px] lg:rounded-[12px] overflow-hidden bg-[#f6f6f6] dark:bg-[#2a2a2a] shadow-[1px_1px_8px_0px_rgba(0,0,0,0.08)]'}`}
       >
         {icon
-          ? <img src={icon} alt={name} className={`w-full h-full ${noBg ? 'object-contain' : 'object-cover'} ${darkInvert ? 'dark:brightness-0 dark:invert' : ''}`} />
+          ? <img src={icon} alt={name} loading="lazy" className={`w-full h-full ${noBg ? 'object-contain' : 'object-cover'} ${darkInvert ? 'dark:brightness-0 dark:invert' : ''}`} />
           : <span className="text-[7px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-tight px-[2px]">{name}</span>
         }
       </button>
@@ -845,7 +849,7 @@ function ExpertiseCard({ card }) {
       <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
         <div className="w-16 h-16 sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] bg-white dark:bg-[#141414] flex items-center justify-center shrink-0 overflow-hidden">
           {card.icon
-            ? <img src={card.icon} alt="" width={64} height={64} className="sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 object-contain dark:brightness-0 dark:invert dark:opacity-[0.965]" />
+            ? <img src={card.icon} alt="" width={64} height={64} loading="lazy" className="sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 object-contain dark:brightness-0 dark:invert dark:opacity-[0.965]" />
             : <span className="text-[10px] text-[#5c5c5c] dark:text-[#adadad] font-medium text-center px-1">icon</span>
           }
         </div>
@@ -1008,8 +1012,8 @@ function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
       <div className={`flex-1 flex items-center justify-center px-4 sm:px-5 lg:px-6 transition-opacity duration-300 ease-out ${anyOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         {card.logo ? (
           <>
-            <img src={card.logo} alt={card.institution} className={`${card.logoClass ?? 'max-h-[66px] sm:max-h-[96px] lg:max-h-[104px]'} w-full object-contain ${card.logoDark ? 'dark:hidden' : ''}`} />
-            {card.logoDark && <img src={card.logoDark} alt={card.institution} className={`hidden dark:block ${card.logoClass ?? 'max-h-[66px] sm:max-h-[96px] lg:max-h-[104px]'} w-full object-contain`} />}
+            <img src={card.logo} alt={card.institution} loading="lazy" width="300" height="128" className={`${card.logoClass ?? 'max-h-[66px] sm:max-h-[96px] lg:max-h-[104px]'} w-full object-contain ${card.logoDark ? 'dark:hidden' : ''}`} />
+            {card.logoDark && <img src={card.logoDark} alt={card.institution} loading="lazy" width="300" height="128" className={`hidden dark:block ${card.logoClass ?? 'max-h-[66px] sm:max-h-[96px] lg:max-h-[104px]'} w-full object-contain`} />}
           </>
         ) : (
           <span className="text-[18px] sm:text-[20px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6]">{card.institution}</span>
@@ -1239,7 +1243,7 @@ function CertificationCard({ card }) {
         <div inert={flipped} className="flex flex-col items-center pt-3 sm:pt-[14px] lg:pt-4 pb-5 sm:pb-5 lg:pb-6 px-3 sm:px-[14px] lg:px-4 bg-white dark:bg-[#1f1f1f] rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] border border-[#d6d6d6] dark:border-[#2a2a2a] [backface-visibility:hidden]">
           <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-white dark:bg-[#1f1f1f] flex items-center justify-center mb-2 sm:mb-[10px] lg:mb-3 overflow-hidden shrink-0">
             {card.icon
-              ? <img src={card.icon} alt="" className={`w-full h-full object-contain${isSvg ? ' dark:brightness-0 dark:invert' : ''}`} />
+              ? <img src={card.icon} alt="" loading="lazy" className={`w-full h-full object-contain${isSvg ? ' dark:brightness-0 dark:invert' : ''}`} />
               : <span className="text-[8px] text-[#5c5c5c] dark:text-[#adadad]">icon</span>
             }
           </div>
@@ -1381,8 +1385,12 @@ function Resume({ lang }) {
 
   useEffect(() => {
     if (!hash) return;
-    const el = document.querySelector(hash);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const raf = requestAnimationFrame(() => {
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth' });
+    });
+    return () => cancelAnimationFrame(raf);
   }, [hash]);
 
   return (

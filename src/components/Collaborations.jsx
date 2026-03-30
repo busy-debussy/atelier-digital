@@ -193,10 +193,10 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
     setActiveModal(i);
     scrollToIndex(i);
   };
-  const closeModal = () => {
+  const closeModal = (restoreFocus = true) => {
     setActiveModal(null);
     modalIndexRef.current = null;
-    triggerRef.current?.focus();
+    if (restoreFocus) triggerRef.current?.focus();
   };
   const navigateModal = (i) => {
     const track = modalTrackRef.current;
@@ -278,6 +278,23 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
     };
   }, [activeModal]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Dismiss modal when user scrolls the section out of view
+  useEffect(() => {
+    if (activeModal === null) return;
+    const section = document.getElementById('collaborators');
+    if (!section) return;
+    let initialised = false;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (!initialised) { initialised = true; return; }
+        if (entry.intersectionRatio < 0.3) closeModal(false);
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(section);
+    return () => obs.disconnect();
+  }, [activeModal]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <section
       id="collaborators"
@@ -297,7 +314,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
         <ul
           ref={trackRef}
           onScroll={handleScroll}
-          {...(activeModal !== null ? { inert: '' } : {})}
+          {...(activeModal !== null ? { inert: '', 'aria-hidden': 'true' } : {})}
           className={`relative flex gap-8 snap-x snap-mandatory transition-[opacity,filter] duration-300 ${activeModal !== null ? 'opacity-[0.1] blur-sm' : 'opacity-100 blur-none'}`}
           style={{
             overflowX: 'auto',
@@ -383,13 +400,13 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                 ref={closeButtonRef}
                 onClick={closeModal}
                 aria-label={t.close}
-                className="group absolute top-3 right-3 lg:top-4 lg:right-4 z-10 flex items-center justify-center p-1.5 sm:p-2 rounded-full bg-[#1f1f1f] hover:bg-[#f6f6f6] dark:bg-[#f6f6f6] dark:hover:bg-[#2a2a2a] transition-[background-color] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+                className="group absolute top-3 right-3 lg:top-4 lg:right-4 z-10 flex items-center justify-center p-1.5 sm:p-2 rounded-full hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-[background-color] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
               >
                 <img
                   src={imgClose}
                   alt=""
                   width={16} height={16}
-                  className="sm:w-5 sm:h-5 brightness-0 invert group-hover:invert-0 dark:invert-0 dark:group-hover:invert transition-[filter] duration-150"
+                  className="sm:w-5 sm:h-5 brightness-0 group-hover:invert dark:invert dark:group-hover:brightness-0 dark:group-hover:invert-0 transition-[filter] duration-150"
                 />
               </button>
 
