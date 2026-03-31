@@ -30,3 +30,4 @@ dist-ssr
 
 # Work in progress — not ready to publish
 src/pages/XRExperiences.jsx
+.vercel
