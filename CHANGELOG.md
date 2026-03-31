@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.8] — 2026-03-31
+
+### New features
+- **OG image** — added `og-image.webp` (2400×1260px dark variant); wired up `og:image`, `og:image:width/height`, and `twitter:image` meta tags; upgraded Twitter card from `summary` to `summary_large_image`
+
+### UI refinements
+- **Hero — H2 subtitle** — each letter fades in individually (35ms stagger, 300ms opacity transition) instead of word-by-word; spaces preserved via `whiteSpace: pre`
+- **Hero — buttons** — fade in with opacity only, no upward movement
+- **Hero — emoji** — fixed replacement character (`<?>`) appearing mid-typing by splitting heading with `[...heading]` (Unicode code points) instead of `.slice()` (code units)
+- **Page load fade-in** — added 500ms opacity transition on mount to Privacy and Terms pages, consistent with Cookies
+
+---
+
 ## [1.1.7] — 2026-03-31
 
 ### UI refinements

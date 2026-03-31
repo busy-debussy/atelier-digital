@@ -191,7 +191,10 @@ function SecondaryNav({ sections, activeId }) {
 function Privacy({ lang }) {
   const t = T[lang];
   const [activeId, setActiveId] = useState('');
+  const [mounted,     setMounted]     = useState(false);
   const [scrolledDown, setScrolledDown] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
   const [atBottom,    setAtBottom]    = useState(false);
 
   useEffect(() => {
@@ -230,7 +233,7 @@ function Privacy({ lang }) {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:ring-2 focus:ring-[#0152EC] focus:bg-white focus:text-[#1f1f1f] focus:outline-none font-medium">
         {t.skipToMain}
       </a>
-      <main id="main-content" aria-label={t.title} className="bg-white dark:bg-[#1f1f1f] min-h-screen" tabIndex={-1}>
+      <main id="main-content" aria-label={t.title} className={`bg-white dark:bg-[#1f1f1f] min-h-screen transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`} tabIndex={-1}>
         <div className="px-6 flex flex-col items-center">
           <div className="flex items-start gap-10 w-full max-w-6xl">
             {/* Left spacer — smaller than the secondary nav to shift content left without losing all whitespace */}

@@ -24,7 +24,7 @@ function isAfterWorkHoursLocal() {
 const CARET_DELAY        = 1000;
 const TYPE_SPEED         = 50;
 const COMMA_PAUSE        = 500;
-const WORD_SPEED         = 120;
+const CHAR_SPEED         = 35;
 const AFTER_SUBTITLE     = COMMA_PAUSE;
 const AFTER_H3_MOUNT     = 50;   // rAF-style delay before fading in H3
 const AFTER_H3_VISIBLE   = 500;  // wait for H3 fade to finish
@@ -90,13 +90,13 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
     ? ['Digital twins', 'Design 3D', 'Accessibilité', 'Design systems', 'Vibe-coding', 'Stratégie UX']
     : ['Digital twins', '3D design', 'Accessibility', 'Design systems', 'Vibe-coding', 'UX strategy']
   );
-  const words = subtitle.split(' ');
+  const subtitleChars = [...subtitle];
 
   // Render gates, skip straight to final state if animation already played
-  const [displayed,     setDisplayed]     = useState(skipAnim ? heading : '');
-  const [typingDone,    setTypingDone]     = useState(skipAnim);
-  const [showSubtitle,  setShowSubtitle]   = useState(skipAnim);
-  const [visibleWords,  setVisibleWords]   = useState(skipAnim ? words.length : 0);
+  const [displayed,      setDisplayed]      = useState(skipAnim ? heading : '');
+  const [typingDone,     setTypingDone]     = useState(skipAnim);
+  const [showSubtitle,   setShowSubtitle]   = useState(skipAnim);
+  const [visibleChars,   setVisibleChars]   = useState(skipAnim ? subtitleChars.length : 0);
   const [showH3,        setShowH3]         = useState(skipAnim);
   const [visiblePills,  setVisiblePills]   = useState(skipAnim ? pills.length : 0);
   const [showButtons,   setShowButtons]    = useState(skipAnim);
@@ -123,11 +123,12 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
     setDisplayed('');
     setTypingDone(false);
     setShowSubtitle(false);
-    setVisibleWords(0);
+    setVisibleChars(0);
     setShowH3(false);
     setVisiblePills(0);
     setShowButtons(false);
 
+    const chars = [...heading]; // Split by Unicode code points so emoji aren't sliced mid-surrogate
     let i = 0;
     let paused = false;
 
@@ -135,12 +136,12 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
       const iv = setInterval(() => {
         if (paused) return;
         i++;
-        setDisplayed(heading.slice(0, i));
-        if (heading[i - 1] === ',') {
+        setDisplayed(chars.slice(0, i).join(''));
+        if (chars[i - 1] === ',') {
           paused = true;
           t(() => { paused = false; }, COMMA_PAUSE);
         }
-        if (i >= heading.length) {
+        if (i >= chars.length) {
           clearInterval(iv);
           setTypingDone(true);
         }
@@ -169,18 +170,18 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
   useEffect(() => {
     if (!showSubtitle) return;
     if (skipAnim) return;
-    let w = 0;
+    let c = 0;
     const iv = setInterval(() => {
-      w++;
-      setVisibleWords(w);
-      if (w >= words.length) clearInterval(iv);
-    }, WORD_SPEED);
+      c++;
+      setVisibleChars(c);
+      if (c >= subtitleChars.length) clearInterval(iv);
+    }, CHAR_SPEED);
     return () => clearInterval(iv);
   }, [showSubtitle]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // After subtitle done: mount H3+pills container → stagger pills → buttons
   useEffect(() => {
-    if (visibleWords < words.length) return;
+    if (visibleChars < subtitleChars.length) return;
     if (skipAnim) return;
     t(() => {
       setShowH3(true); // mounts H3 + pills container (pills all opacity-0)
@@ -198,7 +199,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
         timers.current.push(iv);
       }, AFTER_H3_MOUNT + AFTER_H3_VISIBLE);
     }, AFTER_SUBTITLE);
-  }, [visibleWords]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [visibleChars]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const caretBlinking = displayed.length === 0;
 
@@ -228,17 +229,16 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
               aria-label={subtitle}
               className="text-3xl md:text-5xl font-medium text-[#5c5c5c] dark:text-[#adadad]"
             >
-              {words.map((word, i) => (
+              {subtitleChars.map((char, i) => (
                 <span
                   key={i}
-                  className="inline-block mr-[0.25em]"
                   style={{
-                    opacity: i < visibleWords ? 1 : 0,
-                    transform: prefersReduced ? undefined : (i < visibleWords ? 'translateY(0px)' : 'translateY(10px)'),
-                    transition: 'opacity 500ms cubic-bezier(0.22,1,0.36,1), transform 500ms cubic-bezier(0.22,1,0.36,1)',
+                    opacity: i < visibleChars ? 1 : 0,
+                    transition: 'opacity 300ms cubic-bezier(0.22,1,0.36,1)',
+                    whiteSpace: 'pre',
                   }}
                 >
-                  {word}
+                  {char}
                 </span>
               ))}
             </h2>
@@ -292,8 +292,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
               className="mt-8 sm:mt-10 flex gap-3"
               style={{
                 opacity: showButtons ? 1 : 0,
-                transform: prefersReduced ? undefined : (showButtons ? 'translateY(0px)' : 'translateY(12px)'),
-                transition: 'opacity 500ms cubic-bezier(0.22,1,0.36,1), transform 500ms cubic-bezier(0.22,1,0.36,1)',
+                transition: 'opacity 500ms cubic-bezier(0.22,1,0.36,1)',
               }}
             >
               <a
