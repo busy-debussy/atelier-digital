@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0] — 2026-03-31
+
+### New features
+- **AI chatbot** — floating "Ask about my work" button (bottom-right, all pages); opens a glass-morphism chat panel powered by Claude Haiku via a Vercel serverless function; bilingual (responds in French if the visitor writes in French); limited to 6 turns per conversation; rate-limited to 10 requests per IP per hour; API key kept server-side, never exposed to the browser; CORS configured via `vercel.json`; `VITE_CHAT_API_URL` environment variable wired into GitHub Actions for production builds
+
+### Infrastructure
+- **Vercel** — added `api/chat.js` serverless function and `vercel.json` for CORS headers and SPA routing; site remains on GitHub Pages, Vercel serves the API only
+- **GitHub Actions** — `VITE_CHAT_API_URL` secret passed to Vite build so the chatbot calls the correct Vercel endpoint in production
+
+### Bug fixes
+- **Nav — iOS overscroll clipping** — nav bar no longer gets clipped when fast-scrolling to the top (rubber-band bounce); fixed by adding `transform: translateZ(0)` to the nav wrapper, forcing it into its own GPU compositing layer
+
+---
+
 ## [1.1.9] — 2026-03-31
 
 ### Bug fixes
