@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.6] — 2026-03-31
+
+### Analytics
+- **Microsoft Clarity** — replaced Hotjar/Content Square with Microsoft Clarity for heatmaps and session recordings; updated tracking script and `loadClarity()` function in `analytics.js`
+
+### Legal
+- **Cookies policy** — updated third-party tools section (EN + FR): Hotjar → Microsoft Clarity, updated privacy and terms links
+- **Privacy policy** — updated data collected, how collected, and third-party services sections (EN + FR)
+- **Last updated dates** — bumped to 2026-03-31 on Cookies and Privacy pages
+
+---
+
 ## [1.1.5] — 2026-03-31
 
 ### New features

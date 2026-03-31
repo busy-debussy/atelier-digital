@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-03-26');
+const LAST_UPDATED = new Date('2026-03-31');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -20,10 +20,10 @@ const T = {
     cookiesLink:  ['See ', 'Cookies Policy', ' for full details and management.'],
     sections: [
       { id: 'controller',     heading: 'Controller',                    nameBody: 'Name: David V.', contact: true },
-      { id: 'data-collected', heading: 'Personal data collected',       bullets: ['Essential technical data (e.g., cookie banner state, session preferences)', 'Analytics data (pages visited, time on page, device/browser type)', 'Behavioural insights (anonymised heat maps, session recordings via Hotjar by Content Square, only with consent)', 'Contact info if you email me (name, email)'] },
-      { id: 'how-collected',  heading: 'How data is collected',         bullets: ['Cookies and similar technologies', 'Analytics tools: Google Analytics (only if consented)', 'Behavioural tools: Hotjar by Content Square (only if consented)', 'Direct contact (email)'] },
+      { id: 'data-collected', heading: 'Personal data collected',       bullets: ['Essential technical data (e.g., cookie banner state, session preferences)', 'Analytics data (pages visited, time on page, device/browser type)', 'Behavioural insights (anonymised heat maps, session recordings via Microsoft Clarity, only with consent)', 'Contact info if you email me (name, email)'] },
+      { id: 'how-collected',  heading: 'How data is collected',         bullets: ['Cookies and similar technologies', 'Analytics tools: Google Analytics (only if consented)', 'Behavioural tools: Microsoft Clarity (only if consented)', 'Direct contact (email)'] },
       { id: 'legal-bases',    heading: 'Purposes and legal bases',      navLabel: 'Purposes and legal\nbases', bullets: ['Essential site functionality: legitimate interest', 'Analytics & site improvements: consent', 'Behavioural insights: consent', 'Communication: consent or legitimate interest depending on context'] },
-      { id: 'third-party',    heading: 'Third-party services',          bullets: ['Google Analytics: anonymous aggregated usage data. Opt-out available via cookie settings or Google opt-out tool.', 'Hotjar by Content Square: anonymised heat maps. Only enabled with consent.'] },
+      { id: 'third-party',    heading: 'Third-party services',          bullets: ['Google Analytics: anonymous aggregated usage data. Opt-out available via cookie settings or Google opt-out tool.', 'Microsoft Clarity: anonymised heat maps and session recordings. Only enabled with consent.'] },
       { id: 'cookies-track',  heading: 'Cookies and tracking',          cookiesLink: true },
       { id: 'retention',      heading: 'Data retention',                body: 'Data is retained only as long as necessary. Analytics data is stored in anonymised or aggregated form.' },
       { id: 'transfers',      heading: 'International transfers',       body: 'Data may be processed outside the EU/UK (e.g., Google servers). Appropriate safeguards are applied.' },
@@ -44,10 +44,10 @@ const T = {
     cookiesLink:  ['Voir la ', 'politique de cookies', ' pour tous les détails.'],
     sections: [
       { id: 'controller',     heading: 'Responsable du traitement',          nameBody: 'Nom : David V.', contact: true },
-      { id: 'data-collected', heading: 'Données personnelles collectées',    bullets: ["Données techniques essentielles (ex. : état de la bannière de cookies, préférences de session)", "Données analytiques (pages visitées, temps passé, type d'appareil/navigateur)", "Insights comportementaux (cartes de chaleur anonymisées via Hotjar by Content Square, uniquement avec consentement)", "Coordonnées si vous me contactez par e-mail (nom, e-mail)"] },
-      { id: 'how-collected',  heading: 'Comment les données sont collectées', bullets: ['Cookies et technologies similaires', 'Outils analytiques : Google Analytics (uniquement avec consentement)', 'Outils comportementaux : Hotjar by Content Square (uniquement avec consentement)', 'Contact direct (e-mail)'] },
+      { id: 'data-collected', heading: 'Données personnelles collectées',    bullets: ["Données techniques essentielles (ex. : état de la bannière de cookies, préférences de session)", "Données analytiques (pages visitées, temps passé, type d'appareil/navigateur)", "Insights comportementaux (cartes de chaleur anonymisées via Microsoft Clarity, uniquement avec consentement)", "Coordonnées si vous me contactez par e-mail (nom, e-mail)"] },
+      { id: 'how-collected',  heading: 'Comment les données sont collectées', bullets: ['Cookies et technologies similaires', 'Outils analytiques : Google Analytics (uniquement avec consentement)', 'Outils comportementaux : Microsoft Clarity (uniquement avec consentement)', 'Contact direct (e-mail)'] },
       { id: 'legal-bases',    heading: 'Finalités et bases légales',         bullets: ["Fonctionnement essentiel du site : intérêt légitime", "Analytique et améliorations : consentement", "Insights comportementaux : consentement", "Communication : consentement ou intérêt légitime selon le contexte"] },
-      { id: 'third-party',    heading: 'Services tiers',                     bullets: ["Google Analytics : données d'utilisation agrégées et anonymes. Désactivation possible via les paramètres de cookies ou l'outil Google.", "Hotjar by Content Square : cartes de chaleur anonymisées. Activé uniquement avec consentement."] },
+      { id: 'third-party',    heading: 'Services tiers',                     bullets: ["Google Analytics : données d'utilisation agrégées et anonymes. Désactivation possible via les paramètres de cookies ou l'outil Google.", "Microsoft Clarity : cartes de chaleur et enregistrements de session anonymisés. Activé uniquement avec consentement."] },
       { id: 'cookies-track',  heading: 'Cookies et suivi',                   cookiesLink: true },
       { id: 'retention',      heading: 'Conservation des données',           body: 'Les données sont conservées uniquement le temps nécessaire. Les données analytiques sont stockées sous forme anonymisée ou agrégée.' },
       { id: 'transfers',      heading: 'Transferts internationaux',          body: "Les données peuvent être traitées hors de l'UE/Royaume-Uni (ex. : serveurs Google). Des garanties appropriées sont appliquées." },

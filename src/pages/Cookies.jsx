@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-03-26');
+const LAST_UPDATED = new Date('2026-03-31');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -50,12 +50,12 @@ const T = {
             ],
           },
           {
-            heading: 'Hotjar by Content Square',
-            body: 'This Website also uses Hotjar, a behaviour analytics tool that provides heat maps. Hotjar helps me understand how visitors interact visually with the site to improve usability. Hotjar may collect anonymised information such as:',
+            heading: 'Microsoft Clarity',
+            body: 'This Website also uses Microsoft Clarity, a behaviour analytics tool that provides heat maps and session recordings. Clarity helps me understand how visitors interact visually with the site to improve usability. Clarity may collect anonymised information such as:',
             bullets: ['Clicks, taps, scrolling behaviour', 'Device and browser type', 'Pages visited', 'Screen resolution and language', 'Referring pages'],
             links: [
-              { label: 'Privacy policy', href: 'https://www.hotjar.com/legal/policies/privacy/' },
-              { label: 'Do not track', href: 'https://www.hotjar.com/policies/do-not-track/' },
+              { label: 'Privacy policy', href: 'https://privacy.microsoft.com/privacystatement' },
+              { label: 'Clarity privacy', href: 'https://clarity.microsoft.com/terms' },
             ],
           },
         ],
@@ -132,12 +132,12 @@ const T = {
             ],
           },
           {
-            heading: 'Hotjar by Content Square',
-            body: "Ce site utilise également Hotjar, un outil d'analyse comportementale. Hotjar m'aide à comprendre comment les visiteurs interagissent visuellement avec le site. Hotjar peut collecter des informations anonymisées telles que :",
+            heading: 'Microsoft Clarity',
+            body: "Ce site utilise également Microsoft Clarity, un outil d'analyse comportementale fournissant des cartes de chaleur et des enregistrements de session. Clarity m'aide à comprendre comment les visiteurs interagissent visuellement avec le site. Clarity peut collecter des informations anonymisées telles que :",
             bullets: ['Clics, tapotements, comportement de défilement', "Type d'appareil et de navigateur", 'Pages visitées', "Résolution d'écran et langue", 'Pages de référence'],
             links: [
-              { label: 'Politique de confidentialité', href: 'https://www.hotjar.com/legal/policies/privacy/' },
-              { label: 'Ne pas suivre', href: 'https://www.hotjar.com/privacy/do-not-track/' },
+              { label: 'Politique de confidentialité', href: 'https://privacy.microsoft.com/privacystatement' },
+              { label: 'Confidentialité Clarity', href: 'https://clarity.microsoft.com/terms' },
             ],
           },
         ],

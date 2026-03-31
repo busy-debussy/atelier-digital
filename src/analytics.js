@@ -21,11 +21,12 @@ export function trackPageView(path) {
   });
 }
 
-export function loadContentsquare() {
-  if (document.getElementById('cs-script')) return;
+export function loadClarity() {
+  if (document.getElementById('clarity-script')) return;
   const s = document.createElement('script');
-  s.id    = 'cs-script';
+  s.id    = 'clarity-script';
   s.async = true;
-  s.src   = 'https://t.contentsquare.net/uxa/ddd53e0773447.js';
+  s.src   = 'https://www.clarity.ms/tag/w4c7gwpuqz';
   document.head.appendChild(s);
+  window.clarity = window.clarity || function () { (window.clarity.q = window.clarity.q || []).push(arguments); };
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { initSpringPress } from './utils/springPress';
-import { GA_ID, loadGoogleAnalytics, loadContentsquare, trackPageView } from './analytics';
+import { GA_ID, loadGoogleAnalytics, loadClarity, trackPageView } from './analytics';
 import Nav from './components/Nav';
 import ScrollForMore from './components/ScrollForMore';
 import CookieBanner from './components/CookieBanner';
@@ -84,7 +84,7 @@ function App() {
     const tryLoad = () => {
       if (localStorage.getItem('cookie-consent') === 'accepted') {
         loadGoogleAnalytics(GA_ID);
-        loadContentsquare();
+        loadClarity();
       }
     };
     tryLoad();
