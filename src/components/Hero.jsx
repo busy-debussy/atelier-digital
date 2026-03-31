@@ -245,8 +245,13 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
           </div>
         )}
 
-        {/* H3 + Pills + Buttons, all mounted together so space is reserved upfront */}
-        {showH3 && (
+        {/* H3 + Pills + Buttons — grid height animates from 0→1fr so H1+H2 move up smoothly */}
+        <div style={{
+          display: 'grid',
+          gridTemplateRows: showH3 ? '1fr' : '0fr',
+          transition: skipAnim ? undefined : 'grid-template-rows 700ms cubic-bezier(0.22,1,0.36,1)',
+        }}>
+        <div style={{ overflow: 'hidden', minHeight: 0 }}>
           <div className="mt-10 sm:mt-20 flex flex-col items-center gap-5 sm:gap-6">
             <FadeIn instant={skipAnim}>
               <Link
@@ -313,7 +318,8 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
               </Link>
             </div>
           </div>
-        )}
+        </div>
+        </div>
 
       </div>
     </section>

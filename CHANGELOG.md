@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.7] — 2026-03-31
+
+### UI refinements
+- **Hero — lift animation** — H1/H2 now smoothly slide up when the "experienced in" block appears; previously the layout shifted instantly as the block mounted at full height; now uses `grid-template-rows 0fr→1fr` transition (700ms spring easing) so the push-up is animated
+
+---
+
 ## [1.1.6] — 2026-03-31
 
 ### Analytics
