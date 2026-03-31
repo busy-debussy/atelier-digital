@@ -5,7 +5,6 @@
 html {
   background-color: #ffffff;
   scroll-behavior: smooth;
-  overflow-x: clip;
 }
 
 html.dark {

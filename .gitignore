@@ -23,5 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment variables
+.env
+.env.local
+.env.*.local
+
 # Work in progress — not ready to publish
 src/pages/XRExperiences.jsx

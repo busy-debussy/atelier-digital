@@ -5,6 +5,7 @@ import { GA_ID, loadGoogleAnalytics, loadClarity, trackPageView } from './analyt
 import Nav from './components/Nav';
 import ScrollForMore from './components/ScrollForMore';
 import CookieBanner from './components/CookieBanner';
+import ChatBot from './components/ChatBot';
 import Home from './pages/Home';
 import SalesPlatform from './pages/SalesPlatform';
 import Resume from './pages/Resume';
@@ -101,6 +102,7 @@ function App() {
       <PageViewTracker />
       <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
       <CookieBanner lang={lang} />
+      <ChatBot lang={lang} />
     </BrowserRouter>
   );
 }

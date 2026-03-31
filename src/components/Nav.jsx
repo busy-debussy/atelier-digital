@@ -627,7 +627,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
 // Nav (root)
 function Nav({ isDark, toggleDark, lang, toggleLang }) {
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4 pointer-events-none">
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4 pointer-events-none" style={{ transform: 'translateZ(0)' }}>
       <div className="pointer-events-auto hidden lg:flex">
         <DesktopTabletNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} isTablet={false} />
       </div>
