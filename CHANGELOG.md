@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.9] — 2026-03-31
+
+### Bug fixes
+- **Sales Platform — blank space below footer** — collapsing the Design section no longer leaves a large blank area below the footer; root cause was nested elements with large padding escaping the `grid-rows-[0fr]` + `overflow: hidden` clip (browser rendering bug); fixed by setting `display: none` on the grid after the collapse animation ends, guaranteeing zero layout contribution; expanding reverses this by removing `display: none` one frame before the animation starts; `prefers-reduced-motion` users get the hide/show immediately without waiting for a transition
+
+---
+
 ## [1.1.8] — 2026-03-31
 
 ### New features

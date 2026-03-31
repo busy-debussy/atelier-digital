@@ -1565,6 +1565,7 @@ function EmphasiseContent({ lang }) {
 // ── Collapsible section ───────────────────────────────────────────────────────
 function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgClass, openHeaderDark = false, contentBgClass = 'bg-[#f6f6f6] dark:bg-[#1f1f1f]' }) {
   const [open, setOpen] = useState(true);
+  const [hidden, setHidden] = useState(false);
   const darkHeader = open && openHeaderDark;
   const btnRef = useRef(null);
   const contentRef = useRef(null);
@@ -1572,24 +1573,30 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
   const headingId = `${id}-heading`;
 
   const handleToggle = () => {
-    setOpen(v => {
-      if (v && contentRef.current?.contains(document.activeElement)) {
+    if (open) {
+      // Collapsing — focus management first
+      if (contentRef.current?.contains(document.activeElement)) {
         btnRef.current?.focus();
       }
-      if (v) {
-        // Section is collapsing — clamp scroll once the transition ends so no whitespace appears below footer
-        const el = gridRef.current;
-        const onEnd = () => {
+      setOpen(false);
+      // After animation ends, set display:none to guarantee zero layout contribution
+      const el = gridRef.current;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) {
+        setHidden(true);
+      } else {
+        const onEnd = (e) => {
+          if (e.propertyName !== 'grid-template-rows') return;
           el?.removeEventListener('transitionend', onEnd);
-          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-          if (window.scrollY > maxScroll) {
-            window.scrollTo({ top: maxScroll, behavior: 'smooth' });
-          }
+          setHidden(true);
         };
         el?.addEventListener('transitionend', onEnd);
       }
-      return !v;
-    });
+    } else {
+      // Expanding — remove display:none first, then animate in next frame
+      setHidden(false);
+      requestAnimationFrame(() => setOpen(true));
+    }
   };
 
   return (
@@ -1624,6 +1631,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
       <div
         ref={gridRef}
         id={`${id}-content`}
+        style={hidden ? { display: 'none' } : undefined}
         className={`grid overflow-hidden [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} ${contentBgClass}`}
         inert={!open}
       >

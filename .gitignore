@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Work in progress — not ready to publish
+src/pages/XRExperiences.jsx
