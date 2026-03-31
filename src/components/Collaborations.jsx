@@ -93,7 +93,7 @@ const T = {
       { name: "Organisation européenne pour la recherche nucléaire", description: 'Nous avons rendu hommage à la découverte du boson de Higgs en recréant l’événement de collision dans un <strong>hologramme</strong>.' },
       { name: "Université d'Édimbourg",                             description: 'Avec un professeur d’anatomie, nous avons créé un <strong>hologramme grandeur nature</strong> pour aider l’enseignement du <strong>corps humain</strong>.' },
       { name: 'IBM',                                                description: 'Nous avons tenté d’améliorer le futur des intéractions, avec IBM, en créant un avatar 3D <strong>propulsé par l’IA</strong>.' },
-      { name: "Centre hospitalier universitaire de Hambourg",       description: 'Nous avons soutenu la formation chirurgicale, avec un hôpital universitaire, en concevant une série d’animations 3D de <strong>chirurgies oculaires</strong>.' },
+      { name: "Centre hospitalier universitaire d’Hambourg",       description: 'Nous avons soutenu la formation chirurgicale, avec un hôpital universitaire, en concevant une série d’animations 3D de <strong>chirurgies oculaires</strong>.' },
     ],
   },
 };

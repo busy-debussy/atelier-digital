@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.1.5] — 2026-03-31
+
+### New features
+- **Mobile secondary nav** (Cookies, Privacy, Terms) — floating pill nav appears after the first section scrolls into view and disappears after the last section exits; active section highlighted with filled pill; auto-scrolls active item into view; glass-morphism style matching the main nav; horizontally scrollable with button-shape clip (`overflow-hidden rounded-[16px]` inset within `rounded-3xl` outer); hidden from accessibility tree when not visible (`aria-hidden`)
+- **Page load fade-in** (Cookies) — content fades in from opacity 0 to 100 on mount via `mounted` state
+
+### Analytics
+- **GA4 SPA page tracking** — disabled auto pageview (`send_page_view: false`) and added `PageViewTracker` component that fires a `page_view` event on every client-side route change; previously only the landing page was tracked
+- **`trackPageView`** — new export in `analytics.js`; silently no-ops if consent not yet given
+
+### Micro-interactions
+- **Spring press — `data-spring-desktop`** — new attribute that skips the press effect on mobile (≤639 px); applied to case study cards, contact carousel cards, and certification flip cards so scrolling those carousels doesn't accidentally trigger a press
+- **Spring press — scroll cancel** — 80 ms delay before committing the visual press on mobile so a scroll's `pointercancel` arrives first; `pointermove` threshold (8 px) cancels an in-progress press on swipe
+
+### Mobile nav
+- **Hamburger hit area** — expanded to full right side of nav bar (`flex-1`) for easier tapping; spring press scoped to icon `<span>` so the scale origin is centred on the icon
+- **Menu items press** — spring `data-spring` moved to inner content `<span>` wrappers (text + chevron / arrow) so scale origin matches the visible label, not the full-width row
+- **Language buttons** — added `data-spring` press effect to both GB and FR buttons
+- **Projects submenu** — opens by default when the menu is opened
+
+### Certification carousel (Resume)
+- **Full-width cards** — changed `w-full` → `w-screen` so each page fills the viewport regardless of container hierarchy
+- **Consistent spacing** — carousel breaks out of `px-6` container with `-mx-6`; cards use `gap-4 px-4`
+- **Clip fix** — added `py-3 -my-3` to give vertical breathing room inside the `overflow-x: auto` container
+
+### Bug fixes
+- **Sales Platform — whitespace below footer** — added `overflow-anchor: none` on collapsing grid and a `transitionend` scroll clamp to prevent page scroll position exceeding `scrollHeight - innerHeight` after a section collapses
+- **Collaborations** — corrected French name "Centre hospitalier universitaire de Hambourg" → "d'Hambourg"
+
+### Accessibility
+- **`aria-current="location"`** — fixed invalid `"true"` value on all secondary nav buttons (Cookies, Privacy, Terms desktop and mobile navs)
+- **`<ul>` over `<ol>`** — mobile secondary nav uses unordered list (sections have no meaningful sequence/ranking)
+
+---
+
 ## [1.1.4] — 2026-03-30
 
 ### Accessibility — keyboard navigation

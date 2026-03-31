@@ -189,7 +189,7 @@ function CsCard({ card, t }) {
 
   if (card.cta === 'go') {
     return (
-      <li data-spring className="group/card relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer">
+      <li data-spring-desktop className="group/card relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer">
         {/* Inner wrapper carries overflow-hidden so the spring scale on the li isn't clipped */}
         <div className="absolute inset-0 rounded-[28px] sm:rounded-[32px] overflow-hidden group bg-[#fff]">
           {inner}
@@ -218,7 +218,7 @@ function CsCard({ card, t }) {
 
   return (
     <li
-      data-spring
+      data-spring-desktop
       className={liClass}
       onClick={handleCardClick}
     >

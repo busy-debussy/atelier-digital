@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
@@ -110,6 +110,44 @@ const scrollToSection = (id) => {
   el.focus({ preventScroll: true });
 };
 
+function MobileSecondaryNav({ sections, activeId }) {
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    if (!trackRef.current || !activeId) return;
+    const btn = trackRef.current.querySelector(`[data-section="${activeId}"]`);
+    btn?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, [activeId]);
+
+  return (
+    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] p-[10px]">
+      <div className="overflow-hidden rounded-[16px]">
+        <ul ref={trackRef} className="w-full flex items-center gap-1 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+          {sections.map((s) => {
+            const isActive = activeId === s.id;
+            return (
+              <li key={s.id} className="shrink-0">
+                <button
+                  data-section={s.id}
+                  onClick={() => scrollToSection(s.id)}
+                  aria-current={isActive ? 'location' : undefined}
+                  className={`h-8 px-3 rounded-2xl text-[13px] font-medium whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+                    isActive
+                      ? 'bg-[#161616] dark:bg-white text-white dark:text-[#161616]'
+                      : 'text-[#5c5c5c] dark:text-[#adadad]'
+                  }`}
+                >
+                  {s.heading}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </nav>
+  );
+}
+
 function SecondaryNav({ sections, activeId }) {
   return (
     <nav aria-label="Page sections" className="hidden md:block sticky top-16 self-start z-10 w-44 shrink-0 pt-28">
@@ -120,7 +158,7 @@ function SecondaryNav({ sections, activeId }) {
             <li key={s.id}>
               <button
                 onClick={() => scrollToSection(s.id)}
-                aria-current={isActive ? 'true' : undefined}
+                aria-current={isActive ? 'location' : undefined}
                 className={`relative text-[13px] leading-snug py-1.5 px-2 rounded-lg text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
                   isActive
                     ? 'text-[#1f1f1f] dark:text-[#f6f6f6] font-semibold bg-black/[0.04] dark:bg-white/[0.06]'
@@ -143,6 +181,8 @@ function Terms({ lang }) {
   const t = T[lang];
   const year = new Date().getFullYear();
   const [activeId, setActiveId] = useState('');
+  const [scrolledDown, setScrolledDown] = useState(false);
+  const [atBottom,    setAtBottom]    = useState(false);
 
   useEffect(() => {
     document.title = lang === 'fr' ? 'Conditions • Atelier Digital' : 'Terms • Atelier Digital';
@@ -161,6 +201,19 @@ function Terms({ lang }) {
     });
     return () => observers.forEach(o => o?.disconnect());
   }, [lang]);
+
+  useEffect(() => {
+    const firstEl = document.getElementById(t.sections[0].id);
+    const lastEl  = document.getElementById(t.sections[t.sections.length - 1].id);
+    if (!firstEl || !lastEl) return;
+    const update = () => {
+      setScrolledDown(firstEl.getBoundingClientRect().top < 150);
+      setAtBottom(lastEl.getBoundingClientRect().bottom < 200);
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, [t]);
 
   return (
     <>
@@ -204,6 +257,11 @@ function Terms({ lang }) {
           <p className="text-[22px] sm:text-[26px] font-bold text-center text-[#1f1f1f] dark:text-[#f6f6f6] py-16">
             © {year} David V.{lang === 'fr' ? ' Tous droits réservés.' : ' All rights reserved.'}
           </p>
+        </div>
+        <div aria-hidden={scrolledDown && !atBottom ? undefined : 'true'} className={`md:hidden fixed bottom-20 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+          <div className="pointer-events-auto w-full">
+            <MobileSecondaryNav sections={t.sections} activeId={activeId} />
+          </div>
         </div>
       </main>
       <Footer lang={lang} />

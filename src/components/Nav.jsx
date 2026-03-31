@@ -502,7 +502,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
 
   return (
     <div className="w-full flex flex-col items-center gap-4">
-      <div className="w-full flex items-center justify-between backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] pr-2">
+      <div className="w-full flex items-center backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16]">
         <a data-spring href="/" tabIndex={0} onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-1 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]">
           <div className="flex items-center gap-1 pl-1 pr-4 py-1 rounded-[20px]">
             <img src={imgLogo} alt="" width={36} height={36} className="shrink-0" />
@@ -511,14 +511,16 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
             </span>
           </div>
         </a>
-        <button data-spring onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} className="flex items-center p-[6px]">
-          <img
-            src={menuOpen ? imgClose : imgHamburger}
-            alt=""
-            width={32}
-            height={32}
-            className="shrink-0 dark:invert"
-          />
+        <button onClick={() => { const opening = !menuOpen; setMenuOpen(opening); if (opening) setProjectsOpen(true); }} aria-label={menuOpen ? 'Close menu' : 'Open menu'} className="flex-1 flex items-center justify-end p-2 pr-3 rounded-r-3xl">
+          <span data-spring className="flex items-center justify-center">
+            <img
+              src={menuOpen ? imgClose : imgHamburger}
+              alt=""
+              width={32}
+              height={32}
+              className="shrink-0 dark:invert"
+            />
+          </span>
         </button>
       </div>
 
@@ -543,7 +545,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
                     }}
                     className="flex items-center h-12 px-4 rounded-2xl transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"
                   >
-                    <span className="font-medium text-2xl leading-8 text-black dark:text-white">
+                    <span data-spring className="font-medium text-2xl leading-8 text-black dark:text-white">
                       {T[lang][key]}
                     </span>
                   </Link>
@@ -553,15 +555,17 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
                       onClick={() => setProjectsOpen(!projectsOpen)}
                       className="flex items-center justify-start gap-2 w-full h-12 px-4 rounded-2xl hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors active:opacity-[0.33]"
                     >
-                      <span className="font-medium text-2xl leading-8 text-black dark:text-white">{T[lang][key]}</span>
-                      <img
-                        src={imgChevronDown}
-                        alt=""
-                        width={24}
-                        height={24}
-                        className="shrink-0 dark:invert transition-transform duration-200"
-                        style={{ transform: projectsOpen ? 'rotate(180deg)' : 'none' }}
-                      />
+                      <span data-spring className="flex items-center gap-2">
+                        <span className="font-medium text-2xl leading-8 text-black dark:text-white">{T[lang][key]}</span>
+                        <img
+                          src={imgChevronDown}
+                          alt=""
+                          width={24}
+                          height={24}
+                          className="shrink-0 dark:invert transition-transform duration-200"
+                          style={{ transform: projectsOpen ? 'rotate(180deg)' : 'none' }}
+                        />
+                      </span>
                     </button>
                     {projectsOpen && (
                       <div className="pl-4 pt-2 flex flex-col gap-2">
@@ -578,8 +582,10 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
                               onClick={() => { setMenuOpen(false); setProjectsOpen(false); }}
                               className="flex items-center gap-3 h-12 px-4 rounded-2xl hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors"
                             >
-                              <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" style={{ transform:'none' }} />
-                              <span className="font-medium text-2xl leading-8 text-black dark:text-white">{T[lang][sk]}</span>
+                              <span data-spring className="flex items-center gap-3">
+                                <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" style={{ transform:'none' }} />
+                                <span className="font-medium text-2xl leading-8 text-black dark:text-white">{T[lang][sk]}</span>
+                              </span>
                             </Link>
                           )
                         ))}
@@ -595,6 +601,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
 
           <div className="flex items-center justify-around px-6 py-4">
             <button
+              data-spring
               onClick={() => { if (lang !== 'en') toggleLang(); }}
               className={`flex items-center gap-2 h-12 px-4 rounded-2xl transition-colors active:opacity-[0.33] ${lang !== 'en' ? 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer' : 'bg-[#161616] dark:bg-white cursor-default'}`}
             >
@@ -602,6 +609,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
               <span className={`font-medium text-xl ${lang === 'en' ? 'text-white dark:text-[#161616]' : 'text-[#5c5c5c] dark:text-white/40'}`}>GB</span>
             </button>
             <button
+              data-spring
               onClick={() => { if (lang !== 'fr') toggleLang(); }}
               className={`flex items-center gap-2 h-12 px-4 rounded-2xl transition-colors active:opacity-[0.33] ${lang !== 'fr' ? 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer' : 'bg-[#161616] dark:bg-white cursor-default'}`}
             >

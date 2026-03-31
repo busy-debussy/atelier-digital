@@ -108,7 +108,7 @@ function ContactCard({ card, glass }) {
     ? 'backdrop-blur-[16px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)]'
     : 'bg-white dark:bg-[#141414]';
   return (
-    <li data-spring className={`relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] flex flex-col snap-center rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] ${cardBg} p-8 sm:p-9 lg:p-10 gap-8 sm:gap-9 lg:gap-10 motion-safe:transition-transform duration-200 motion-safe:hover:scale-[1.03] cursor-pointer`}>
+    <li data-spring-desktop className={`relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] flex flex-col snap-center rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] ${cardBg} p-8 sm:p-9 lg:p-10 gap-8 sm:gap-9 lg:gap-10 motion-safe:transition-transform duration-200 motion-safe:hover:scale-[1.03] cursor-pointer`}>
 
       <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
@@ -282,6 +282,44 @@ const scrollToSection = (id) => {
   el.focus({ preventScroll: true });
 };
 
+function MobileSecondaryNav({ sections, activeId }) {
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    if (!trackRef.current || !activeId) return;
+    const btn = trackRef.current.querySelector(`[data-section="${activeId}"]`);
+    btn?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, [activeId]);
+
+  return (
+    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] p-[10px]">
+      <div className="overflow-hidden rounded-[16px]">
+        <ul ref={trackRef} className="w-full flex items-center gap-1 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+          {sections.map((s) => {
+            const isActive = activeId === s.id;
+            return (
+              <li key={s.id} className="shrink-0">
+                <button
+                  data-section={s.id}
+                  onClick={() => scrollToSection(s.id)}
+                  aria-current={isActive ? 'location' : undefined}
+                  className={`h-8 px-3 rounded-2xl text-[13px] font-medium whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+                    isActive
+                      ? 'bg-[#161616] dark:bg-white text-white dark:text-[#161616]'
+                      : 'text-[#5c5c5c] dark:text-[#adadad]'
+                  }`}
+                >
+                  {s.heading}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </nav>
+  );
+}
+
 function SecondaryNav({ sections, activeId }) {
   return (
     <nav aria-label="Page sections" className="hidden md:block sticky top-16 self-start z-10 w-44 shrink-0 pt-28">
@@ -314,6 +352,29 @@ function SecondaryNav({ sections, activeId }) {
 function Cookies({ lang }) {
   const t = T[lang];
   const [activeId, setActiveId] = useState('');
+  const [mounted, setMounted] = useState(false);
+  const [scrolledDown, setScrolledDown] = useState(false);
+  const [atBottom,    setAtBottom]    = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
+
+  useEffect(() => {
+    const firstEl = document.getElementById(t.sections[0].id);
+    const lastEl  = document.getElementById(t.sections[t.sections.length - 1].id);
+    if (!firstEl || !lastEl) return;
+
+    const update = () => {
+      const firstTop = firstEl.getBoundingClientRect().top;
+      const lastBottom = lastEl.getBoundingClientRect().bottom;
+      // Nav visible when first section has been scrolled to (near top) and last section hasn't fully exited
+      setScrolledDown(firstTop < 150);
+      setAtBottom(lastBottom < 200);
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, [t]);
 
   useEffect(() => {
     document.title = lang === 'fr' ? 'Cookies • Atelier Digital' : 'Cookies • Atelier Digital';
@@ -335,7 +396,7 @@ function Cookies({ lang }) {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:ring-2 focus:ring-[#0152EC] focus:bg-white focus:text-[#1f1f1f] focus:outline-none font-medium">
         {t.skipToMain}
       </a>
-      <main id="main-content" aria-label={t.title} className="bg-white dark:bg-[#1f1f1f] min-h-screen" tabIndex={-1}>
+      <main id="main-content" aria-label={t.title} className={`bg-white dark:bg-[#1f1f1f] min-h-screen transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`} tabIndex={-1}>
         {/* Shared layout wrapper */}
         <div className="px-6 flex flex-col items-center">
           <div className="flex items-start gap-10 w-full max-w-6xl">
@@ -376,6 +437,13 @@ function Cookies({ lang }) {
             {t.outro}
           </p>
         </div>{/* px-6 */}
+
+        {/* Fixed mobile secondary nav — appears after title scrolls out, disappears when outro is reached */}
+        <div aria-hidden={scrolledDown && !atBottom ? undefined : 'true'} className={`md:hidden fixed bottom-20 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+          <div className="pointer-events-auto w-full">
+            <MobileSecondaryNav sections={t.sections} activeId={activeId} />
+          </div>
+        </div>
       </main>
       <Footer lang={lang} />
     </>

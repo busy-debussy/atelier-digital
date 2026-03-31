@@ -10,9 +10,14 @@ export function initSpringPress() {
   if (typeof window === 'undefined') return () => {};
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return () => {};
 
-  let held = null;
+  let held        = null;
+  let pressTimer  = null;
+  let startX      = 0;
+  let startY      = 0;
+  const SCROLL_THRESHOLD = 8;  // px  — cancel if pointer drifts this far
+  const PRESS_DELAY      = 80; // ms  — wait before committing the visual press
 
-  const press = (el) => {
+  const applyPress = (el) => {
     held = el;
     const mobile = window.matchMedia('(max-width: 639px)').matches;
     const scale  = mobile ? 1.1 : 0.92;
@@ -21,7 +26,12 @@ export function initSpringPress() {
     el.style.opacity    = '0.78';
   };
 
+  const cancelTimer = () => {
+    if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
+  };
+
   const release = () => {
+    cancelTimer();
     const el = held;
     if (!el) return;
     held = null;
@@ -31,17 +41,37 @@ export function initSpringPress() {
   };
 
   const onDown = (e) => {
-    const el = e.target.closest('[data-spring]');
+    const el = e.target.closest('[data-spring], [data-spring-desktop]');
     if (!el || el.disabled || el.hasAttribute('disabled')) return;
-    press(el);
+    const mobile = window.matchMedia('(max-width: 639px)').matches;
+    if (mobile && el.hasAttribute('data-spring-desktop') && !el.hasAttribute('data-spring')) return;
+    startX = e.clientX;
+    startY = e.clientY;
+    // On mobile, delay the visual press so a scroll's pointercancel can arrive first
+    if (mobile) {
+      pressTimer = setTimeout(() => { pressTimer = null; applyPress(el); }, PRESS_DELAY);
+    } else {
+      applyPress(el);
+    }
   };
 
-  document.addEventListener('pointerdown', onDown);
-  document.addEventListener('pointerup',   release);
+  const onMove = (e) => {
+    if (!pressTimer && !held) return;
+    if (Math.abs(e.clientX - startX) > SCROLL_THRESHOLD ||
+        Math.abs(e.clientY - startY) > SCROLL_THRESHOLD) {
+      cancelTimer();
+      if (held) release();
+    }
+  };
+
+  document.addEventListener('pointerdown',   onDown);
+  document.addEventListener('pointermove',   onMove, { passive: true });
+  document.addEventListener('pointerup',     release);
   document.addEventListener('pointercancel', release);
 
   return () => {
     document.removeEventListener('pointerdown', onDown);
+    document.removeEventListener('pointermove', onMove);
     document.removeEventListener('pointerup',   release);
     document.removeEventListener('pointercancel', release);
   };

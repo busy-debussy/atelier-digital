@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { initSpringPress } from './utils/springPress';
-import { GA_ID, loadGoogleAnalytics, loadContentsquare } from './analytics';
+import { GA_ID, loadGoogleAnalytics, loadContentsquare, trackPageView } from './analytics';
 import Nav from './components/Nav';
 import ScrollForMore from './components/ScrollForMore';
 import CookieBanner from './components/CookieBanner';
@@ -16,6 +16,14 @@ import NotFound from './pages/NotFound';
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, [pathname]);
+  return null;
+}
+
+// Fires a GA4 page_view on every client-side navigation.
+// The initial pageview is sent here too (send_page_view: false disables the auto one).
+function PageViewTracker() {
+  const { pathname } = useLocation();
+  useEffect(() => { trackPageView(pathname); }, [pathname]);
   return null;
 }
 
@@ -90,6 +98,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <PageViewTracker />
       <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
       <CookieBanner lang={lang} />
     </BrowserRouter>

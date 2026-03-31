@@ -1568,12 +1568,25 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
   const darkHeader = open && openHeaderDark;
   const btnRef = useRef(null);
   const contentRef = useRef(null);
+  const gridRef = useRef(null);
   const headingId = `${id}-heading`;
 
   const handleToggle = () => {
     setOpen(v => {
       if (v && contentRef.current?.contains(document.activeElement)) {
         btnRef.current?.focus();
+      }
+      if (v) {
+        // Section is collapsing — clamp scroll once the transition ends so no whitespace appears below footer
+        const el = gridRef.current;
+        const onEnd = () => {
+          el?.removeEventListener('transitionend', onEnd);
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          if (window.scrollY > maxScroll) {
+            window.scrollTo({ top: maxScroll, behavior: 'smooth' });
+          }
+        };
+        el?.addEventListener('transitionend', onEnd);
       }
       return !v;
     });
@@ -1609,8 +1622,9 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
       </div>
 
       <div
+        ref={gridRef}
         id={`${id}-content`}
-        className={`grid overflow-hidden motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} ${contentBgClass}`}
+        className={`grid overflow-hidden [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} ${contentBgClass}`}
         inert={!open}
       >
         <div ref={contentRef} className="overflow-hidden min-h-0">
