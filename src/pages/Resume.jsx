@@ -61,7 +61,7 @@ const T = {
     topSkills:      'Top skills',
     certifications: 'Certifications',
     education:      'Education',
-    downloadPdf:    'download PDF',
+    downloadPdf:    'Download PDF',
     sendEmail:      'send an email',
     connect:        "let's connect",
     navPrev:        'View previous experience',
@@ -280,7 +280,7 @@ const T = {
     topSkills:      'Compétences',
     certifications: 'Certificats',
     education:      'Formation',
-    downloadPdf:    'télécharger PDF',
+    downloadPdf:    'Télécharger PDF',
     sendEmail:      'échangeons',
     connect:        'connectons',
     navPrev:        "Voir l'expérience précédente",
@@ -1236,7 +1236,7 @@ function CertificationCard({ card }) {
 
   return (
     <div
-      data-spring-desktop
+      data-spring
       role="button"
       tabIndex={0}
       aria-pressed={flipped}
@@ -1340,11 +1340,11 @@ function SkillsCertSection({ t }) {
                 if (e.key === 'ArrowLeft') { e.preventDefault(); scrollToCertPage(Math.max(0, activePage - 1)); }
                 if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCertPage(Math.min(certPages.length - 1, activePage + 1)); }
               }}
-              className="flex overflow-x-auto snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC] -mx-6 py-3 -my-3"
+              className="flex overflow-x-auto snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
               style={{ scrollbarWidth: 'none', touchAction: 'pan-x pan-y' }}
             >
               {certPages.map((page, pi) => (
-                <li key={pi} className="w-screen shrink-0 snap-start flex gap-4 px-4">
+                <li key={pi} className="w-full shrink-0 snap-start flex gap-4 px-4">
                   {page.map((card, ci) => (
                     <div key={ci} className="flex-1 min-w-0">
                       <CertificationCard card={card} />
