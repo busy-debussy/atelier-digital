@@ -185,13 +185,13 @@ function CsCard({ card, t }) {
     </>
   );
 
-  const liClass = 'relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] rounded-[28px] sm:rounded-[32px] overflow-hidden group snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer bg-[#fff]';
+  const liClass = 'relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] rounded-[28px] sm:rounded-[32px] overflow-hidden group snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer bg-[#fff] dark:bg-[#111111]';
 
   if (card.cta === 'go') {
     return (
       <li data-spring-desktop className="group/card relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer">
         {/* Inner wrapper carries overflow-hidden so the spring scale on the li isn't clipped */}
-        <div className="absolute inset-0 rounded-[28px] sm:rounded-[32px] overflow-hidden group bg-[#fff]">
+        <div className="absolute inset-0 rounded-[28px] sm:rounded-[32px] overflow-hidden group bg-[#fff] dark:bg-[#111111]">
           {inner}
         </div>
         <Link to={card.href} className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white rounded-[28px] sm:rounded-[32px]" aria-label={card.title} />

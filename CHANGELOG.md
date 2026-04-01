@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.2.1] — 2026-04-01
+
+### New features
+- **Conversation logging** — each completed chat conversation is saved as a JSON file to Vercel Blob (`chat-logs/`); stores IP, timestamp, and full transcript; write is fire-and-forget and never blocks the response; `@vercel/blob` added to dependencies
+- **Chatbot system prompt** — updated with richer briefing: expanded holography section (IBM Watson avatar project, mechanical engineering prototypes, automotive/military HUDs), clearer career timeline, updated XR description (Magic Leap 2), expanded "what he's looking for" section
+
+### UI refinements
+- **Chatbot — panel position** — chat panel now opens at `bottom-4 left-4`, same position as the cookie banner, covering the button area rather than floating above it
+- **Chatbot — panel colours** — inverted to match cookie banner style: dark background (`#1c1c1c`) in light mode, white background in dark mode
+- **Chatbot — title** — "Ask about David" → "A.I. knows about me" (EN) / "L'I.A. me connaît par 💙" (FR)
+- **Chatbot — panel border** — uses same border as mobile nav: `border-white/[0.16] dark:border-black/[0.16]`
+- **Chatbot — panel radius** — matches case study card radius: `rounded-3xl`
+- **Chatbot — close button** — replaced inline SVG with `icon-close-sm.svg` matching the collaborations modal; white icon by default in light mode, black in dark mode; inverts on hover
+- **Chatbot — send button** — uses `icon-send.svg` asset; larger (24px icon, `p-2`); light blue border (`#5289f2`) matching Figma design
+- **Chatbot — empty state** — removed placeholder text; messages area collapses to zero height when no messages, so panel shows header + input only
+- **Chatbot — input placeholder** — "Ask me anything…" → "Ask Claude…" (EN) / "Demande à Claude…" (FR); placeholder nudged 2px right so blinking cursor appears in front
+- **Chatbot — input height** — fixed at 42px to match send button; grows up to 100px on multi-line input; wraps long messages
+- **Chatbot — separator** — single separator above input, only shown once messages exist; no separator below header
+- **Chatbot — tooltip** — "Learn about David" / "En savoir plus sur David"
+- **Chatbot — trigger button** — stacked above cookie button at `bottom-[68px]`; additional vertical spacing between the two buttons
+- **Chatbot — keyboard** — `inert` on panel when closed removes invisible elements from Tab order; Tab from textarea jumps to close button; `tabIndex={0}` on trigger button for Safari; `aria-label` and `autoComplete="off"` on textarea
+- **Cookie banner — animation** — replaced CSS keyframe with always-in-DOM approach (same as chatbot panel): `opacity-0 translate-y-3 → opacity-100 translate-y-0`, `duration-300 ease-out`; both banner and button states animate independently; `inert` when hidden
+- **Cookie banner — tooltip** — moved from above button to side (right), no caret; matching chatbot tooltip style
+- **Cookie banner — keyboard** — `tabIndex={0}` on cookie icon button for Safari
+- **Case studies — dark mode cards** — card background is `#111111` in dark mode (was white in both modes)
+- **index.css** — restored `overflow-x: clip` on `html` (accidentally removed during iOS nav fix); this also fixes mobile nav bar width changing when switching language
+
+### Bug fixes
+- **Carousel clipping** — `overflow-x: clip` on `html` restored, fixing horizontal content clipping introduced in a previous session
+
+### Privacy & legal
+- **Privacy policy** — updated (EN + FR) to disclose AI chatbot, Anthropic as a third-party processor, anonymous conversation storage on Vercel, and legitimate interest legal basis; last updated date bumped to 2026-04-01
+- **Conversation anonymisation** — IP addresses not stored in chat logs; transcripts contain timestamp and messages only
+
+### Cost controls
+- **Anthropic spend cap** — $5/month hard limit set in Anthropic console; API errors gracefully after limit is reached
+
+---
+
 ## [1.2.0] — 2026-03-31
 
 ### New features

@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
+import imgSend  from '../assets/icons/icon-send.svg';
+import imgClose from '../assets/icons/icon-close-sm.svg';
 
 const API_URL = import.meta.env.VITE_CHAT_API_URL || '/api/chat';
 const MAX_TURNS = 6;
@@ -6,9 +8,9 @@ const MAX_TURNS = 6;
 const L = {
   en: {
     button:      'Ask about my work',
-    title:       'Ask about David',
+    title:       'A.I. knows about me',
     empty:       "Ask anything about David's experience or work.",
-    placeholder: 'Ask me anything…',
+    placeholder: 'Ask Claude…',
     send:        'Send',
     limit:       "That's the end of our chat — reach out directly for more.",
     error:       'Something went wrong. Please try again.',
@@ -16,9 +18,9 @@ const L = {
   },
   fr: {
     button:      'Poser une question',
-    title:       'Renseignez-vous sur David',
+    title:       'L\'I.A. me connaît par 💙',
     empty:       "Posez une question sur l'expérience ou le travail de David.",
-    placeholder: 'Posez votre question…',
+    placeholder: 'Demande à Claude…',
     send:        'Envoyer',
     limit:       'Fin de la conversation — contactez David directement pour en savoir plus.',
     error:       'Une erreur s\'est produite. Veuillez réessayer.',
@@ -32,9 +34,10 @@ export default function ChatBot({ lang = 'en' }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput]     = useState('');
   const [loading, setLoading] = useState(false);
-  const bottomRef = useRef(null);
-  const inputRef  = useRef(null);
+  const bottomRef   = useRef(null);
+  const inputRef    = useRef(null);
   const textareaRef = useRef(null);
+  const closeRef    = useRef(null);
 
   const userTurns = messages.filter(m => m.role === 'user').length;
   const atLimit   = userTurns >= MAX_TURNS;
@@ -55,7 +58,7 @@ export default function ChatBot({ lang = 'en' }) {
     const el = textareaRef.current;
     if (el) {
       el.style.height = 'auto';
-      el.style.height = `${Math.min(el.scrollHeight, 100)}px`;
+      el.style.height = `${Math.max(42, Math.min(el.scrollHeight, 100))}px`;
     }
   };
 
@@ -92,40 +95,40 @@ export default function ChatBot({ lang = 'en' }) {
       {/* Chat panel */}
       <div
         aria-live="polite"
-        className={`fixed bottom-[84px] right-4 sm:right-6 z-40 w-[calc(100vw-32px)] sm:w-[380px] transition-all duration-300 ease-out ${
+        inert={!open}
+        className={`fixed bottom-4 left-4 z-[400] w-[calc(100vw-32px)] sm:w-[380px] transition-all duration-300 ease-out ${
           open ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
         }`}
       >
-        <div className="bg-white/[0.94] dark:bg-[#1c1c1c]/[0.94] backdrop-blur-[16px] rounded-3xl shadow-[0px_8px_40px_rgba(0,0,0,0.14)] dark:shadow-[0px_8px_40px_rgba(0,0,0,0.5)] dark:ring-1 dark:ring-white/[0.08] flex flex-col overflow-hidden" style={{ maxHeight: '520px' }}>
+        <div className="bg-[#1c1c1c]/[0.94] dark:bg-white/[0.94] backdrop-blur-[16px] rounded-3xl shadow-[0px_8px_40px_rgba(0,0,0,0.14)] dark:shadow-[0px_8px_40px_rgba(0,0,0,0.5)] border border-white/[0.16] dark:border-black/[0.16] flex flex-col overflow-hidden" style={{ maxHeight: '520px' }}>
 
           {/* Header */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-black/[0.06] dark:border-white/[0.07] shrink-0">
-            <span className="font-semibold text-[15px] text-[#1f1f1f] dark:text-[#f6f6f6]">{l.title}</span>
+          <div className="flex items-center justify-between px-5 py-4 shrink-0">
+            <span className="font-semibold text-[15px] text-[#f6f6f6] dark:text-[#1f1f1f]">{l.title}</span>
             <button
+              ref={closeRef}
+              data-spring
               onClick={() => setOpen(false)}
               aria-label="Close"
-              className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-black/[0.06] dark:hover:bg-white/[0.1] transition-colors cursor-pointer text-[#5c5c5c] dark:text-[#adadad]"
+              className="group flex items-center justify-center p-1.5 rounded-full hover:bg-white dark:hover:bg-[#1f1f1f] transition-[background-color] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
             >
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-              </svg>
+              <img
+                src={imgClose}
+                alt=""
+                width={16} height={16}
+                className="invert dark:invert-0 group-hover:invert-0 dark:group-hover:invert transition-[filter] duration-150"
+              />
             </button>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 min-h-0" style={{ scrollbarWidth: 'none' }}>
-            {messages.length === 0 && (
-              <p className="text-[13px] text-[#5c5c5c] dark:text-[#adadad] text-center pt-4 leading-relaxed">
-                {l.empty}
-              </p>
-            )}
-
-            {messages.map((m, i) => (
+          <div className={`overflow-y-auto px-4 space-y-3 min-h-0 ${messages.length || loading ? 'flex-1 py-4' : ''}`} style={{ scrollbarWidth: 'none' }}>
+{messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-[14px] leading-relaxed ${
+                <div className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-[14px] leading-relaxed break-words ${
                   m.role === 'user'
                     ? 'bg-[#0152EC] text-white rounded-br-sm'
-                    : 'bg-black/[0.05] dark:bg-white/[0.07] text-[#1f1f1f] dark:text-[#f6f6f6] rounded-bl-sm'
+                    : 'bg-white/[0.07] dark:bg-black/[0.05] text-[#f6f6f6] dark:text-[#1f1f1f] rounded-bl-sm'
                 }`}>
                   {m.content}
                 </div>
@@ -134,11 +137,11 @@ export default function ChatBot({ lang = 'en' }) {
 
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-black/[0.05] dark:bg-white/[0.07] px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1.5 items-center">
+                <div className="bg-white/[0.07] dark:bg-black/[0.05] px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1.5 items-center">
                   {[0, 1, 2].map(i => (
                     <span
                       key={i}
-                      className="w-1.5 h-1.5 rounded-full bg-[#5c5c5c] dark:bg-[#adadad] animate-bounce"
+                      className="w-1.5 h-1.5 rounded-full bg-[#adadad] dark:bg-[#5c5c5c] animate-bounce"
                       style={{ animationDelay: `${i * 0.15}s` }}
                     />
                   ))}
@@ -147,7 +150,7 @@ export default function ChatBot({ lang = 'en' }) {
             )}
 
             {atLimit && !loading && (
-              <p className="text-[13px] text-[#5c5c5c] dark:text-[#adadad] text-center pt-2 leading-relaxed">
+              <p className="text-[13px] text-[#adadad] dark:text-[#5c5c5c] text-center pt-2 leading-relaxed">
                 {l.limit}
               </p>
             )}
@@ -157,51 +160,55 @@ export default function ChatBot({ lang = 'en' }) {
 
           {/* Input */}
           {!atLimit && (
-            <div className="px-4 py-3 border-t border-black/[0.06] dark:border-white/[0.07] shrink-0 flex items-end gap-2">
+            <div className={`px-4 py-4 shrink-0 flex items-end gap-2 ${messages.length || loading ? 'border-t border-white/[0.07] dark:border-black/[0.06]' : ''}`}>
               <textarea
                 ref={el => { textareaRef.current = el; inputRef.current = el; }}
                 value={input}
                 onChange={handleInputChange}
                 onKeyDown={e => {
                   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+                  if (e.key === 'Tab' && !e.shiftKey) { e.preventDefault(); closeRef.current?.focus(); }
                 }}
                 placeholder={l.placeholder}
+                aria-label={l.placeholder}
+                autoComplete="off"
                 rows={1}
                 disabled={loading}
-                className="flex-1 resize-none bg-black/[0.04] dark:bg-white/[0.06] rounded-xl px-3 py-2.5 text-[14px] text-[#1f1f1f] dark:text-[#f6f6f6] placeholder:text-[#9c9c9c] dark:placeholder:text-[#666] outline-none focus:ring-1 focus:ring-[#0152EC] transition-all leading-relaxed"
-                style={{ scrollbarWidth: 'none', maxHeight: '100px' }}
+                className="flex-1 resize-none bg-white/[0.06] dark:bg-black/[0.04] rounded-xl px-3 py-[10px] text-[14px] leading-[22px] text-[#f6f6f6] dark:text-[#1f1f1f] placeholder:text-[#666] dark:placeholder:text-[#9c9c9c] placeholder:[text-indent:2px] outline-none focus:ring-1 focus:ring-[#0152EC] transition-all"
+                style={{ scrollbarWidth: 'none', minHeight: '42px', maxHeight: '100px' }}
               />
               <button
                 onClick={send}
                 disabled={!input.trim() || loading}
                 data-spring
                 aria-label={l.send}
-                className="shrink-0 w-9 h-9 rounded-xl bg-[#0152EC] text-white flex items-center justify-center transition-opacity disabled:opacity-30 enabled:cursor-pointer enabled:hover:bg-[#0143c8]"
+                className="shrink-0 rounded-xl bg-[#0152EC] border border-[#5289f2] text-white flex items-center justify-center p-2 transition-opacity disabled:opacity-30 enabled:cursor-pointer enabled:hover:bg-[#0143c8]"
               >
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                  <path d="M13.5 7.5L1.5 1.5l2 6-2 6 12-6z" fill="currentColor"/>
-                </svg>
+                <img src={imgSend} alt="" width={24} height={24} className="brightness-0 invert" />
               </button>
             </div>
           )}
         </div>
       </div>
 
-      {/* Floating trigger button */}
-      <button
-        data-spring
-        onClick={() => setOpen(o => !o)}
-        aria-label={open ? 'Close chat' : l.button}
-        aria-expanded={open}
-        className="fixed bottom-6 right-4 sm:right-6 z-40 flex items-center gap-2 pl-3 pr-4 py-2.5 bg-white/[0.72] dark:bg-black/[0.72] backdrop-blur-[8px] rounded-full shadow-[0px_4px_20px_rgba(0,0,0,0.12)] dark:shadow-[0px_4px_20px_rgba(0,0,0,0.4)] dark:ring-1 dark:ring-white/[0.16] cursor-pointer hover:bg-white/90 dark:hover:bg-black/90 transition-colors"
-      >
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 text-[#1f1f1f] dark:text-[#f6f6f6]">
-          <path d="M9 1C4.58 1 1 4.13 1 8c0 1.71.67 3.27 1.78 4.5L2 17l4.5-1.78C7.56 15.73 8.26 16 9 16c4.42 0 8-3.13 8-7s-3.58-8-8-8z" fill="currentColor" fillOpacity="0.12" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-        </svg>
-        <span className="text-[13px] font-semibold text-[#1f1f1f] dark:text-[#f6f6f6] whitespace-nowrap leading-none">
-          {l.button}
-        </span>
-      </button>
+      {/* Floating trigger button — stacked above cookie button (bottom-left) */}
+      <div className="fixed bottom-[68px] left-4 z-40 group">
+        <button
+          data-spring
+          onClick={() => setOpen(o => !o)}
+          aria-label={open ? 'Close chat' : l.button}
+          aria-expanded={open}
+          tabIndex={0}
+          className="w-9 h-9 flex items-center justify-center rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] hover:scale-110 transition-transform duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
+        >
+          <span className="text-[16px] leading-none">💬</span>
+        </button>
+        <div className="pointer-events-none absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
+          <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[15px] font-semibold leading-4 px-3 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+            {lang === 'fr' ? 'En savoir plus sur David' : 'Learn about David'}
+          </div>
+        </div>
+      </div>
     </>
   );
 }
