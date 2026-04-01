@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.2.5] — 2026-04-02
+
+### Navigation
+- **Language dropdown** — now centred below the language button (was right-aligned); added `center` alignment option to `usePortalPosition`
+
+### Cookie & footer
+- **Floating cookie button removed** — the 🍪 icon button no longer appears after consent; cookie preferences are now accessible via "Manage Cookies" in the footer
+- **Footer — Manage Cookies** — "Cookies" link replaced with a "Manage Cookies" button that opens the cookie panel; label is `whitespace-nowrap` to prevent wrapping; French: "Gérer les cookies"
+- **Cookie banner link** — "Learn more about cookies" → "View the cookies policy" (EN); "En savoir plus sur les cookies" → "Consulter la politique de cookies" (FR); still navigates to `/cookies`
+- **Footer legal buttons** — side padding reduced from `px-4` to `px-2`
+
+### Chatbot
+- **Trigger button position** — moved from `bottom-[68px]` to `bottom-4`, taking the position previously occupied by the cookie icon
+
+### Sales Platform
+- **Stakeholders tile** — removed `space-y` between list items; vertical rhythm now driven purely by line-height, consistent with the Mission tile
+- **My role tile** — stats block (`15 weeks` / `10 projects`) nudged up by 2px on tablet and desktop (`sm:-mt-2`); extra vertical breathing room added on mobile (`my-4`, reset at `sm`)
+- **Outcome — £6.8 Billions** — corrected to `£6.8 billion` (lowercase, no plural after a numeral)
+
+### Copy & language
+- **British English audit** — confirmed all user-visible copy is British English; corrected `£6.8 Billion` → `£6.8 billion` in chatbot system prompt (`api/chat.js`)
+
+---
+
 ## [1.2.4] — 2026-04-01
 
 ### New features

@@ -61,7 +61,7 @@ Design:
 
 Outcome:
 - The first two projects sold out within the first 48 hours of release.
-- By the end of the first year, the platform contributed to a 20% YoY increase in sales, generating £6.8 Billion.
+- By the end of the first year, the platform contributed to a 20% YoY increase in sales, generating £6.8 billion.
 
 Retrospective:
 - Strong coordination between internal and external stakeholders was crucial to the successful launch and to scaling subsequent deliveries.
@@ -94,7 +94,7 @@ IBM: Teamed up with IBM to build an AI-powered 3D Avatar (IBM Watson).
 University Hospital Hamburg: Supported surgical training by designing a series of 3D eye surgery animations with leading eye surgeons.
 
 ADDITIONAL HOLOGRAPHY HIGHLIGHTS
-- Anatomy hologram based on Leonardo da Vinci's drawings, presented at Buckingham Palace (the drawings were owned by Queen Elizabeth).
+- Anatomy hologram based on Leonardo da Vinci's drawings, presented at the Queen's Gallery at Buckingham Palace (part of the Royal Collection in the UK).
 - Full-size human body hologram revealing muscles, bones, and organs — co-created with an anatomy professor at the University of Edinburgh for medical teaching.
 - R&D efforts to make 3D images appear in mid-air, viewable without glasses.
 - Physical prototypes for holographic technologies in automotive (heads-up displays) and military sectors.

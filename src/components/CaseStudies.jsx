@@ -200,7 +200,7 @@ function CsCard({ card, t }) {
           <svg width="12" height="6" viewBox="0 0 12 6" aria-hidden="true" className="shrink-0 relative z-[1] mr-3 sm:mr-3.5 lg:mr-4" style={{ display: 'block', marginBottom: '-1px' }}>
             <path d="M0,6 L5.2,0.9 Q6,0 6.8,0.9 L12,6 Z" className="fill-[#1f1f1f] dark:fill-[#f6f6f6]" />
           </svg>
-          <div className="relative z-0 bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-semibold leading-4 px-3 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+          <div className="relative z-0 bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-semibold leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
             {t.viewCaseStudy}
           </div>
         </div>

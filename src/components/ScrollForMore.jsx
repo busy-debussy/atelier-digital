@@ -32,10 +32,9 @@ export default function ScrollForMore({ lang, scrollTarget }) {
       onMouseLeave={hideTip}
     >
       <div className={`absolute bottom-[calc(100%+20px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none transition-opacity duration-150 ${tipVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] sm:text-[15px] font-semibold px-3 py-1 rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
           {label}
         </div>
-        <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-[#1f1f1f] dark:border-t-[#f6f6f6] mt-[-1px]" />
       </div>
 
       <button

@@ -7,7 +7,7 @@ const T = {
   en: {
     label:      'Cookie preferences',
     message:    'This site uses cookies for analytics.',
-    learnMore:  'Learn more about cookies',
+    learnMore:  'View the cookies policy',
     learnMoreShort: 'Learn more',
     reject:     'Decline',
     accept:     'Accept',
@@ -15,7 +15,7 @@ const T = {
   fr: {
     label:      'Préférences de cookies',
     message:    "Ce site utilise des cookies pour l'analyse.",
-    learnMore:  'En savoir plus sur les cookies',
+    learnMore:  'Consulter la politique de cookies',
     learnMoreShort: 'En savoir plus',
     reject:     'Refuser',
     accept:     'Accepter',
@@ -23,16 +23,14 @@ const T = {
 };
 
 function CookieBanner({ lang, hideFloating = false }) {
-  const [visible,      setVisible]     = useState(false);
-  const [consentGiven, setConsentGiven] = useState(false);
+  const [visible, setVisible] = useState(false);
   const rejectRef = useRef(null);
   const t = T[lang] ?? T.en;
 
   useEffect(() => {
     const stored = localStorage.getItem(CONSENT_KEY);
     if (!stored) setVisible(true);
-    else setConsentGiven(true);
-    const show = () => { setVisible(true); setConsentGiven(false); };
+    const show = () => { setVisible(true); };
     window.addEventListener('show-cookie-banner', show);
     return () => window.removeEventListener('show-cookie-banner', show);
   }, []);
@@ -44,7 +42,6 @@ function CookieBanner({ lang, hideFloating = false }) {
   const respond = (choice) => {
     localStorage.setItem(CONSENT_KEY, choice);
     setVisible(false);
-    setConsentGiven(true);
     window.dispatchEvent(new CustomEvent('cookie-consent-changed', { detail: choice }));
   };
 
@@ -86,28 +83,6 @@ function CookieBanner({ lang, hideFloating = false }) {
         </div>
       </div>
 
-      {/* Small cookie button */}
-      <div
-        inert={!consentGiven || hideFloating}
-        className={`fixed bottom-4 left-4 z-[300] group transition-all duration-300 ease-out ${
-          consentGiven && !hideFloating ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
-        }`}
-      >
-        <button
-          onClick={() => window.dispatchEvent(new Event('show-cookie-banner'))}
-          aria-label={t.label}
-          tabIndex={0}
-          data-spring
-          className="w-9 h-9 flex items-center justify-center rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] hover:scale-110 transition-transform duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
-        >
-          <span className="text-[16px] leading-none">🍪</span>
-        </button>
-        <div className="pointer-events-none absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
-          <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[15px] font-semibold leading-4 px-3 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
-            {t.label}
-          </div>
-        </div>
-      </div>
     </>
   );
 }

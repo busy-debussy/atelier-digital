@@ -96,6 +96,13 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
+  // Keyboard shortcut: Cmd/Ctrl+Shift+K
+  useEffect(() => {
+    const handler = () => setOpen(o => !o);
+    window.addEventListener('toggle-chat', handler);
+    return () => window.removeEventListener('toggle-chat', handler);
+  }, []);
+
   // Focus input when panel opens
   useEffect(() => {
     if (open) setTimeout(() => inputRef.current?.focus(), 300);
@@ -242,7 +249,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
       </div>
 
       {/* Floating trigger button — stacked above cookie button (bottom-left) */}
-      <div inert={hideFloating || undefined} className={`fixed bottom-[68px] left-4 z-40 group transition-all duration-300 ease-out ${hideFloating ? 'opacity-0 pointer-events-none translate-y-3' : 'opacity-100 pointer-events-auto translate-y-0'}`}>
+      <div inert={hideFloating || undefined} className={`fixed bottom-4 left-4 z-40 group transition-all duration-300 ease-out ${hideFloating ? 'opacity-0 pointer-events-none translate-y-3' : 'opacity-100 pointer-events-auto translate-y-0'}`}>
         {/* First-load hint callout */}
         <div
           aria-hidden="true"
@@ -252,8 +259,6 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
             <span className="text-[13px] font-semibold leading-snug">{lang === 'fr' ? 'Discutez avec l\'I.A. pour gagner du temps' : 'Chat with A.I.'}</span>
             <span className="text-[11px] opacity-80 leading-snug">{lang === 'fr' ? '' : 'Skip the scroll, just ask'}</span>
           </div>
-          {/* Caret pointing left */}
-          <div className="absolute right-full top-1/2 -translate-y-1/2 border-y-[5px] border-r-[6px] border-y-transparent border-r-[#0152EC]" />
         </div>
 
         <button
@@ -267,8 +272,9 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
           <span className="text-[16px] leading-none">💬</span>
         </button>
         <div className="pointer-events-none absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
-          <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[15px] font-semibold leading-4 px-3 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+          <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-1.5">
             {lang === 'fr' ? 'En savoir plus sur David' : 'Learn about David'}
+            <span className="text-[11px] text-[#adadad] dark:text-[#5c5c5c]">C</span>
           </div>
         </div>
       </div>

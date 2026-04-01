@@ -90,6 +90,8 @@ function usePortalPosition(anchorRef, { offsetTop = 11, align = 'left', offsetX 
       const base = { position: 'fixed', top: r.bottom + offsetTop, visibility: 'visible', zIndex: 200 };
       if (align === 'right') {
         setStyle({ ...base, right: window.innerWidth - r.right });
+      } else if (align === 'center') {
+        setStyle({ ...base, left: r.left + r.width / 2, transform: 'translateX(-50%)' });
       } else {
         setStyle({ ...base, left: r.left + offsetX });
       }
@@ -103,16 +105,14 @@ function usePortalPosition(anchorRef, { offsetTop = 11, align = 'left', offsetX 
 }
 
 // Tooltip
-function Tooltip({ label, isDark, offset = 8 }) {
+function Tooltip({ label, isDark, offset = 8, shortcut }) {
   const bg  = isDark ? '#f6f6f6' : '#1f1f1f';
   const txt = isDark ? '#1f1f1f' : '#f6f6f6';
   return (
     <div style={{ top: `calc(100% + ${offset}px)` }} className="absolute left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center">
-      <svg width="12" height="6" viewBox="0 0 12 6" aria-hidden="true" className="shrink-0 relative z-[1]" style={{ display:'block', marginBottom:'-1px' }}>
-        <path d={`M0,6 L5.2,0.9 Q6,0 6.8,0.9 L12,6 Z`} fill={bg} />
-      </svg>
-      <div style={{ background: bg, color: txt }} className="relative z-0 text-[15px] font-semibold leading-4 px-3 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+<div style={{ background: bg, color: txt }} className="relative z-0 text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-1.5">
         {label}
+        {shortcut && <span className="text-[11px] text-[#adadad] dark:text-[#5c5c5c]">{shortcut}</span>}
       </div>
     </div>
   );
@@ -153,6 +153,7 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
         onClick={handleClick}
         onMouseEnter={() => { setHovered(true);  if (!noTooltip) showTip(); }}
         onMouseLeave={() => { setHovered(false); hideTip(); }}
+        onBlur={() => { setHovered(false); hideTip(); }}
         aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
         className="relative flex items-center h-8 w-[51px] rounded-[16px] cursor-pointer transition-colors"
         style={{ padding: isDark ? '3px 3px 3px 4px' : '3px 4px 3px 3px', gap:2, ...bgStyle }}
@@ -169,7 +170,7 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
           </>
         )}
       </button>
-      {tooltipVisible && <Tooltip label={T[lang]['dark mode'] ?? 'dark mode'} isDark={isDark} offset={16} />}
+      {!noTooltip && <div className={`pointer-events-none transition-opacity duration-200 ${tooltipVisible ? 'opacity-100' : 'opacity-0'}`}><Tooltip label={T[lang]['dark mode'] ?? 'dark mode'} isDark={isDark} offset={10} shortcut="D" /></div>}
     </div>
   );
 }
@@ -196,7 +197,7 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
         </span>
         <Chevron isOpen={isOpen} isDark={isDark} />
       </button>
-      {tooltipVisible && !isOpen && <Tooltip label={T[lang]['tip projects']} isDark={isDark} offset={16} />}
+      {tooltipVisible && !isOpen && <Tooltip label={T[lang]['tip projects']} isDark={isDark} offset={10} />}
     </div>
   );
 }
@@ -265,7 +266,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
 
 // LanguageDropdown
 function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef }) {
-  const portalStyle = usePortalPosition(anchorRef, { offsetTop: 11, align: 'right' });
+  const portalStyle = usePortalPosition(anchorRef, { offsetTop: 11, align: 'center' });
   const other = lang === 'en' ? 'fr' : 'en';
   const handleSelect = () => { toggleLang(); onClose(); };
 
@@ -334,7 +335,7 @@ function LanguageButton({ isOpen, onClick, onClose, lang, toggleLang, isDark, la
         </span>
         <Chevron isOpen={isOpen} isDark={isDark} />
       </button>
-      {tooltipVisible && !isOpen && <Tooltip label="languages" isDark={isDark} offset={16} />}
+      {tooltipVisible && !isOpen && <Tooltip label="languages" isDark={isDark} offset={10} shortcut="L" />}
       {isOpen && <LanguageDropdown lang={lang} toggleLang={toggleLang} onClose={onClose} dropdownRef={langDropdownRef} anchorRef={containerRef} />}
     </div>
   );
@@ -371,7 +372,7 @@ function NavLink({ to, label, currentPage, tooltip, isDark }) {
           {label}
         </span>
       </Link>
-      {tooltipVisible && tooltip && <Tooltip label={tooltip} isDark={isDark} offset={16} />}
+      {tooltipVisible && tooltip && <Tooltip label={tooltip} isDark={isDark} offset={10} />}
     </li>
   );
 }
@@ -439,7 +440,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
             </span>
           </div>
         </a>
-        {logoTipVisible && <Tooltip label={currentPage === '/' ? T[lang]['back to top'] : T[lang]['go home']} isDark={isDark} />}
+        {logoTipVisible && <Tooltip label={currentPage === '/' ? T[lang]['back to top'] : T[lang]['go home']} isDark={isDark} offset={2} />}
       </div>
 
       <ol className={`flex items-center ${isTablet ? 'gap-2' : 'gap-4'}`}>

@@ -253,8 +253,8 @@ import imgHifi09MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi
 // ── Hero ──────────────────────────────────────────────────────────────────────
 const HERO = {
   en: {
-    category: 'Real Estate · Sales Platform',
-    title: 'A digital sales platform for luxury real estate developments',
+    category: 'Case Study · Responsive Web App',
+    title: 'A sales platform for luxury real estate developments',
     stats: [
       { prefix: '£', countTo: 6.8, decimals: 1, suffix: 'B',  label: 'in sales generated'      },
       { prefix: '+', countTo: 20,  decimals: 0, suffix: '%',   label: 'YoY sales increase'       },
@@ -262,8 +262,8 @@ const HERO = {
     ],
   },
   fr: {
-    category: 'Immobilier · Plateforme de vente',
-    title: 'Une plateforme de vente digitale pour des projets immobiliers de luxe',
+    category: 'Étude de cas · Appli Web Réactive',
+    title: 'Une plateforme de vente pour des projets immobiliers de luxe',
     stats: [
       { prefix: '',  countTo: 8,  decimals: 0, suffix: ' Mds €', label: 'de ventes générées'           },
       { prefix: '+', countTo: 20, decimals: 0, suffix: ' %',      label: 'd’augmentation en un an' },
@@ -317,7 +317,7 @@ function Hero({ lang }) {
       </picture>
 
       {/* Gradient overlay, darkens bottom for text legibility */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/60 to-black/20" />
 
       {/* Main content, bottom */}
       <div className="relative z-10 mt-auto max-w-5xl mx-auto w-full px-6 sm:px-8 lg:px-10 pb-24 sm:pb-28 lg:pb-24 flex flex-col gap-6 sm:gap-8">
@@ -479,27 +479,27 @@ const CONTEXT_INDUSTRY = {
 };
 const CONTEXT_BODIES = {
   // index matches eyebrows array (0 = client, body handled inline, 1 = industry, handled inline)
-  mission:      { en: <>From concept to completion, our mission is to <strong>supercharge property sales</strong> by providing an <strong>interactive 3D experience</strong> of spaces before they are built.</>, fr: <>Du concept à la production, <strong>booster les ventes</strong> en offrant une <strong>expérience interactive 3D</strong> des lieux avant la construction des villas et appartements.</> },
-  stakeholders: { en: <ul className="space-y-1 list-disc list-inside"><li>The client’s <strong>digital team</strong> & <strong>architects</strong>.</li><li>Our product team, project manager, and dev, studio, design, marketing and customer success teams.</li></ul>, fr: <ul className="space-y-1 list-disc list-inside"><li>L’<strong>équipe client digitale</strong> et <strong>architectes</strong>.</li><li>Nos chef de produit, de projet, et nos équipes dev, studio, design, marketing, et customer success.</li></ul> },
+  mission:      { en: <>From concept to delivery, we aimed to <strong>supercharging property sales</strong> by giving buyers an <strong>interactive 3D experience</strong> of spaces before they are built.</>, fr: <><strong>Dynamiser les ventes</strong> immobilières en offrant aux acheteurs une <strong>expérience 3D interactive </strong> des espaces avant leur construction.</> },
+  stakeholders: { en: <ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong>, marketing, customer success.</li></ul>, fr: <ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong>, marketing, service client.</li></ul> },
   myRole: {
     en: {
       stats: [
         { value: "15 weeks", label: "to first launch" },
         { value: "10 projects", label: "in first year" },
       ],
-      body: <>As <strong>Senior <abbr title="User Experience / User Interface" className="no-underline">UX/UI</abbr> Designer</strong> and <strong>Design Team Manager</strong>, I led a team of 4 designers, covering UX, UI, interaction design, and graphics, from initial concept through successive product launches.</>,
+      body: <>As <strong>Senior <abbr title="User Experience / User Interface" className="no-underline">UX/UI</abbr> Designer</strong> and <strong>Design Team Manager</strong>, I led a team of four designers across UX, UI, interaction design, and visual design, from initial concept through successive product launches. 🚀</>,
     },
     fr: {
       stats: [
         { value: "15 semaines", label: "jusqu’au 1er lancement" },
         { value: "10 projets",   label: "la premi\u00e8re ann\u00e9e" },
       ],
-      body: <>En tant que <strong>Senior <abbr title="User Experience / User Interface" className="no-underline">UX/UI</abbr> Designer</strong> et <strong>responsable de l&apos;équipe design</strong>, j&apos;ai dirigé une équipe de 4 designers, couvrant l&apos;UX, l&apos;UI, le design d&apos;interaction et le graphisme, du concept initial jusqu&apos;aux lancements successifs.</>,
+      body: <>En tant que <strong>Senior <abbr title="User Experience / User Interface" className="no-underline">UX/UI</abbr> Designer</strong> et <strong>responsable de l&apos;équipe design</strong>, j’ai dirigé une équipe de quatre designers couvrant l’UX, l’UI, le design d’interaction et le design visuel, de la phase de conception initiale jusqu’aux lancements successifs du produit.🚀</>,
     },
   },
   team: {
-    en: <><p>The entire team worked remotely.</p>We worked together across a global network, with colleagues based in Brazil 🇧🇷, Canada 🇨🇦, the United Kingdom 🇬🇧, Europe 🇪🇺, the United Arab Emirates 🇦🇪, India 🇮🇳, Vietnam 🇻🇳, and Australia 🇦🇺.</>,
-    fr: <><p>100% télétravail.</p>Nous étions répartis sur quatre continents, avec des collègues au Brésil 🇧🇷, Canada 🇨🇦, Royaume-Uni 🇬🇧, Europe 🇪🇺, Émirats arabes unis 🇦🇪, Inde 🇮🇳, Vietnam 🇻🇳 et Australie 🇦🇺.</>,
+    en: <>Fully remote, distributed globally 🌏. <strong>Dev & studio</strong> teams made up most of the workforce, while our <strong>design team</strong> coordinated communications and served as the source of truth in Figma and Confluence for product, dev, and QA teams.</>,
+    fr: <>100% télétravail, dans le monde 🌏. Équipes <strong>dev et studio</strong> formaient l’essentiel des effectifs, tandis que <strong>l’équipe design</strong> orchestrait communications et servait de source de vérité dans Figma et Confluence pour les équipes produit, dev et QA.</>,
   },
 };
 
@@ -526,7 +526,7 @@ function ContextContent({ lang }) {
         <Tile>
           <img src={imgClientLogo} alt="Client logo" width={80} height={80} className="brightness-0 dark:invert" />
           <TileEyebrow>{eyebrows[0]}</TileEyebrow>
-          <TileBody>One of the <strong>leading real estate developers</strong> in the United Arab Emirates (UAE).</TileBody>
+          <TileBody>{lang === 'fr' ? <>L'un des <strong>principaux promoteurs immobiliers</strong> des Émirats arabes unis (EAU).</> : <>One of the <strong>leading real estate developers</strong> in the United Arab Emirates (UAE).</>}</TileBody>
           <span className="self-start px-4 py-2 bg-[#f6f6f6] dark:bg-[#1f1f1f] border border-black/[0.08] dark:border-white/[0.08] rounded-full text-[14px] sm:text-[15px] font-medium text-[#1f1f1f] dark:text-[#f6f6f6]">
             {clientPill}
           </span>
@@ -550,7 +550,7 @@ function ContextContent({ lang }) {
       <Tile>
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-8">
           <TileEyebrow>{eyebrows[4]}</TileEyebrow>
-          <div className="flex items-start gap-8 sm:gap-12 shrink-0">
+          <div className="flex items-start gap-8 sm:gap-12 shrink-0 my-4 sm:my-0 sm:-mt-2">
             {CONTEXT_BODIES.myRole[l].stats.map((s, i) => (
               <div key={i} className="flex flex-col items-start sm:items-end gap-0.5">
                 <span className="text-[28px] sm:text-[32px] lg:text-[36px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">{s.value}</span>
@@ -579,7 +579,7 @@ const IMPACT = {
   en: {
     outcome: {
       eyebrow: "Outcome",
-      body: <><p>Following validation and user testing within our development environment, we successfully launched the first two projects, both of which <strong>sold out within the first 48 hours</strong> of release.</p><p>Building on that momentum, project delivery accelerated. And by the end of our first year of collaboration, the platform contributed to a <strong>20% YoY increase</strong> in sales, generating <strong>£6.8 Billions</strong>.</p></>,
+      body: <><p>Following validation and user testing within our development environment, we successfully launched the first two projects, both of which <strong>sold out within the first 48 hours</strong> of release.</p><p>Building on that momentum, project delivery accelerated. And by the end of our first year of collaboration, the platform contributed to a <strong>20% YoY increase</strong> in sales, generating <strong>£6.8 billion</strong>.</p></>,
     },
     retrospective: {
       eyebrow: "Retrospective",

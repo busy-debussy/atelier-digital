@@ -93,6 +93,20 @@ function App() {
     return () => window.removeEventListener('cookie-consent-changed', tryLoad);
   }, []);
 
+  useEffect(() => {
+    const handler = (e) => {
+      // Skip if any modifier is held, or if focus is in a text field
+      if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+      const tag = document.activeElement?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      if (e.code === 'KeyD') setIsDark(d => !d);
+      if (e.code === 'KeyL') setLang(l => l === 'en' ? 'fr' : 'en');
+      if (e.code === 'KeyC') window.dispatchEvent(new CustomEvent('toggle-chat'));
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
   const [chatOpen, setChatOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(() => !localStorage.getItem('cookie-consent'));
   const [secondaryNavVisible, setSecondaryNavVisible] = useState(false);

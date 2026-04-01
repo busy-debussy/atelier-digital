@@ -7,7 +7,7 @@ function CopyrightTag({ year, tooltip }) {
     <span className="relative inline-block group cursor-default">
       © {year} Atelier Digital
       <div className="pointer-events-none absolute bottom-[calc(100%+8px)] left-0 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200 flex flex-col items-start">
-        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[15px] font-semibold leading-4 px-3 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-semibold leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
           {tooltip}
         </div>
         <svg width="12" height="6" viewBox="0 0 12 6" aria-hidden="true" className="shrink-0 ml-3" style={{ display: 'block', marginTop: '-1px' }}>
@@ -36,7 +36,7 @@ const T = {
     education:    'education',
     location:     'Edinburgh, United Kingdom',
     privacy:      'Privacy',
-    cookies:      'Cookies',
+    manageCookies: 'Manage Cookies',
     terms:        'Terms',
     thanks:       'Thanks for visiting!',
     techTooltip:  'Designed in Figma, built in React & Tailwind CSS',
@@ -58,7 +58,7 @@ const T = {
     education:    'formation',
     location:     'Édimbourg, Royaume-Uni',
     privacy:      'Confidentialité',
-    cookies:      'Cookies',
+    manageCookies: 'Gérer les cookies',
     terms:        'Conditions',
     thanks:       'Merci de votre visite !',
     techTooltip:  'Conçu avec Figma, construit en React & Tailwind CSS',
@@ -107,6 +107,14 @@ function Footer({ lang }) {
     setTimeout(() => navigate(to), 140);
   };
 
+  const manageCookiesBtn = () => (
+    <button
+      data-spring
+      onClick={() => window.dispatchEvent(new Event('show-cookie-banner'))}
+      className={`px-2 py-1 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer whitespace-nowrap`}
+    >{t.manageCookies}</button>
+  );
+
   const legalLink = (to, label) => {
     const isActive = pathname === to;
     return (
@@ -115,7 +123,7 @@ function Footer({ lang }) {
         to={to}
         tabIndex={0}
         onClick={() => { if (isActive) window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-        className={`px-4 py-1 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+        className={`px-2 py-1 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
           isActive
             ? 'bg-[#161616] dark:bg-white text-white dark:text-[#161616] font-semibold'
             : 'hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
@@ -192,7 +200,7 @@ function Footer({ lang }) {
             <ul className="flex items-center gap-1" aria-label="Legal">
               <li>{legalLink('/privacy', t.privacy)}</li>
               <li role="none" aria-hidden="true"><div className="w-px h-3 bg-black/20 dark:bg-white/20" /></li>
-              <li>{legalLink('/cookies', t.cookies)}</li>
+              <li>{manageCookiesBtn()}</li>
               <li role="none" aria-hidden="true"><div className="w-px h-3 bg-black/20 dark:bg-white/20" /></li>
               <li>{legalLink('/terms', t.terms)}</li>
             </ul>
@@ -206,7 +214,7 @@ function Footer({ lang }) {
             <ul className="flex items-center gap-1 justify-center" aria-label="Legal">
               <li>{legalLink('/privacy', t.privacy)}</li>
               <li role="none" aria-hidden="true"><div className="w-px h-3 bg-black/20 dark:bg-white/20" /></li>
-              <li>{legalLink('/cookies', t.cookies)}</li>
+              <li>{manageCookiesBtn()}</li>
               <li role="none" aria-hidden="true"><div className="w-px h-3 bg-black/20 dark:bg-white/20" /></li>
               <li>{legalLink('/terms', t.terms)}</li>
             </ul>
