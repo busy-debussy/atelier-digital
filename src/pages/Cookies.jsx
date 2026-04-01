@@ -376,6 +376,12 @@ function Cookies({ lang }) {
     return () => window.removeEventListener('scroll', update);
   }, [t]);
 
+  const secondaryNavVisible = scrolledDown && !atBottom;
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('secondary-nav-change', { detail: secondaryNavVisible }));
+    return () => window.dispatchEvent(new CustomEvent('secondary-nav-change', { detail: false }));
+  }, [secondaryNavVisible]);
+
   useEffect(() => {
     document.title = lang === 'fr' ? 'Cookies • Atelier Digital' : 'Cookies • Atelier Digital';
   }, [lang]);
@@ -439,7 +445,7 @@ function Cookies({ lang }) {
         </div>{/* px-6 */}
 
         {/* Fixed mobile secondary nav — appears after title scrolls out, disappears when outro is reached */}
-        <div aria-hidden={scrolledDown && !atBottom ? undefined : 'true'} className={`md:hidden fixed bottom-20 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div aria-hidden={scrolledDown && !atBottom ? undefined : 'true'} className={`md:hidden fixed bottom-4 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <div className="pointer-events-auto w-full">
             <MobileSecondaryNav sections={t.sections} activeId={activeId} />
           </div>

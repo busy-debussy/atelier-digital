@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.2.4] — 2026-04-01
+
+### New features
+- **Chatbot — first-load hint** — a blue callout bubble appears to the right of the chatbot button after the user actions the cookie banner (accepted or declined), shown once only (localStorage flag); auto-dismisses after 5 seconds or on any click; copy: "Chat with A.I." / "Skip the scroll, just ask" (EN), "Discutez avec l'I.A. pour gagner du temps" (FR)
+
+### Chatbot system prompt
+- **Collaborations** — added all 11 collaboration modal descriptions attributed per partner (UK Government, Looking Glass Factory, DSTL, JLR, Nokia, PIF, Etisalat, CERN, University of Edinburgh, IBM, University Hospital Hamburg)
+- **Work history** — added full drawer content for all experience and education cards; added all four certifications and top skills
+- **Sales Platform case study** — added detailed section: client context, mission, challenge, UX strategy (MVP, firm deadlines, incremental iterations), 9-view design, technical exploration (Unreal pixel-streaming trade-off), outcome (£6.8B, 20% YoY, 48h sell-out), and retrospective
+- **Portfolio meta** — added section explaining David built this site himself, taking on designer, PM, product manager, and tester roles, using Claude Code as AI coding assistant
+- **Observed qualities** — added section on non-obvious strengths: technical depth, spatial/digital career thread, high-stakes delivery, systems thinking, collaborative nature
+- **Soluis date** — removed end date to avoid disclosing departure timing
+- **French placeholder** — "Demande à Claude…" → "Demandez à Claude…"
+
+### UI refinements
+- **Mobile nav — z-index** — nav wrapper raised from `z-50` to `z-[500]`; portal backdrop raised from `z-[49]` to `z-[499]`; mobile menu now renders above chatbot panel and cookie banner
+
+### Secondary nav — hide floating buttons
+- **Cookies / Privacy / Terms** — cookie and chatbot floating buttons fade out when the mobile secondary nav is visible; fade back in when it exits; implemented via `secondary-nav-change` window event dispatched from all three pages; App.jsx listens and passes `hideFloating` prop to both CookieBanner and ChatBot
+- **Privacy & Terms** — added `secondary-nav-change` event dispatch (matching Cookies); fixed mobile secondary nav position from `bottom-20` to `bottom-4`
+
+### Accessibility
+- **Chatbot dialog** — `role="dialog"` and `aria-modal` now only applied when panel is open, removing false-positive WCAG errors when closed
+- **Cookie banner dialog** — same pattern: `role="dialog"` and `aria-modal` only applied when banner is visible
+- **App wrapper** — removed `aria-hidden` from background wrapper when chat is open; `inert` alone is sufficient and avoids "aria-hidden on parent of focusable" error
+
+---
+
 ## [1.2.3] — 2026-04-01
 
 ### New features

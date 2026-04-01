@@ -94,18 +94,39 @@ function App() {
   }, []);
 
   const [chatOpen, setChatOpen] = useState(false);
+  const [bannerOpen, setBannerOpen] = useState(() => !localStorage.getItem('cookie-consent'));
+  const [secondaryNavVisible, setSecondaryNavVisible] = useState(false);
   const toggleDark = () => setIsDark(!isDark);
   const toggleLang = () => setLang(lang === 'en' ? 'fr' : 'en');
+
+  useEffect(() => {
+    const handler = (e) => setSecondaryNavVisible(e.detail);
+    window.addEventListener('secondary-nav-change', handler);
+    return () => window.removeEventListener('secondary-nav-change', handler);
+  }, []);
+
+  useEffect(() => {
+    const onShow = () => setBannerOpen(true);
+    const onConsent = () => setBannerOpen(false);
+    window.addEventListener('show-cookie-banner', onShow);
+    window.addEventListener('cookie-consent-changed', onConsent);
+    return () => {
+      window.removeEventListener('show-cookie-banner', onShow);
+      window.removeEventListener('cookie-consent-changed', onConsent);
+    };
+  }, []);
 
   return (
     <BrowserRouter>
       <ScrollToTop />
       <PageViewTracker />
-      <div aria-hidden={chatOpen || undefined} inert={chatOpen || undefined}>
-        <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
-        <CookieBanner lang={lang} />
+      <div inert={chatOpen || undefined}>
+        <div inert={bannerOpen || undefined}>
+          <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
+        </div>
+        <CookieBanner lang={lang} hideFloating={secondaryNavVisible} />
       </div>
-      <ChatBot lang={lang} onOpenChange={setChatOpen} />
+      <ChatBot lang={lang} onOpenChange={setChatOpen} hideFloating={secondaryNavVisible} />
     </BrowserRouter>
   );
 }

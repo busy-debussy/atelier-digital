@@ -20,7 +20,7 @@ const L = {
     button:      'Poser une question',
     title:       'L\'I.A. me connaît par 💙',
     empty:       "Posez une question sur l'expérience ou le travail de David.",
-    placeholder: 'Demande à Claude…',
+    placeholder: 'Demandez à Claude…',
     send:        'Envoyer',
     limit:       'Fin de la conversation — contactez David directement pour en savoir plus.',
     error:       'Une erreur s\'est produite. Veuillez réessayer.',
@@ -44,9 +44,12 @@ function renderContent(text) {
   });
 }
 
-export default function ChatBot({ lang = 'en', onOpenChange }) {
+const HINT_KEY = 'chatbot-hint-shown';
+
+export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = false }) {
   const l = L[lang] || L.en;
   const [open, setOpen]       = useState(false);
+  const [hint, setHint]       = useState(false);
 
   useEffect(() => { onOpenChange?.(open); }, [open, onOpenChange]);
   const [messages, setMessages] = useState([]);
@@ -56,6 +59,34 @@ export default function ChatBot({ lang = 'en', onOpenChange }) {
   const inputRef    = useRef(null);
   const textareaRef = useRef(null);
   const closeRef    = useRef(null);
+  const hintTimer   = useRef(null);
+
+  // Show hint once, after the user actions the cookie banner; dismiss on any click
+  useEffect(() => {
+    if (localStorage.getItem(HINT_KEY)) return;
+    const onConsent = () => {
+      hintTimer.current = setTimeout(() => setHint(true), 600);
+      const onAnyClick = () => dismissHint();
+      document.addEventListener('pointerdown', onAnyClick, { once: true });
+    };
+    window.addEventListener('cookie-consent-changed', onConsent, { once: true });
+    return () => {
+      clearTimeout(hintTimer.current);
+      window.removeEventListener('cookie-consent-changed', onConsent);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Auto-dismiss hint after 5s
+  useEffect(() => {
+    if (!hint) return;
+    const t = setTimeout(dismissHint, 5000);
+    return () => clearTimeout(t);
+  }, [hint]);
+
+  const dismissHint = () => {
+    setHint(false);
+    localStorage.setItem(HINT_KEY, '1');
+  };
 
   const userTurns = messages.filter(m => m.role === 'user').length;
   const atLimit   = userTurns >= MAX_TURNS;
@@ -112,10 +143,7 @@ export default function ChatBot({ lang = 'en', onOpenChange }) {
     <>
       {/* Chat panel */}
       <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="chatbot-title"
-        aria-live="polite"
+        {...(open ? { role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'chatbot-title', 'aria-live': 'polite' } : {})}
         inert={!open}
         className={`fixed bottom-4 z-[400] transition-all duration-300 ease-out ${
           open ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
@@ -214,10 +242,23 @@ export default function ChatBot({ lang = 'en', onOpenChange }) {
       </div>
 
       {/* Floating trigger button — stacked above cookie button (bottom-left) */}
-      <div className="fixed bottom-[68px] left-4 z-40 group">
+      <div inert={hideFloating || undefined} className={`fixed bottom-[68px] left-4 z-40 group transition-all duration-300 ease-out ${hideFloating ? 'opacity-0 pointer-events-none translate-y-3' : 'opacity-100 pointer-events-auto translate-y-0'}`}>
+        {/* First-load hint callout */}
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute left-[calc(100%+10px)] top-1/2 -translate-y-1/2 transition-all duration-300 ease-out ${hint && !hideFloating ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-1'}`}
+        >
+          <div className="bg-[#0152EC] text-white px-3 py-2 rounded-xl shadow-[0px_4px_16px_rgba(1,82,236,0.35)] whitespace-nowrap flex flex-col gap-0.5">
+            <span className="text-[13px] font-semibold leading-snug">{lang === 'fr' ? 'Discutez avec l\'I.A. pour gagner du temps' : 'Chat with A.I.'}</span>
+            <span className="text-[11px] opacity-80 leading-snug">{lang === 'fr' ? '' : 'Skip the scroll, just ask'}</span>
+          </div>
+          {/* Caret pointing left */}
+          <div className="absolute right-full top-1/2 -translate-y-1/2 border-y-[5px] border-r-[6px] border-y-transparent border-r-[#0152EC]" />
+        </div>
+
         <button
           data-spring
-          onClick={() => setOpen(o => !o)}
+          onClick={() => { dismissHint(); setOpen(o => !o); }}
           aria-label={open ? 'Close chat' : l.button}
           aria-expanded={open}
           tabIndex={0}

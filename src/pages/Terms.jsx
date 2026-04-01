@@ -220,6 +220,12 @@ function Terms({ lang }) {
     return () => window.removeEventListener('scroll', update);
   }, [t]);
 
+  const secondaryNavVisible = scrolledDown && !atBottom;
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('secondary-nav-change', { detail: secondaryNavVisible }));
+    return () => window.dispatchEvent(new CustomEvent('secondary-nav-change', { detail: false }));
+  }, [secondaryNavVisible]);
+
   return (
     <>
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:ring-2 focus:ring-[#0152EC] focus:bg-white focus:text-[#1f1f1f] focus:outline-none font-medium">
@@ -263,7 +269,7 @@ function Terms({ lang }) {
             © {year} David V.{lang === 'fr' ? ' Tous droits réservés.' : ' All rights reserved.'}
           </p>
         </div>
-        <div aria-hidden={scrolledDown && !atBottom ? undefined : 'true'} className={`md:hidden fixed bottom-20 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div aria-hidden={scrolledDown && !atBottom ? undefined : 'true'} className={`md:hidden fixed bottom-4 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <div className="pointer-events-auto w-full">
             <MobileSecondaryNav sections={t.sections} activeId={activeId} />
           </div>

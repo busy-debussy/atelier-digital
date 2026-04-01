@@ -22,7 +22,7 @@ const T = {
   },
 };
 
-function CookieBanner({ lang }) {
+function CookieBanner({ lang, hideFloating = false }) {
   const [visible,      setVisible]     = useState(false);
   const [consentGiven, setConsentGiven] = useState(false);
   const rejectRef = useRef(null);
@@ -52,12 +52,10 @@ function CookieBanner({ lang }) {
     <>
       {/* Full banner */}
       <div
-        role="dialog"
-        aria-modal="true"
-        aria-label={t.label}
-        inert={!visible}
+        {...(visible && !hideFloating ? { role: 'dialog', 'aria-modal': 'true', 'aria-label': t.label } : {})}
+        inert={!visible || hideFloating}
         className={`fixed bottom-4 left-4 z-[300] w-[280px] bg-[#1f1f1f]/95 dark:bg-[#f6f6f6]/95 backdrop-blur-sm border border-white/[0.08] dark:border-black/[0.08] rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.10)] p-4 flex flex-col gap-3 transition-all duration-300 ease-out ${
-          visible ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
+          visible && !hideFloating ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
         }`}
       >
         <p className="text-[13px] text-[#adadad] dark:text-[#5c5c5c]">
@@ -90,9 +88,9 @@ function CookieBanner({ lang }) {
 
       {/* Small cookie button */}
       <div
-        inert={!consentGiven}
+        inert={!consentGiven || hideFloating}
         className={`fixed bottom-4 left-4 z-[300] group transition-all duration-300 ease-out ${
-          consentGiven ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
+          consentGiven && !hideFloating ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
         }`}
       >
         <button

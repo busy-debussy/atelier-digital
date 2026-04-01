@@ -210,10 +210,10 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
         {/* H1, typed heading */}
         <div>
           <h1
-            aria-label={heading}
             className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.15] md:leading-none text-[#1f1f1f] dark:text-[#f6f6f6]"
           >
-            <span>
+            <span className="sr-only">{heading}</span>
+            <span aria-hidden="true">
               {displayed}
               {!typingDone && (
                 <span className={`inline-block w-[3px] h-[0.85em] ml-1 align-middle bg-[#1f1f1f] dark:bg-[#f6f6f6] rounded-sm ${caretBlinking ? 'motion-safe:animate-[blink_1s_step-end_infinite]' : ''}`} />
@@ -226,21 +226,23 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
         {showSubtitle && (
           <div className="mt-6 sm:mt-8">
             <h2
-              aria-label={subtitle}
               className="text-3xl md:text-5xl font-medium text-[#5c5c5c] dark:text-[#adadad]"
             >
-              {subtitleChars.map((char, i) => (
-                <span
-                  key={i}
-                  style={{
-                    opacity: i < visibleChars ? 1 : 0,
-                    transition: 'opacity 300ms cubic-bezier(0.22,1,0.36,1)',
-                    whiteSpace: 'pre',
-                  }}
-                >
-                  {char}
-                </span>
-              ))}
+              <span className="sr-only">{subtitle}</span>
+              <span aria-hidden="true">
+                {subtitleChars.map((char, i) => (
+                  <span
+                    key={i}
+                    style={{
+                      opacity: i < visibleChars ? 1 : 0,
+                      transition: 'opacity 300ms cubic-bezier(0.22,1,0.36,1)',
+                      whiteSpace: 'pre',
+                    }}
+                  >
+                    {char}
+                  </span>
+                ))}
+              </span>
             </h2>
           </div>
         )}
@@ -259,9 +261,9 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                 to="/resume#experience"
                 className="group block border border-black/[0.08] dark:border-white/[0.08] hover:border-black/[0.18] dark:hover:border-white/[0.18] rounded-3xl px-6 py-5 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_20px_rgba(255,255,255,0.04)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2 cursor-pointer"
               >
-                <h3 className="text-[14px] sm:text-[15px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad]">
+                <p className="text-[14px] sm:text-[15px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad]">
                   {expLabel}
-                </h3>
+                </p>
                 <ul
                   aria-label={expLabel}
                   className="list-none grid grid-cols-3 gap-2 p-0 m-0"
