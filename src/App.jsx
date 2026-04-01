@@ -93,6 +93,7 @@ function App() {
     return () => window.removeEventListener('cookie-consent-changed', tryLoad);
   }, []);
 
+  const [chatOpen, setChatOpen] = useState(false);
   const toggleDark = () => setIsDark(!isDark);
   const toggleLang = () => setLang(lang === 'en' ? 'fr' : 'en');
 
@@ -100,9 +101,11 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <PageViewTracker />
-      <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
-      <CookieBanner lang={lang} />
-      <ChatBot lang={lang} />
+      <div aria-hidden={chatOpen || undefined} inert={chatOpen || undefined}>
+        <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
+        <CookieBanner lang={lang} />
+      </div>
+      <ChatBot lang={lang} onOpenChange={setChatOpen} />
     </BrowserRouter>
   );
 }

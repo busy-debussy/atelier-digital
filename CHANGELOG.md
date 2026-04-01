@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.2] — 2026-04-01
+
+### Bug fixes
+- **Chatbot — panel width on mobile** — switched from `calc(100vw - 32px)` to `left: 16px / right: 16px` inline styles with `maxWidth: 380px`; safe now that `overflow-x: clip` is restored on `html`
+
+### Privacy & legal
+- **Terms of use** — added "AI chatbot" section (EN + FR): AI-generated responses disclaimer, intended use, anonymous storage disclosure, misuse prohibition; last updated date bumped to 2026-04-01
+- **Privacy policy** — removed Figma capture script from `index.html`
+
+### Accessibility
+- **Chatbot — modal background** — background content now gets `aria-hidden` and `inert` when chat panel is open, properly hiding it from assistive technologies; resolves WCAG 2.2 modal accessibility error
+
+---
+
 ## [1.2.1] — 2026-04-01
 
 ### New features

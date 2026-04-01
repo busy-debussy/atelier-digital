@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-03-26');
+const LAST_UPDATED = new Date('2026-04-01');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -23,6 +23,7 @@ const T = {
       { id: 'third-party',     heading: 'Third-party links',       body: 'This Website may include links to external websites or tools. These are provided for convenience only. David V. is not responsible for the content, practices, or policies of any third-party websites.' },
       { id: 'disclaimer',      heading: 'Disclaimer',              body: 'All information on this Website is provided for general and portfolio purposes only. While efforts are made to ensure accuracy, there is no guarantee that the information is complete, current, or error-free.' },
       { id: 'liability',       heading: 'Limitation of liability', body: 'To the fullest extent permitted by law, David V. shall not be held liable for any direct, indirect, or incidental damages arising from your use of this Website.' },
+      { id: 'ai-chatbot',       heading: 'AI chatbot',              body: 'This Website includes an AI-powered chatbot powered by Claude (Anthropic). By using it, you acknowledge that:', bullets: ['Responses are AI-generated and may not always be accurate or complete', 'The chatbot is intended to answer questions about David\'s professional background only', 'Conversation transcripts are stored anonymously for quality and insight purposes', 'You must not attempt to misuse, manipulate, or overload the chatbot'] },
       { id: 'privacy-cookies', heading: 'Privacy and cookies',     privacyLink: true },
       { id: 'changes',         heading: 'Changes to these terms',  body: 'These Terms may be updated periodically. Continued use of the Website after updates means you accept any changes.' },
       { id: 'contact',         heading: 'Contact',                 contact: true },
@@ -43,6 +44,7 @@ const T = {
       { id: 'third-party',     heading: 'Liens tiers',                 body: "Ce site peut inclure des liens vers des sites ou outils externes. Ces liens sont fournis pour votre commodité uniquement. David V. n'est pas responsable du contenu, des pratiques ou des politiques de ces sites tiers." },
       { id: 'disclaimer',      heading: 'Avertissement',               body: "Toutes les informations de ce site sont fournies à des fins générales et de portfolio. Bien que des efforts soient faits pour en garantir l'exactitude, aucune garantie n'est offerte quant à l'exhaustivité ou l'absence d'erreurs." },
       { id: 'liability',       heading: 'Limitation de responsabilité', body: "Dans les limites autorisées par la loi, David V. ne saurait être tenu responsable de dommages directs, indirects ou accessoires résultant de l'utilisation de ce site." },
+      { id: 'ai-chatbot',       heading: 'Chatbot IA',                  body: 'Ce site intègre un chatbot alimenté par Claude (Anthropic). En l\'utilisant, vous reconnaissez que :', bullets: ['Les réponses sont générées par une IA et peuvent ne pas toujours être exactes ou complètes', 'Le chatbot est destiné uniquement à répondre aux questions sur le parcours professionnel de David', 'Les transcriptions de conversations sont stockées anonymement à des fins de qualité et d\'analyse', 'Vous ne devez pas tenter d\'utiliser abusivement, manipuler ou surcharger le chatbot'] },
       { id: 'privacy-cookies', heading: 'Confidentialité et cookies',  privacyLink: true },
       { id: 'changes',         heading: 'Modifications des conditions', body: "Ces conditions peuvent être mises à jour périodiquement. L'utilisation continue du site après toute mise à jour vaut acceptation des modifications." },
       { id: 'contact',         heading: 'Contact',                     contact: true },

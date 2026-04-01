@@ -28,9 +28,11 @@ const L = {
   },
 };
 
-export default function ChatBot({ lang = 'en' }) {
+export default function ChatBot({ lang = 'en', onOpenChange }) {
   const l = L[lang] || L.en;
   const [open, setOpen]       = useState(false);
+
+  useEffect(() => { onOpenChange?.(open); }, [open, onOpenChange]);
   const [messages, setMessages] = useState([]);
   const [input, setInput]     = useState('');
   const [loading, setLoading] = useState(false);
@@ -94,17 +96,21 @@ export default function ChatBot({ lang = 'en' }) {
     <>
       {/* Chat panel */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="chatbot-title"
         aria-live="polite"
         inert={!open}
-        className={`fixed bottom-4 left-4 z-[400] w-[calc(100vw-32px)] sm:w-[380px] transition-all duration-300 ease-out ${
+        className={`fixed bottom-4 z-[400] transition-all duration-300 ease-out ${
           open ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
         }`}
+        style={{ left: '16px', right: '16px', maxWidth: '380px' }}
       >
         <div className="bg-[#1c1c1c]/[0.94] dark:bg-white/[0.94] backdrop-blur-[16px] rounded-3xl shadow-[0px_8px_40px_rgba(0,0,0,0.14)] dark:shadow-[0px_8px_40px_rgba(0,0,0,0.5)] border border-white/[0.16] dark:border-black/[0.16] flex flex-col overflow-hidden" style={{ maxHeight: '520px' }}>
 
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 shrink-0">
-            <span className="font-semibold text-[15px] text-[#f6f6f6] dark:text-[#1f1f1f]">{l.title}</span>
+            <span id="chatbot-title" className="font-semibold text-[15px] text-[#f6f6f6] dark:text-[#1f1f1f]">{l.title}</span>
             <button
               ref={closeRef}
               data-spring
