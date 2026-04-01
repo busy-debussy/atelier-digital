@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.3] — 2026-04-01
+
+### New features
+- **Chatbot — clickable links** — URLs and email addresses in assistant responses are now rendered as clickable links; URLs open in a new tab, email addresses open the mail client
+
+### Bug fixes
+- **Blob — private access** — fixed `BlobError: Cannot use public access on a private store` by switching `access: 'public'` to `access: 'private'`; also more appropriate for privacy
+
+### Privacy & legal
+- **Code comment** — added inline comment in `api/chat.js` explaining why conversation logging is independent of cookie consent (no personal data, legitimate interest basis)
+
+---
+
 ## [1.2.2] — 2026-04-01
 
 ### Bug fixes

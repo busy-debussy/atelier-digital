@@ -138,10 +138,14 @@ export default async function handler(req, res) {
     });
     const reply = response.content[0].text;
 
+    // Log conversation to Blob (fire-and-forget, never blocks the response).
+    // Intentionally independent of cookie consent: logs contain no personal data
+    // (no IP, no identifiers) — only a timestamp and conversation text — so
+    // legitimate interest applies regardless of consent status (see Privacy Policy).
     const transcript = [...clean, { role: 'assistant', content: reply }];
     const filename = `chat-logs/${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
     put(filename, JSON.stringify({ timestamp: new Date().toISOString(), messages: transcript }), {
-      access: 'public',
+      access: 'private',
       contentType: 'application/json',
       token: process.env.BLOB_READ_WRITE_TOKEN,
     }).catch(err => console.error('Blob write failed:', err));

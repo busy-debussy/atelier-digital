@@ -28,6 +28,22 @@ const L = {
   },
 };
 
+const LINK_RE = /(https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
+const EMAIL_RE = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+function renderContent(text) {
+  const parts = text.split(LINK_RE);
+  return parts.map((part, i) => {
+    if (/^https?:\/\//.test(part)) {
+      return <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="underline opacity-80 hover:opacity-100 transition-opacity">{part}</a>;
+    }
+    if (EMAIL_RE.test(part)) {
+      return <a key={i} href={`mailto:${part}`} className="underline opacity-80 hover:opacity-100 transition-opacity">{part}</a>;
+    }
+    return part;
+  });
+}
+
 export default function ChatBot({ lang = 'en', onOpenChange }) {
   const l = L[lang] || L.en;
   const [open, setOpen]       = useState(false);
@@ -136,7 +152,7 @@ export default function ChatBot({ lang = 'en', onOpenChange }) {
                     ? 'bg-[#0152EC] text-white rounded-br-sm'
                     : 'bg-white/[0.07] dark:bg-black/[0.05] text-[#f6f6f6] dark:text-[#1f1f1f] rounded-bl-sm'
                 }`}>
-                  {m.content}
+                  {m.role === 'assistant' ? renderContent(m.content) : m.content}
                 </div>
               </div>
             ))}
