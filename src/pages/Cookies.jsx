@@ -330,6 +330,7 @@ function SecondaryNav({ sections, activeId }) {
             <li key={s.id}>
               <button
                 onClick={() => scrollToSection(s.id)}
+                aria-label={s.heading}
                 aria-current={isActive ? 'true' : undefined}
                 className={`relative text-[13px] leading-snug py-1.5 px-2 rounded-lg text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
                   isActive
@@ -445,7 +446,7 @@ function Cookies({ lang }) {
         </div>{/* px-6 */}
 
         {/* Fixed mobile secondary nav — appears after title scrolls out, disappears when outro is reached */}
-        <div aria-hidden={scrolledDown && !atBottom ? undefined : 'true'} className={`md:hidden fixed bottom-4 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div inert={scrolledDown && !atBottom ? undefined : true} className={`md:hidden fixed bottom-4 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <div className="pointer-events-auto w-full">
             <MobileSecondaryNav sections={t.sections} activeId={activeId} />
           </div>

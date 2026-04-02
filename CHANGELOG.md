@@ -1,8 +1,44 @@
 # Changelog
 
+## [1.2.6] — 2026-04-02
+
+### Cookie banner
+- **Centred** — banner position changed from `left-4` to `left-1/2 -translate-x-1/2`
+- **No pre-selected button** — auto-focus moved from "Decline" button to the dialog container (`tabIndex={-1}`); focus enters the modal without pre-selecting a choice
+- **Non-blocking** — removed `aria-modal="true"`; page remains interactive while banner is open; `bannerOpen` state and inner `inert` wrapper removed from App.jsx
+- **Banner link** — "Learn more about cookies" → "View the cookies policy" (EN); "Consulter la politique de cookies" (FR)
+
+### Chatbot
+- **Hint callout removed** — first-load blue hint bubble removed entirely; `hint` state, `hintTimer`, `HINT_KEY`, and both related `useEffect`s cleaned up; hover tooltip is the sole discovery mechanism
+- **Trigger button** — `bottom-[68px]` → `bottom-4`; `dismissHint()` call removed from click handler
+
+### Footer
+- **Manage Cookies** — "Cookies" link replaced with a button dispatching `show-cookie-banner`; `whitespace-nowrap`; French: "Gérer les cookies"
+- **Legal button padding** — `px-4` → `px-2` on Privacy, Manage Cookies, and Terms
+
+### Accessibility (Cookies / Privacy / Terms pages)
+- **No label for button** — added explicit `aria-label={s.heading}` to all `SecondaryNav` buttons; audit tools were not computing accessible name from absolutely-positioned child spans
+- **aria-hidden on parent of focusable** — replaced `aria-hidden` with `inert` on the hidden mobile secondary nav container; `inert` removes focusability and hides from AT without the parent/focusable conflict
+
+### Sales Platform
+- **Stakeholder tile** — `space-y-1` removed from bullet list; line rhythm now consistent with Mission tile
+- **My role tile** — stats nudged up `sm:-mt-2` on tablet/desktop; `my-4` breathing room on mobile (reset at `sm`)
+- **£6.8 Billions** → **£6.8 billion** in page and chatbot system prompt
+
+### Copy
+- **British English** — confirmed all user-visible copy is British English; corrected monetary figure capitalisation/pluralisation
+
+---
+
 ## [1.2.5] — 2026-04-02
 
-### Navigation
+### Navigation & tooltips
+- **Tooltips — style** — font size reduced from `text-[15px]` to `text-[13px]`; weight reduced from `font-semibold` to `font-light`; side padding reduced from `px-3` to `px-2`; caret/arrow removed from all tooltips
+- **Tooltips — keyboard shortcuts** — shortcut letter shown in muted grey alongside label: `D` (dark mode), `L` (language), `C` (chatbot); shortcut `C` also shown in chatbot hover tooltip
+- **Tooltips — gap** — offset reduced from `16px` to `10px` on all nav tooltips; logo tooltip uses `offset={2}` to compensate for its `p-2` container
+- **Dark mode tooltip** — always in DOM, visibility toggled via opacity transition (fixes random persistence bug in dark mode)
+- **ScrollForMore tooltip** — updated to match nav tooltip style (`text-[13px] font-light px-2 py-[4px]`); caret removed
+- **Keyboard shortcuts** — single-key shortcuts added: `D` (dark mode), `L` (language), `C` (open/close chatbot); implemented with `e.code` for Mac reliability; skipped when modifier keys held or focus is in a text field
 - **Language dropdown** — now centred below the language button (was right-aligned); added `center` alignment option to `usePortalPosition`
 
 ### Cookie & footer

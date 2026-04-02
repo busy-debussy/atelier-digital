@@ -94,8 +94,8 @@ const T = {
       },
       {
         bg:           imgBgTwin,
-        title:        'Des jumeaux numériques',
-        subtitle:     'accélérent la macro-ingénierie',
+        title:        'Un jumeau numérique',
+        subtitle:     'accélére la macro-ingénierie',
         primaryChip:  { label: 'Jumeau numérique', icon: imgIconTwin },
         secondaryChips: [{ label: 'Unreal Engine' }],
         tint:         null,

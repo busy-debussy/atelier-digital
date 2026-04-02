@@ -24,7 +24,7 @@ const T = {
 
 function CookieBanner({ lang, hideFloating = false }) {
   const [visible, setVisible] = useState(false);
-  const rejectRef = useRef(null);
+  const dialogRef = useRef(null);
   const t = T[lang] ?? T.en;
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function CookieBanner({ lang, hideFloating = false }) {
   }, []);
 
   useEffect(() => {
-    if (visible) rejectRef.current?.focus();
+    if (visible) dialogRef.current?.focus();
   }, [visible]);
 
   const respond = (choice) => {
@@ -49,9 +49,11 @@ function CookieBanner({ lang, hideFloating = false }) {
     <>
       {/* Full banner */}
       <div
-        {...(visible && !hideFloating ? { role: 'dialog', 'aria-modal': 'true', 'aria-label': t.label } : {})}
+        {...(visible && !hideFloating ? { role: 'dialog', 'aria-label': t.label } : {})}
+        ref={dialogRef}
+        tabIndex={-1}
         inert={!visible || hideFloating}
-        className={`fixed bottom-4 left-4 z-[300] w-[280px] bg-[#1f1f1f]/95 dark:bg-[#f6f6f6]/95 backdrop-blur-sm border border-white/[0.08] dark:border-black/[0.08] rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.10)] p-4 flex flex-col gap-3 transition-all duration-300 ease-out ${
+        className={`fixed bottom-4 left-1/2 -translate-x-1/2 z-[300] w-[280px] bg-[#1f1f1f]/95 dark:bg-[#f6f6f6]/95 backdrop-blur-sm border border-white/[0.08] dark:border-black/[0.08] rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.10)] p-4 flex flex-col gap-3 transition-all duration-300 ease-out ${
           visible && !hideFloating ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
         }`}
       >
@@ -67,7 +69,6 @@ function CookieBanner({ lang, hideFloating = false }) {
         <div className="flex items-center gap-2">
           <button
             data-spring
-            ref={rejectRef}
             onClick={() => respond('rejected')}
             className="flex-1 py-1.5 text-[13px] font-medium rounded-lg border border-white/[0.15] dark:border-black/[0.12] bg-[#f6f6f6] dark:bg-[#1f1f1f] text-[#1f1f1f] dark:text-[#f6f6f6] hover:bg-[#ebebeb] dark:hover:bg-[#2c2c2c] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7aabff] dark:focus-visible:ring-[#0152EC]"
           >

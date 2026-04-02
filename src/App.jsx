@@ -108,7 +108,6 @@ function App() {
   }, []);
 
   const [chatOpen, setChatOpen] = useState(false);
-  const [bannerOpen, setBannerOpen] = useState(() => !localStorage.getItem('cookie-consent'));
   const [secondaryNavVisible, setSecondaryNavVisible] = useState(false);
   const toggleDark = () => setIsDark(!isDark);
   const toggleLang = () => setLang(lang === 'en' ? 'fr' : 'en');
@@ -119,25 +118,12 @@ function App() {
     return () => window.removeEventListener('secondary-nav-change', handler);
   }, []);
 
-  useEffect(() => {
-    const onShow = () => setBannerOpen(true);
-    const onConsent = () => setBannerOpen(false);
-    window.addEventListener('show-cookie-banner', onShow);
-    window.addEventListener('cookie-consent-changed', onConsent);
-    return () => {
-      window.removeEventListener('show-cookie-banner', onShow);
-      window.removeEventListener('cookie-consent-changed', onConsent);
-    };
-  }, []);
-
   return (
     <BrowserRouter>
       <ScrollToTop />
       <PageViewTracker />
       <div inert={chatOpen || undefined}>
-        <div inert={bannerOpen || undefined}>
-          <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
-        </div>
+        <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
         <CookieBanner lang={lang} hideFloating={secondaryNavVisible} />
       </div>
       <ChatBot lang={lang} onOpenChange={setChatOpen} hideFloating={secondaryNavVisible} />
