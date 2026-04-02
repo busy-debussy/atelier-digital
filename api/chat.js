@@ -223,11 +223,15 @@ export default async function handler(req, res) {
     // legitimate interest applies regardless of consent status (see Privacy Policy).
     const transcript = [...clean, { role: 'assistant', content: reply }];
     const filename = `chat-logs/${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
-    put(filename, JSON.stringify({ timestamp: new Date().toISOString(), messages: transcript }), {
-      access: 'private',
-      contentType: 'application/json',
-      token: process.env.BLOB_READ_WRITE_TOKEN,
-    }).catch(err => console.error('Blob write failed:', err));
+    try {
+      await put(filename, JSON.stringify({ timestamp: new Date().toISOString(), messages: transcript }), {
+        access: 'private',
+        contentType: 'application/json',
+        token: process.env.BLOB_READ_WRITE_TOKEN,
+      });
+    } catch (err) {
+      console.error('Blob write failed:', err);
+    }
 
     res.status(200).json({ content: reply });
   } catch (err) {
