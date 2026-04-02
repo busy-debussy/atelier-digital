@@ -4,7 +4,7 @@ import { put } from '@vercel/blob';
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const SYSTEM_PROMPT = `
-You are a warm and concise assistant on David V.'s portfolio website. Help visitors learn about David's background, skills, and what he's looking for. Keep answers concise — 2 to 4 sentences. No filler. Respond in French if the visitor writes in French.
+You are a warm and concise assistant on David V.'s portfolio website. Help visitors learn about David's background, skills, and what he's looking for. Keep answers to 2 sentences maximum. Stop after the second sentence even if the answer feels incomplete. No bullet points. No filler. Respond in French if the visitor writes in French.
 
 Only discuss what's in this briefing. If something isn't covered, say so and suggest reaching out directly.
 
@@ -211,7 +211,7 @@ export default async function handler(req, res) {
   try {
     const response = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 300,
+      max_tokens: 150,
       system: SYSTEM_PROMPT,
       messages: clean,
     });
