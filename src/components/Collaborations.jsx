@@ -115,6 +115,8 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
   const [contentVisible, setContentVisible] = useState(true);
+  const isProgrammaticScroll = useRef(false);
+  const programmaticScrollTimer = useRef(null);
 
   // Carousel padding: centres the first logo on load
   const getCarouselPl = () => {
@@ -160,11 +162,17 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
       0,
       item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2
     );
+    isProgrammaticScroll.current = true;
+    clearTimeout(programmaticScrollTimer.current);
     track.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
     setActiveIndex(index);
+    programmaticScrollTimer.current = setTimeout(() => {
+      isProgrammaticScroll.current = false;
+    }, 600);
   };
 
   const handleScroll = () => {
+    if (isProgrammaticScroll.current) return;
     const track = trackRef.current;
     if (!track) return;
     const center = track.scrollLeft + track.clientWidth / 2;
@@ -360,25 +368,38 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
         </ul>
 
         {/* Normal nav, below track, reduced gap */}
-        <div {...(activeModal !== null ? { inert: '' } : {})} className={`flex items-center justify-end gap-2 sm:gap-3 lg:gap-4 mt-6 sm:mt-4 pr-6 sm:pr-28 lg:pr-52 ${activeModal !== null ? 'invisible' : ''}`}>
-          <button
-            data-spring
-            onClick={() => scrollToIndex(Math.max(0, activeIndex - getStep()))}
-            disabled={activeIndex === 0}
-            aria-label={t.navPrev}
-            className={navBtnClass}
-          >
-            <img src={imgChevronLeft} alt="" width={20} height={20} className={chevL} />
-          </button>
-          <button
-            data-spring
-            onClick={() => scrollToIndex(Math.min(collaborators.length - 1, activeIndex + getStep()))}
-            disabled={activeIndex === collaborators.length - 1}
-            aria-label={t.navNext}
-            className={navBtnClass}
-          >
-            <img src={imgChevronRight} alt="" width={20} height={20} className={chevR} />
-          </button>
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center mt-6 sm:mt-4 px-6 sm:px-28 lg:px-52">
+          <div />
+          <div className="flex items-center">
+            {collaborators.map((_, i) => {
+              const win = Math.min(5, collaborators.length); const start = Math.min(Math.max(0, activeIndex - 2), collaborators.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < collaborators.length));
+              return (
+                <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToIndex(i)} aria-label={`Go to collaborator ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                  <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+                </button>
+              );
+            })}
+          </div>
+          <div {...(activeModal !== null ? { inert: '' } : {})} className={`flex items-center gap-2 sm:gap-3 lg:gap-4 justify-self-end ${activeModal !== null ? 'invisible' : ''}`}>
+            <button
+              data-spring
+              onClick={() => scrollToIndex(Math.max(0, activeIndex - getStep()))}
+              disabled={activeIndex === 0}
+              aria-label={t.navPrev}
+              className={navBtnClass}
+            >
+              <img src={imgChevronLeft} alt="" width={20} height={20} className={chevL} />
+            </button>
+            <button
+              data-spring
+              onClick={() => scrollToIndex(Math.min(collaborators.length - 1, activeIndex + getStep()))}
+              disabled={activeIndex === collaborators.length - 1}
+              aria-label={t.navNext}
+              className={navBtnClass}
+            >
+              <img src={imgChevronRight} alt="" width={20} height={20} className={chevR} />
+            </button>
+          </div>
         </div>
 
         {/* Modal overlay */}

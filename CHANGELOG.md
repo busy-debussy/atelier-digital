@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.2.9] — 2026-04-02
+
+### Carousels
+- **Dots navigation** — all carousels (Contact, Case Studies, Collaborations, Resume Experience / Expertise / Education) now show a pill-for-active dot indicator centred between a left spacer and the chevron buttons; windowed 5-dot display (same pattern as Sales Platform) handles long lists gracefully
+- **Contact — Message card first** — email/message card is now the first card in the carousel on all variants
+- **Collaborations — dots stable during scroll** — `isProgrammaticScroll` ref suppresses `handleScroll` during programmatic smooth-scroll so dots don't flicker through intermediate positions; dots remain visible when the detail modal is open (only chevrons are hidden/inerted)
+
+### Navigation
+- **"Let's talk" scroll fallback** — `handleClick` on desktop and mobile now checks `getElementById(hash)` first, then falls back to `getElementById('footer-contact')`, so the button works on pages without a contact section (Privacy, Terms, Cookies)
+- **Dark mode tooltip suppression** — extracted `suppress()` function; `useEffect` on `isDark` calls it on every toggle (keyboard shortcut D included), fully eliminating spurious tooltip appearances
+
+### Footer
+- **`id="footer-contact"`** added to the contact column to serve as the scroll target fallback for "Let's talk" without conflicting with the `id="contact"` on the Contact section
+
+### Chatbot
+- **Pill label** — updated to "Ask A.I. about David" (was "Ask A.I."); `max-w` widened to `max-w-[160px]` to fit the longer text
+- **Urgent warning** — remaining turns counter turns amber (`text-[#f59e0b]`) and bold at 1 message remaining
+
+### Résumé
+- **Bio copy** — "Design is how it looks and how it works." → "Design is how it works."
+
+### PDF
+- **Updated CV link** — Google Drive file ID updated to the latest CV in both `Contact.jsx` and `Resume.jsx`
+
+---
+
 ## [1.2.8] — 2026-04-02
 
 ### Chatbot

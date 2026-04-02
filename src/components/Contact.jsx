@@ -33,7 +33,7 @@ const T = {
       title: 'Paper version',
       description: 'View a print-friendly A4-size version of this résumé.',
       buttonLabel: 'Download PDF',
-      action: { type: 'download', href: 'https://drive.google.com/uc?export=download&id=1lYUG7b85P9nuI5KAIs16Zbxf0S8dyXpZ' },
+      action: { type: 'download', href: 'https://drive.google.com/uc?export=download&id=1-xtBf6L3nXJ5b0sQ1vfO8HSO_hN1jBU6' },
     },
     resumeCard: {
       icon: imgPortrait, iconDark: imgPortrait,
@@ -66,7 +66,7 @@ const T = {
       title: 'Version papier',
       description: 'Lire la version A4 imprimable de ce curriculum vitae.',
       buttonLabel: 'Télécharger PDF',
-      action: { type: 'download', href: 'https://drive.google.com/uc?export=download&id=1lYUG7b85P9nuI5KAIs16Zbxf0S8dyXpZ' },
+      action: { type: 'download', href: 'https://drive.google.com/uc?export=download&id=1-xtBf6L3nXJ5b0sQ1vfO8HSO_hN1jBU6' },
     },
     resumeCard: {
       icon: imgPortrait, iconDark: imgPortrait,
@@ -144,8 +144,8 @@ function ContactCard({ card, glass }) {
 function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWidth }) {
   const t = T[lang] ?? T.en;
   const cards = [
-    t.linkedinCard,
     t.emailCard,
+    t.linkedinCard,
     variant === 'resume' ? t.pdfCard : t.resumeCard,
   ];
 
@@ -263,25 +263,41 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
       </ul>
 
       {/* Nav — mobile/tablet only; desktop never needs it */}
-      <div className="lg:hidden flex items-center justify-end gap-2 sm:gap-3 mt-4 sm:mt-5 pr-6 sm:pr-28">
-        <button
-          data-spring
-          onClick={() => scrollToCard(Math.max(0, activeIndex - getStep()))}
-          disabled={activeIndex === 0}
-          aria-label={t.navPrev}
-          className={navBtnClass}
-        >
-          <img src={imgChevronLeft} alt="" width={20} height={20} className={chevL} />
-        </button>
-        <button
-          data-spring
-          onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + getStep()))}
-          disabled={activeIndex === cards.length - 1}
-          aria-label={t.navNext}
-          className={navBtnClass}
-        >
-          <img src={imgChevronRight} alt="" width={20} height={20} className={chevR} />
-        </button>
+      <div className="lg:hidden grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 px-6">
+        <div />
+        <div className="flex items-center">
+          {cards.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollToCard(i)}
+              aria-label={`Go to card ${i + 1}`}
+              aria-current={i === activeIndex ? 'true' : undefined}
+              className="group cursor-pointer p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200"
+            >
+              <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center gap-2 sm:gap-3 justify-self-end">
+          <button
+            data-spring
+            onClick={() => scrollToCard(Math.max(0, activeIndex - getStep()))}
+            disabled={activeIndex === 0}
+            aria-label={t.navPrev}
+            className={navBtnClass}
+          >
+            <img src={imgChevronLeft} alt="" width={20} height={20} className={chevL} />
+          </button>
+          <button
+            data-spring
+            onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + getStep()))}
+            disabled={activeIndex === cards.length - 1}
+            aria-label={t.navNext}
+            className={navBtnClass}
+          >
+            <img src={imgChevronRight} alt="" width={20} height={20} className={chevR} />
+          </button>
+        </div>
       </div>
 
     </section>

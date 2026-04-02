@@ -858,7 +858,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
       role="dialog"
       aria-modal="true"
       aria-label={lang === 'fr' ? 'Image en plein écran' : 'Fullscreen image'}
-      className="fixed inset-0 z-[400]"
+      className="fixed inset-0 z-[600]"
       style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.92)' }}
     >
       {/* Slide track */}

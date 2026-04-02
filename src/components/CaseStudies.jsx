@@ -329,25 +329,38 @@ function CaseStudies({ lang }) {
       </ul>
 
       {/* Nav, mobile/tablet only */}
-      <div className="lg:hidden flex items-center justify-end gap-2 sm:gap-3 mt-4 sm:mt-5 pr-6 sm:pr-28">
-        <button
-          data-spring
-          onClick={() => scrollToCard(Math.max(0, activeIndex - getStep()))}
-          disabled={activeIndex === 0}
-          aria-label={t.navPrev}
-          className={navBtnClass}
-        >
-          <img src={imgChevronLeft} alt="" width={20} height={20} className={chevL} />
-        </button>
-        <button
-          data-spring
-          onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + getStep()))}
-          disabled={activeIndex === cards.length - 1}
-          aria-label={t.navNext}
-          className={navBtnClass}
-        >
-          <img src={imgChevronRight} alt="" width={20} height={20} className={chevR} />
-        </button>
+      <div className="lg:hidden grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 px-6">
+        <div />
+        <div className="flex items-center">
+          {cards.map((_, i) => {
+            const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
+            return (
+              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex items-center gap-2 sm:gap-3 justify-self-end">
+          <button
+            data-spring
+            onClick={() => scrollToCard(Math.max(0, activeIndex - getStep()))}
+            disabled={activeIndex === 0}
+            aria-label={t.navPrev}
+            className={navBtnClass}
+          >
+            <img src={imgChevronLeft} alt="" width={20} height={20} className={chevL} />
+          </button>
+          <button
+            data-spring
+            onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + getStep()))}
+            disabled={activeIndex === cards.length - 1}
+            aria-label={t.navNext}
+            className={navBtnClass}
+          >
+            <img src={imgChevronRight} alt="" width={20} height={20} className={chevR} />
+          </button>
+        </div>
       </div>
 
     </section>

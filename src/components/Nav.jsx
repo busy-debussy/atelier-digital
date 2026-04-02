@@ -132,13 +132,18 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
   const [hovered, setHovered]           = useState(false);
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
   const suppressRef = useRef(false);
+  const suppressTimer = useRef(null);
 
-  const handleClick = () => {
+  const suppress = () => {
     hideTip();
     suppressRef.current = true;
-    setTimeout(() => { suppressRef.current = false; }, 600);
-    onToggle();
+    clearTimeout(suppressTimer.current);
+    suppressTimer.current = setTimeout(() => { suppressRef.current = false; }, 800);
   };
+
+  useEffect(() => { suppress(); }, [isDark]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleClick = () => { suppress(); onToggle(); };
 
   const bgStyle = isDark
     ? { background: hovered ? '#000000' : '#262626' }
@@ -342,11 +347,18 @@ function NavLink({ to, label, currentPage, tooltip, isDark }) {
   const [path, hash] = to.split('#');
   const isActive = currentPage === path && !hash;
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
-  const handleClick = () => {
+  const handleClick = (e) => {
     hideTip();
-    if (hash && currentPage === path) {
-      document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' });
-    } else if (currentPage === path && !hash) {
+    if (hash) {
+      const el = document.getElementById(hash) || document.getElementById('footer-contact');
+      if (el) {
+        e.preventDefault();
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        el.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth' });
+        return;
+      }
+    }
+    if (currentPage === path && !hash) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -527,11 +539,20 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
                 {to ? (
                   <Link
                     to={to}
-                    onClick={() => {
-                      setMenuOpen(false);
+                    onClick={(e) => {
                       const [p, h] = to.split('#');
-                      if (h && currentPage === p) { document.getElementById(h)?.scrollIntoView({ behavior: 'smooth' }); }
-                      else if (currentPage === to) { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+                      if (h) {
+                        const el = document.getElementById(h) || document.getElementById('footer-contact');
+                        if (el) {
+                          e.preventDefault();
+                          setMenuOpen(false);
+                          const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                          el.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth' });
+                          return;
+                        }
+                      }
+                      setMenuOpen(false);
+                      if (currentPage === p && !h) { window.scrollTo({ top: 0, behavior: 'smooth' }); }
                     }}
                     className="flex items-center h-12 px-4 rounded-2xl transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"
                   >

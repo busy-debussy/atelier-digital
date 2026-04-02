@@ -179,7 +179,7 @@ function Footer({ lang }) {
             </ul>
           </div>
 
-          <div>
+          <div id="footer-contact">
             <h2 className={`text-[30px] sm:text-[36px] lg:text-[44px] leading-tight font-semibold mb-8 sm:mb-12 lg:mb-16 whitespace-nowrap ${strong}`}>
               {t.contact}
             </h2>

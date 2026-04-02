@@ -91,7 +91,7 @@ const T = {
       { name: 'Excellence in Holography',                                            issuer: 'International Hologram Manufacturers Association', icon: imgIconAward,   svgIcon: true },
     ],
     bio: [
-      <>Design is how it looks and how it works. A background in <B>mechanical engineering</B>, <B>holography</B>, <B>spatial computing</B> and <B>digital twins</B> brings technical depth to every digital experience I craft.</>,
+      <>Design is how it works. A background in <B>mechanical engineering</B>, <B>holography</B>, <B>spatial computing</B> and <B>digital twins</B> brings technical depth to every digital experience I craft.</>,
       <><B>Driving innovation through design</B>, I am proficient at <B>prototyping</B> (digital twins, extended reality, web and mobile) while <B>collaborating</B> cross-functionally and <B>leading</B> a design team.</>,
       <>Attentive, empathetic, curious and agile, I am a <B>first-principle</B> thinker with a <B>human-centred</B> approach to problem-solving.</>,
       <>Thriving on new challenges. Dedicated to <B>building better</B>.</>,
@@ -532,7 +532,7 @@ function SummarySection({ t, lang }) {
             </li>
             <li className="sm:mt-3">
               <a
-                href="https://drive.google.com/uc?export=download&id=1lYUG7b85P9nuI5KAIs16Zbxf0S8dyXpZ"
+                href="https://drive.google.com/uc?export=download&id=1-xtBf6L3nXJ5b0sQ1vfO8HSO_hN1jBU6"
                 target="_blank"
                 rel="noopener noreferrer"
                 tabIndex={0}
@@ -771,33 +771,38 @@ function ExperienceSection({ t }) {
         {cards[activeIndex]?.period}
       </p>
 
-      <div className="flex items-center justify-end gap-2 sm:gap-3 lg:gap-4 mt-4 sm:mt-5 lg:mt-6 pr-6 sm:pr-28 lg:pr-52">
-        <button
-          onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
-          disabled={activeIndex === 0}
-          data-spring
-          aria-label={t.navPrev}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
-        >
-          <img
-            src={imgChevronLeft}
-            alt="" width={20} height={20}
-            className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]"
-          />
-        </button>
-        <button
-          onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + 1))}
-          disabled={activeIndex === cards.length - 1}
-          data-spring
-          aria-label={t.navNext}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
-        >
-          <img
-            src={imgChevronRight}
-            alt="" width={20} height={20}
-            className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]"
-          />
-        </button>
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 lg:mt-6 px-6 sm:px-28 lg:px-52">
+        <div />
+        <div className="flex items-center">
+          {cards.map((_, i) => {
+            const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
+            return (
+              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 justify-self-end">
+          <button
+            onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
+            disabled={activeIndex === 0}
+            data-spring
+            aria-label={t.navPrev}
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+          >
+            <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]" />
+          </button>
+          <button
+            onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + 1))}
+            disabled={activeIndex === cards.length - 1}
+            data-spring
+            aria-label={t.navNext}
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+          >
+            <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]" />
+          </button>
+        </div>
       </div>
 
     </section>
@@ -821,11 +826,10 @@ function ToolIcon({ name, icon, noBg, darkInvert }) {
 
   return (
     <div className="relative flex flex-col items-center">
-      <div className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 transition-opacity duration-150 ${visible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[12px] font-semibold px-2 py-[3px] rounded-[6px] whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+      <div className={`absolute bottom-[calc(100%+8px)] left-1/2 -translate-x-1/2 pointer-events-none z-10 transition-opacity duration-150 ${visible ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
           {name}
         </div>
-        <div className="w-0 h-0 border-l-[4px] border-r-[4px] border-t-[4px] border-l-transparent border-r-transparent border-t-[#1f1f1f] dark:border-t-[#f6f6f6]" />
       </div>
       <button
         ref={btnRef}
@@ -969,29 +973,38 @@ function ExpertiseSection({ t }) {
         </ul>
       </div>
 
-      <div className="flex items-center justify-end gap-2 sm:gap-3 lg:gap-4 mt-4 sm:mt-5 lg:mt-6 pr-6 sm:pr-28 lg:pr-52">
-        <button
-          onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
-          disabled={activeIndex === 0}
-          data-spring
-          aria-label={t.xpNavPrev}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
-        >
-          <img src={imgChevronLeft} alt="" width={20} height={20}
-            className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]"
-          />
-        </button>
-        <button
-          onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + 1))}
-          disabled={activeIndex === cards.length - 1}
-          data-spring
-          aria-label={t.xpNavNext}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
-        >
-          <img src={imgChevronRight} alt="" width={20} height={20}
-            className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]"
-          />
-        </button>
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 lg:mt-6 px-6 sm:px-28 lg:px-52">
+        <div />
+        <div className="flex items-center">
+          {cards.map((_, i) => {
+            const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
+            return (
+              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 justify-self-end">
+          <button
+            onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
+            disabled={activeIndex === 0}
+            data-spring
+            aria-label={t.xpNavPrev}
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+          >
+            <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]" />
+          </button>
+          <button
+            onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + 1))}
+            disabled={activeIndex === cards.length - 1}
+            data-spring
+            aria-label={t.xpNavNext}
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+          >
+            <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]" />
+          </button>
+        </div>
       </div>
 
     </section>
@@ -1194,29 +1207,38 @@ function EducationSection({ t }) {
         {cards[activeIndex]?.period}
       </p>
 
-      <div className="flex items-center justify-end gap-2 sm:gap-3 lg:gap-4 mt-4 sm:mt-5 lg:mt-6 pr-6 sm:pr-28 lg:pr-52">
-        <button
-          onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
-          disabled={activeIndex === 0}
-          data-spring
-          aria-label={t.eduNavPrev}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
-        >
-          <img src={imgChevronLeft} alt="" width={20} height={20}
-            className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]"
-          />
-        </button>
-        <button
-          onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + 1))}
-          disabled={activeIndex === cards.length - 1}
-          data-spring
-          aria-label={t.eduNavNext}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
-        >
-          <img src={imgChevronRight} alt="" width={20} height={20}
-            className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]"
-          />
-        </button>
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 lg:mt-6 px-6 sm:px-28 lg:px-52">
+        <div />
+        <div className="flex items-center">
+          {cards.map((_, i) => {
+            const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
+            return (
+              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 justify-self-end">
+          <button
+            onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
+            disabled={activeIndex === 0}
+            data-spring
+            aria-label={t.eduNavPrev}
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+          >
+            <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]" />
+          </button>
+          <button
+            onClick={() => scrollToCard(Math.min(cards.length - 1, activeIndex + 1))}
+            disabled={activeIndex === cards.length - 1}
+            data-spring
+            aria-label={t.eduNavNext}
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+          >
+            <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]" />
+          </button>
+        </div>
       </div>
 
     </section>
