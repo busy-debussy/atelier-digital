@@ -8,6 +8,7 @@ const MAX_TURNS = 6;
 const L = {
   en: {
     button:      'Ask about my work',
+    pill:        'Ask A.I.',
     title:       'A.I. knows about me',
     empty:       "Ask anything about David's experience or work.",
     placeholder: 'Ask Claude…',
@@ -15,9 +16,11 @@ const L = {
     limit:       "That's the end of our chat — reach out directly for more.",
     error:       'Something went wrong. Please try again.',
     rateLimited: 'Too many requests. Please try again later.',
+    remaining:   (n) => `${n} message${n === 1 ? '' : 's'} remaining`,
   },
   fr: {
     button:      'Poser une question',
+    pill:        'Ask A.I.',
     title:       'L\'I.A. me connaît par 💙',
     empty:       "Posez une question sur l'expérience ou le travail de David.",
     placeholder: 'Demandez à Claude…',
@@ -25,6 +28,7 @@ const L = {
     limit:       'Fin de la conversation — contactez David directement pour en savoir plus.',
     error:       'Une erreur s\'est produite. Veuillez réessayer.',
     rateLimited: 'Trop de requêtes. Veuillez réessayer plus tard.',
+    remaining:   (n) => `${n} message${n === 1 ? '' : 's'} restant${n === 1 ? '' : 's'}`,
   },
 };
 
@@ -59,6 +63,12 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
 
   const userTurns = messages.filter(m => m.role === 'user').length;
   const atLimit   = userTurns >= MAX_TURNS;
+
+  const [pillExpanded, setPillExpanded] = useState(true);
+  useEffect(() => {
+    const id = setTimeout(() => setPillExpanded(false), 3000);
+    return () => clearTimeout(id);
+  }, []);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -182,6 +192,12 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
               </div>
             )}
 
+            {userTurns >= 2 && !atLimit && !loading && (
+              <p className="text-[12px] text-[#666] dark:text-[#9c9c9c] text-center leading-relaxed">
+                {l.remaining(MAX_TURNS - userTurns)}
+              </p>
+            )}
+
             {atLimit && !loading && (
               <p className="text-[13px] text-[#adadad] dark:text-[#5c5c5c] text-center pt-2 leading-relaxed">
                 {l.limit}
@@ -232,9 +248,12 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
           aria-label={open ? 'Close chat' : l.button}
           aria-expanded={open}
           tabIndex={0}
-          className="w-9 h-9 flex items-center justify-center rounded-full bg-[#1f1f1f] dark:bg-[#f6f6f6] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.08] dark:ring-black/[0.08] hover:scale-110 transition-transform duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
+          className={`flex items-center justify-center rounded-full bg-[#1f1f1f] dark:bg-[#f6f6f6] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.08] dark:ring-black/[0.08] hover:scale-110 transition-[width,padding,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${pillExpanded ? 'h-9 px-4 gap-2' : 'w-9 h-9'}`}
         >
-          <span className="text-[16px] leading-none">💬</span>
+          <span className="text-[16px] leading-none text-white dark:text-[#1f1f1f] shrink-0" aria-hidden="true">💬</span>
+          <span className={`text-[13px] font-semibold text-white dark:text-[#1f1f1f] whitespace-nowrap overflow-hidden transition-[max-width,opacity] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${pillExpanded ? 'max-w-[80px] opacity-100' : 'max-w-0 opacity-0'}`}>
+            {l.pill}
+          </span>
         </button>
         <div className="pointer-events-none absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
           <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-1.5">

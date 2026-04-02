@@ -131,9 +131,12 @@ function useDelayedTooltip(delay = 600) {
 function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
   const [hovered, setHovered]           = useState(false);
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
+  const suppressRef = useRef(false);
 
   const handleClick = () => {
     hideTip();
+    suppressRef.current = true;
+    setTimeout(() => { suppressRef.current = false; }, 600);
     onToggle();
   };
 
@@ -151,7 +154,7 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
     <div className="relative">
       <button
         onClick={handleClick}
-        onMouseEnter={() => { setHovered(true);  if (!noTooltip) showTip(); }}
+        onMouseEnter={() => { setHovered(true);  if (!noTooltip && !suppressRef.current) showTip(); }}
         onMouseLeave={() => { setHovered(false); hideTip(); }}
         onBlur={() => { setHovered(false); hideTip(); }}
         aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
@@ -475,7 +478,6 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
   };
 
   const mobilePages = [
-    { key: 'home',       to: '/'        },
     { key: 'projects',   to: null       },
     { key: 'résumé',     to: '/resume'  },
     { key: "let's talk", to: '/#contact' },

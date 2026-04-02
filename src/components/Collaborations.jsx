@@ -114,6 +114,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
   const trackRef    = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
+  const [contentVisible, setContentVisible] = useState(true);
 
   // Carousel padding: centres the first logo on load
   const getCarouselPl = () => {
@@ -199,11 +200,15 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
     if (restoreFocus) triggerRef.current?.focus();
   };
   const navigateModal = (i) => {
-    const track = modalTrackRef.current;
-    if (track) track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
-    modalIndexRef.current = i;
-    setActiveModal(i);
-    scrollToIndex(i);
+    setContentVisible(false);
+    setTimeout(() => {
+      const track = modalTrackRef.current;
+      if (track) track.scrollTo({ left: i * track.clientWidth, behavior: 'instant' });
+      modalIndexRef.current = i;
+      setActiveModal(i);
+      scrollToIndex(i);
+      setContentVisible(true);
+    }, 150);
   };
 
   const handleModalScroll = () => {
@@ -216,6 +221,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
         modalIndexRef.current = i;
         setActiveModal(i);
         scrollToIndex(i);
+        setContentVisible(true);
       }
     }, 80);
   };
@@ -430,13 +436,15 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                 {collaborators.map((collab, i) => (
                   <div
                     key={i}
-                    className="shrink-0 w-full h-full flex flex-col justify-between sm:justify-normal gap-2 sm:gap-[14px] lg:gap-4 pt-4 sm:pt-7 lg:pt-9 pb-4 sm:pb-6 lg:pb-7 px-4 sm:px-10 lg:px-14"
+                    className="shrink-0 w-full h-full flex flex-col justify-between gap-2 sm:gap-[14px] lg:gap-4 pt-4 sm:pt-7 lg:pt-9 pb-2 sm:pb-3 lg:pb-4 px-4 sm:px-10 lg:px-14"
                     style={{ scrollSnapAlign: 'start' }}
                   >
-                    <p className="text-[15px] sm:text-[16px] lg:text-[17px] leading-[28px] sm:leading-[30px] lg:leading-[34px] text-[#5c5c5c] dark:text-[#adadad] [&_strong]:text-[#1f1f1f] dark:[&_strong]:text-[#f6f6f6] pr-7 sm:pr-8">
-                      <span dangerouslySetInnerHTML={{ __html: collab.description }} />
-                    </p>
-                    <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="flex-1 min-h-0 overflow-hidden" style={{ opacity: contentVisible ? 1 : 0, transition: 'opacity 150ms ease' }}>
+                      <p className="text-[15px] sm:text-[16px] lg:text-[17px] leading-[28px] sm:leading-[30px] lg:leading-[34px] text-[#5c5c5c] dark:text-[#adadad] [&_strong]:text-[#1f1f1f] dark:[&_strong]:text-[#f6f6f6] pr-7 sm:pr-8">
+                        <span dangerouslySetInnerHTML={{ __html: collab.description }} />
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2 sm:gap-3" style={{ opacity: contentVisible ? 1 : 0, transition: 'opacity 150ms ease' }}>
                       {collab.logoSmall ? (
                         <>
                           <img src={collab.logoSmall} alt="" className={`w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0 ${collab.logoSmallDark ? 'dark:hidden' : ''}`} />

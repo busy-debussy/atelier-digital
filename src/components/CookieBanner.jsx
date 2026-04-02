@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const CONSENT_KEY = 'cookie-consent';
 
@@ -27,6 +27,8 @@ function CookieBanner({ lang, hideFloating = false }) {
   const [explicit, setExplicit] = useState(false);
   const dialogRef = useRef(null);
   const t = T[lang] ?? T.en;
+  const { pathname } = useLocation();
+  const onCookiesPage = pathname === '/cookies';
 
   useEffect(() => {
     const stored = localStorage.getItem(CONSENT_KEY);
@@ -69,6 +71,7 @@ function CookieBanner({ lang, hideFloating = false }) {
           <p className="text-[13px] text-[#adadad] dark:text-[#5c5c5c] md:mt-2">
             <Link
               to="/cookies"
+              onClick={onCookiesPage ? () => { setVisible(false); setExplicit(false); } : undefined}
               className="underline hover:opacity-60 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7aabff] dark:focus-visible:ring-[#0152EC] rounded-sm text-[#f6f6f6] dark:text-[#1f1f1f]"
             >
               {t.learnMore}

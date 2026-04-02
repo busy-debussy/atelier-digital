@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.2.8] — 2026-04-02
+
+### Chatbot
+- **Pill trigger button** — trigger now opens as `💬 Ask A.I.` pill on load, smoothly collapsing to the circular icon after 3 seconds; width, padding and text opacity all transition with spring easing
+- **Remaining turns indicator** — after the user's 2nd message, a subtle centred note shows how many messages remain (e.g. "4 messages remaining"); counts down with each turn; disappears when the limit message takes over; bilingual (`messages restants` in FR)
+- **Emoji contrast fix** — added `text-white dark:text-[#1f1f1f]` to the emoji span so contrast checkers see white-on-dark rather than assuming black-on-dark (ratio was 1.27:1); `aria-hidden="true"` added to remove it from the accessibility tree
+
+### Collaborations modal
+- **Navigation fade** — pressing prev/next fades description and logo+title out (150ms), snaps to the new card instantly, then fades new content back in; swipe navigation restores visibility once scroll settles
+- **Logo/title alignment** — `justify-between` on all breakpoints (was `sm:justify-normal`) so logo+title is always pinned to the bottom; description wrapped in `flex-1 min-h-0 overflow-hidden` so variable-length text never pushes the logo row
+- **Bottom padding reduced** — `pb-4 sm:pb-6 lg:pb-7` → `pb-2 sm:pb-3 lg:pb-4` to move logo+title closer to the card bottom
+
+### Cookie banner
+- **Self-dismiss on cookies page** — clicking "View the cookies policy" while already on `/cookies` now dismisses the banner instead of navigating (no-op navigation)
+
+### Navigation
+- **Dark mode tooltip flicker fix** — `suppressRef` blocks `showTip` for 600ms after a click, preventing spurious `mouseenter` events fired by the browser during DOM re-render from re-triggering the tooltip
+- **Mobile menu — "home" removed** — logo already navigates home; the menu item was redundant
+
+---
+
 ## [1.2.7] — 2026-04-02
 
 ### Easter egg
