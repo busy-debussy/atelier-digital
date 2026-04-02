@@ -6,13 +6,25 @@ import Footer from '../components/Footer';
 import ScrollForMore from '../components/ScrollForMore';
 
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function Home({ lang, isDark, enableDark }) {
   const [showScroll, setShowScroll] = useState(false);
+  const { hash } = useLocation();
 
   useEffect(() => {
     document.title = 'Atelier Digital • David V.';
   }, []);
+
+  useEffect(() => {
+    if (!hash) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const id = setTimeout(() => {
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth' });
+    }, 50);
+    return () => clearTimeout(id);
+  }, [hash]);
 
   return (
     <>

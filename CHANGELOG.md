@@ -1,5 +1,51 @@
 # Changelog
 
+## [1.2.7] — 2026-04-02
+
+### Easter egg
+- **Konami code** — entering ↑↑↓↓←→←→BA triggers a confetti burst (`canvas-confetti`); sequence tracked via `konamiRef` in App.jsx; fires only when no modifier keys held and focus is not in a text field
+
+### Chatbot
+- **Escape key** — pressing Escape dispatches `close-chat` event (handled before modifier/text-field guards so it always works); ChatBot listens and closes the panel
+- **Click-outside dismiss** — an invisible full-screen overlay (`z-[399]`) mounts behind the panel when open; clicking it closes the panel
+- **Trigger hides when open** — trigger button fades to `opacity-0 pointer-events-none` when the panel is open (no slide, opacity only); `inert` added to match
+- **Trigger button style** — inverted to dark: `bg-[#1f1f1f] dark:bg-[#f6f6f6]`; removed `backdrop-blur` (required transparency that conflicted with full opacity icon)
+- **Close button** — padding increased from `p-1.5` to `p-2.5`; repositioned with `-mt-2 -mr-3`
+- **Panel radius** — `rounded-3xl` → `rounded-[28px]`
+- **Tooltip casing** — "Learn about David" → "learn about David"; "En savoir plus sur David" → "en savoir plus sur David"
+
+### Hero
+- **Language switch — no re-animation** — `isFirstHeading` ref distinguishes initial load from language toggle; switching language now snaps directly to final state without replaying the typing animation
+- **Shadow clipping fix** — added `padding: '20px', margin: '-20px'` to the overflow wrapper inside the grid expand animation; hover shadow on the "experienced in" card was getting clipped
+- **Container radius** — `rounded-3xl` → `rounded-[32px]`
+
+### Navigation
+- **"Let's talk" destination** — changed from `/resume#contact` to `/#contact`; now scrolls to the contact section on the home page instead of navigating to the résumé page
+- **Home page hash scroll** — added `useLocation` hash detection to `Home.jsx` so navigating to `/#contact` from another page smoothly scrolls to the contact section
+- **Language toggle** — replaced dropdown with direct toggle (only 2 languages; dropdown was unnecessary overhead)
+- **Language tooltip** — updated from "languages" / "langues" to "read in french" / "lire en anglais"
+- **Dropdown blur** — `backdrop-blur-[4px]` → `backdrop-blur-[12px]` on Projects and Language dropdowns
+
+### Cookie banner
+- **Copy / link spacing (tablet+)** — separated the message copy and "View the cookies policy" link into distinct paragraphs with `md:mt-2` between them; previously inline in the same `<p>`
+- **Title / copy spacing (tablet+)** — added `md:mt-2` to the copy paragraph to increase gap below the 🍪 heading
+
+### Contact carousel
+- **Card order (home variant)** — reordered from LinkedIn → Interactive CV → Message to LinkedIn → Message → Interactive CV
+
+### CTA labels — "Message"
+- **Resume page** — `send an email` → `Message` (EN); `échangeons` → `Échangeons` (FR)
+- **Case studies** — `email` → `Message` (EN); `envoyer un email` → `Message` (FR) on the restricted card CTA
+- **Contact carousel** — `Envoyer un email` → `Message` on the FR email card button
+- **Footer** — sr-only label: "Send an email to David" → "Message David"
+- **Privacy / Cookies pages** — `aria-label` on obfuscated email button: "Send an email to David" → "Message David"
+
+### Copy
+- **Resume hero buttons** — `let's connect` → `Let's connect` (EN); `connectons` → `Connectons`, `échangeons` → `Échangeons` (FR)
+- **ScrollForMore tooltip** — `Scroll for more` → `scroll for more`
+
+---
+
 ## [1.2.6] — 2026-04-02
 
 ### Cookie banner

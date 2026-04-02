@@ -65,11 +65,16 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
-  // Keyboard shortcut: C
+  // Keyboard shortcuts: C (toggle), Escape (close)
   useEffect(() => {
-    const handler = () => setOpen(o => !o);
-    window.addEventListener('toggle-chat', handler);
-    return () => window.removeEventListener('toggle-chat', handler);
+    const toggle = () => setOpen(o => !o);
+    const close  = () => setOpen(false);
+    window.addEventListener('toggle-chat', toggle);
+    window.addEventListener('close-chat',  close);
+    return () => {
+      window.removeEventListener('toggle-chat', toggle);
+      window.removeEventListener('close-chat',  close);
+    };
   }, []);
 
   // Focus input when panel opens
@@ -117,6 +122,8 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
 
   return (
     <>
+      {/* Dismiss overlay */}
+      {open && <div className="fixed inset-0 z-[399]" onClick={() => setOpen(false)} aria-hidden="true" />}
       {/* Chat panel */}
       <div
         {...(open ? { role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'chatbot-title', 'aria-live': 'polite' } : {})}
@@ -126,7 +133,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
         }`}
         style={{ left: '16px', right: '16px', maxWidth: '380px' }}
       >
-        <div className="bg-[#1c1c1c]/[0.94] dark:bg-white/[0.94] backdrop-blur-[16px] rounded-3xl shadow-[0px_8px_40px_rgba(0,0,0,0.14)] dark:shadow-[0px_8px_40px_rgba(0,0,0,0.5)] border border-white/[0.16] dark:border-black/[0.16] flex flex-col overflow-hidden" style={{ maxHeight: '520px' }}>
+        <div className="bg-[#1c1c1c]/[0.94] dark:bg-white/[0.94] backdrop-blur-[16px] rounded-[28px] shadow-[0px_8px_40px_rgba(0,0,0,0.14)] dark:shadow-[0px_8px_40px_rgba(0,0,0,0.5)] border border-white/[0.16] dark:border-black/[0.16] flex flex-col overflow-hidden" style={{ maxHeight: '520px' }}>
 
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 shrink-0">
@@ -136,7 +143,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
               data-spring
               onClick={() => setOpen(false)}
               aria-label="Close"
-              className="group flex items-center justify-center p-1.5 rounded-full hover:bg-white dark:hover:bg-[#1f1f1f] transition-[background-color] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+              className="group flex items-center justify-center p-2.5 rounded-full hover:bg-white dark:hover:bg-[#1f1f1f] transition-[background-color] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 -mt-2 -mr-3"
             >
               <img
                 src={imgClose}
@@ -218,20 +225,20 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
       </div>
 
       {/* Floating trigger button */}
-      <div inert={hideFloating || undefined} className={`fixed bottom-4 left-4 z-40 group transition-all duration-300 ease-out ${hideFloating ? 'opacity-0 pointer-events-none translate-y-3' : 'opacity-100 pointer-events-auto translate-y-0'}`}>
+      <div inert={hideFloating || open || undefined} className={`fixed bottom-4 left-4 z-40 group transition-[opacity,transform] duration-300 ease-out ${hideFloating ? 'opacity-0 pointer-events-none translate-y-3' : open ? 'opacity-0 pointer-events-none translate-y-0' : 'opacity-100 pointer-events-auto translate-y-0'}`}>
         <button
           data-spring
           onClick={() => setOpen(o => !o)}
           aria-label={open ? 'Close chat' : l.button}
           aria-expanded={open}
           tabIndex={0}
-          className="w-9 h-9 flex items-center justify-center rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] hover:scale-110 transition-transform duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
+          className="w-9 h-9 flex items-center justify-center rounded-full bg-[#1f1f1f] dark:bg-[#f6f6f6] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.08] dark:ring-black/[0.08] hover:scale-110 transition-transform duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
         >
           <span className="text-[16px] leading-none">💬</span>
         </button>
         <div className="pointer-events-none absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
           <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-1.5">
-            {lang === 'fr' ? 'En savoir plus sur David' : 'Learn about David'}
+            {lang === 'fr' ? 'en savoir plus sur David' : 'learn about David'}
             <span className="text-[11px] text-[#adadad] dark:text-[#5c5c5c]">C</span>
           </div>
         </div>

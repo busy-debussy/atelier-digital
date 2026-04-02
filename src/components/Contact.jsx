@@ -58,7 +58,7 @@ const T = {
       icon: imgSendLight, iconDark: imgSendDark,
       title: 'Échangeons',
       description: "Explorons ce que nous pouvons construire ensemble.",
-      buttonLabel: 'Envoyer un email',
+      buttonLabel: 'Message',
       action: { type: 'email', href: `mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent('Prise de contact')}` },
     },
     pdfCard: {
@@ -145,8 +145,8 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
   const t = T[lang] ?? T.en;
   const cards = [
     t.linkedinCard,
-    variant === 'resume' ? t.pdfCard : t.resumeCard,
     t.emailCard,
+    variant === 'resume' ? t.pdfCard : t.resumeCard,
   ];
 
   const trackRef       = useRef(null);

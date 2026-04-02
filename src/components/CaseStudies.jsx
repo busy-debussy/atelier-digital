@@ -25,7 +25,7 @@ const T = {
     navNext:       'View next case study',
     restricted:    'Restricted access',
     restrictedBody:'Get in touch to learn more\nabout this project.',
-    restrictedCta: 'email',
+    restrictedCta: 'Message',
     viewCaseStudy: 'view case study',
     cards: [
       {
@@ -68,7 +68,7 @@ const T = {
     navNext:       "Voir l'étude de cas suivante",
     restricted:    'Accès restreint',
     restrictedBody:'Prenez contact pour en savoir plus\nsur ce projet.',
-    restrictedCta: 'envoyer un email',
+    restrictedCta: 'Message',
     viewCaseStudy: "voir l'étude de cas",
     cards: [
       {
@@ -196,11 +196,8 @@ function CsCard({ card, t }) {
         </div>
         <Link to={card.href} className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white rounded-[28px] sm:rounded-[32px]" aria-label={card.title} />
         {/* Tooltip below the arrow button — outside overflow-hidden, triggered by group/card hover */}
-        <div className="absolute top-full right-3 sm:right-3.5 lg:right-4 pt-2 z-20 pointer-events-none opacity-0 group-hover/card:opacity-100 group-hover/card:delay-[600ms] transition-opacity duration-200 flex flex-col items-end">
-          <svg width="12" height="6" viewBox="0 0 12 6" aria-hidden="true" className="shrink-0 relative z-[1] mr-3 sm:mr-3.5 lg:mr-4" style={{ display: 'block', marginBottom: '-1px' }}>
-            <path d="M0,6 L5.2,0.9 Q6,0 6.8,0.9 L12,6 Z" className="fill-[#1f1f1f] dark:fill-[#f6f6f6]" />
-          </svg>
-          <div className="relative z-0 bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-semibold leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+        <div className="absolute top-full right-3 sm:right-3.5 lg:right-4 pt-2 z-20 pointer-events-none opacity-0 group-hover/card:opacity-100 group-hover/card:delay-[600ms] transition-opacity duration-200">
+          <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
             {t.viewCaseStudy}
           </div>
         </div>

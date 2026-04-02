@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-03-31');
+const LAST_UPDATED = new Date('2026-04-02');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -263,7 +263,7 @@ function CookieSection({ s, num, browserLabel, newTabLabel, manageBtn, delay }) 
             <button
               onClick={() => window.location.href = 'mailto:d@AtelierDigital.co.uk'}
               className={`${body} ${lnk} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] rounded`}
-              aria-label="Send an email to David"
+              aria-label="Message David"
             >
               <span className="obf-email" data-u="d" data-d="AtelierDigital.co.uk" aria-hidden="true" />
             </button>

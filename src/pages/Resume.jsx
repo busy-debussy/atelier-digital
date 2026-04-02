@@ -62,8 +62,8 @@ const T = {
     certifications: 'Certifications',
     education:      'Education',
     downloadPdf:    'Download PDF',
-    sendEmail:      'send an email',
-    connect:        "let's connect",
+    sendEmail:      'Message',
+    connect:        "Let's connect",
     navPrev:        'View previous experience',
     navNext:        'View next experience',
     eduNavPrev:     'View previous education',
@@ -91,7 +91,7 @@ const T = {
       { name: 'Excellence in Holography',                                            issuer: 'International Hologram Manufacturers Association', icon: imgIconAward,   svgIcon: true },
     ],
     bio: [
-      <>Multidisciplinary UX/UI designer with a background in <B>2D and 3D graphics</B>, I craft <B>intuitive</B> digital experiences.</>,
+      <>Design is how it looks and how it works. A background in <B>mechanical engineering</B>, <B>holography</B>, <B>spatial computing</B> and <B>digital twins</B> brings technical depth to every digital experience I craft.</>,
       <><B>Driving innovation through design</B>, I am proficient at <B>prototyping</B> (digital twins, extended reality, web and mobile) while <B>collaborating</B> cross-functionally and <B>leading</B> a design team.</>,
       <>Attentive, empathetic, curious and agile, I am a <B>first-principle</B> thinker with a <B>human-centred</B> approach to problem-solving.</>,
       <>Thriving on new challenges. Dedicated to <B>building better</B>.</>,
@@ -281,8 +281,8 @@ const T = {
     certifications: 'Certificats',
     education:      'Formation',
     downloadPdf:    'Télécharger PDF',
-    sendEmail:      'échangeons',
-    connect:        'connectons',
+    sendEmail:      'Échangeons',
+    connect:        'Connectons',
     navPrev:        "Voir l'expérience précédente",
     navNext:        "Voir l'expérience suivante",
     eduNavPrev:     "Voir la formation précédente",
@@ -310,7 +310,7 @@ const T = {
       { name: 'Excellence en Holographie',                                            issuer: 'International Hologram Manufacturers Association', icon: imgIconAward,   svgIcon: true },
     ],
     bio: [
-      <>Architecte du numérique, fort de douze années d'expérience dans <B>l'innovation</B> tout en <B>graphisme 2D et 3D</B>, je conçois des produits <B>intuitifs</B>.</>,
+      <>Le design, c'est comment ça fonctionne. Un parcours en <B>ingénierie mécanique</B>, <B>holographie</B>, <B>informatique spatiale</B> et <B>jumeaux numériques</B> apporte une profondeur technique à chaque expérience digitale que je conçois.</>,
       <>Promouvant l'innovation via le design, j'ai acquis une expertise en <B>prototypage</B>, tout en <B>collaborant</B>  étroitement avec des équipes inter-fonctionnelles, et  <B>dirigeant</B>  une équipe.</>,
       <>Attentif, dans l'empathie, et curieux, je suis un <B>penseur créatif</B>, animé par une méthode de résolution des problèmes, et de gestion des projets d'innovation, <B>centrée sur les usagers</B>.</>,
       <>Avide de nouveaux défis, et de contribuer à un <B>avenir meilleur</B>.</>,
@@ -1325,7 +1325,7 @@ function SkillsCertSection({ t }) {
             {certs.map((card, i) => <CertificationCard key={i} card={card} />)}
           </div>
 
-          <div className="sm:hidden">
+          <div className="sm:hidden -mx-6">
             <div role="region" aria-roledescription="carousel" aria-label={t.certCarousel}>
               <div aria-live="polite" aria-atomic="true" className="sr-only">
                 {t.cardOf(activePage + 1, certPages.length)}
@@ -1340,11 +1340,11 @@ function SkillsCertSection({ t }) {
                 if (e.key === 'ArrowLeft') { e.preventDefault(); scrollToCertPage(Math.max(0, activePage - 1)); }
                 if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCertPage(Math.min(certPages.length - 1, activePage + 1)); }
               }}
-              className="flex overflow-x-auto snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
+              className="flex overflow-x-auto snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC] py-3 -my-3"
               style={{ scrollbarWidth: 'none', touchAction: 'pan-x pan-y' }}
             >
               {certPages.map((page, pi) => (
-                <li key={pi} className="w-full shrink-0 snap-start flex gap-4 px-4">
+                <li key={pi} className="w-full shrink-0 snap-start flex gap-4 px-6">
                   {page.map((card, ci) => (
                     <div key={ci} className="flex-1 min-w-0">
                       <CertificationCard card={card} />
@@ -1353,7 +1353,7 @@ function SkillsCertSection({ t }) {
                 </li>
               ))}
             </ul>
-            <div className="flex items-center justify-end gap-2 mt-6">
+            <div className="flex items-center justify-end gap-2 mt-6 pr-6">
               <button
                 onClick={() => scrollToCertPage(Math.max(0, activePage - 1))}
                 disabled={activePage === 0}

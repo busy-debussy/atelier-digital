@@ -226,7 +226,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
       aria-label={lang === 'fr' ? 'Études de cas' : 'Case studies'}
       ref={dropdownRef}
       style={portalStyle}
-      className="w-[198px] backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] rounded-2xl overflow-hidden shadow-[0px_4px_20px_rgba(0,0,0,0.12)]"
+      className="w-[198px] backdrop-blur-[12px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] rounded-2xl overflow-hidden shadow-[0px_4px_20px_rgba(0,0,0,0.12)]"
     >
       <ul role="none" className="p-2 flex flex-col">
         {items.map(({ key, to, locked }) => (
@@ -284,7 +284,7 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
       aria-label={lang === 'en' ? 'Language selection' : 'Sélection de la langue'}
       ref={dropdownRef}
       style={portalStyle}
-      className="backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] rounded-2xl overflow-hidden shadow-[0px_4px_20px_rgba(0,0,0,0.12)]"
+      className="backdrop-blur-[12px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] rounded-2xl overflow-hidden shadow-[0px_4px_20px_rgba(0,0,0,0.12)]"
     >
       <ul role="none" className="p-2">
         <li role="none">
@@ -309,7 +309,7 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
 }
 
 // LanguageButton
-function LanguageButton({ isOpen, onClick, onClose, lang, toggleLang, isDark, langDropdownRef }) {
+function LanguageButton({ lang, toggleLang, isDark }) {
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
   const containerRef = useRef(null);
   const flagCode = lang === 'en' ? 'gb' : 'fr';
@@ -318,25 +318,18 @@ function LanguageButton({ isOpen, onClick, onClose, lang, toggleLang, isDark, la
   return (
     <div className="relative" ref={containerRef}>
       <button
-        onClick={() => { hideTip(); onClick(); }}
+        onClick={() => { hideTip(); toggleLang(); }}
         onMouseEnter={showTip}
         onMouseLeave={hideTip}
-        aria-haspopup="menu"
-        aria-expanded={isOpen}
-        aria-controls={isOpen ? 'language-menu' : undefined}
         aria-label={`${label}, change language`}
-        className={`flex items-center gap-2 h-8 px-3 rounded-[12px] cursor-pointer active:opacity-[0.33] transition-colors ${
-          isOpen ? 'bg-[#161616] dark:bg-white' : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
-        }`}
+        className="flex items-center gap-2 h-8 px-3 rounded-[12px] cursor-pointer active:opacity-[0.33] transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"
       >
         <Flag code={flagCode} />
-        <span className={`font-medium text-base leading-6 whitespace-nowrap ${isOpen ? 'text-white dark:text-[#161616]' : 'text-[#161616] dark:text-white'}`}>
+        <span className="font-medium text-base leading-6 whitespace-nowrap text-[#161616] dark:text-white">
           {label}
         </span>
-        <Chevron isOpen={isOpen} isDark={isDark} />
       </button>
-      {tooltipVisible && !isOpen && <Tooltip label="languages" isDark={isDark} offset={10} shortcut="L" />}
-      {isOpen && <LanguageDropdown lang={lang} toggleLang={toggleLang} onClose={onClose} dropdownRef={langDropdownRef} anchorRef={containerRef} />}
+      {tooltipVisible && <Tooltip label={lang === 'fr' ? 'lire en anglais' : 'read in french'} isDark={isDark} offset={10} shortcut="L" />}
     </div>
   );
 }
@@ -452,18 +445,12 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
         </li>
 
         <NavLink to="/resume"         label={T[lang].résumé}       currentPage={currentPage} tooltip={T[lang]['tip resume']} isDark={isDark} />
-        <NavLink to="/resume#contact" label={T[lang]["let's talk"]} currentPage={currentPage} tooltip={T[lang]['tip talk']}   isDark={isDark} />
+        <NavLink to="/#contact" label={T[lang]["let's talk"]} currentPage={currentPage} tooltip={T[lang]['tip talk']}   isDark={isDark} />
 
         <li role="none" aria-hidden="true"><div className="w-px h-4 bg-black/[0.12] dark:bg-white/[0.12] shrink-0" /></li>
 
         <li className="relative">
-          <LanguageButton
-            isOpen={langOpen}
-            onClick={() => { setLangOpen(!langOpen); setProjectsOpen(false); }}
-            onClose={() => setLangOpen(false)}
-            lang={lang} toggleLang={toggleLang} isDark={isDark}
-            langDropdownRef={langDropdownRef}
-          />
+          <LanguageButton lang={lang} toggleLang={toggleLang} isDark={isDark} />
         </li>
 
         <li><DarkModeToggle isDark={isDark} onToggle={toggleDark} lang={lang} /></li>
@@ -491,7 +478,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
     { key: 'home',       to: '/'        },
     { key: 'projects',   to: null       },
     { key: 'résumé',     to: '/resume'  },
-    { key: "let's talk", to: '/resume#contact' },
+    { key: "let's talk", to: '/#contact' },
   ];
 
   const subItems = [

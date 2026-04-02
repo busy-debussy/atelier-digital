@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import confetti from 'canvas-confetti';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { initSpringPress } from './utils/springPress';
 import { GA_ID, loadGoogleAnalytics, loadClarity, trackPageView } from './analytics';
@@ -93,12 +94,25 @@ function App() {
     return () => window.removeEventListener('cookie-consent-changed', tryLoad);
   }, []);
 
+  const konamiRef = useRef([]);
+  const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','KeyB','KeyA'];
+
+
   useEffect(() => {
     const handler = (e) => {
       // Skip if any modifier is held, or if focus is in a text field
+      if (e.code === 'Escape') { window.dispatchEvent(new CustomEvent('close-chat')); return; }
       if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
       const tag = document.activeElement?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+      // Konami code
+      konamiRef.current = [...konamiRef.current, e.code].slice(-KONAMI.length);
+      if (konamiRef.current.join(',') === KONAMI.join(',')) {
+        konamiRef.current = [];
+        confetti({ particleCount: 200, spread: 120, origin: { y: 0.6 } });
+      }
+
       if (e.code === 'KeyD') setIsDark(d => !d);
       if (e.code === 'KeyL') setLang(l => l === 'en' ? 'fr' : 'en');
       if (e.code === 'KeyC') window.dispatchEvent(new CustomEvent('toggle-chat'));

@@ -89,7 +89,7 @@ function ObfuscatedEmail({ lang }) {
       onClick={() => window.location.href = `mailto:${u}@${d}?subject=${encodeURIComponent(subject)}`}
       className={`${muted} ${hover} ${row} text-left cursor-pointer`}
     >
-      <span className="sr-only">Send an email to David</span>
+      <span className="sr-only">Message David</span>
       <span className="obf-email" data-u={u} data-d={d} aria-hidden="true" />
     </button>
   );

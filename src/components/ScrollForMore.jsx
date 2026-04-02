@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import imgChevronDown from '../assets/icons/icon-chevron-down.svg';
 
 const T = {
-  en: 'Scroll for more',
+  en: 'scroll for more',
   fr: 'Faire défiler',
 };
 

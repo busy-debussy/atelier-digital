@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-04-01');
+const LAST_UPDATED = new Date('2026-04-02');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -21,7 +21,7 @@ const T = {
     sections: [
       { id: 'controller',     heading: 'Controller',                    nameBody: 'Name: David V.', contact: true },
       { id: 'data-collected', heading: 'Personal data collected',       bullets: ['Essential technical data (e.g., cookie banner state, session preferences)', 'Analytics data (pages visited, time on page, device/browser type)', 'Behavioural insights (anonymised heat maps, session recordings via Microsoft Clarity, only with consent)', 'Chat conversation transcripts (anonymised, no IP address) if you use the AI chatbot', 'Contact info if you email me (name, email)'] },
-      { id: 'how-collected',  heading: 'How data is collected',         bullets: ['Cookies and similar technologies', 'Analytics tools: Google Analytics (only if consented)', 'Behavioural tools: Microsoft Clarity (only if consented)', 'AI chatbot: if used, conversation transcripts are stored anonymously on Vercel\'s infrastructure', 'Direct contact (email)'] },
+      { id: 'how-collected',  heading: 'How data is collected',         bullets: ['Cookies and similar technologies', 'Analytics tools: Google Analytics (only if consented)', 'Behavioural tools: Microsoft Clarity (only if consented)', 'AI chatbot: conversation transcripts are stored anonymously on Vercel\'s infrastructure', 'Direct contact (email)'] },
       { id: 'legal-bases',    heading: 'Purposes and legal bases',      navLabel: 'Purposes and legal\nbases', bullets: ['Essential site functionality: legitimate interest', 'Analytics & site improvements: consent', 'Behavioural insights: consent', 'AI chatbot: legitimate interest (understanding visitor interest in David\'s work)', 'Communication: consent or legitimate interest depending on context'] },
       { id: 'third-party',    heading: 'Third-party services',          bullets: ['Google Analytics: anonymous aggregated usage data. Opt-out available via cookie settings or Google opt-out tool.', 'Microsoft Clarity: anonymised heat maps and session recordings. Only enabled with consent.', 'Anthropic (Claude AI): chat messages are processed by Anthropic\'s API to generate responses. Conversation transcripts are stored anonymously on Vercel\'s infrastructure. No personal identifiers (e.g. IP addresses) are retained.'] },
       { id: 'cookies-track',  heading: 'Cookies and tracking',          cookiesLink: true },
@@ -45,7 +45,7 @@ const T = {
     sections: [
       { id: 'controller',     heading: 'Responsable du traitement',          nameBody: 'Nom : David V.', contact: true },
       { id: 'data-collected', heading: 'Données personnelles collectées',    bullets: ["Données techniques essentielles (ex. : état de la bannière de cookies, préférences de session)", "Données analytiques (pages visitées, temps passé, type d'appareil/navigateur)", "Insights comportementaux (cartes de chaleur anonymisées via Microsoft Clarity, uniquement avec consentement)", "Transcriptions de conversations du chatbot IA (anonymisées, sans adresse IP) si vous utilisez le chatbot", "Coordonnées si vous me contactez par e-mail (nom, e-mail)"] },
-      { id: 'how-collected',  heading: 'Comment les données sont collectées', bullets: ['Cookies et technologies similaires', 'Outils analytiques : Google Analytics (uniquement avec consentement)', 'Outils comportementaux : Microsoft Clarity (uniquement avec consentement)', "Chatbot IA : si utilisé, les transcriptions de conversations sont stockées anonymement sur l'infrastructure Vercel", 'Contact direct (e-mail)'] },
+      { id: 'how-collected',  heading: 'Comment les données sont collectées', bullets: ['Cookies et technologies similaires', 'Outils analytiques : Google Analytics (uniquement avec consentement)', 'Outils comportementaux : Microsoft Clarity (uniquement avec consentement)', "Chatbot IA : les transcriptions de conversations sont stockées anonymement sur l'infrastructure Vercel", 'Contact direct (e-mail)'] },
       { id: 'legal-bases',    heading: 'Finalités et bases légales',         bullets: ["Fonctionnement essentiel du site : intérêt légitime", "Analytique et améliorations : consentement", "Insights comportementaux : consentement", "Chatbot IA : intérêt légitime (comprendre l'intérêt des visiteurs pour le travail de David)", "Communication : consentement ou intérêt légitime selon le contexte"] },
       { id: 'third-party',    heading: 'Services tiers',                     bullets: ["Google Analytics : données d'utilisation agrégées et anonymes. Désactivation possible via les paramètres de cookies ou l'outil Google.", "Microsoft Clarity : cartes de chaleur et enregistrements de session anonymisés. Activé uniquement avec consentement.", "Anthropic (Claude IA) : les messages du chat sont traités par l'API d'Anthropic pour générer des réponses. Les transcriptions sont stockées anonymement sur l'infrastructure Vercel. Aucun identifiant personnel (ex. : adresse IP) n'est conservé."] },
       { id: 'cookies-track',  heading: 'Cookies et suivi',                   cookiesLink: true },
@@ -70,7 +70,7 @@ function ObfuscatedEmail({ className }) {
     <button
       onClick={() => window.location.href = `mailto:${u}@${d}`}
       className={`${className} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] rounded`}
-      aria-label="Send an email to David"
+      aria-label="Message David"
     >
       <span className="obf-email" data-u={u} data-d={d} aria-hidden="true" />
     </button>
