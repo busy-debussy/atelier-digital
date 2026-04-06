@@ -1,5 +1,51 @@
 # Changelog
 
+## [1.4.0] — 2026-04-06
+
+### New page
+- **XR Experiences case study** — full bilingual (EN/FR) case study page at `/xr-experiences` and `/fr/xr-experiences`, with 8 sections: Team, Why, Who, When & Where, What, Prioritise & Choose, Solve, and Measure & Review
+- **Route** — added to `App.jsx` for both EN (`/xr-experiences`) and FR (`/fr/xr-experiences`)
+
+### New components
+- **`WorldMapDots`** — interactive SVG world map showing the distributed team across Scotland, England, UAE, and Vietnam; dots grouped by timezone; hover highlights a timezone column; click locks selection; keyboard-navigable legend pills with roving tabindex; fully bilingual (headings, role labels, map caption, aria strings)
+- **XR page architecture** — sticky side nav with `IntersectionObserver`-driven active section tracking; hero with four stats; six experience cards; AR/VR flowcharts with EN/FR regex translation pipeline; inline SVG diagrams; asset injection between paragraphs via `body.slice(1).map` + index guards
+
+### New assets
+- **Photos** (7) — MIPIM exterior, client pavilion, event space, event group, presenter-led AR session, Magic Leap 2 headset, Magic Leap 2 controller
+- **Diagrams** — `xbox-key-binding.svg` (Xbox controller keybindings for the Digital Twin), `globe-time-zones.svg`, `globe.svg`
+- **Logos** — `logo-table-top.webp` (AR tracker derived from client logo)
+- **Flowcharts** — `shared-ar-experience-flow-inital.svg` and `shared-ar-experience-flow-shipped.svg`; bilingual text via SVG regex translation pipeline; `text-anchor="middle"` with centred tspan x-coordinates so FR text is never off-centre in containers
+
+### Content — English
+- All 8 sections written; "Believers" renamed to **"Visionaries"** in audience type list
+- Experience 02: "top-down exploration" → **"satellite view"**
+- Experience 05: added parenthetical **(the dry valleys at the heart of the development)** for Wadis
+- Experience 06: removed reference to unavailable dedicated case study
+- Magic Leap multiplayer rationale restructured into two cleaner sentences with distinct reasons
+- AR asset constraint: "optimized for mixed reality at scale" → **"for the device's processing constraints"**
+- Solve section: "audience experience" → **"user experience"**
+- Measure section: "one attendee" → **"several attendees"**
+- All em dashes in body text replaced with appropriate punctuation (periods, colons, commas)
+
+### Content — French
+- Full bilingual translation across all 8 sections
+- Typographic apostrophes (`'` U+2019) throughout
+- Image captions translated for all 7 figures (Xbox, Magic Leap, building, tracker, floor plan, AR session, world map)
+- World map legend fully translated: group headings and role pill labels
+- `LEGEND_T` object handles EN/FR legend strings, map caption, and aria labels inside `WorldMapDots`
+
+### Accessibility
+- `role="img"` + `aria-label` on all inline SVGs (Xbox keybinding, flowcharts, world map)
+- Skip-to-content link on case study page
+- `aria-labelledby` wired to section headings in the side nav
+- Roving tabindex on world map legend pills with left/right arrow key support on the map itself
+
+### Bug fixes
+- **Flowchart SVG text (FR)** — tspan x-coordinates were hardcoded for English string lengths; fixed by setting `text-anchor="middle"` and x to the geometric centre of each column/container
+- **Xbox controller light mode** — colour-inversion logic removed; diagram now uses a dark (`#141414`) background in both modes pending a redesigned asset
+
+---
+
 ## [1.1.8] — 2026-03-31
 
 ### New features
