@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-04-02');
+const LAST_UPDATED = new Date('2026-04-06');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -379,8 +379,7 @@ function Cookies({ lang }) {
 
   const secondaryNavVisible = scrolledDown && !atBottom;
   useEffect(() => {
-    window.dispatchEvent(new CustomEvent('secondary-nav-change', { detail: secondaryNavVisible }));
-    return () => window.dispatchEvent(new CustomEvent('secondary-nav-change', { detail: false }));
+    // secondary-nav-change intentionally not dispatched — chat button coexists with sec nav
   }, [secondaryNavVisible]);
 
   useEffect(() => {
@@ -446,11 +445,12 @@ function Cookies({ lang }) {
         </div>{/* px-6 */}
 
         {/* Fixed mobile secondary nav — appears after title scrolls out, disappears when outro is reached */}
-        <div inert={scrolledDown && !atBottom ? undefined : true} className={`md:hidden fixed bottom-4 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div inert={scrolledDown && !atBottom ? undefined : true} className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <div className="pointer-events-auto w-full">
             <MobileSecondaryNav sections={t.sections} activeId={activeId} />
           </div>
         </div>
+        <div aria-hidden="true" className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0'}`} style={{ width: 52, height: 52, left: 8, bottom: 8 }} />
       </main>
       <Footer lang={lang} />
     </>

@@ -141,7 +141,7 @@ function ContactCard({ card, glass }) {
 
 // ── Section ───────────────────────────────────────────────────────────────────
 // variant: 'home' (middle card = link to /resume) | 'resume' (middle card = download PDF)
-function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWidth }) {
+function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWidth, showDesktopNav = false }) {
   const t = T[lang] ?? T.en;
   const cards = [
     t.emailCard,
@@ -263,7 +263,7 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
       </ul>
 
       {/* Nav — mobile/tablet only; desktop never needs it */}
-      <div className="lg:hidden grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 px-6">
+      <div className={`${showDesktopNav ? '' : 'lg:hidden '}grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 px-6`}>
         <div />
         <div className="flex items-center">
           {cards.map((_, i) => (

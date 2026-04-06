@@ -429,14 +429,14 @@ const LEGEND_T = {
   en: {
     headings:      { dev: 'Development', design: 'Design', management: 'Management', studio: 'Studio' },
     labels:        { Designer: 'Designer', 'Unity Devs': 'Unity Devs', 'Creative Team': 'Creative Team', 'Project Manager': 'Project Manager', 'Product Manager': 'Product Manager', 'Unreal Engine Devs': 'Unreal Engine Devs' },
-    mapCaption:    'Interact with the map to explore time zones.',
+    mapCaption:    'Slide or hover over the map to explore time zones.',
     groupAriaLabel: 'Team members by location',
     mapAriaLabel:   'World map showing team locations. Use left and right arrow keys to explore time zones.',
   },
   fr: {
     headings:      { dev: 'Développement', design: 'Design', management: 'Management', studio: 'Studio' },
     labels:        { Designer: 'Designer', 'Unity Devs': 'Devs Unity', 'Creative Team': "Équipe créative", 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', 'Unreal Engine Devs': 'Devs Unreal Engine' },
-    mapCaption:    "Interagissez avec la carte pour explorer les fuseaux horaires.",
+    mapCaption:    "Glissez ou survolez la carte pour explorer les fuseaux horaires.",
     groupAriaLabel: "Membres de l'équipe par localisation",
     mapAriaLabel:   "Carte du monde montrant les localisations de l'équipe. Utilisez les flèches gauche et droite pour explorer les fuseaux horaires.",
   },
@@ -645,6 +645,45 @@ function WorldMapDots({ isDark, lang = 'en' }) {
     const tzList = Object.keys(lastRowByTz).sort((a, b) => parseFloat(a) - parseFloat(b));
     return { svgHtml: svg.outerHTML, dotPositions: positions, tzList };
   }, [isDark]);
+
+  // Mobile: press-and-slide to scrub through timezones by finger x position
+  useEffect(() => {
+    const el = mapRef.current;
+    if (!el || !tzList.length) return;
+
+    let startX = null, startY = null, sliding = false;
+
+    const onTouchStart = (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      sliding = false;
+    };
+
+    const onTouchMove = (e) => {
+      if (startX === null) return;
+      const dx = Math.abs(e.touches[0].clientX - startX);
+      const dy = Math.abs(e.touches[0].clientY - startY);
+      if (!sliding && dy > dx) return; // predominantly vertical — allow page scroll
+      sliding = true;
+      e.preventDefault(); // lock scroll while scrubbing horizontally
+      const r = el.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.touches[0].clientX - r.left) / r.width));
+      const idx = Math.min(tzList.length - 1, Math.floor(pct * tzList.length));
+      setSelected({ tz: tzList[idx], country: null });
+    };
+
+    const onTouchEnd = () => { startX = null; startY = null; sliding = false; };
+
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchmove',  onTouchMove,  { passive: false });
+    el.addEventListener('touchend',   onTouchEnd,   { passive: true });
+
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove',  onTouchMove);
+      el.removeEventListener('touchend',   onTouchEnd);
+    };
+  }, [tzList]);
 
   // On hover/select change: toggle [data-active], restore previously lit circles, highlight new tz group
   useLayoutEffect(() => {
@@ -860,7 +899,7 @@ const scrollToSection = (id) => {
 // ── Desktop secondary nav ─────────────────────────────────────────────────────
 function SecondaryNav({ sections, activeId, onNavigate }) {
   return (
-    <nav aria-label="Page sections" className="hidden md:block sticky top-16 self-start z-10 shrink-0 pt-28">
+    <nav aria-label="Page sections" className="hidden md:block sticky top-16 self-start z-10 w-44 shrink-0 pt-28">
       <ol className="grid gap-2" style={{ gridTemplateColumns: 'max-content' }}>
         {sections.map((s) => {
           const isActive = activeId === s.id;
@@ -1062,7 +1101,7 @@ function XRExperiences({ lang, isDark }) {
               >
                 {t.title}
               </h1>
-              <p className="text-[17px] sm:text-[19px] lg:text-[21px] leading-relaxed text-white/60 max-w-2xl">
+              <p className="text-[17px] sm:text-[19px] lg:text-[21px] leading-relaxed text-white/80 max-w-2xl">
                 {t.tagline}
               </p>
               <ul className="flex flex-wrap gap-x-10 gap-y-6 sm:gap-x-16 mt-2" aria-label="Key figures">
@@ -1071,7 +1110,7 @@ function XRExperiences({ lang, isDark }) {
                     <span className="text-[32px] sm:text-[40px] font-bold leading-none tabular-nums whitespace-nowrap" style={{ color: GOLD }}>
                       <AnimatedStat prefix={s.prefix} countTo={s.countTo} suffix={s.suffix} ready={heroReady} />
                     </span>
-                    <span className="text-[13px] sm:text-[14px] text-white/50 uppercase tracking-widest font-medium">{s.label}</span>
+                    <span className="text-[13px] sm:text-[14px] text-white/70 uppercase tracking-widest font-medium">{s.label}</span>
                   </li>
                 ))}
               </ul>
@@ -1275,12 +1314,19 @@ function XRExperiences({ lang, isDark }) {
       {/* ── Mobile floating nav ── */}
       <div
         inert={scrolledDown && !atBottom ? undefined : true}
-        className={`md:hidden fixed bottom-20 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <div className="pointer-events-auto w-full">
           <MobileSecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
         </div>
       </div>
+
+      {/* ── Chat button circular wrapper — centred behind the trigger when sec nav is visible ── */}
+      <div
+        aria-hidden="true"
+        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0'}`}
+        style={{ width: 52, height: 52, left: 8, bottom: 8 }}
+      />
 
       <Footer lang={lang} />
     </>

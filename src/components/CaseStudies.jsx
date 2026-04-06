@@ -223,7 +223,7 @@ function CsCard({ card, t }) {
 }
 
 // Section
-function CaseStudies({ lang }) {
+function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
   const t = T[lang] ?? T.en;
   const cards = t.cards;
 
@@ -237,11 +237,13 @@ function CaseStudies({ lang }) {
     if (typeof window === 'undefined') return '1.5rem';
     const vw = window.innerWidth;
     if (window.matchMedia('(min-width: 1024px)').matches) {
+      if (lgAlignWidth !== undefined) return `${Math.max(24, (vw - lgAlignWidth) / 2)}px`;
       const allThreeW = 3 * LG_CARD + 2 * LG_GAP;
       if (vw >= allThreeW + 48) return `${(vw - allThreeW) / 2}px`;
       return `${Math.max(24, (vw - LG_CARD) / 2)}px`;
     }
-    if (window.matchMedia('(min-width: 640px)').matches) return '24px';
+    if (window.matchMedia('(min-width: 640px)').matches)
+      return smAlignWidth !== undefined ? `${Math.max(24, (vw - smAlignWidth) / 2)}px` : '24px';
     return `${Math.max(16, (vw - 300) / 2)}px`;
   };
   const [carouselPl, setCarouselPl] = useState(getCarouselPl);
@@ -327,7 +329,7 @@ function CaseStudies({ lang }) {
       </ul>
 
       {/* Nav, mobile/tablet only */}
-      <div className="lg:hidden grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 px-6">
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 px-6">
         <div />
         <div className="flex items-center">
           {cards.map((_, i) => {

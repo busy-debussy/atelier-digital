@@ -38,6 +38,29 @@
 
 ---
 
+## [1.5.1] — 2026-04-06
+
+### Navigation
+- **Nav hides on scroll down** — main nav bar slides out (`translateY(-120%)`) when scrolling down past 8px threshold; reappears on any upward scroll or when at the top; 300ms ease transition
+- **"Let's talk" scroll fix** — from pages without a `#contact` section, button now scrolls to `Number.MAX_SAFE_INTEGER` (browser-clamped to page bottom) instead of `scrollIntoView` on `footer-contact`, ensuring full scroll on long pages like Sales Platform
+- **Keyboard shortcut badge style** — shortcut hints in tooltips now render as a `<kbd>` element with dark grey background (`#4a4a4a` light / `#2a2a2a` dark), 15×18px square, rounded corners
+
+### Home — carousels
+- **Carousel alignment** — Case Studies and Contact carousels now use `lgAlignWidth={720} smAlignWidth={536}`, matching Collaborations and the Resume page; content left-edge aligns consistently across all sections
+- **Desktop nav visible** — dots and chevron controls now show on desktop for both Case Studies and Contact carousels (were `lg:hidden`)
+
+### XR Experiences page
+- **Mobile secondary nav repositioned** — matches policy pages: `bottom-2 left-[68px] right-4`, shifted right of chat button
+- **Circular wrapper behind chat button** — when secondary nav is visible on mobile, a 52×52px frosted-glass circle appears behind the chat button, matching the secondary nav's backdrop style; both are vertically centred on the same axis
+- **Tagline contrast** — `text-white/60` → `text-white/80` (~7.4:1, WCAG AAA)
+- **Stats labels contrast** — `text-white/50` → `text-white/70` (~6.4:1, WCAG AA large)
+
+### Cookies · Privacy · Terms pages
+- **Circular wrapper behind chat button** — same 52×52px frosted-glass circle treatment as XR page; appears when secondary nav is visible
+- **Secondary nav repositioned** — `bottom-2 left-[68px] right-4` (was centred full-width); chat button and secondary nav coexist and are centred as a pair
+
+---
+
 ## [1.2.9] — 2026-04-02
 
 ### Carousels

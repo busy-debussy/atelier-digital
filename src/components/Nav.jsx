@@ -112,7 +112,7 @@ function Tooltip({ label, isDark, offset = 8, shortcut }) {
     <div style={{ top: `calc(100% + ${offset}px)` }} className="absolute left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center">
 <div style={{ background: bg, color: txt }} className="relative z-0 text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-1.5">
         {label}
-        {shortcut && <span className="text-[11px] text-[#adadad] dark:text-[#5c5c5c]">{shortcut}</span>}
+        {shortcut && <kbd className="text-[11px] font-medium w-[15px] h-[18px] flex items-center justify-center rounded bg-[#4a4a4a] dark:bg-[#2a2a2a] text-[#d4d4d4] not-italic">{shortcut}</kbd>}
       </div>
     </div>
   );
@@ -349,11 +349,17 @@ function NavLink({ to, label, currentPage, tooltip, isDark }) {
   const handleClick = (e) => {
     hideTip();
     if (hash) {
-      const el = document.getElementById(hash) || document.getElementById('footer-contact');
-      if (el) {
+      const el = document.getElementById(hash);
+      const useFallback = !el && !!document.getElementById('footer-contact');
+      const target = el || (useFallback ? document.getElementById('footer-contact') : null);
+      if (target) {
         e.preventDefault();
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        el.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth' });
+        if (useFallback) {
+          window.scrollTo({ top: Number.MAX_SAFE_INTEGER, behavior: reduced ? 'instant' : 'smooth' });
+        } else {
+          target.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth' });
+        }
         return;
       }
     }
@@ -635,8 +641,26 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
 
 // Nav (root)
 function Nav({ isDark, toggleDark, lang, toggleLang }) {
+  const [visible, setVisible] = useState(true);
+  const lastY = useRef(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y <= 0) { setVisible(true); }
+      else if (y < lastY.current) { setVisible(true); }
+      else if (y > lastY.current + 8) { setVisible(false); }
+      lastY.current = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <div className="fixed top-0 left-0 right-0 z-[500] flex justify-center pt-4 px-4 pointer-events-none" style={{ transform: 'translateZ(0)' }}>
+    <div
+      className="fixed top-0 left-0 right-0 z-[500] flex justify-center pt-4 px-4 pointer-events-none transition-transform duration-300 ease-in-out"
+      style={{ transform: visible ? 'translateY(0)' : 'translateY(-120%)' }}
+    >
       <div className="pointer-events-auto hidden lg:flex">
         <DesktopTabletNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} isTablet={false} />
       </div>
