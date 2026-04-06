@@ -155,15 +155,19 @@ function Footer({ lang }) {
               <li className="flex flex-col">
                 <span className={`${strong} ${row}`}>{t.projects}</span>
                 <ul>
-                  <li><Locked label={t.digitalTwins} /></li>
                   <li>
                     <Link data-spring tabIndex={0} to="/projects/sales-platform" onClick={() => { if (pathname === '/projects/sales-platform') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
                       <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
                       {t.salesPlatform}
                     </Link>
                   </li>
-                  <li><Locked label={t.xr} /></li>
-                  <li><Locked label={t.holograms} /></li>
+                  <li>
+                    <Link data-spring tabIndex={0} to="/projects/xr" onClick={() => { if (pathname === '/projects/xr') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
+                      <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
+                      {t.xr}
+                    </Link>
+                  </li>
+                  <li><Locked label={t.digitalTwins} /></li>
                 </ul>
               </li>
 

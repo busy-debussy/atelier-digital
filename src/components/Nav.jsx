@@ -214,10 +214,9 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
 function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
   const portalStyle = usePortalPosition(anchorRef, { offsetTop: 11, offsetX: -14 });
   const items = [
-    { key: 'digital twin',     to: null,                       locked: true  },
     { key: 'sales platform',   to: '/projects/sales-platform', locked: false },
-    { key: 'extended reality', to: null,                       locked: true  },
-    { key: 'holograms',        to: null,                       locked: true  },
+    { key: 'extended reality', to: '/projects/xr',             locked: false },
+    { key: 'digital twin',     to: null,                       locked: true  },
   ];
 
   useEffect(() => {
@@ -496,10 +495,9 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
   ];
 
   const subItems = [
-    { key: 'digital twin',     to: null,                       locked: true  },
     { key: 'sales platform',   to: '/projects/sales-platform', locked: false },
-    { key: 'extended reality', to: null,                       locked: true  },
-    { key: 'holograms',        to: null,                       locked: true  },
+    { key: 'extended reality', to: '/projects/xr',             locked: false },
+    { key: 'digital twin',     to: null,                       locked: true  },
   ];
 
   return (

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { initSpringPress } from './utils/springPress';
 import { GA_ID, loadGoogleAnalytics, loadClarity, trackPageView } from './analytics';
 import Nav from './components/Nav';
@@ -39,15 +39,29 @@ function AnimatedRoutes({ children }) {
   );
 }
 
+const PROJECTS = ['/projects/sales-platform', '/projects/xr'];
+
 function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handler = () => {
+      const idx = PROJECTS.indexOf(pathname);
+      const next = PROJECTS[(idx + 1) % PROJECTS.length];
+      navigate(next);
+    };
+    window.addEventListener('cycle-project', handler);
+    return () => window.removeEventListener('cycle-project', handler);
+  }, [pathname, navigate]);
+
   return (
     <div id="app-shell" className="min-h-screen bg-white dark:bg-[#141414] text-gray-900 dark:text-white">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-[#1f1f1f] focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">
         {lang === 'fr' ? 'Aller au contenu principal' : 'Skip to main content'}
       </a>
       <Nav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} />
-      {(pathname === '/resume' || pathname === '/projects/sales-platform') && <ScrollForMore lang={lang} scrollTarget={pathname === '/resume' ? 'summary-bio' : undefined} />}
+      {(pathname === '/resume' || pathname === '/projects/sales-platform' || pathname === '/projects/xr') && <ScrollForMore lang={lang} scrollTarget={pathname === '/resume' ? 'summary-bio' : undefined} />}
       <AnimatedRoutes><Routes>
         <Route path="/" element={<Home lang={lang} isDark={isDark} enableDark={() => setIsDark(true)} />} />
         <Route path="/projects/sales-platform" element={<SalesPlatform lang={lang} isDark={isDark} />} />
@@ -118,6 +132,7 @@ function App() {
       if (e.code === 'KeyD') setIsDark(d => !d);
       if (e.code === 'KeyL') setLang(l => l === 'en' ? 'fr' : 'en');
       if (e.code === 'KeyC') window.dispatchEvent(new CustomEvent('toggle-chat'));
+      if (e.code === 'KeyP') window.dispatchEvent(new CustomEvent('cycle-project'));
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);

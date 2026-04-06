@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import imgHero           from '../assets/photos/photo-cgi-sales-platform-hero.webp';
 import imgHeroMobile     from '../assets/photos/photo-cgi-sales-platform-mobile.webp';
 import imgChevronUp      from '../assets/icons/icon-chevron-up.svg';
+import imgArrowRight     from '../assets/icons/icon-arrow-right.svg';
 import imgChevronLeft    from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight   from '../assets/icons/icon-chevron-right.svg';
 import imgClose          from '../assets/icons/icon-close.svg';
@@ -254,7 +256,7 @@ import imgHifi09MobileFrDark   from '../assets/projects/sales-platform/hifi/hifi
 const HERO = {
   en: {
     category: 'Case Study · Responsive Web App',
-    title: 'A sales platform for luxury real estate developments',
+    title: 'A luxury off-plan sales platform',
     stats: [
       { prefix: '£', countTo: 6.8, decimals: 1, suffix: 'B',  label: 'in sales generated'      },
       { prefix: '+', countTo: 20,  decimals: 0, suffix: '%',   label: 'YoY sales increase'       },
@@ -263,7 +265,7 @@ const HERO = {
   },
   fr: {
     category: 'Étude de cas · Appli Web Réactive',
-    title: 'Une plateforme de vente pour des projets immobiliers de luxe',
+    title: 'Une plateforme de vente sur plan',
     stats: [
       { prefix: '',  countTo: 8,  decimals: 0, suffix: ' Mds €', label: 'de ventes générées'           },
       { prefix: '+', countTo: 20, decimals: 0, suffix: ' %',      label: 'd’augmentation en un an' },
@@ -272,9 +274,10 @@ const HERO = {
   },
 };
 
-function useCountUp(target, duration = 1800, decimals = 0) {
+function useCountUp(target, duration = 1800, decimals = 0, ready = true) {
   const [count, setCount] = useState(0);
   useEffect(() => {
+    if (!ready) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setCount(target);
       return;
@@ -289,12 +292,12 @@ function useCountUp(target, duration = 1800, decimals = 0) {
     };
     const id = requestAnimationFrame(step);
     return () => cancelAnimationFrame(id);
-  }, [target, duration, decimals]);
+  }, [target, duration, decimals, ready]);
   return count;
 }
 
-function AnimatedStat({ prefix, countTo, decimals, suffix }) {
-  const value = useCountUp(countTo, 1800, decimals);
+function AnimatedStat({ prefix, countTo, decimals, suffix, ready }) {
+  const value = useCountUp(countTo, 1800, decimals, ready);
   return (
     <span>{prefix}{decimals > 0 ? value.toFixed(decimals) : value}{suffix}</span>
   );
@@ -302,6 +305,8 @@ function AnimatedStat({ prefix, countTo, decimals, suffix }) {
 
 function Hero({ lang }) {
   const h = HERO[lang] ?? HERO.en;
+  const [heroReady, setHeroReady] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setHeroReady(true), 600); return () => clearTimeout(t); }, []);
   return (
     <section aria-labelledby="hero-heading" lang={lang} className="relative min-h-screen flex flex-col overflow-hidden">
 
@@ -316,17 +321,17 @@ function Hero({ lang }) {
         />
       </picture>
 
-      {/* Gradient overlay, darkens bottom for text legibility */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/60 to-black/20" />
+      {/* Gradient overlay, animates in with text */}
+      <div className="absolute inset-0 pointer-events-none transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0, background: 'linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.2) 100%)' }} />
 
       {/* Main content, bottom */}
-      <div className="relative z-10 mt-auto max-w-5xl mx-auto w-full px-6 sm:px-8 lg:px-10 pb-24 sm:pb-28 lg:pb-24 flex flex-col gap-6 sm:gap-8">
+      <div className="relative z-10 mt-auto max-w-5xl mx-auto w-full px-6 sm:px-8 lg:px-10 pb-24 sm:pb-28 lg:pb-32 flex flex-col gap-6 sm:gap-8 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
 
-        <p className="text-[13px] sm:text-[14px] font-semibold tracking-widest uppercase text-white">
+        <p className="text-[12px] sm:text-[13px] font-semibold tracking-widest uppercase text-white/70">
           {h.category}
         </p>
 
-        <h1 id="hero-heading" className="text-[32px] sm:text-[44px] lg:text-[56px] font-semibold leading-[1.1] text-white max-w-3xl">
+        <h1 id="hero-heading" className="text-[40px] sm:text-[56px] lg:text-[72px] font-bold leading-[1.05] text-white max-w-3xl">
           {h.title}
         </h1>
 
@@ -337,9 +342,9 @@ function Hero({ lang }) {
               <li key={i} className="flex flex-col gap-1">
                 <span className="text-[28px] sm:text-[36px] lg:text-[44px] font-bold leading-tight text-white tabular-nums whitespace-nowrap">
                   <span className="sr-only">{s.prefix}{finalValue}{s.suffix}</span>
-                  <span><AnimatedStat prefix={s.prefix} countTo={s.countTo} decimals={s.decimals} suffix={s.suffix} /></span>
+                  <span><AnimatedStat prefix={s.prefix} countTo={s.countTo} decimals={s.decimals} suffix={s.suffix} ready={heroReady} /></span>
                 </span>
-                <span className="text-[12px] sm:text-[13px] lg:text-[14px] text-white leading-snug max-w-[100px] sm:max-w-none">{s.label}</span>
+                <span className="text-[12px] sm:text-[13px] lg:text-[14px] text-white/70 uppercase tracking-widest font-medium leading-snug max-w-[100px] sm:max-w-none">{s.label}</span>
               </li>
             );
           })}
@@ -1704,6 +1709,21 @@ function SalesPlatform({ lang, isDark }) {
             {id === 'impact'    && <ImpactContent lang={lang} />}
           </Section>
         ))}
+
+        {/* ── Outro ── */}
+        <div className="py-16 sm:py-20">
+          <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10">
+            <Link
+              data-spring
+              to="/#case-studies"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
+            >
+              <img src={imgArrowRight} alt="" width={16} height={16} className="brightness-0 invert" style={{ transform: 'rotate(180deg)' }} />
+              {lang === 'fr' ? 'Retour aux études de cas' : 'Back to case studies'}
+            </Link>
+          </div>
+        </div>
+
       </main>
 
       <Footer lang={lang} />

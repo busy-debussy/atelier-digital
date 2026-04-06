@@ -2,6 +2,7 @@ import { useState, useEffect, useLayoutEffect, useRef, useMemo, Fragment } from 
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import rawGlobe from '../assets/icons/globe-time-zones.svg?raw';
+import imgArrowRight from '../assets/icons/icon-arrow-right.svg';
 import mipimPhoto from '../assets/photos/photo-MIPIM.webp';
 import eventBuildingPhoto from '../assets/photos/photo-event-building.webp';
 import eventSpacePhoto from '../assets/photos/photo-event-space.webp';
@@ -28,10 +29,10 @@ const T = {
     title:       'Revealing a Megaproject',
     tagline:     'The architecture of engagement. A global unveiling.',
     stats: [
-      { value: '6', label: 'Apps' },
-      { value: '3 XR',    label: 'Experiences' },
-      { value: '1 UX',    label: 'Designer' },
-      { value: '6 weeks', label: 'To deliver' },
+      { countTo: 6, decimals: 0, prefix: '', suffix: '',        label: 'Apps' },
+      { countTo: 3, decimals: 0, prefix: '', suffix: ' XR',     label: 'Experiences' },
+      { countTo: 1, decimals: 0, prefix: '', suffix: ' UX',     label: 'Designer' },
+      { countTo: 6, decimals: 0, prefix: '', suffix: ' weeks',  label: 'To deliver' },
     ],
     sections: [
       {
@@ -174,7 +175,7 @@ const T = {
         ],
       },
     ],
-    backLabel: 'Back to home',
+    backLabel: 'Back to case studies',
     placeholderAsset: 'Asset — coming soon',
     flowLabels: {
       initial: 'Initial flow for the shared AR experience',
@@ -200,10 +201,10 @@ const T = {
     title:       'Révéler un Mégaprojet',
     tagline:     "L’architecture de l’engagement lors d’un dévoilement mondial.",
     stats: [
-      { value: '6',          label: 'Apps' },
-      { value: '3 XR',       label: 'Expériences' },
-      { value: '1 UX',       label: 'Designer' },
-      { value: '6 semaines', label: 'Pour livrer' },
+      { countTo: 6, decimals: 0, prefix: '', suffix: '',           label: 'Apps' },
+      { countTo: 3, decimals: 0, prefix: '', suffix: ' XR',        label: 'Expériences' },
+      { countTo: 1, decimals: 0, prefix: '', suffix: ' UX',        label: 'Designer' },
+      { countTo: 6, decimals: 0, prefix: '', suffix: ' semaines',  label: 'Pour livrer' },
     ],
     sections: [
       {
@@ -346,7 +347,7 @@ const T = {
         ],
       },
     ],
-    backLabel: "Retour à l’accueil",
+    backLabel: "Retour aux études de cas",
     placeholderAsset: 'Asset — à venir',
     flowLabels: {
       initial: "Flux initial de l’expérience AR partagée",
@@ -399,6 +400,29 @@ const SVG_W = 1114, SVG_H = 561;
 function extractTz(id) {
   const m = id.match(/^(?:even|odd)([+-]?\d+(?:\.\d+)?)-/);
   return m ? String(parseFloat(m[1])) : null;
+}
+
+function useCountUp(target, duration, ready) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!ready || !target) return;
+    let startTime = null;
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    const id = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(id);
+  }, [target, duration, ready]);
+  return count;
+}
+
+function AnimatedStat({ prefix, countTo, suffix, ready }) {
+  const value = useCountUp(countTo, 1800, ready);
+  return <span>{prefix}{value}{suffix}</span>;
 }
 
 const LEGEND_T = {
@@ -725,7 +749,7 @@ function WorldMapDots({ isDark, lang = 'en' }) {
           </div>
         ))}
       </div>
-      <p className="text-[11px] text-[#5c5c5c] dark:text-[#adadad] mt-2" aria-hidden="true">{lt.mapCaption}</p>
+      <p className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] mt-2 text-center" aria-hidden="true">{lt.mapCaption}</p>
 
       {/* Screen-reader description of the map */}
       <p className="sr-only">
@@ -1027,7 +1051,7 @@ function XRExperiences({ lang, isDark }) {
           <img src={mipimPhoto} alt="" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} />
           <div className="absolute inset-0 pointer-events-none transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0, background: 'linear-gradient(to bottom, rgba(14,14,14,0.2) 0%, rgba(14,14,14,1) 100%)' }} />
 
-          <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 mt-auto relative z-10 pb-16 sm:pb-20 lg:pb-24 pt-40 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
+          <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 mt-auto relative z-10 pb-24 sm:pb-28 lg:pb-32 pt-40 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
             <div className="flex flex-col gap-6 sm:gap-8">
               <p className="text-[12px] sm:text-[13px] font-semibold uppercase tracking-widest text-white">
                 {t.label}
@@ -1044,7 +1068,9 @@ function XRExperiences({ lang, isDark }) {
               <ul className="flex flex-wrap gap-x-10 gap-y-6 sm:gap-x-16 mt-2" aria-label="Key figures">
                 {t.stats.map((s, i) => (
                   <li key={i} className="flex flex-col gap-1">
-                    <span className="text-[32px] sm:text-[40px] font-bold leading-none" style={{ color: GOLD }}>{s.value}</span>
+                    <span className="text-[32px] sm:text-[40px] font-bold leading-none tabular-nums whitespace-nowrap" style={{ color: GOLD }}>
+                      <AnimatedStat prefix={s.prefix} countTo={s.countTo} suffix={s.suffix} ready={heroReady} />
+                    </span>
                     <span className="text-[13px] sm:text-[14px] text-white/50 uppercase tracking-widest font-medium">{s.label}</span>
                   </li>
                 ))}
@@ -1178,7 +1204,7 @@ function XRExperiences({ lang, isDark }) {
                             </figure>
                           )}
                           {section.id === 'prioritise' && i === 1 && (
-                            <figure className="flex flex-col gap-2 max-w-[460px] mx-auto">
+                            <figure className="flex flex-col gap-2 max-w-sm mx-auto">
                               <img src={tableTopLogo} alt="Client logo design on the AR table top" className="w-full rounded-[16px] sm:rounded-[20px] object-cover dark:[filter:invert(0.92)_hue-rotate(180deg)]" />
                               <figcaption className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] text-center">{t.captions.tracker}</figcaption>
                             </figure>
@@ -1234,11 +1260,12 @@ function XRExperiences({ lang, isDark }) {
         <div className="py-16 sm:py-20">
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10">
             <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-[14px] font-medium transition-opacity hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] rounded"
-              style={{ color: isDark ? GOLD : GOLD_A11Y }}
+              data-spring
+              to="/#case-studies"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
             >
-              ← {t.backLabel}
+              <img src={imgArrowRight} alt="" width={16} height={16} className="brightness-0 invert" style={{ transform: 'rotate(180deg)' }} />
+              {t.backLabel}
             </Link>
           </div>
         </div>

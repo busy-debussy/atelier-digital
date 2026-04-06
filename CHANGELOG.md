@@ -1,5 +1,43 @@
 # Changelog 
 
+## [1.5.0] — 2026-04-06
+
+### Navigation
+- **XR page linked** — "Extended reality" entry in desktop dropdown and mobile submenu now links to `/projects/xr` (was locked)
+- **Holograms removed** — removed from both desktop dropdown and mobile submenu
+- **Digital twin moved last** — reordered to: sales platform → extended reality → digital twin in both nav and footer sitemap
+- **`P` keyboard shortcut** — pressing `P` cycles between case study pages (`/projects/sales-platform` → `/projects/xr` → back); follows the existing single-key pattern (D, L, C)
+
+### Case Studies carousel (Home)
+- **XR card unlocked** — card 2 now links to `/projects/xr`, uses blue panel background and white arrow button matching card 1; "view case study" tooltip on hover
+
+### Footer sitemap
+- **XR linked** — "extended reality" entry replaced locked state with an active link to `/projects/xr`
+- **Digital twin moved last** — reordered to match nav: sales platform → extended reality → digital twin
+
+### XR Experiences page
+- **Scroll for more** — scroll indicator now appears on the XR page (added `/projects/xr` to the condition in App.jsx)
+- **Hero animation** — text and gradient overlay now fade in after 600ms on mount (matching Sales Platform behaviour); count-up stats gated on `heroReady`
+- **Back to case studies CTA** — replaced gold text link with blue pill button (`bg-[#0152EC]`) with left-pointing white arrow; links to `/#case-studies`; label updated to "Back to case studies" / "Retour aux études de cas"
+- **Bottom padding increased** — hero content `pb-24 sm:pb-28 lg:pb-32` to clear the scroll indicator
+- **`aria-hidden` removed from stats** — collapsed sr-only + aria-hidden double-span pattern to a single span; screen readers read the final value without announcing count-up animation
+- **Parse error fix** — French `backLabel` string changed to double quotes to avoid invalid character error on `é`
+
+### Sales Platform page
+- **Hero animation** — gradient overlay and text now fade in after 600ms on mount, matching XR; count-up stats gated on `heroReady`
+- **Hero title** — updated to "A luxury off-plan sales platform" / "Une plateforme de vente sur plan"
+- **Title size & weight** — `text-[40px] sm:text-[56px] lg:text-[72px] font-bold leading-[1.05]` (was 32/44/56px font-semibold); matches XR hero
+- **Category eyebrow** — `text-[12px] sm:text-[13px]` (was 13/14px); matches XR
+- **Stats labels** — `text-white/70 uppercase tracking-widest font-medium` (was `text-white leading-snug`); AAA compliant (~7.4:1), fixes prior contrast failure at white/50
+- **Hero text hierarchy** — eyebrow and stats labels set to `text-white/70`; title and stats numbers remain full white
+- **Bottom padding** — `pb-24 sm:pb-28 lg:pb-32` to clear scroll indicator
+- **Back to case studies CTA** — blue pill button with left-pointing white arrow added at page bottom; links to `/#case-studies`
+
+### Tailwind / build
+- **`@source` directive** — added `@source "./**/*.{jsx,tsx,js,ts,html}"` to `index.css` to ensure all JSX files are scanned for utility classes regardless of Vite module graph entry order
+
+---
+
 ## [1.2.9] — 2026-04-02
 
 ### Carousels
