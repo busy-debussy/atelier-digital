@@ -7,6 +7,7 @@ import ScrollForMore from './components/ScrollForMore';
 import CookieBanner from './components/CookieBanner';
 import Home from './pages/Home';
 import SalesPlatform from './pages/SalesPlatform';
+import XRExperiences from './pages/XRExperiences';
 import Resume from './pages/Resume';
 import Cookies from './pages/Cookies';
 import Privacy from './pages/Privacy';
@@ -48,6 +49,7 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
       <AnimatedRoutes><Routes>
         <Route path="/" element={<Home lang={lang} isDark={isDark} enableDark={() => setIsDark(true)} />} />
         <Route path="/projects/sales-platform" element={<SalesPlatform lang={lang} isDark={isDark} />} />
+        <Route path="/projects/xr" element={<XRExperiences lang={lang} isDark={isDark} />} />
         <Route path="/resume" element={<Resume lang={lang} />} />
         <Route path="/cookies" element={<Cookies lang={lang} />} />
         <Route path="/privacy" element={<Privacy lang={lang} />} />

@@ -1,7 +1,9 @@
 export const GA_ID = 'G-HK7KZMSNMQ';
 
+const isProd = !['localhost', '127.0.0.1'].includes(window.location.hostname);
+
 export function loadGoogleAnalytics(id) {
-  if (!id || document.getElementById('ga-script')) return;
+  if (!id || !isProd || document.getElementById('ga-script')) return;
   const s = document.createElement('script');
   s.id    = 'ga-script';
   s.async = true;
@@ -22,7 +24,7 @@ export function trackPageView(path) {
 }
 
 export function loadClarity() {
-  if (document.getElementById('clarity-script')) return;
+  if (!isProd || document.getElementById('clarity-script')) return;
   const s = document.createElement('script');
   s.id    = 'clarity-script';
   s.async = true;
