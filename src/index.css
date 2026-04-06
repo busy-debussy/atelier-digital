@@ -12,6 +12,14 @@ html.dark {
   background-color: #141414;
 }
 
+html.dark strong {
+  color: #ffffff;
+}
+
+/* Accessible gold — 6:1 on white in light mode, reverts to brand gold in dark mode */
+.gold-text { color: #7A5C00; }
+html.dark .gold-text { color: #C9A84C; }
+
 body {
   scroll-behavior: smooth;
   overflow-x: clip;
