@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import imgSend  from '../assets/icons/icon-send.svg';
 import imgClose from '../assets/icons/icon-close-sm.svg';
+import { trackEvent } from '../analytics';
 
 const API_URL = import.meta.env.VITE_CHAT_API_URL || '/api/chat';
 const MAX_TURNS = 6;
@@ -56,7 +57,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
   const l = L[lang] || L.en;
   const [open, setOpen] = useState(false);
 
-  useEffect(() => { onOpenChange?.(open); }, [open, onOpenChange]);
+  useEffect(() => { onOpenChange?.(open); if (open) trackEvent('chat_open'); }, [open, onOpenChange]);
   const [messages, setMessages] = useState([]);
   const [input, setInput]     = useState('');
   const [loading, setLoading] = useState(false);

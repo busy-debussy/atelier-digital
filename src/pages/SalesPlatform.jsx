@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
+import { trackEvent } from '../analytics';
 import Footer from '../components/Footer';
 import imgHero           from '../assets/photos/photo-cgi-sales-platform-hero.webp';
 import imgHeroMobile     from '../assets/photos/photo-cgi-sales-platform-mobile.webp';
@@ -1678,6 +1679,7 @@ function SalesPlatform({ lang, isDark }) {
 
   useEffect(() => {
     document.title = lang === 'fr' ? 'Web App • Atelier Digital' : 'Web App • Atelier Digital';
+    trackEvent('case_study_view', { study: 'sales_platform' });
   }, [lang]);
 
   return (

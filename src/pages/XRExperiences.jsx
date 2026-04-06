@@ -1,5 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useRef, useMemo, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { trackEvent } from '../analytics';
 import Footer from '../components/Footer';
 import rawGlobe from '../assets/icons/globe-time-zones.svg?raw';
 import imgArrowRight from '../assets/icons/icon-arrow-right.svg';
@@ -213,7 +214,7 @@ const T = {
         heading: 'Sur plusieurs fuseaux horaires',
         body: [
           <>Pour ce projet, notre équipe de cinq personnes, réparties dans quatre pays, a assuré la <strong>conception et le développement</strong> de toutes les applications de bout en bout. La production vidéo a été prise en charge par notre équipe studio.</>,
-          <>Pour surmonter les contraintes du télétravail sur plusieurs fuseaux horaires, nous avons fonctionné en sprints de deux semaines avec des <strong>réunions quotidiennes</strong> alignés sur les horaires du Royaume-Uni. Ce rythme était essentiel pour :</>,
+          <>Pour surmonter les contraintes du télétravail sur plusieurs fuseaux horaires, nous avons fonctionné en sprints de deux semaines avec des <strong>réunions quotidiennes</strong> alignés sur les horaires du Royaume-Uni. Cette organisation était essentiel pour :</>,
           <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
             <li><strong>Maintenir la coordination</strong> et la visibilité sur l’avancement du sprint</li>
             <li><strong>Identifier les obstacles</strong> tôt pour éviter les retards</li>
@@ -221,7 +222,7 @@ const T = {
             <li><strong>Anticiper les risques liés à la livraison</strong> et faire des compromis</li>
             <li><strong>Guider l’évolution du design</strong> tout au long du processus</li>
           </ul>,
-          <>Compte tenu de l’ambition du projet et de son calendrier serré, cette organisation a été essentielle pour respecter les délais, avec les équipes design et dev travaillant en synergie.</>,
+          <>Compte tenu de l’ambition du projet et de son calendrier serré, cette organisation nous a permis de respecter les délais, avec les équipes design et dev travaillant en synergie.</>,
         ],
         map: true,
       },
@@ -231,7 +232,7 @@ const T = {
         heading: 'Une seule chance de marquer les esprits',
         body: [
           <>Il s’agissait d’une occasion unique de présenter l’un des projets urbains les plus ambitieux jamais proposés à un public mondial d’investisseurs. Avec un temps limité et des attentes élevées, il fallait rendre l’ampleur et l’ambition du projet immédiatement perceptibles, sous peine de le voir réduit à un simple concept.</>,
-          <>Chaque décision comptait : l’espace, le rythme, la façon dont les groupes et les individus interagissaient. Nous avions besoin d’un système d’expériences fonctionnant ensemble pour susciter la conviction, tout en veillant à ce qu’aucune partie de l’histoire de passe à côté . L’objectif était de faire en sorte que chaque visiteur comprenne qu’il ne s’agissait pas d’un projet immobilier ordinaire, mais d’une redéfinition de ce qu’une ville pouvait être.</>,
+          <>Chaque décision comptait : l’espace, le rythme, la façon dont les groupes et les individus interagissaient. Nous avions besoin d’un système d’expériences fonctionnant ensemble pour susciter la conviction, tout en veillant à ce qu’aucune partie de l’histoire de passe à côté. L’objectif était de faire en sorte que chaque visiteur comprenne qu’il ne s’agissait pas d’un projet immobilier ordinaire, mais d’une redéfinition de ce qu’une ville pouvait être.</>,
         ],
       },
       {
@@ -436,7 +437,7 @@ const LEGEND_T = {
   fr: {
     headings:      { dev: 'Développement', design: 'Design', management: 'Management', studio: 'Studio' },
     labels:        { Designer: 'Designer', 'Unity Devs': 'Devs Unity', 'Creative Team': "Équipe créative", 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', 'Unreal Engine Devs': 'Devs Unreal Engine' },
-    mapCaption:    "Glissez ou survolez la carte pour explorer les fuseaux horaires.",
+    mapCaption:    "Survolez la carte pour explorer les fuseaux horaires.",
     groupAriaLabel: "Membres de l'équipe par localisation",
     mapAriaLabel:   "Carte du monde montrant les localisations de l'équipe. Utilisez les flèches gauche et droite pour explorer les fuseaux horaires.",
   },
@@ -651,31 +652,30 @@ function WorldMapDots({ isDark, lang = 'en' }) {
     const el = mapRef.current;
     if (!el || !tzList.length) return;
 
-    let startX = null, startY = null, sliding = false;
+    let startX = null;
 
     const onTouchStart = (e) => {
       startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-      sliding = false;
+      const r = el.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (startX - r.left) / r.width));
+      const idx = Math.min(tzList.length - 1, Math.floor(pct * tzList.length));
+      setSelected({ tz: tzList[idx], country: null });
     };
 
+    // touch-action: pan-y on the element lets the browser handle vertical scroll
+    // natively; horizontal moves come straight to this handler without conflict.
     const onTouchMove = (e) => {
       if (startX === null) return;
-      const dx = Math.abs(e.touches[0].clientX - startX);
-      const dy = Math.abs(e.touches[0].clientY - startY);
-      if (!sliding && dy > dx) return; // predominantly vertical — allow page scroll
-      sliding = true;
-      e.preventDefault(); // lock scroll while scrubbing horizontally
       const r = el.getBoundingClientRect();
       const pct = Math.max(0, Math.min(1, (e.touches[0].clientX - r.left) / r.width));
       const idx = Math.min(tzList.length - 1, Math.floor(pct * tzList.length));
       setSelected({ tz: tzList[idx], country: null });
     };
 
-    const onTouchEnd = () => { startX = null; startY = null; sliding = false; };
+    const onTouchEnd = () => { startX = null; };
 
     el.addEventListener('touchstart', onTouchStart, { passive: true });
-    el.addEventListener('touchmove',  onTouchMove,  { passive: false });
+    el.addEventListener('touchmove',  onTouchMove,  { passive: true });
     el.addEventListener('touchend',   onTouchEnd,   { passive: true });
 
     return () => {
@@ -756,7 +756,7 @@ function WorldMapDots({ isDark, lang = 'en' }) {
       <div
         ref={mapRef}
         className="relative w-full mb-2 sm:mb-0 rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C9A84C]"
-        style={{ cursor: 'crosshair' }}
+        style={{ cursor: 'crosshair', touchAction: 'pan-y' }}
         tabIndex={0}
         role="img"
         aria-label={lt.mapAriaLabel}
@@ -1032,6 +1032,7 @@ function XRExperiences({ lang, isDark }) {
   useEffect(() => { setMounted(true); }, []);
   useEffect(() => { const t = setTimeout(() => setHeroReady(true), 600); return () => clearTimeout(t); }, []);
   useEffect(() => { document.title = t.pageTitle; }, [t]);
+  useEffect(() => { trackEvent('case_study_view', { study: 'xr' }); }, []);
 
   // Active section via IntersectionObserver
   useEffect(() => {

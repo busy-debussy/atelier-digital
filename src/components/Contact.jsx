@@ -255,11 +255,10 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
           if (idx >= 0) scrollToCard(idx);
         }}
         className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
-        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingTop: '28px', paddingBottom: '28px', touchAction: 'pan-x pan-y' }}
+        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, paddingTop: '28px', paddingBottom: '28px', touchAction: 'pan-x pan-y' }}
         aria-label={t.heading}
       >
         {cards.map((card, i) => <ContactCard key={i} card={card} glass={noBg} />)}
-        <li role="none" aria-hidden="true"><div className="shrink-0" style={{ width: carouselPl }} /></li>
       </ul>
 
       {/* Nav — mobile/tablet only; desktop never needs it */}

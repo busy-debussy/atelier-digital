@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import imgChevronDown from '../assets/icons/icon-chevron-down.svg';
+import { trackEvent } from '../analytics';
 
 const T = {
   en: 'scroll for more',
@@ -39,6 +40,7 @@ export default function ScrollForMore({ lang, scrollTarget }) {
 
       <button
         onClick={() => {
+          trackEvent('scroll_for_more');
           const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           const mobile = window.matchMedia('(max-width: 639px)').matches;
           if (scrollTarget && mobile) {

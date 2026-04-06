@@ -86,10 +86,10 @@ function ObfuscatedEmail({ lang }) {
   return (
     <button
       data-spring
+      aria-label="Message David"
       onClick={() => window.location.href = `mailto:${u}@${d}?subject=${encodeURIComponent(subject)}`}
       className={`${muted} ${hover} ${row} text-left cursor-pointer`}
     >
-      <span className="sr-only">Message David</span>
       <span className="obf-email" data-u={u} data-d={d} aria-hidden="true" />
     </button>
   );
@@ -110,6 +110,7 @@ function Footer({ lang }) {
   const manageCookiesBtn = () => (
     <button
       data-spring
+      aria-label={t.manageCookies}
       onClick={() => window.dispatchEvent(new Event('show-cookie-banner'))}
       className={`px-2 py-1 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer whitespace-nowrap`}
     >{t.manageCookies}</button>
@@ -202,10 +203,8 @@ function Footer({ lang }) {
         <div className="max-w-5xl mx-auto px-6 py-10 text-sm text-[#5c5c5c] dark:text-[#adadad]">
           <div className="flex flex-col items-center gap-4 sm:hidden">
             <ul className="flex items-center gap-1" aria-label="Legal">
-              <li>{legalLink('/privacy', t.privacy)}</li>
-              <li role="none" aria-hidden="true"><div className="w-px h-3 bg-black/20 dark:bg-white/20" /></li>
-              <li>{manageCookiesBtn()}</li>
-              <li role="none" aria-hidden="true"><div className="w-px h-3 bg-black/20 dark:bg-white/20" /></li>
+              <li className="flex items-center gap-1">{legalLink('/privacy', t.privacy)}<div aria-hidden="true" className="w-px h-3 bg-black/20 dark:bg-white/20 shrink-0" /></li>
+              <li className="flex items-center gap-1">{manageCookiesBtn()}<div aria-hidden="true" className="w-px h-3 bg-black/20 dark:bg-white/20 shrink-0" /></li>
               <li>{legalLink('/terms', t.terms)}</li>
             </ul>
             <ul className="flex justify-center gap-6" aria-label="Copyright">
@@ -216,10 +215,8 @@ function Footer({ lang }) {
           <div className="hidden sm:grid sm:grid-cols-3 items-center">
             <CopyrightTag year={year} tooltip={t.techTooltip} />
             <ul className="flex items-center gap-1 justify-center" aria-label="Legal">
-              <li>{legalLink('/privacy', t.privacy)}</li>
-              <li role="none" aria-hidden="true"><div className="w-px h-3 bg-black/20 dark:bg-white/20" /></li>
-              <li>{manageCookiesBtn()}</li>
-              <li role="none" aria-hidden="true"><div className="w-px h-3 bg-black/20 dark:bg-white/20" /></li>
+              <li className="flex items-center gap-1">{legalLink('/privacy', t.privacy)}<div aria-hidden="true" className="w-px h-3 bg-black/20 dark:bg-white/20 shrink-0" /></li>
+              <li className="flex items-center gap-1">{manageCookiesBtn()}<div aria-hidden="true" className="w-px h-3 bg-black/20 dark:bg-white/20 shrink-0" /></li>
               <li>{legalLink('/terms', t.terms)}</li>
             </ul>
             <span className="text-right">{t.thanks}</span>

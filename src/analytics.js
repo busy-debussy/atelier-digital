@@ -23,6 +23,11 @@ export function trackPageView(path) {
   });
 }
 
+export function trackEvent(name, params = {}) {
+  if (typeof window.gtag !== 'function') return;
+  window.gtag('event', name, params);
+}
+
 export function loadClarity() {
   if (!isProd || document.getElementById('clarity-script')) return;
   const s = document.createElement('script');

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { initSpringPress } from './utils/springPress';
-import { GA_ID, loadGoogleAnalytics, loadClarity, trackPageView } from './analytics';
+import { GA_ID, loadGoogleAnalytics, loadClarity, trackPageView, trackEvent } from './analytics';
 import Nav from './components/Nav';
 import ScrollForMore from './components/ScrollForMore';
 import CookieBanner from './components/CookieBanner';
@@ -60,8 +60,8 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
       if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
       const tag = document.activeElement?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-      if (e.code === 'KeyH') { pathname === '/' ? window.scrollTo({ top: 0, behavior: 'smooth' }) : navigate('/'); }
-      if (e.code === 'KeyR') navigate('/resume');
+      if (e.code === 'KeyH') { pathname === '/' ? window.scrollTo({ top: 0, behavior: 'smooth' }) : navigate('/'); trackEvent('keyboard_shortcut', { key: 'H' }); }
+      if (e.code === 'KeyR') { navigate('/resume'); trackEvent('keyboard_shortcut', { key: 'R' }); }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
@@ -141,10 +141,11 @@ function App() {
         confetti({ particleCount: 200, spread: 120, origin: { y: 0.6 } });
       }
 
-      if (e.code === 'KeyD') setIsDark(d => !d);
-      if (e.code === 'KeyL' || e.code === 'KeyF') setLang(l => l === 'en' ? 'fr' : 'en');
-      if (e.code === 'KeyC') window.dispatchEvent(new CustomEvent('toggle-chat'));
-      if (e.code === 'KeyP') window.dispatchEvent(new CustomEvent('cycle-project'));
+      if (e.code === 'KeyD') { setIsDark(d => !d); trackEvent('dark_mode_toggle'); }
+      if (e.code === 'KeyL' || e.code === 'KeyF') { setLang(l => { const next = l === 'en' ? 'fr' : 'en'; trackEvent('language_toggle', { language: next }); return next; }); }
+      if (e.code === 'KeyC') { window.dispatchEvent(new CustomEvent('toggle-chat')); trackEvent('keyboard_shortcut', { key: 'C' }); }
+      if (e.code === 'KeyP') { window.dispatchEvent(new CustomEvent('cycle-project')); trackEvent('keyboard_shortcut', { key: 'P' }); }
+      if (e.code === 'KeyT') { window.dispatchEvent(new CustomEvent('toggle-contact')); trackEvent('keyboard_shortcut', { key: 'T' }); }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { trackEvent } from '../analytics';
 
 const T = {
   en: {
@@ -22,6 +23,7 @@ export default function NotFound({ lang }) {
   const t = T[lang] ?? T.en;
   useEffect(() => {
     document.title = lang === 'fr' ? 'Page introuvable • Atelier Digital' : 'Page not found • Atelier Digital';
+    trackEvent('404_error', { path: window.location.pathname });
   }, [lang]);
 
   return (

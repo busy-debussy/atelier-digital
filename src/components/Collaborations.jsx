@@ -335,6 +335,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
             overflowY: 'visible',
             scrollbarWidth: 'none',
             paddingLeft: carouselPl,
+            paddingRight: carouselPl,
             paddingTop: '20px',
             paddingBottom: '20px',
             touchAction: 'pan-x pan-y',
@@ -363,8 +364,6 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
               </button>
             </li>
           ))}
-          {/* Trailing spacer so the last logo can reach its centred snap position */}
-          <li role="none" aria-hidden="true"><div className="shrink-0" style={{ width: carouselPl }} /></li>
         </ul>
 
         {/* Normal nav, below track, reduced gap */}

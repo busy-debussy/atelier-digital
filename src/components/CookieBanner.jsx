@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { trackEvent } from '../analytics';
 
 export const CONSENT_KEY = 'cookie-consent';
 
@@ -47,6 +48,7 @@ function CookieBanner({ lang, hideFloating = false }) {
     setVisible(false);
     setExplicit(false);
     window.dispatchEvent(new CustomEvent('cookie-consent-changed', { detail: choice }));
+    trackEvent('cookie_consent', { choice });
   };
 
   return (
@@ -87,6 +89,7 @@ function CookieBanner({ lang, hideFloating = false }) {
         <div className="flex items-center gap-4 md:shrink-0">
           <button
             data-spring
+            aria-label={t.reject}
             onClick={() => respond('rejected')}
             className="flex-1 md:flex-none md:w-[100px] py-2.5 text-[13px] font-medium rounded-xl border border-white/[0.15] dark:border-black/[0.12] bg-[#f6f6f6] dark:bg-[#1f1f1f] text-[#1f1f1f] dark:text-[#f6f6f6] hover:bg-[#ebebeb] dark:hover:bg-[#2c2c2c] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7aabff] dark:focus-visible:ring-[#0152EC]"
           >
@@ -94,6 +97,7 @@ function CookieBanner({ lang, hideFloating = false }) {
           </button>
           <button
             data-spring
+            aria-label={t.accept}
             onClick={() => respond('accepted')}
             className="flex-1 md:flex-none md:w-[100px] py-2.5 text-[13px] font-medium rounded-xl border border-white/[0.15] dark:border-black/[0.12] bg-[#f6f6f6] dark:bg-[#1f1f1f] text-[#1f1f1f] dark:text-[#f6f6f6] hover:bg-[#ebebeb] dark:hover:bg-[#2c2c2c] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7aabff] dark:focus-visible:ring-[#0152EC]"
           >

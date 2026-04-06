@@ -1,5 +1,41 @@
 # Changelog 
 
+## [1.5.4] — 2026-04-06
+
+### Contact modal ("Let's Talk")
+- **Portrait, email, LinkedIn, location, vCard** — new modal accessible via the "Let's Talk" nav button or `T` keyboard shortcut; replaces the previous scroll-to-section behaviour
+- **Email row** — tapping the row opens a mailto; a copy button alongside shows a checkmark + "Copied!" confirmation
+- **LinkedIn row** — opens `linkedin.com/in/davidviallard` in a new tab; displays "David V." (no full last name in the UI); icon inverts correctly in dark mode
+- **Location row** — links to Google Maps coordinates (Edinburgh)
+- **Save contact** — downloads `david-v.vcf`; vCard 3.0 with embedded base64 portrait photo
+- **Modal centering** — uses `fixed inset-0 flex items-center justify-center` on the wrapper to avoid transform conflicts with the `modal-card-in` CSS animation
+- **WCAG compliance** — `inert` set on `#root` when modal is open (covers full React app while the portal outside `#root` stays accessible); `aria-hidden` alone was insufficient and has been removed
+- **`T` to toggle** — pressing T again while the modal is open closes it (toggle behaviour via CustomEvent listener)
+
+### GA4 analytics events
+- **`chat_open`** — fired when the AI chat panel is opened
+- **`scroll_for_more`** — fired when the scroll indicator button is clicked
+- **`dark_mode_toggle`** — fired on `D` keyboard shortcut
+- **`language_toggle`** — fired on `L`/`F` keyboard shortcut, includes `{ language }` param
+- **`keyboard_shortcut`** — fired for H, R, C, P, T shortcuts with `{ key }` param
+- **`vcard_download`** — fired when the Save Contact link is clicked in the modal
+- **`contact_email_click`** — fired when the email row in the modal is clicked
+- **`contact_linkedin_click`** — fired when the LinkedIn row in the modal is clicked
+- **`cookie_consent`** — fired on Accept or Decline with `{ choice: 'accepted'/'rejected' }`
+- **`case_study_view`** — fired on mount of SalesPlatform and XRExperiences with `{ study }` param
+- **`404_error`** — fired on mount of the NotFound page with `{ path }` param
+
+### XR Experiences — timezone map (mobile)
+- **Tap to show timezone** — touching the map immediately highlights the timezone at the tap position (previously only recorded coordinates without updating state)
+- **Slide to scrub** — sliding horizontally after a tap changes the timezone in real time
+- **`touch-action: pan-y`** — added to the map element so the browser handles vertical scroll natively without competing with the JS touch handler; simplified `touchmove` to always update (direction detection loop removed); all touch listeners are now passive
+
+### Accessibility (WCAG 2.2)
+- **Empty list items resolved** — footer legal dividers (`Privacy · Cookies · Terms`) folded into adjacent `<li>` elements as inline `<div aria-hidden>` bars; carousel trailing spacers replaced with `paddingRight` on the scroll container; Nav desktop divider folded into the language button's `<li>`
+- **Footer build error fixed** — unclosed `<span>` in `ObfuscatedEmail` component removed
+
+---
+
 ## [1.5.3] — 2026-04-06
 
 ### Terminology & URLs

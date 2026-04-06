@@ -13,6 +13,9 @@ import imgLockIcon     from '../assets/icons/icon-lock-sm.svg';
 import imgArrowRight   from '../assets/icons/icon-arrow-right-accent.svg';
 import imgHamburger    from '../assets/icons/icon-hamburger.svg';
 import imgClose        from '../assets/icons/icon-close.svg';
+import imgLinkedIn     from '../assets/icons/icon-linkedin.svg';
+import { trackEvent }  from '../analytics';
+import imgPortrait     from '../assets/photos/portrait.webp';
 
 // Translations
 const T = {
@@ -110,9 +113,9 @@ function Tooltip({ label, isDark, offset = 8, shortcut }) {
   const txt = isDark ? '#1f1f1f' : '#f6f6f6';
   return (
     <div style={{ top: `calc(100% + ${offset}px)` }} className="absolute left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center">
-<div style={{ background: bg, color: txt }} className="relative z-0 text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-1.5">
+<div style={{ background: bg, color: txt }} className={`relative z-0 text-[13px] font-light leading-4 pl-2 ${shortcut ? 'pr-[4px]' : 'pr-2'} py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-1.5`}>
         {label}
-        {shortcut && <kbd className="text-[11px] font-medium w-[15px] h-[18px] flex items-center justify-center rounded bg-[#4a4a4a] dark:bg-[#2a2a2a] text-[#d4d4d4] not-italic">{shortcut}</kbd>}
+        {shortcut && <kbd className="text-[11px] font-medium w-[18px] h-[18px] flex items-center justify-center rounded-md bg-[#f6f6f6] dark:bg-[#2a2a2a] text-[#1f1f1f] dark:text-[#d4d4d4] not-italic">{shortcut}</kbd>}
       </div>
     </div>
   );
@@ -390,8 +393,186 @@ function NavLink({ to, label, currentPage, tooltip, shortcut, isDark }) {
   );
 }
 
+// ContactModal
+function ContactModal({ lang, onClose }) {
+  const closeRef = useRef(null);
+  const u = 'd', d = 'AtelierDigital.co.uk';
+  const liHref = () => ['https://www.link','edin.com','/in/','dav','idvi','all','ard'].join('');
+  const subject = lang === 'fr' ? 'Prise de contact' : 'Getting in touch';
+
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => { closeRef.current?.focus({ preventScroll: true }); }, []);
+
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
+
+  // Inverted: dark card in light mode, light card in dark mode
+  const lbl = 'text-[11px] font-semibold uppercase tracking-widest text-[#adadad] dark:text-[#5c5c5c] mb-1';
+  const val = 'text-[16px] font-medium text-[#f6f6f6] dark:text-[#1f1f1f]';
+  const row = 'block py-4 px-6 -mx-6 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC] hover:bg-white/[0.04] dark:hover:bg-black/[0.04]';
+
+  return createPortal(
+    <>
+      <div
+        aria-hidden="true"
+        onClick={onClose}
+        className="fixed inset-0 z-[600] bg-black/40 backdrop-blur-[2px]"
+        style={{ animation: 'fade-in 0.2s ease both' }}
+      />
+      {/* Centering wrapper — flex centering is more reliable than top/left/transform */}
+      <div className="fixed inset-0 z-[601] flex items-center justify-center pointer-events-none px-4">
+        <div role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" className="pointer-events-auto w-full max-w-[380px] relative">
+          {/* Close button */}
+          <button
+            ref={closeRef}
+            onClick={onClose}
+            aria-label={lang === 'fr' ? 'Fermer' : 'Close'}
+            data-spring
+          className="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 rounded-full text-[#f6f6f6] dark:text-[#1f1f1f] hover:bg-[#f6f6f6] dark:hover:bg-[#1f1f1f] hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] active:opacity-[0.33] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] cursor-pointer"
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+          </button>
+          <div
+            className="bg-[#1f1f1f] dark:bg-[#f6f6f6] rounded-[28px] shadow-[0px_24px_64px_rgba(0,0,0,0.32)] ring-1 ring-white/[0.08] dark:ring-black/[0.08] px-6 pt-6 pb-6"
+            style={{ animation: 'modal-card-in 0.35s cubic-bezier(0.22,1,0.36,1) both' }}
+          >
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-5">
+          <img
+            src={imgPortrait}
+            alt="David V."
+            width={48}
+            height={48}
+            className="rounded-full shrink-0 object-cover ring-2 ring-white/[0.12] dark:ring-black/[0.10]"
+            style={{ width: 48, height: 48 }}
+          />
+          <div>
+            <h2 id="contact-modal-title" className="text-[17px] font-semibold text-[#f6f6f6] dark:text-[#1f1f1f] leading-tight">
+              David V.
+            </h2>
+            <p className="text-[13px] text-[#adadad] dark:text-[#5c5c5c]">
+              {lang === 'fr' ? 'Designer produit senior' : 'Senior Product Designer'}
+            </p>
+          </div>
+        </div>
+
+        <div className="h-px bg-white/[0.08] dark:bg-black/[0.08] -mx-6" />
+
+        <ul>
+          <li className="border-b border-white/[0.06] dark:border-black/[0.06]">
+            <a data-spring href={`mailto:${u}@${d}?subject=${encodeURIComponent(subject)}`} onClick={() => trackEvent('contact_email_click')} className={`${row} flex items-center justify-between gap-3`}>
+              <div className="min-w-0">
+                <p className={lbl}>{lang === 'fr' ? 'E-mail' : 'Email'}</p>
+                <span className={`${val} obf-email block`} data-u={u} data-d={d} aria-hidden="true" />
+                <span className="sr-only">d@AtelierDigital.co.uk</span>
+              </div>
+              <button
+                data-spring
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigator.clipboard.writeText(`${u}@${d}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
+                aria-label={lang === 'fr' ? "Copier l'adresse e-mail" : 'Copy email address'}
+                className="flex items-center gap-1.5 px-2 h-7 rounded-lg text-[12px] font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] hover:bg-white/[0.08] dark:hover:bg-black/[0.06] shrink-0 text-[#f6f6f6] dark:text-[#1f1f1f]"
+              >
+                {copied ? (
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2.5 7l3.5 3.5 5.5-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                ) : (
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <rect x="4.5" y="0.5" width="9" height="10" rx="1.5" stroke="currentColor"/>
+                    <rect x="0.5" y="3.5" width="9" height="10" rx="1.5" fill="currentColor" fillOpacity="0.12" stroke="currentColor"/>
+                  </svg>
+                )}
+                {copied ? (lang === 'fr' ? 'Copié !' : 'Copied!') : (lang === 'fr' ? 'Copier' : 'Copy')}
+              </button>
+            </a>
+          </li>
+          <li className="border-b border-white/[0.06] dark:border-black/[0.06]">
+            <button
+              data-spring
+              onClick={() => { trackEvent('contact_linkedin_click'); window.open(liHref(), '_blank', 'noopener,noreferrer'); }}
+              className="py-4 px-6 -ml-6 w-[calc(100%+3rem)] text-left cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC] hover:bg-white/[0.04] dark:hover:bg-black/[0.04]"
+            >
+              <p className={lbl}>LinkedIn</p>
+              <p className={`${val} flex items-center gap-2`}>
+                <img src={imgLinkedIn} alt="" width={16} height={16} className="invert dark:invert-0 shrink-0" />
+                David V.
+              </p>
+            </button>
+          </li>
+          <li>
+            <a
+              data-spring
+              href="https://maps.google.com/?q=55.9527025,-3.2038472"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={row}
+            >
+              <p className={lbl}>{lang === 'fr' ? 'Localisation' : 'Location'}</p>
+              <p className={val}>
+                🏴󠁧󠁢󠁳󠁣󠁴󠁿 {lang === 'fr' ? 'Édimbourg, Royaume-Uni' : 'Edinburgh, United Kingdom'}
+              </p>
+            </a>
+          </li>
+        </ul>
+
+        <div className="pt-4">
+          <a
+            data-spring
+            href="/david-v.vcf"
+            download="david-v.vcf"
+            onClick={() => trackEvent('vcard_download')}
+            className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl border border-white/[0.12] dark:border-black/[0.10] text-[#f6f6f6] dark:text-[#1f1f1f] font-medium text-[15px] hover:bg-white/[0.06] dark:hover:bg-black/[0.04] active:opacity-[0.33] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            {lang === 'fr' ? 'Enregistrer le contact' : 'Save contact'}
+          </a>
+        </div>
+
+          </div>{/* end dialog */}
+        </div>{/* end card wrapper */}
+      </div>{/* end centering wrapper */}
+    </>,
+    document.body
+  );
+}
+
+// LetsTalkButton — opens contact modal instead of scrolling
+function LetsTalkButton({ lang, isDark, onOpen }) {
+  const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
+  return (
+    <li className="relative">
+      <button
+        data-spring
+        onClick={() => { hideTip(); onOpen(); }}
+        onMouseEnter={showTip}
+        onMouseLeave={hideTip}
+        className="flex items-center justify-center h-8 px-4 rounded-[12px] transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] cursor-pointer"
+      >
+        <span className="font-medium text-base leading-6 whitespace-nowrap text-black dark:text-white">
+          {T[lang]["let's talk"]}
+        </span>
+      </button>
+      {tooltipVisible && <Tooltip label={T[lang]['tip talk']} isDark={isDark} offset={10} shortcut="T" />}
+    </li>
+  );
+}
+
 // DesktopTabletNav
-function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
+function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onContactOpen }) {
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [langOpen,     setLangOpen]     = useState(false);
   const location  = useLocation();
@@ -465,11 +646,10 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
         </li>
 
         <NavLink to="/resume"         label={T[lang].résumé}       currentPage={currentPage} tooltip={T[lang]['tip resume']} shortcut="R" isDark={isDark} />
-        <NavLink to="/#contact" label={T[lang]["let's talk"]} currentPage={currentPage} tooltip={T[lang]['tip talk']}   isDark={isDark} />
+        <LetsTalkButton lang={lang} isDark={isDark} onOpen={onContactOpen} />
 
-        <li role="none" aria-hidden="true"><div className="w-px h-4 bg-black/[0.12] dark:bg-white/[0.12] shrink-0" /></li>
-
-        <li className="relative">
+        <li className="relative flex items-center gap-2">
+          <div aria-hidden="true" className="w-px h-4 bg-black/[0.12] dark:bg-white/[0.12] shrink-0" />
           <LanguageButton lang={lang} toggleLang={toggleLang} isDark={isDark} />
         </li>
 
@@ -480,7 +660,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
 }
 
 // MobileNav
-function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
+function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
   const [menuOpen,     setMenuOpen]     = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(true);
   const location  = useLocation();
@@ -497,7 +677,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
   const mobilePages = [
     { key: 'projects',   to: null       },
     { key: 'résumé',     to: '/resume'  },
-    { key: "let's talk", to: '/#contact' },
+    { key: "let's talk", modal: true    },
   ];
 
   const subItems = [
@@ -538,9 +718,18 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
       {menuOpen && (
         <div className="w-full backdrop-blur-[8px] bg-white/[0.88] dark:bg-black/[0.88] border border-black/[0.16] dark:border-white/[0.16] rounded-[32px] overflow-hidden">
           <ol className="flex flex-col gap-2 p-4">
-            {mobilePages.map(({ key, to }) => (
+            {mobilePages.map(({ key, to, modal }) => (
               <li key={key}>
-                {to ? (
+                {modal ? (
+                  <button
+                    onClick={() => { setMenuOpen(false); onContactOpen(); }}
+                    className="flex items-center h-12 px-4 rounded-2xl transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08] w-full text-left cursor-pointer"
+                  >
+                    <span data-spring className="font-medium text-2xl leading-8 text-black dark:text-white">
+                      {T[lang][key]}
+                    </span>
+                  </button>
+                ) : to ? (
                   <Link
                     to={to}
                     onClick={(e) => {
@@ -642,7 +831,21 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
 // Nav (root)
 function Nav({ isDark, toggleDark, lang, toggleLang }) {
   const [visible, setVisible] = useState(true);
+  const [contactOpen, setContactOpen] = useState(false);
   const lastY = useRef(0);
+
+  useEffect(() => {
+    const root = document.getElementById('root');
+    if (!root) return;
+    root.inert = contactOpen || false;
+    return () => { root.inert = false; };
+  }, [contactOpen]);
+
+  useEffect(() => {
+    const handler = () => setContactOpen(c => !c);
+    window.addEventListener('toggle-contact', handler);
+    return () => window.removeEventListener('toggle-contact', handler);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -662,14 +865,15 @@ function Nav({ isDark, toggleDark, lang, toggleLang }) {
       style={{ transform: visible ? 'translateY(0)' : 'translateY(-120%)' }}
     >
       <div className="pointer-events-auto hidden lg:flex">
-        <DesktopTabletNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} isTablet={false} />
+        <DesktopTabletNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} isTablet={false} onContactOpen={() => setContactOpen(true)} />
       </div>
       <div className="pointer-events-auto hidden sm:flex lg:hidden">
-        <DesktopTabletNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} isTablet={true} />
+        <DesktopTabletNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} isTablet={true} onContactOpen={() => setContactOpen(true)} />
       </div>
       <div className="pointer-events-auto flex sm:hidden w-full">
-        <MobileNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} />
+        <MobileNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} onContactOpen={() => setContactOpen(true)} />
       </div>
+      {contactOpen && <ContactModal lang={lang} isDark={isDark} onClose={() => setContactOpen(false)} />}
     </div>
   );
 }
