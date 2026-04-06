@@ -36,7 +36,7 @@ const T = {
         secondaryChips: [{ label: 'React' }],
         tint:         'blue',
         cta:          'go',
-        href:         '/projects/sales-platform',
+        href:         '/case-study/sales-platform',
       },
       {
         bg:           imgBgXR,
@@ -46,7 +46,7 @@ const T = {
         secondaryChips: [{ label: 'Unity' }, { label: 'Unreal' }],
         tint:         'blue',
         cta:          'go',
-        href:         '/projects/xr',
+        href:         '/case-study/xr',
       },
       {
         bg:           imgBgTwin,
@@ -78,7 +78,7 @@ const T = {
         secondaryChips: [{ label: 'React' }],
         tint:         'blue',
         cta:          'go',
-        href:         '/projects/sales-platform',
+        href:         '/case-study/sales-platform',
       },
       {
         bg:           imgBgXR,
@@ -88,7 +88,7 @@ const T = {
         secondaryChips: [{ label: 'Unity' }, { label: 'Unreal' }],
         tint:         'blue',
         cta:          'go',
-        href:         '/projects/xr',
+        href:         '/case-study/xr',
       },
       {
         bg:           imgBgTwin,

@@ -12,8 +12,8 @@ import tableTopLogo from '../assets/logos/clients/logo-table-top.webp';
 import magicLeapPhoto from '../assets/photos/photo-magic-leap-2-glasses.webp';
 import magicLeapControllerPhoto from '../assets/photos/photo-magic-leap-2-controller.webp';
 import rawXboxKeybinding from '../assets/icons/xbox-key-binding.svg?raw';
-import rawFlowInitial from '../assets/projects/xr-experience/flowchart/shared-ar-experience-flow-inital.svg?raw';
-import rawFlowShipped from '../assets/projects/xr-experience/flowchart/shared-ar-experience-flow-shipped.svg?raw';
+import rawFlowInitial from '../assets/case-study/xr-experience/flowchart/shared-ar-experience-flow-inital.svg?raw';
+import rawFlowShipped from '../assets/case-study/xr-experience/flowchart/shared-ar-experience-flow-shipped.svg?raw';
 
 // ── Accent colour ─────────────────────────────────────────────────────────────
 const GOLD        = '#C9A84C'; // dark-mode accent (~7.7:1 on #141414)

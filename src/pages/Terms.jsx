@@ -18,12 +18,12 @@ const T = {
     contactIntro:  'For questions about these Terms, please contact:',
     privacyLink:   ['Please refer to the ', 'Privacy Policy', ' and ', 'Cookies Policy', ' pages for information on how your data is collected and used.'],
     sections: [
-      { id: 'ownership',       heading: 'Ownership of content',    body: 'All content on this Website — including designs, case studies, text, images, and code — is owned by David V. unless otherwise noted. Client logos and project materials are the property of their respective owners and are used for portfolio demonstration only. You may not copy, reproduce, distribute, or adapt any content without prior written consent.' },
+      { id: 'ownership',       heading: 'Ownership of content',    body: 'All content on this Website (including designs, case studies, text, images, and code) is owned by David V. unless otherwise noted. Client logos and project materials are the property of their respective owners and are used for portfolio demonstration only. You may not copy, reproduce, distribute, or adapt any content without prior written consent.' },
       { id: 'acceptable-use',  heading: 'Acceptable use',          body: 'You agree to use this Website lawfully and respectfully. You must not:', bullets: ["Misrepresent or claim any content as your own", "Copy portfolio work for commercial or academic use", "Use automated tools to collect or download content", "Attempt to disrupt or harm the Website's functionality"] },
-      { id: 'third-party',     heading: 'Third-party links',       body: 'This Website may include links to external websites or tools. These are provided for convenience only. David V. is not responsible for the content, practices, or policies of any third-party websites.' },
-      { id: 'disclaimer',      heading: 'Disclaimer',              body: 'All information on this Website is provided for general and portfolio purposes only. While efforts are made to ensure accuracy, there is no guarantee that the information is complete, current, or error-free.' },
+      { id: 'third-party',     heading: 'Third-party links',       body: 'This Website may include links to external websites or tools. These are provided for convenience only. David V. is not responsible for the content, practices, or policies of any third party websites.' },
+      { id: 'disclaimer',      heading: 'Disclaimer',              body: 'All information on this Website is provided for general and portfolio purposes only. While efforts are made to ensure accuracy, there is no guarantee that the information is complete, current, or error free.' },
       { id: 'liability',       heading: 'Limitation of liability', body: 'To the fullest extent permitted by law, David V. shall not be held liable for any direct, indirect, or incidental damages arising from your use of this Website.' },
-      { id: 'ai-chatbot',       heading: 'AI chatbot',              body: 'This Website includes an AI-powered chatbot powered by Claude (Anthropic). By using it, you acknowledge that:', bullets: ['Responses are AI-generated and may not always be accurate or complete', 'The chatbot is intended to answer questions about David\'s professional background only', 'Conversation transcripts are stored anonymously for quality and insight purposes', 'You must not attempt to misuse, manipulate, or overload the chatbot'] },
+      { id: 'ai-chatbot',       heading: 'AI chatbot',              body: 'This Website includes an AI powered chatbot powered by Claude (Anthropic). By using it, you acknowledge that:', bullets: ['Responses are AI generated and may not always be accurate or complete', 'The chatbot is intended to answer questions about David\'s professional background only', 'Conversation transcripts are stored anonymously for quality and insight purposes', 'You must not attempt to misuse, manipulate, or overload the chatbot'] },
       { id: 'privacy-cookies', heading: 'Privacy and cookies',     privacyLink: true },
       { id: 'changes',         heading: 'Changes to these terms',  body: 'These Terms may be updated periodically. Continued use of the Website after updates means you accept any changes.' },
       { id: 'contact',         heading: 'Contact',                 contact: true },
@@ -39,7 +39,7 @@ const T = {
     contactIntro:  'Pour toute question concernant ces conditions, veuillez contacter :',
     privacyLink:   ['Veuillez consulter les pages ', 'Politique de confidentialité', ' et ', 'Politique de cookies', " pour en savoir plus sur la collecte et l'utilisation de vos données."],
     sections: [
-      { id: 'ownership',       heading: 'Propriété du contenu',        body: "Tout le contenu de ce site — y compris les maquettes, études de cas, textes, images et code — appartient à David V., sauf indication contraire. Les logos clients et documents de projet appartiennent à leurs propriétaires respectifs et sont utilisés à des fins de portfolio uniquement. Vous ne pouvez pas copier, reproduire, distribuer ou adapter ce contenu sans consentement écrit préalable." },
+      { id: 'ownership',       heading: 'Propriété du contenu',        body: "Tout le contenu de ce site (y compris les maquettes, études de cas, textes, images et code) appartient à David V., sauf indication contraire. Les logos clients et documents de projet appartiennent à leurs propriétaires respectifs et sont utilisés à des fins de portfolio uniquement. Vous ne pouvez pas copier, reproduire, distribuer ou adapter ce contenu sans consentement écrit préalable." },
       { id: 'acceptable-use',  heading: 'Utilisation acceptable',      body: "Vous acceptez d'utiliser ce site de manière légale et respectueuse. Vous ne devez pas :", bullets: ["Vous attribuer ou usurper tout contenu de ce site", "Copier des travaux du portfolio à des fins commerciales ou académiques", "Utiliser des outils automatisés pour collecter ou télécharger du contenu", "Tenter de perturber ou d'endommager le fonctionnement du site"] },
       { id: 'third-party',     heading: 'Liens tiers',                 body: "Ce site peut inclure des liens vers des sites ou outils externes. Ces liens sont fournis pour votre commodité uniquement. David V. n'est pas responsable du contenu, des pratiques ou des politiques de ces sites tiers." },
       { id: 'disclaimer',      heading: 'Avertissement',               body: "Toutes les informations de ce site sont fournies à des fins générales et de portfolio. Bien que des efforts soient faits pour en garantir l'exactitude, aucune garantie n'est offerte quant à l'exhaustivité ou l'absence d'erreurs." },
@@ -112,7 +112,7 @@ const scrollToSection = (id) => {
   el.focus({ preventScroll: true });
 };
 
-function MobileSecondaryNav({ sections, activeId }) {
+function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   const trackRef = useRef(null);
 
   useEffect(() => {
@@ -131,7 +131,7 @@ function MobileSecondaryNav({ sections, activeId }) {
               <li key={s.id} className="shrink-0">
                 <button
                   data-section={s.id}
-                  onClick={() => scrollToSection(s.id)}
+                  onClick={() => onNavigate(s.id)}
                   aria-current={isActive ? 'location' : undefined}
                   className={`h-8 px-3 rounded-2xl text-[13px] font-medium whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
                     isActive
@@ -150,7 +150,7 @@ function MobileSecondaryNav({ sections, activeId }) {
   );
 }
 
-function SecondaryNav({ sections, activeId }) {
+function SecondaryNav({ sections, activeId, onNavigate }) {
   return (
     <nav aria-label="Page sections" className="hidden md:block sticky top-16 self-start z-10 w-44 shrink-0 pt-28">
       <ol className="space-y-2">
@@ -159,7 +159,7 @@ function SecondaryNav({ sections, activeId }) {
           return (
             <li key={s.id}>
               <button
-                onClick={() => scrollToSection(s.id)}
+                onClick={() => onNavigate(s.id)}
                 aria-label={s.heading}
                 aria-current={isActive ? 'location' : undefined}
                 className={`relative text-[13px] leading-snug py-1.5 px-2 rounded-lg text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
@@ -187,6 +187,7 @@ function Terms({ lang }) {
   const [mounted,     setMounted]     = useState(false);
   const [scrolledDown, setScrolledDown] = useState(false);
   const [atBottom,    setAtBottom]    = useState(false);
+  const suppressRef = useRef(false);
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -199,7 +200,7 @@ function Terms({ lang }) {
       const el = document.getElementById(s.id);
       if (!el) return null;
       const obs = new IntersectionObserver(
-        ([e]) => { if (e.isIntersecting) setActiveId(s.id); },
+        ([e]) => { if (e.isIntersecting && !suppressRef.current) setActiveId(s.id); },
         { rootMargin: '-30% 0px -60% 0px' }
       );
       obs.observe(el);
@@ -226,6 +227,13 @@ function Terms({ lang }) {
     // secondary-nav-change intentionally not dispatched — chat button coexists with sec nav
   }, [secondaryNavVisible]);
 
+  const handleNavigate = (id) => {
+    setActiveId(id);
+    suppressRef.current = true;
+    scrollToSection(id);
+    setTimeout(() => { suppressRef.current = false; }, 1500);
+  };
+
   return (
     <>
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:ring-2 focus:ring-[#0152EC] focus:bg-white focus:text-[#1f1f1f] focus:outline-none font-medium">
@@ -244,7 +252,7 @@ function Terms({ lang }) {
                   {t.updated} {formatDate(LAST_UPDATED, lang)}
                 </p>
                 <h1 className="text-[36px] sm:text-[44px] font-semibold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
-                  {t.title} {t.emoji}
+                  {t.title}
                 </h1>
               </div>
 
@@ -261,7 +269,7 @@ function Terms({ lang }) {
               </div>
             </div>
 
-            <SecondaryNav sections={t.sections} activeId={activeId} />
+            <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
           </div>
 
           {/* Outro — outside flex row so sticky nav stops before it */}
@@ -271,7 +279,7 @@ function Terms({ lang }) {
         </div>
         <div inert={scrolledDown && !atBottom ? undefined : true} className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <div className="pointer-events-auto w-full">
-            <MobileSecondaryNav sections={t.sections} activeId={activeId} />
+            <MobileSecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
           </div>
         </div>
         <div aria-hidden="true" className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0'}`} style={{ width: 52, height: 52, left: 8, bottom: 8 }} />

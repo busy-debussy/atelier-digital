@@ -121,7 +121,7 @@ const scrollToSection = (id) => {
   el.focus({ preventScroll: true });
 };
 
-function MobileSecondaryNav({ sections, activeId }) {
+function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   const trackRef = useRef(null);
 
   useEffect(() => {
@@ -140,7 +140,7 @@ function MobileSecondaryNav({ sections, activeId }) {
               <li key={s.id} className="shrink-0">
                 <button
                   data-section={s.id}
-                  onClick={() => scrollToSection(s.id)}
+                  onClick={() => onNavigate(s.id)}
                   aria-current={isActive ? 'location' : undefined}
                   className={`h-8 px-3 rounded-2xl text-[13px] font-medium whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
                     isActive
@@ -159,7 +159,7 @@ function MobileSecondaryNav({ sections, activeId }) {
   );
 }
 
-function SecondaryNav({ sections, activeId }) {
+function SecondaryNav({ sections, activeId, onNavigate }) {
   return (
     <nav aria-label="Page sections" className="hidden md:block sticky top-16 self-start z-10 w-44 shrink-0 pt-28">
       <ol className="space-y-2">
@@ -168,7 +168,7 @@ function SecondaryNav({ sections, activeId }) {
           return (
             <li key={s.id}>
               <button
-                onClick={() => scrollToSection(s.id)}
+                onClick={() => onNavigate(s.id)}
                 aria-label={s.navLabel ?? s.heading}
                 aria-current={isActive ? 'location' : undefined}
                 className={`relative text-[13px] leading-snug py-1.5 px-2 rounded-lg text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
@@ -194,6 +194,7 @@ function Privacy({ lang }) {
   const [activeId, setActiveId] = useState('');
   const [mounted,     setMounted]     = useState(false);
   const [scrolledDown, setScrolledDown] = useState(false);
+  const suppressRef = useRef(false);
 
   useEffect(() => { setMounted(true); }, []);
   const [atBottom,    setAtBottom]    = useState(false);
@@ -207,7 +208,7 @@ function Privacy({ lang }) {
       const el = document.getElementById(s.id);
       if (!el) return null;
       const obs = new IntersectionObserver(
-        ([e]) => { if (e.isIntersecting) setActiveId(s.id); },
+        ([e]) => { if (e.isIntersecting && !suppressRef.current) setActiveId(s.id); },
         { rootMargin: '-30% 0px -60% 0px' }
       );
       obs.observe(el);
@@ -234,6 +235,13 @@ function Privacy({ lang }) {
     // secondary-nav-change intentionally not dispatched — chat button coexists with sec nav
   }, [secondaryNavVisible]);
 
+  const handleNavigate = (id) => {
+    setActiveId(id);
+    suppressRef.current = true;
+    scrollToSection(id);
+    setTimeout(() => { suppressRef.current = false; }, 1500);
+  };
+
   return (
     <>
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:ring-2 focus:ring-[#0152EC] focus:bg-white focus:text-[#1f1f1f] focus:outline-none font-medium">
@@ -252,7 +260,7 @@ function Privacy({ lang }) {
                   {t.updated} {formatDate(LAST_UPDATED, lang)}
                 </p>
                 <h1 className="text-[36px] sm:text-[44px] font-semibold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
-                  {t.title} {t.emoji}
+                  {t.title}
                 </h1>
               </div>
 
@@ -268,7 +276,7 @@ function Privacy({ lang }) {
               </div>
             </div>
 
-            <SecondaryNav sections={t.sections} activeId={activeId} />
+            <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
           </div>
 
           {/* Outro — outside flex row so sticky nav stops before it */}
@@ -278,7 +286,7 @@ function Privacy({ lang }) {
         </div>
         <div inert={scrolledDown && !atBottom ? undefined : true} className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <div className="pointer-events-auto w-full">
-            <MobileSecondaryNav sections={t.sections} activeId={activeId} />
+            <MobileSecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
           </div>
         </div>
         <div aria-hidden="true" className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0'}`} style={{ width: 52, height: 52, left: 8, bottom: 8 }} />

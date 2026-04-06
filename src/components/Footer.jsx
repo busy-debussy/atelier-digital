@@ -25,7 +25,7 @@ const T = {
     home:         'home',
     caseStudies:  'case studies',
     collaborators:'collaborators',
-    projects:     'projects',
+    projects:     'case studies',
     digitalTwins: 'digital twins',
     salesPlatform:'sales platform',
     xr:           'extended reality',
@@ -47,7 +47,7 @@ const T = {
     home:         'accueil',
     caseStudies:  'études de cas',
     collaborators:'collaborateurs',
-    projects:     'projets',
+    projects:     'études de cas',
     digitalTwins: 'jumeaux numériques',
     salesPlatform:'plateforme web',
     xr:           'réalité étendue',
@@ -156,13 +156,13 @@ function Footer({ lang }) {
                 <span className={`${strong} ${row}`}>{t.projects}</span>
                 <ul>
                   <li>
-                    <Link data-spring tabIndex={0} to="/projects/sales-platform" onClick={() => { if (pathname === '/projects/sales-platform') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
+                    <Link data-spring tabIndex={0} to="/case-study/sales-platform" onClick={() => { if (pathname === '/case-study/sales-platform') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
                       <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
                       {t.salesPlatform}
                     </Link>
                   </li>
                   <li>
-                    <Link data-spring tabIndex={0} to="/projects/xr" onClick={() => { if (pathname === '/projects/xr') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
+                    <Link data-spring tabIndex={0} to="/case-study/xr" onClick={() => { if (pathname === '/case-study/xr') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
                       <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
                       {t.xr}
                     </Link>

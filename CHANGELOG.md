@@ -1,5 +1,46 @@
 # Changelog 
 
+## [1.5.3] — 2026-04-06
+
+### Terminology & URLs
+- **"Case studies" everywhere** — renamed from "projects" across all nav labels, footer sitemap, tooltips, and page copy (EN and FR); consistent with how the work is described throughout the site
+- **URL scheme** — routes changed from `/projects/sales-platform` and `/projects/xr` to `/case-study/sales-platform` and `/case-study/xr`; asset folder renamed `assets/projects/` → `assets/case-study/` to match
+
+### Navigation
+- **Case studies tooltip** — projects button tooltip updated to "browse case studies"; `P` shortcut badge added to tooltip (was missing)
+
+### Chat
+- **Cookie notice** — subtitle added below chat header: "By using this chat you agree to our cookies policy" with a link to `/cookies`; bilingual
+- **Tooltip shortcut badge** — `C` shortcut hint in the floating button tooltip now renders as a `<kbd>` badge (dark grey background, rounded) matching the style used in all Nav tooltips
+
+### Policy pages (Privacy · Cookies · Terms)
+- **Secondary nav active-state bug fix** — clicking a section in the secondary nav could switch the active highlight to a different section once scrolling settled on short sections (e.g. "Cookies and tracking", "International transfers", "Security", "CCPA"); fixed with a `suppressRef` pattern that blocks the IntersectionObserver for 1500ms after a programmatic navigation; applied to both desktop and mobile secondary nav on all three pages
+- **Page title emojis removed** — 🔒 / 🍪 / 📄 removed from the `<h1>` on Privacy, Cookies, and Terms
+
+### Terms of use — copy
+- **Em-dashes removed** — ownership body text replaced `—…—` parenthetical em-dashes with `(…)` in EN and FR
+- **Compound word hyphens removed** — "third-party", "error-free", "AI-powered", "AI-generated" → "third party", "error free", "AI powered", "AI generated" in description body text
+
+---
+
+## [1.5.2] — 2026-04-06
+
+### Keyboard shortcuts
+- **H** — go home from any page; scrolls to top if already on `/`; shortcut badge shown in logo tooltip
+- **R** — navigate to résumé from any page; shortcut badge shown in résumé nav tooltip
+- **F** — alias for L (toggle EN/FR language); no additional tooltip
+- **Escape** — was already wired; confirmed working to close chat panel
+
+### Hero (Home)
+- **Subtle radial gradient** — faint `#0152EC` wash (5% opacity) centred at 50% 40%, fading to transparent; light mode only; adds focal depth without visible colour
+- **Accessibility** — H1 and H2 now use `aria-label` on the element itself instead of a hidden `sr-only` span + `aria-hidden` on the visual span; removes 3 of 4 spurious `aria-hidden` best-practice warnings on the home page (email obfuscation span intentionally kept)
+- **"Experienced in" card** — removed white/dark fill background; card is now transparent against the page
+
+### Chat button
+- **Emoji span** — removed `aria-hidden="true"` from the 💬 emoji; button `aria-label` already provides the accessible name so the attribute was redundant
+
+---
+
 ## [1.5.0] — 2026-04-06
 
 ### Navigation

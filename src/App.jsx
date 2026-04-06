@@ -39,7 +39,7 @@ function AnimatedRoutes({ children }) {
   );
 }
 
-const PROJECTS = ['/projects/sales-platform', '/projects/xr'];
+const PROJECTS = ['/case-study/sales-platform', '/case-study/xr'];
 
 function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
   const { pathname } = useLocation();
@@ -55,17 +55,29 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
     return () => window.removeEventListener('cycle-project', handler);
   }, [pathname, navigate]);
 
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+      const tag = document.activeElement?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      if (e.code === 'KeyH') { pathname === '/' ? window.scrollTo({ top: 0, behavior: 'smooth' }) : navigate('/'); }
+      if (e.code === 'KeyR') navigate('/resume');
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [pathname, navigate]);
+
   return (
     <div id="app-shell" className="min-h-screen bg-white dark:bg-[#141414] text-gray-900 dark:text-white">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-[#1f1f1f] focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">
         {lang === 'fr' ? 'Aller au contenu principal' : 'Skip to main content'}
       </a>
       <Nav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} />
-      {(pathname === '/resume' || pathname === '/projects/sales-platform' || pathname === '/projects/xr') && <ScrollForMore lang={lang} scrollTarget={pathname === '/resume' ? 'summary-bio' : undefined} />}
+      {(pathname === '/resume' || pathname === '/case-study/sales-platform' || pathname === '/case-study/xr') && <ScrollForMore lang={lang} scrollTarget={pathname === '/resume' ? 'summary-bio' : undefined} />}
       <AnimatedRoutes><Routes>
         <Route path="/" element={<Home lang={lang} isDark={isDark} enableDark={() => setIsDark(true)} />} />
-        <Route path="/projects/sales-platform" element={<SalesPlatform lang={lang} isDark={isDark} />} />
-        <Route path="/projects/xr" element={<XRExperiences lang={lang} isDark={isDark} />} />
+        <Route path="/case-study/sales-platform" element={<SalesPlatform lang={lang} isDark={isDark} />} />
+        <Route path="/case-study/xr" element={<XRExperiences lang={lang} isDark={isDark} />} />
         <Route path="/resume" element={<Resume lang={lang} />} />
         <Route path="/cookies" element={<Cookies lang={lang} />} />
         <Route path="/privacy" element={<Privacy lang={lang} />} />
@@ -130,7 +142,7 @@ function App() {
       }
 
       if (e.code === 'KeyD') setIsDark(d => !d);
-      if (e.code === 'KeyL') setLang(l => l === 'en' ? 'fr' : 'en');
+      if (e.code === 'KeyL' || e.code === 'KeyF') setLang(l => l === 'en' ? 'fr' : 'en');
       if (e.code === 'KeyC') window.dispatchEvent(new CustomEvent('toggle-chat'));
       if (e.code === 'KeyP') window.dispatchEvent(new CustomEvent('cycle-project'));
     };

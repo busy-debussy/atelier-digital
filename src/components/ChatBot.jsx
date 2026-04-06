@@ -17,6 +17,8 @@ const L = {
     error:       'Something went wrong. Please try again.',
     rateLimited: 'Too many requests. Please try again later.',
     remaining:   (n) => `${n} message${n === 1 ? '' : 's'} remaining`,
+    cookieNotice: 'By using this chat you agree to our',
+    cookieLink:   'cookies policy',
   },
   fr: {
     button:      'Poser une question',
@@ -29,6 +31,8 @@ const L = {
     error:       'Une erreur s\'est produite. Veuillez réessayer.',
     rateLimited: 'Trop de requêtes. Veuillez réessayer plus tard.',
     remaining:   (n) => `${n} message${n === 1 ? '' : 's'} restant${n === 1 ? '' : 's'}`,
+    cookieNotice: 'En utilisant ce chat vous acceptez notre',
+    cookieLink:   'politique de cookies',
   },
 };
 
@@ -164,6 +168,12 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
             </button>
           </div>
 
+          {/* Cookie notice */}
+          <p className="px-5 pb-3 text-[11px] text-[#f6f6f6]/40 dark:text-[#1f1f1f]/40 shrink-0">
+            {l.cookieNotice}{' '}
+            <a href="/cookies" className="underline hover:text-[#f6f6f6]/70 dark:hover:text-[#1f1f1f]/70 transition-colors">{l.cookieLink}</a>.
+          </p>
+
           {/* Messages */}
           <div className={`overflow-y-auto px-4 space-y-3 min-h-0 ${messages.length || loading ? 'flex-1 py-4' : ''}`} style={{ scrollbarWidth: 'none' }}>
             {messages.map((m, i) => (
@@ -254,7 +264,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
           tabIndex={0}
           className={`flex items-center justify-center rounded-full bg-[#1f1f1f] dark:bg-[#f6f6f6] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.08] dark:ring-black/[0.08] hover:scale-110 transition-[width,padding,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${pillExpanded ? 'h-9 px-4 gap-2' : 'w-9 h-9'}`}
         >
-          <span className="text-[16px] leading-none text-white dark:text-[#1f1f1f] shrink-0" aria-hidden="true">💬</span>
+          <span className="text-[16px] leading-none text-white dark:text-[#1f1f1f] shrink-0">💬</span>
           <span className={`text-[13px] font-semibold text-white dark:text-[#1f1f1f] whitespace-nowrap overflow-hidden transition-[max-width,opacity] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${pillExpanded ? 'max-w-[160px] opacity-100' : 'max-w-0 opacity-0'}`}>
             {l.pill}
           </span>
@@ -262,7 +272,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
         <div className="pointer-events-none absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
           <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-1.5">
             {lang === 'fr' ? 'en savoir plus sur David' : 'learn about David'}
-            <span className="text-[11px] text-[#adadad] dark:text-[#5c5c5c]">C</span>
+            <kbd className="text-[11px] font-medium w-[15px] h-[18px] flex items-center justify-center rounded bg-[#4a4a4a] dark:bg-[#2a2a2a] text-[#d4d4d4] not-italic">C</kbd>
           </div>
         </div>
       </div>

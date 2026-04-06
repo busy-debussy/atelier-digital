@@ -215,21 +215,22 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
   const caretBlinking = displayed.length === 0;
 
   return (
-    <section aria-label={lang === 'fr' ? 'Présentation' : 'Introduction'} className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 pb-24">
+    <section aria-label={lang === 'fr' ? 'Présentation' : 'Introduction'} className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 pb-24">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 dark:hidden" style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(1,82,236,0.05) 0%, transparent 70%)' }} />
+
+
       <div className="flex flex-col items-center gap-0 -mt-0 sm:mt-0">
 
         {/* H1, typed heading */}
         <div>
           <h1
+            aria-label={heading}
             className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.15] md:leading-none text-[#1f1f1f] dark:text-[#f6f6f6]"
           >
-            <span className="sr-only">{heading}</span>
-            <span aria-hidden="true">
-              {displayed}
-              {!typingDone && (
-                <span className={`inline-block w-[3px] h-[0.85em] ml-1 align-middle bg-[#1f1f1f] dark:bg-[#f6f6f6] rounded-sm ${caretBlinking ? 'motion-safe:animate-[blink_1s_step-end_infinite]' : ''}`} />
-              )}
-            </span>
+            {displayed}
+            {!typingDone && (
+              <span aria-hidden="true" className={`inline-block w-[3px] h-[0.85em] ml-1 align-middle bg-[#1f1f1f] dark:bg-[#f6f6f6] rounded-sm ${caretBlinking ? 'motion-safe:animate-[blink_1s_step-end_infinite]' : ''}`} />
+            )}
           </h1>
         </div>
 
@@ -237,23 +238,21 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
         {showSubtitle && (
           <div className="mt-6 sm:mt-8">
             <h2
+              aria-label={subtitle}
               className="text-3xl md:text-5xl font-medium text-[#5c5c5c] dark:text-[#adadad]"
             >
-              <span className="sr-only">{subtitle}</span>
-              <span aria-hidden="true">
-                {subtitleChars.map((char, i) => (
-                  <span
-                    key={i}
-                    style={{
-                      opacity: i < visibleChars ? 1 : 0,
-                      transition: 'opacity 300ms cubic-bezier(0.22,1,0.36,1)',
-                      whiteSpace: 'pre',
-                    }}
-                  >
-                    {char}
-                  </span>
-                ))}
-              </span>
+              {subtitleChars.map((char, i) => (
+                <span
+                  key={i}
+                  style={{
+                    opacity: i < visibleChars ? 1 : 0,
+                    transition: 'opacity 300ms cubic-bezier(0.22,1,0.36,1)',
+                    whiteSpace: 'pre',
+                  }}
+                >
+                  {char}
+                </span>
+              ))}
             </h2>
           </div>
         )}

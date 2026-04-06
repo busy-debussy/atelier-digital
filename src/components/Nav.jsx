@@ -17,7 +17,7 @@ import imgClose        from '../assets/icons/icon-close.svg';
 // Translations
 const T = {
   en: {
-    projects:          'projects',
+    projects:          'case studies',
     'digital twin':    'digital twin',
     'sales platform':  'sales platform',
     'extended reality':'extended reality',
@@ -28,12 +28,12 @@ const T = {
     'dark mode':       'dark mode',
     'back to top':     'back to top',
     'go home':         'go home',
-    'tip projects':    'open menu',
+    'tip projects':    'browse case studies',
     'tip resume':      'view my CV',
     'tip talk':        'contact details',
   },
   fr: {
-    projects:          'projets',
+    projects:          'études de cas',
     'digital twin':    'digital twin',
     'sales platform':  'plateforme web',
     'extended reality':'réalité étendue',
@@ -44,7 +44,7 @@ const T = {
     'dark mode':       'mode sombre',
     'back to top':     'retour en haut',
     'go home':         "aller à l'accueil",
-    'tip projects':    'ouvrir le menu',
+    'tip projects':    'parcourir les études de cas',
     'tip resume':      'voir mon CV',
     'tip talk':        'échangeons',
   },
@@ -196,7 +196,7 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
         aria-expanded={isOpen}
         aria-controls={isOpen ? 'projects-menu' : undefined}
         aria-label={isOpen ? `Close ${T[lang].projects} menu` : `Open ${T[lang].projects} menu`}
-        className={`flex items-center justify-center gap-2 h-8 w-[106px] rounded-[12px] cursor-pointer active:opacity-[0.33] transition-colors ${
+        className={`flex items-center justify-center gap-2 h-8 px-4 rounded-[12px] cursor-pointer active:opacity-[0.33] transition-colors ${
           isOpen ? 'bg-[#161616] dark:bg-white' : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
         }`}
       >
@@ -205,7 +205,7 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
         </span>
         <Chevron isOpen={isOpen} isDark={isDark} />
       </button>
-      {tooltipVisible && !isOpen && <Tooltip label={T[lang]['tip projects']} isDark={isDark} offset={10} />}
+      {tooltipVisible && !isOpen && <Tooltip label={T[lang]['tip projects']} isDark={isDark} offset={10} shortcut="P" />}
     </div>
   );
 }
@@ -214,8 +214,8 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
 function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
   const portalStyle = usePortalPosition(anchorRef, { offsetTop: 11, offsetX: -14 });
   const items = [
-    { key: 'sales platform',   to: '/projects/sales-platform', locked: false },
-    { key: 'extended reality', to: '/projects/xr',             locked: false },
+    { key: 'sales platform',   to: '/case-study/sales-platform', locked: false },
+    { key: 'extended reality', to: '/case-study/xr',             locked: false },
     { key: 'digital twin',     to: null,                       locked: true  },
   ];
 
@@ -342,7 +342,7 @@ function LanguageButton({ lang, toggleLang, isDark }) {
 }
 
 // NavLink, pressed state on active page
-function NavLink({ to, label, currentPage, tooltip, isDark }) {
+function NavLink({ to, label, currentPage, tooltip, shortcut, isDark }) {
   const [path, hash] = to.split('#');
   const isActive = currentPage === path && !hash;
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
@@ -385,7 +385,7 @@ function NavLink({ to, label, currentPage, tooltip, isDark }) {
           {label}
         </span>
       </Link>
-      {tooltipVisible && tooltip && <Tooltip label={tooltip} isDark={isDark} offset={10} />}
+      {tooltipVisible && tooltip && <Tooltip label={tooltip} isDark={isDark} offset={10} shortcut={shortcut} />}
     </li>
   );
 }
@@ -453,7 +453,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
             </span>
           </div>
         </a>
-        {logoTipVisible && <Tooltip label={currentPage === '/' ? T[lang]['back to top'] : T[lang]['go home']} isDark={isDark} offset={2} />}
+        {logoTipVisible && <Tooltip label={currentPage === '/' ? T[lang]['back to top'] : T[lang]['go home']} isDark={isDark} offset={2} shortcut="H" />}
       </div>
 
       <ol className={`flex items-center ${isTablet ? 'gap-2' : 'gap-4'}`}>
@@ -464,7 +464,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet }) {
           )}
         </li>
 
-        <NavLink to="/resume"         label={T[lang].résumé}       currentPage={currentPage} tooltip={T[lang]['tip resume']} isDark={isDark} />
+        <NavLink to="/resume"         label={T[lang].résumé}       currentPage={currentPage} tooltip={T[lang]['tip resume']} shortcut="R" isDark={isDark} />
         <NavLink to="/#contact" label={T[lang]["let's talk"]} currentPage={currentPage} tooltip={T[lang]['tip talk']}   isDark={isDark} />
 
         <li role="none" aria-hidden="true"><div className="w-px h-4 bg-black/[0.12] dark:bg-white/[0.12] shrink-0" /></li>
@@ -501,8 +501,8 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang }) {
   ];
 
   const subItems = [
-    { key: 'sales platform',   to: '/projects/sales-platform', locked: false },
-    { key: 'extended reality', to: '/projects/xr',             locked: false },
+    { key: 'sales platform',   to: '/case-study/sales-platform', locked: false },
+    { key: 'extended reality', to: '/case-study/xr',             locked: false },
     { key: 'digital twin',     to: null,                       locked: true  },
   ];
 
