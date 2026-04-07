@@ -1,5 +1,36 @@
 # Changelog 
 
+## [1.5.5] — 2026-04-07
+
+### XR Experiences — content rewrite (EN + FR)
+- **Tagline** — shortened to "The architecture of engagement" (removed "A global unveiling.")
+- **Team section** — tightened copy; sprint cadence list condensed to four focused bullets; closing paragraph replaced with a UX Contribution callout (Figma / Confluence / Jira)
+- **Why section** — condensed to one paragraph + blue goal callout ("Ensure every visitor leaves convinced…")
+- **Who section** — merged four paragraphs into two; UX Insight callout added on audience flex design
+- **When & Where section** — condensed from three paragraphs to two; Spatial UX Consideration callout added
+- **What section** — body condensed to one sentence; prose UX contribution replaced with a `footerCallout` beneath the experience cards
+- **Prioritise section** — heading: "What made the cut and why" → "Decision-making under constraints"; prose condensed; UX Insight callout added
+- **Solve section** — heading: "Form follows constraint." → "Form follows constraint"; five long paragraphs replaced with structured lists (per-experience constraints, design strategies, interaction patterns, Approaches, Key decisions); UX Contribution callout added
+- **Measure section** — heading: "Iterating live, under pressure" → "Iterating live under pressure"; verbose narrative condensed to tighter prose
+- **FR sections** — fully updated to match EN structure across all sections
+- **Callout variants** — amber for UX Contribution/Insight, blue (`variant: 'goal'`) for project goals
+
+### XR Experiences — mobile map fix
+- **Legend pill interaction** — `onMouseEnter`/`onMouseLeave` replaced with `onPointerEnter`/`onPointerLeave` guarded by `pointerType !== 'touch'`; on mobile, tapping a pill now correctly shows only the country dot + tooltip without also triggering the timezone column highlight
+
+### Contact modal ("Let's Talk")
+- **Close button** — delayed fade-in on open (`fade-in 0.3s ease 0.25s both`) so it appears after the panel has settled
+- **Email copy pill** — restyled from `rounded-lg` to `rounded-full` with wider padding and a persistent subtle background; reads clearly as a distinct pill at rest
+
+### Sales Platform
+- **Hero title** — "A luxury off-plan sales platform" → "Luxury off-plan sales platform"
+- **Define challenge** — body text rephrased for clarity and rewrapped as JSX
+
+### AI Chat
+- **Cookie notice** — "agree to our cookies policy" → "agree to the cookies policy"
+
+---
+
 ## [1.5.4] — 2026-04-06
 
 ### Contact modal ("Let's Talk")

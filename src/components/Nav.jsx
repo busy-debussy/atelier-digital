@@ -439,6 +439,7 @@ function ContactModal({ lang, onClose }) {
             aria-label={lang === 'fr' ? 'Fermer' : 'Close'}
             data-spring
           className="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 rounded-full text-[#f6f6f6] dark:text-[#1f1f1f] hover:bg-[#f6f6f6] dark:hover:bg-[#1f1f1f] hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] active:opacity-[0.33] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] cursor-pointer"
+          style={{ animation: 'fade-in 0.3s ease 0.25s both' }}
           >
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
               <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -482,7 +483,7 @@ function ContactModal({ lang, onClose }) {
                 data-spring
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigator.clipboard.writeText(`${u}@${d}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
                 aria-label={lang === 'fr' ? "Copier l'adresse e-mail" : 'Copy email address'}
-                className="flex items-center gap-1.5 px-2 h-7 rounded-lg text-[12px] font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] hover:bg-white/[0.08] dark:hover:bg-black/[0.06] shrink-0 text-[#f6f6f6] dark:text-[#1f1f1f]"
+                className="flex items-center gap-1.5 px-3 h-7 rounded-full text-[12px] font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] bg-white/[0.06] dark:bg-black/[0.05] hover:bg-white/[0.12] dark:hover:bg-black/[0.1] shrink-0 text-[#f6f6f6] dark:text-[#1f1f1f]"
               >
                 {copied ? (
                   <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">

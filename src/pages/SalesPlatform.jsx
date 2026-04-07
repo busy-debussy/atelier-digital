@@ -257,7 +257,7 @@ import imgHifi09MobileFrDark   from '../assets/case-study/sales-platform/hifi/hi
 const HERO = {
   en: {
     category: 'Case Study · Responsive Web App',
-    title: 'A luxury off-plan sales platform',
+    title: 'Luxury off-plan sales platform',
     stats: [
       { prefix: '£', countTo: 6.8, decimals: 1, suffix: 'B',  label: 'in sales generated'      },
       { prefix: '+', countTo: 20,  decimals: 0, suffix: '%',   label: 'YoY sales increase'       },
@@ -669,7 +669,7 @@ const DEFINE = {
   en: {
     challenge: {
       eyebrow: "The challenge",
-      body: "How can we help real estate buyers experience unbuilt spaces, across multiple geographies, emotionally and contextually?",
+      body: <>How can we help real estate buyers experience unbuilt spaces across multiple geographies in a way that is emotionally engaging and contextually relevant?</>,
     },
     exploration: {
       eyebrow: "Exploration",

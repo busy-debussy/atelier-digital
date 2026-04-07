@@ -18,7 +18,7 @@ const L = {
     error:       'Something went wrong. Please try again.',
     rateLimited: 'Too many requests. Please try again later.',
     remaining:   (n) => `${n} message${n === 1 ? '' : 's'} remaining`,
-    cookieNotice: 'By using this chat you agree to our',
+    cookieNotice: 'By using this chat you agree to the',
     cookieLink:   'cookies policy',
   },
   fr: {
