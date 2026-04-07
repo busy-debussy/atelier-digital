@@ -480,32 +480,35 @@ const CONTEXT_EYEBROWS = {
 const CONTEXT_CLIENT_PILL = { en: 'Result oriented', fr: 'Axé résultats' };
 const CONTEXT_INDUSTRY = {
   stat:     { en: '£5.65 B*',                                       fr: '6.7 Md€*' },
-  body:     { en: <>At the start of the project, the client was experiencing annual <strong>revenue growth</strong> and expanding operations across three Emirates. The goal of the platform was to support <strong>this growth</strong>, and extend beyond the UAE.</>, fr: <>Au début du projet, le client enregistrait une <strong>croissance annuelle</strong> de son chiffre d'affaires et étendait ses activités à trois Émirats. L'objectif de la plateforme était de <strong>soutenir cette croissance</strong>, au-delà des EAU.</> },
+  body:     { en: <>The client needed a platform to <strong>support growth</strong> and <strong>scale globally</strong>. While their existing platform worked well, <strong>high maintenance fees</strong> prompted a more <strong>cost-effective</strong>, <strong>user-focused solution</strong>.</>, fr: <>Le client avait besoin d'une plateforme pour <strong>soutenir sa croissance</strong> et <strong>s'étendre à l'international</strong>. Bien que leur plateforme existante fonctionne bien, des <strong>frais de maintenance élevés</strong> ont motivé une solution plus <strong>économique</strong> et <strong>centrée utilisateur</strong>.</> },
   footnote: { en: '*client\'s revenues YoY, before the platform.',   fr: "*chiffre d'affaires annuel du client, avant la plateforme." },
 };
 const CONTEXT_BODIES = {
   // index matches eyebrows array (0 = client, body handled inline, 1 = industry, handled inline)
-  mission:      { en: <>From concept to delivery, we aimed to <strong>supercharging property sales</strong> by giving buyers an <strong>interactive 3D experience</strong> of spaces before they are built.</>, fr: <><strong>Dynamiser les ventes</strong> immobilières en offrant aux acheteurs une <strong>expérience 3D interactive </strong> des espaces avant leur construction.</> },
-  stakeholders: { en: <ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong>, marketing, customer success.</li></ul>, fr: <ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong>, marketing, service client.</li></ul> },
+  mission:      { en: <>Design a <strong>luxury-first</strong>, <strong>user-centric web platform</strong> that lets buyers explore unbuilt properties interactively while supporting sales agents during high-pressure launch events.</>, fr: <>Concevoir une plateforme web <strong>haut de gamme</strong> et <strong>centrée sur l'utilisateur</strong> permettant aux acheteurs d'explorer des biens non construits de manière interactive, tout en accompagnant les agents commerciaux lors des lancements sous haute pression.</> },
+  stakeholders: {
+    en: <><ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong> and marketing.</li></ul><div className="mt-4 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad]">🎨 <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">Design Team:</strong> Coordinated <strong>cross-functional communications</strong> and served as the <strong>source of truth</strong> for product and design decisions.</div></>,
+    fr: <><ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong> et marketing.</li></ul><div className="mt-4 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad]">🎨 <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">Équipe Design :</strong> Coordination des <strong>communications transverses</strong> et référent de <strong>source de vérité</strong> pour les décisions produit et design.</div></>,
+  },
   myRole: {
     en: {
       stats: [
         { value: "15 weeks", label: "to first launch" },
         { value: "10 projects", label: "in first year" },
       ],
-      body: <>As <strong>Senior <abbr title="User Experience / User Interface" className="no-underline">UX/UI</abbr> Designer</strong> and <strong>Design Team Manager</strong>, I led a team of four designers across UX, UI, interaction design, and visual design, from initial concept through successive product launches. 🚀</>,
+      body: <>As <strong>Senior <abbr title="User Experience / User Interface" className="no-underline">UX/UI</abbr> Designer</strong> and <strong>Design Team Manager</strong>, I led a team of four designers across <strong>UX, UI, interaction, and visual design</strong> from concept to launch, including <strong>MVP strategy</strong> and <strong>incremental feature rollout</strong>. 🚀</>,
     },
     fr: {
       stats: [
         { value: "15 semaines", label: "jusqu’au 1er lancement" },
         { value: "10 projets",   label: "la premi\u00e8re ann\u00e9e" },
       ],
-      body: <>En tant que <strong>Senior <abbr title="User Experience / User Interface" className="no-underline">UX/UI</abbr> Designer</strong> et <strong>responsable de l&apos;équipe design</strong>, j’ai dirigé une équipe de quatre designers couvrant l’UX, l’UI, le design d’interaction et le design visuel, de la phase de conception initiale jusqu’aux lancements successifs du produit.🚀</>,
+      body: <>En tant que <strong>Senior <abbr title="User Experience / User Interface" className="no-underline">UX/UI</abbr> Designer</strong> et <strong>responsable de l&apos;équipe design</strong>, j’ai dirigé une équipe de quatre designers couvrant l’<strong>UX, l’UI, l’interaction et le design visuel</strong>, du concept au lancement, incluant la <strong>stratégie MVP</strong> et le <strong>déploiement incrémental des fonctionnalités</strong>. 🚀</>,
     },
   },
   team: {
-    en: <>Fully remote, distributed globally 🌏. <strong>Dev & studio</strong> teams made up most of the workforce, while our <strong>design team</strong> coordinated communications and served as the source of truth in Figma and Confluence for product, dev, and QA teams.</>,
-    fr: <>100% télétravail, dans le monde 🌏. Équipes <strong>dev et studio</strong> formaient l’essentiel des effectifs, tandis que <strong>l’équipe design</strong> orchestrait communications et servait de source de vérité dans Figma et Confluence pour les équipes produit, dev et QA.</>,
+    en: <>Fully remote, distributed globally 🌏. The <strong>design team</strong> collaborated closely with <strong>developers</strong> and the <strong>studio team</strong>, ensuring <strong>consistent communication</strong> and alignment across all launches.</>,
+    fr: <>100% télétravail, dans le monde 🌏. L’<strong>équipe design</strong> a collaboré étroitement avec les <strong>développeurs</strong> et l’<strong>équipe studio</strong>, garantissant une <strong>communication cohérente</strong> et un alignement tout au long des lancements.</>,
   },
 };
 
@@ -528,30 +531,23 @@ function ContextContent({ lang }) {
   const l = lang in CONTEXT_BODIES.mission ? lang : 'en';
   return (
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-      <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-6 sm:gap-7 lg:gap-8">
-        <Tile>
-          <img src={imgClientLogo} alt="Client logo" width={80} height={80} className="brightness-0 dark:invert" />
-          <TileEyebrow>{eyebrows[0]}</TileEyebrow>
-          <TileBody>{lang === 'fr' ? <>L'un des <strong>principaux promoteurs immobiliers</strong> des Émirats arabes unis (EAU).</> : <>One of the <strong>leading real estate developers</strong> in the United Arab Emirates (UAE).</>}</TileBody>
-          <span className="self-start px-4 py-2 bg-[#f6f6f6] dark:bg-[#1f1f1f] border border-black/[0.08] dark:border-white/[0.08] rounded-full text-[14px] sm:text-[15px] font-medium text-[#1f1f1f] dark:text-[#f6f6f6]">
-            {clientPill}
-          </span>
-        </Tile>
-        <Tile>
-          <p className="text-right text-[30px] sm:text-[36px] lg:text-[44px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
-            {CONTEXT_INDUSTRY.stat[lang] ?? CONTEXT_INDUSTRY.stat.en}
-          </p>
-          <p className="text-right text-[24px] sm:text-[26px] lg:text-[30px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">{eyebrows[1]}</p>
-          <TileBody>{CONTEXT_INDUSTRY.body[l]}</TileBody>
-          <p className="text-right text-[13px] sm:text-[14px] text-[#5c5c5c] dark:text-[#adadad]">
-            {CONTEXT_INDUSTRY.footnote[lang] ?? CONTEXT_INDUSTRY.footnote.en}
-          </p>
-        </Tile>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-7 lg:gap-8">
-        <Tile><TileEyebrow>{eyebrows[2]}</TileEyebrow><TileBody>{CONTEXT_BODIES.mission[l]}</TileBody></Tile>
-        <Tile><TileEyebrow>{eyebrows[3]}</TileEyebrow><TileBody>{CONTEXT_BODIES.stakeholders[l]}</TileBody></Tile>
-      </div>
+      <Tile>
+        <img src={imgClientLogo} alt="Client logo" width={80} height={80} className="brightness-0 dark:invert" />
+        <TileEyebrow>{eyebrows[0]}</TileEyebrow>
+        <TileBody>{lang === 'fr' ? <>L'un des <strong>principaux promoteurs immobiliers</strong> des Émirats arabes unis (EAU), qui connaissait une croissance annuelle de son chiffre d'affaires et étendait ses activités à travers trois Émirats.</> : <>One of the <strong>leading real estate developers</strong> in the United Arab Emirates (UAE), was experiencing annual revenue growth and expanding operations across three Emirates.</>}</TileBody>
+      </Tile>
+      <Tile>
+        <p className="text-[30px] sm:text-[36px] lg:text-[44px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
+          {CONTEXT_INDUSTRY.stat[lang] ?? CONTEXT_INDUSTRY.stat.en}
+        </p>
+        <p className="text-[24px] sm:text-[26px] lg:text-[30px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">{eyebrows[1]}</p>
+        <TileBody>{CONTEXT_INDUSTRY.body[l]}</TileBody>
+        <p className="text-[13px] sm:text-[14px] text-[#5c5c5c] dark:text-[#adadad]">
+          {CONTEXT_INDUSTRY.footnote[lang] ?? CONTEXT_INDUSTRY.footnote.en}
+        </p>
+      </Tile>
+      <Tile><TileEyebrow>{eyebrows[2]}</TileEyebrow><TileBody>{CONTEXT_BODIES.mission[l]}</TileBody></Tile>
+      <Tile><TileEyebrow>{eyebrows[3]}</TileEyebrow><TileBody>{CONTEXT_BODIES.stakeholders[l]}</TileBody></Tile>
 
       <Tile>
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-8">
@@ -585,22 +581,22 @@ const IMPACT = {
   en: {
     outcome: {
       eyebrow: "Outcome",
-      body: <><p>Following validation and user testing within our development environment, we successfully launched the first two projects, both of which <strong>sold out within the first 48 hours</strong> of release.</p><p>Building on that momentum, project delivery accelerated. And by the end of our first year of collaboration, the platform contributed to a <strong>20% YoY increase</strong> in sales, generating <strong>£6.8 billion</strong>.</p></>,
+      body: <><p>The platform's first two projects <strong>sold out within 48 hours</strong> of launch, demonstrating the immediate effectiveness of the design. By the end of the first year, the platform contributed to a <strong>20% YoY increase in sales</strong>, generating <strong>£6.8 billion in revenue</strong>.</p><p>The strong coordination between design, development, and project teams was key to this success. We maintained momentum through <strong>iterative improvements</strong> and <strong>cross-functional collaboration</strong>, ensuring that the platform scaled with each new project.</p></>,
     },
     retrospective: {
       eyebrow: "Retrospective",
-      body: <><p><strong>Strong coordination</strong> between internal and external stakeholders was crucial to the successful launch of the initial project and to scaling subsequent deliveries.</p><p>The design team played a pivotal role in aligning stakeholders, shaping <strong>strategic decisions</strong>, and contributing to <strong>automation efforts</strong> that streamlined the pace of future launches.</p><p>A huge credit goes to our <strong>cross-functional team</strong> project managers, product owners, QA testers, developers, artists, engineers, and designers, who consistently delivered <strong>high-volume</strong>, <strong>high-impact</strong> projects at an accelerated pace. This was achieved while simultaneously supporting parallel initiatives for other clients, including those involving <strong>cutting-edge</strong> XR technologies and <strong>digital twin solutions</strong>.</p><p>This project reaffirmed the power of <strong>collaborative iteration</strong> and the importance of early alignment between development and design teams.</p><p>Throughout the project, several <strong>trade-offs</strong> were made, carefully balancing user needs, business priorities, and technical constraints. Happy to discuss these in more detail.</p></>
+      body: <><p>This project highlighted the importance of <strong>early alignment</strong> between design, development, and the client. The team's <strong>agility and collaboration</strong> ensured we met tight deadlines.</p><p>We made several <strong>trade-offs</strong> to balance user needs, business priorities, and technical constraints. In retrospect, more structured research and user testing could have further informed our design decisions. However, our <strong>iterative approach</strong> and ability to adapt quickly contributed to the project's success.</p><p>This experience underscored the value of <strong>clear communication and expectation management</strong> with stakeholders, especially when priorities evolve throughout the project.</p></>
 ,
     },
   },
   fr: {
     outcome: {
       eyebrow: "Bilan",
-      body: <><p>Après validation et tests utilisateurs dans notre environnement de développement, nous avons lancé avec succès les deux premiers projets, tous deux <strong>vendus intégralement dans les 48 premières heures</strong> suivant leur lancement. 🚀</p><p>Portés par cette dynamique, les livraisons de projets se sont accélérées. À la fin de notre première année de collaboration, la plateforme avait contribué à une <strong>augmentation des ventes de 20 %</strong>, générant plus de <strong>8 milliards d'euros</strong> de chiffre d'affaires.</p></>,
+      body: <><p>Les deux premiers projets de la plateforme ont été <strong>vendus en 48 heures</strong> suivant leur lancement, témoignant de l'efficacité immédiate du design. À la fin de la première année, la plateforme a contribué à une <strong>augmentation des ventes de 20 %</strong>, générant <strong>6,8 milliards de livres sterling</strong> de chiffre d'affaires.</p><p>La coordination étroite entre les équipes design, développement et gestion de projet a été essentielle à ce succès. Nous avons maintenu l'élan grâce à des <strong>améliorations itératives</strong> et une <strong>collaboration transversale</strong>, garantissant que la plateforme évolue avec chaque nouveau projet.</p></>,
     },
     retrospective: {
       eyebrow: "Rétrospective",
-      body: <><p><strong>Une coordination étroite</strong> entre les parties prenantes internes et externes a été essentielle au lancement réussi du projet initial ainsi qu'à la montée en puissance des projets suivants.</p><p>L'équipe design a joué un rôle clé dans l'alignement des parties prenantes, l'orientation des <strong>décisions stratégiques</strong>, et la contribution aux <strong>efforts d'automatisation</strong> qui ont permis d'accélérer le rythme des lancements futurs.</p><p>Un grand bravo à notre équipe pluridisciplinaire, chefs de projet, responsables produit, testeurs qualité, développeurs, artistes, ingénieurs et designers, qui ont livré de manière constante des projets à <strong>fort volume</strong> et à <strong>fort impact</strong>, à un rythme soutenu. Cela a été accompli tout en soutenant en parallèle d'autres initiatives pour d'autres clients, notamment dans les domaines de la <strong>technologie XR</strong> et des solutions de <strong>jumeaux numériques</strong>.</p><p>Ce projet a réaffirmé la puissance de l'<strong>itération collaborative</strong> et souligné l'importance d'un alignement entre les équipes de développement et de design dès le début.</p><p>Tout au long du projet, plusieurs <strong>compromis</strong> ont été nécessaires, en équilibrant soigneusement les besoins des utilisateurs, les priorités métier et les contraintes techniques. Je serais ravi d'en parler plus en détail.</p></>
+      body: <><p>Ce projet a mis en lumière l'importance d'un <strong>alignement précoce</strong> entre le design, le développement et le client. L'<strong>agilité et la collaboration</strong> de l'équipe nous ont permis de respecter des délais serrés.</p><p>Nous avons effectué plusieurs <strong>compromis</strong> pour équilibrer les besoins des utilisateurs, les priorités métier et les contraintes techniques. Rétrospectivement, une recherche plus structurée et des tests utilisateurs plus poussés auraient pu davantage éclairer nos décisions de design. Cependant, notre <strong>approche itérative</strong> et notre capacité d'adaptation rapide ont contribué au succès du projet.</p><p>Cette expérience a souligné la valeur d'une <strong>communication claire et de la gestion des attentes</strong> avec les parties prenantes, en particulier lorsque les priorités évoluent au fil du projet.</p></>
 ,
     },
   },
@@ -669,14 +665,15 @@ const DEFINE = {
   en: {
     challenge: {
       eyebrow: "The challenge",
-      body: <>How can we help real estate buyers experience unbuilt spaces across multiple geographies in a way that is emotionally engaging and contextually relevant?</>,
+      body: <>How can we help real estate buyers experience <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">unbuilt spaces</strong> across multiple geographies in a way that is <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">emotionally engaging</strong> and <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">contextually relevant?</strong></>,
+      description: <><p>Key constraints included:</p><ul className="list-disc list-inside space-y-1"><li><strong>Technical limitations:</strong> Large 3D datasets made real-time rendering expensive and slow.</li><li><strong>Tight deadlines:</strong> The first launch was only <strong>a few weeks away</strong>, leaving limited time for research or extensive feature development.</li><li><strong>Client expectations:</strong> The client wanted a <strong>premium, user-friendly experience</strong> and made final decisions on key features.</li></ul></>,
     },
     exploration: {
       eyebrow: "Exploration",
       subsections: [
         {
           h4: "Integrating 3D without compromising performance",
-          body: <><p>Unreal Engine's <strong>real-time rendering</strong> offered impressive lighting quality improvements, approaching that of traditionally rendered CG images (e.g. 3dsMax + VRay).</p><p>We imported city-scale 3D datasets into Unreal and tested <strong>Pixel-streaming</strong> for real-time web playback.</p><p><span role="img" aria-label="Stop">🛑</span> Two major challenges emerged:</p><ul className="list-disc list-inside space-y-1"><li>Long <strong>loading times</strong> for large 3D datasets (several minutes).</li><li>High streaming <strong>costs per user</strong>, making it unfeasible at scale.</li></ul><p><span role="img" aria-label="Solution">✅</span> To provide browser-based access to large 3D scenes, <strong>pre-rendering images</strong> from Unreal would be a better <strong>short-term solution</strong>, while <strong>Pixel-streaming</strong> could be reserved for <strong>exclusive audiences</strong>.</p></>,
+          body: <><p>Unreal Engine's <strong>real-time rendering</strong> provided significant improvements in lighting quality, nearing the level of traditional CG rendering (e.g. 3dsMax with VRay). This offered a more <strong>immersive, realistic experience</strong> for users.</p><p>We imported large-scale 3D datasets into Unreal and tested <strong>Pixel-streaming</strong> for real-time playback in browsers. However, two major challenges emerged:</p><p><span role="img" aria-label="Challenges">🛑</span> <strong>Challenges</strong></p><ul className="list-disc list-inside space-y-1"><li><strong>Long loading times:</strong> Large 3D datasets caused multi-minute load times.</li><li><strong>High streaming costs:</strong> The per-user cost of streaming 3D content at scale was <strong>unsustainable</strong> for the project.</li></ul><p><span role="img" aria-label="Solution">✅</span> <strong>Solution</strong></p><p>To deliver a browser-based 3D experience efficiently, we decided to use <strong>pre-rendered images</strong> from Unreal for the MVP. This allowed for <strong>smooth, scalable access</strong> to 3D scenes, while <strong>Pixel-streaming</strong> could be reserved for <strong>exclusive, high-priority users</strong> or special events.</p></>,
         },
       ],
     },
@@ -685,31 +682,32 @@ const DEFINE = {
       subsections: [
         {
           h4: "Firm deadlines",
-          body: <>The nature of the market meant project deliveries had <strong>strict deadlines</strong>. The client expected to <strong>sell lots of units on launch day</strong>, so every unit (~1000/project) should be viewable in-app from day one.</>,
+          body: <>Given the <strong>fast-paced nature</strong> of the luxury real estate market, project deliveries had <strong>strict deadlines</strong>. The client aimed to sell large volumes of units on launch day, meaning that every unit (approx. <strong>1,000 per project</strong>) had to be viewable in-app from day one.</>,
         },
         {
-          h4: "MVP",
-          body: <>Given our resources at the time, the 15 weeks from the start of the project to the launch event would likely not suffice to fully design, implement and test the platform we wanted for the users. Therefore, we designed a <strong>Minimum Viable Product</strong> that would be <strong>desktop-first</strong> so that at the first launch event, the sales agent would be able to showcase the project and make sales.</>,
+          h4: "MVP Approach",
+          body: <>With just <strong>15 weeks</strong> from project start to launch, the timeline didn't allow for full design, implementation, and testing of the ideal platform. As a result, we opted for a <strong>Minimum Viable Product (MVP)</strong> that was <strong>desktop-first</strong>, ensuring that sales agents could showcase properties and close deals on launch day.</>,
         },
         {
           h4: "Incremental iterations",
-          body: <>The schedule of upcoming projects for the year would be <strong>accelerating</strong> and it was expected that some projects would bring <strong>new design and development challenges</strong>. Past the first project launch, we would incrementally introduce features to <strong>meet prioritised users' and client's goals</strong>.</>,
+          body: <>Due to the <strong>rapid pace</strong> of upcoming launches, we anticipated new design and development challenges for each project. After the first launch, we would <strong>incrementally introduce</strong> additional features based on <strong>user feedback</strong> and evolving client priorities. This allowed us to balance <strong>immediate needs</strong> with <strong>longer-term goals</strong>, enabling <strong>continuous improvement</strong> without delaying launch.</>,
         },
-        { h4: "Launches timeline", body: null },
+        { h4: "Launches timeline", body: null, before: <>The launch schedule was <strong>ambitious</strong>, with <strong>tight timelines</strong> for each project release. Here's an overview of the expected delivery timeline for the first year.</>, after: <>Each of these projects required careful <strong>prioritisation</strong> and <strong>fast-paced iterations</strong> to meet the market's demands. As the platform grew, our <strong>incremental approach</strong> allowed us to continuously improve features and ensure that new projects met both <strong>user and client expectations</strong>.</> },
       ],
     },
   },
   fr: {
     challenge: {
       eyebrow: "Le défi",
-      body: "Comment pouvons-nous aider des acheteurs immobiliers à se projeter émotionnellement et contextuellement dans des espaces non-bâtis, et ce dans divers environnements géographiques ?",
+      body: <>Comment pouvons-nous aider des acheteurs immobiliers à se projeter dans des <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">espaces non-bâtis</strong> de façon <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">émotionnellement engageante</strong> et <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">contextuellement pertinente</strong>, dans divers environnements géographiques<strong className="text-[#1f1f1f] dark:text-[#f6f6f6]"> ?</strong></>,
+      description: <><p>Les principales contraintes incluaient :</p><ul className="list-disc list-inside space-y-1"><li><strong>Limitations techniques :</strong> Les grandes bases de données 3D rendaient le rendu en temps réel coûteux et lent.</li><li><strong>Délais serrés :</strong> Le premier lancement n'était qu'à <strong>15 semaines</strong>, laissant peu de temps pour la recherche ou le développement de fonctionnalités.</li><li><strong>Attentes du client :</strong> Le client souhaitait une <strong>expérience premium et intuitive</strong> et prenait les décisions finales sur les fonctionnalités clés.</li></ul></>,
     },
     exploration: {
       eyebrow: "Exploration",
       subsections: [
         {
           h4: "Intégration 3D sans compromettre les perfs",
-          body: <><p>Le rendu en <strong>temps réel</strong> d'Unreal Engine offrait une qualité d'éclairage se rapprochant des images de synthèse traditionnelles (3dsMax + VRay par exemple).</p><p>Nous avons importé les données 3D d'une ville dans Unreal et testé le <strong>Pixel-streaming</strong> pour une lecture en temps réel dans le navigateur.</p><p><span role="img" aria-label="Stop">🛑</span> Deux défis majeurs sont apparus :</p><ul className="list-disc list-inside space-y-1"><li>Les temps de <strong>chargement</strong> trop longs pour de larges projets 3D (plusieurs minutes).</li><li>Les <strong>coûts de streaming élevés par utilisateur</strong>, rendant cela non viable à grande échelle.</li></ul><p><span role="img" aria-label="Solution">✅</span> Pour offrir un accès à de grandes scènes 3D dans le navigateur, le <strong>pré-rendu d'images</strong> depuis Unreal serait une meilleure <strong>solution à court terme</strong>, tandis que le <strong>Pixel-streaming</strong> pourrait être réservé à un <strong>public exclusif</strong>.</p></>,
+          body: <><p>Le rendu en <strong>temps réel</strong> d'Unreal Engine apportait des améliorations significatives en qualité d'éclairage, s'approchant du rendu CG traditionnel (3dsMax avec VRay par exemple). Cela offrait une <strong>expérience immersive et réaliste</strong> aux utilisateurs.</p><p>Nous avons importé de larges ensembles de données 3D dans Unreal et testé le <strong>Pixel-streaming</strong> pour une lecture en temps réel dans les navigateurs. Cependant, deux défis majeurs sont apparus :</p><p><span role="img" aria-label="Challenges">🛑</span> <strong>Défis</strong></p><ul className="list-disc list-inside space-y-1"><li><strong>Temps de chargement longs :</strong> Les larges ensembles de données 3D causaient des temps de chargement de plusieurs minutes.</li><li><strong>Coûts de streaming élevés :</strong> Le coût par utilisateur du streaming 3D à grande échelle était <strong>insoutenable</strong> pour le projet.</li></ul><p><span role="img" aria-label="Solution">✅</span> <strong>Solution</strong></p><p>Pour proposer une expérience 3D dans le navigateur de façon efficace, nous avons opté pour les <strong>images pré-rendues</strong> depuis Unreal pour le MVP. Cela permettait un <strong>accès fluide et évolutif</strong> aux scènes 3D, tandis que le <strong>Pixel-streaming</strong> pouvait être réservé aux <strong>utilisateurs prioritaires</strong> ou événements spéciaux.</p></>,
         },
       ],
     },
@@ -718,17 +716,17 @@ const DEFINE = {
       subsections: [
         {
           h4: "Échéances strictes",
-          body: <>La nature du marché impliquait que les lancements de projets aient des <strong>délais stricts</strong>. Le client s'attendait à <strong>vendre de nombreux logements dès le jour du lancement</strong>, chaque logement (~1000 par projet) devait être terminé et visible dans l'application dès le premier jour.</>,
+          body: <>Compte tenu du <strong>rythme soutenu</strong> du marché immobilier de luxe, les livraisons de projets avaient des <strong>délais stricts</strong>. Le client visait à vendre de grandes quantités de lots dès le jour du lancement, ce qui signifiait que chaque lot (environ <strong>1 000 par projet</strong>) devait être visible dans l'application dès le premier jour.</>,
         },
         {
-          h4: "MVP",
-          body: <>Compte tenu de nos ressources, les 15 semaines entre le début du premier projet et le lancement étaient insuffisantes pour concevoir, mettre en œuvre et tester la plateforme que nous souhaitions pour tous les utilisateurs. Par conséquent, nous avons conçu un <strong>Produit Minimum Viable</strong> qui serait <strong>d'abord destiné aux PCs</strong>, afin qu'au lancement, les commerciaux puissent présenter le projet et réaliser des ventes.</>,
+          h4: "Approche MVP",
+          body: <>Avec seulement <strong>15 semaines</strong> entre le début du projet et le lancement, le calendrier ne permettait pas la conception, l'implémentation et les tests complets de la plateforme idéale. Nous avons donc opté pour un <strong>Produit Minimum Viable (MVP)</strong> <strong>desktop-first</strong>, garantissant que les agents commerciaux puissent présenter les biens et conclure des ventes dès le lancement.</>,
         },
         {
           h4: "Itérations incrémentales",
-          body: <>Le calendrier de projets pour l'année allait <strong>accélérer</strong>, il était prévu que de nouveaux <strong>défis en termes de conception et de développement</strong> accompagnent certains projets. Une fois le premier projet lancé, nous introduirions des fonctionnalités pour <strong>répondre aux objectifs priorisés des utilisateurs et du client</strong>.</>,
+          body: <>En raison du <strong>rythme rapide</strong> des lancements à venir, nous anticipions de nouveaux défis de conception et développement pour chaque projet. Après le premier lancement, nous introduirions <strong>progressivement</strong> de nouvelles fonctionnalités basées sur les <strong>retours utilisateurs</strong> et les priorités évolutives du client. Cela nous permettait d'équilibrer les <strong>besoins immédiats</strong> et les <strong>objectifs à long terme</strong>, favorisant une <strong>amélioration continue</strong> sans retarder le lancement.</>,
         },
-        { h4: "Chronologie des lancements", body: null },
+        { h4: "Chronologie des lancements", body: null, before: <>Le calendrier de lancement était <strong>ambitieux</strong>, avec des <strong>délais serrés</strong> pour chaque sortie de projet. Voici un aperçu du calendrier de livraison prévu pour la première année.</>, after: <>Chacun de ces projets nécessitait une <strong>priorisation rigoureuse</strong> et des <strong>itérations rapides</strong> pour répondre aux exigences du marché. Au fil de la croissance de la plateforme, notre <strong>approche incrémentale</strong> nous a permis d'améliorer continuellement les fonctionnalités et de garantir que les nouveaux projets répondent aux <strong>attentes des utilisateurs et du client</strong>.</> },
       ],
     },
   },
@@ -741,6 +739,7 @@ function DefineContent({ lang }) {
       <Tile bgClass="bg-[#f6f6f6] dark:bg-[#1f1f1f]">
         <TileEyebrow>{d.challenge.eyebrow}</TileEyebrow>
         <TileTitle>{d.challenge.body}</TileTitle>
+        <div className="mt-4 sm:mt-6"><TileBody>{d.challenge.description}</TileBody></div>
       </Tile>
       <Tile bgClass="bg-transparent">
         <TileEyebrow>{d.exploration.eyebrow}</TileEyebrow>
@@ -756,7 +755,7 @@ function DefineContent({ lang }) {
         {d.uxStrategy.subsections.map((s, i) => (
           <div key={i} className="flex flex-col gap-4 sm:gap-5 lg:gap-6 pt-2">
             <TileH4>{s.h4}</TileH4>
-            {s.body ? <TileBody>{s.body}</TileBody> : <LaunchesTimeline />}
+            {s.body ? <TileBody>{s.body}</TileBody> : <><TileBody>{s.before}</TileBody><div className="my-8 sm:my-10"><LaunchesTimeline /></div><TileBody>{s.after}</TileBody></>}
           </div>
         ))}
       </Tile>
@@ -1417,26 +1416,26 @@ function HifiCarousel({ lang, isDark }) {
 // ── Design section content ────────────────────────────────────────────────────
 const DESIGN = {
   en: {
-    userFlow: { eyebrow: "User flow" },
+    userFlow: { eyebrow: "User flow", body: <>The platform was designed to allow users to <strong>explore client projects worldwide</strong>, progressing seamlessly from <strong>macro to micro views</strong>. This hierarchical structure supported <strong>scalability</strong> and an <strong>intuitive browsing experience</strong>.</>, footer: <>💡 <strong>Design Principle:</strong> Layered, <strong>progressive flow</strong> lets users explore at their own pace while supporting future <strong>global expansion</strong>.</> },
     concepts: {
       eyebrow: "Concepts",
       subsections: [
-        { h4: "Back layer: computer generated images (CGI)", body: <>Collaborating with the 3D studio team, an <strong>ideation session</strong> provided an opportunity to <strong>conceptualise</strong> how each view could introduce dynamic elements.</>, after: "conceptsCarousel" },
-        { h4: "Front layer: user interface", topSpacing: true, body: <>An initial <strong>brainstorming session</strong> within the design team helped <strong>define the features</strong> each view introduces. The <strong>9 views are sequential</strong>, with each view adding new capabilities as users navigate deeper, from a global overview down to interior spaces.</>, after: "grid9" },
+        { h4: "Back layer: computer generated images (CGI)", body: <>In collaboration with the 3D studio team, we ideated how each view could incorporate <strong>dynamic CGI elements</strong> to enhance immersion, such as <strong>lighting changes</strong> and <strong>day/night cycles</strong>. This approach allowed us to simulate <strong>real-world environments</strong>, offering users an <strong>engaging experience</strong> of unbuilt spaces.</>, after: "conceptsCarousel" },
+        { h4: "Front layer: user interface", topSpacing: true, body: <>In an initial <strong>brainstorming session</strong> with the design team, we defined the <strong>key features</strong> for each of the <strong>9 sequential views</strong>. Each view progressively introduced new capabilities, allowing users to navigate from a <strong>global overview</strong> to <strong>detailed interior spaces</strong>.</>, after: "grid9" },
         { h3: "Wireframes", body: <>For this project, <strong>wireframing was an essential part</strong> of the design process allowing <strong>better coordination</strong> between internal teams (design, studio and dev), as well as with external stakeholders.</>, after: "wireframesCarousel", topSpacing: true },
-        { h3: "High-fidelity mock-ups", topSpacing: true, body: <>Building a comprehensive <strong>design system</strong> enabled efficient previewing and testing of high-fidelity mockups and prototypes at scale, <strong>streamlining</strong> iteration and <strong>ensuring consistency</strong> across the product.</>, after: "hifiCarousel" },
+        { h3: "High-fidelity mock-ups", topSpacing: true, body: <>By building a comprehensive <strong>design system</strong>, we streamlined the creation and testing of <strong>high-fidelity mockups and prototypes</strong>, ensuring <strong>consistency</strong> and <strong>efficient iteration</strong> across the product.</>, after: "hifiCarousel" },
       ],
     },
   },
   fr: {
-    userFlow: { eyebrow: "Flux utilisateur" },
+    userFlow: { eyebrow: "Flux utilisateur", body: <>La plateforme a été conçue pour permettre aux utilisateurs d’<strong>explorer les projets clients à travers le monde</strong>, en progressant de manière fluide des <strong>vues macro aux vues micro</strong>. Cette structure hiérarchique favorise l’<strong>évolutivité</strong> et une <strong>expérience de navigation intuitive</strong>.</>, footer: <>💡 <strong>Principe de design :</strong> Un <strong>flux progressif</strong> en couches permet aux utilisateurs d’explorer à leur propre rythme tout en soutenant une future <strong>expansion mondiale</strong>.</> },
     concepts: {
       eyebrow: "Conceptualisation",
       subsections: [
-        { h4: "Arrière-plan : images de synthèse", body: <>En collaboration avec l'équipe 3D, une <strong>session d'idéation</strong> nous a permis de <strong>conceptualiser</strong> comment chaque vue pouvait apporter du dynamisme.</>, after: "conceptsCarousel" },
-        { h4: "Premier-plan : interface utilisateur", topSpacing: true, body: <>Une première <strong>séance de brainstorming</strong> au sein de l'équipe de conception a permis de <strong>définir les fonctionnalités</strong> propres à chaque vue. Les <strong>9 vues sont séquentielles</strong>, chaque vue ajoutant de nouvelles fonctionnalités à mesure que l'utilisateur navigue, d'une vue globale jusqu'aux espaces intérieurs.</>, after: "grid9" },
+        { h4: "Arrière-plan : images de synthèse", body: <>En collaboration avec l'équipe 3D, nous avons réfléchi à la manière dont chaque vue pourrait intégrer des <strong>éléments CGI dynamiques</strong> pour renforcer l'immersion, tels que des <strong>changements d'éclairage</strong> et des <strong>cycles jour/nuit</strong>. Cette approche nous a permis de simuler des <strong>environnements réels</strong>, offrant aux utilisateurs une <strong>expérience engageante</strong> d'espaces non construits.</>, after: "conceptsCarousel" },
+        { h4: "Premier-plan : interface utilisateur", topSpacing: true, body: <>Lors d'une première <strong>séance de brainstorming</strong> avec l'équipe design, nous avons défini les <strong>fonctionnalités clés</strong> pour chacune des <strong>9 vues séquentielles</strong>. Chaque vue introduisait progressivement de nouvelles capacités, permettant aux utilisateurs de naviguer d'une <strong>vue d'ensemble globale</strong> jusqu'aux <strong>espaces intérieurs détaillés</strong>.</>, after: "grid9" },
         { h3: "Maquettes filaires", body: <>Pour ce projet, la création de maquettes était un <strong>élément essentiel du processus de conception</strong>, permettant une <strong>meilleure coordination</strong> entre les équipes internes (design, studio and dev), ainsi qu'avec les parties prenantes externes.</>, after: "wireframesCarousel", topSpacing: true },
-        { h3: "Maquettes haute-fidélité", topSpacing: true, body: <>La création d'un <strong>design system</strong> a permis de prévisualiser et de tester efficacement des maquettes et prototypes haute fidélité à grande échelle, facilitant ainsi les itérations et garantissant la <strong>cohérence du produit</strong>.</>, after: "hifiCarousel" },
+        { h3: "Maquettes haute-fidélité", topSpacing: true, body: <>En développant un <strong>design system</strong> complet, nous avons rationalisé la création et les tests de <strong>maquettes et prototypes haute-fidélité</strong>, garantissant la <strong>cohérence</strong> et une <strong>itération efficace</strong> sur l'ensemble du produit.</>, after: "hifiCarousel" },
       ],
     },
   },
@@ -1458,7 +1457,7 @@ function UiConceptCard({ card, isDark }) {
           {card.title}
         </h5>
         <ul className="flex flex-col gap-0.5 text-[12px] sm:text-[13px] leading-snug list-disc list-inside" style={{ color: titleColor }}>
-          {card.bullets.map((b, k) => <li key={k}>{b}</li>)}
+          {card.bullets.filter(Boolean).map((b, k) => <li key={k}>{b}</li>)}
         </ul>
       </div>
     </div>
@@ -1476,11 +1475,15 @@ function DesignContent({ lang, isDark }) {
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
       <Tile bgClass="bg-[#f6f6f6] dark:bg-[#1f1f1f]">
         <TileEyebrow>{d.userFlow.eyebrow}</TileEyebrow>
-        <picture>
-          <source media="(min-width: 1024px)" srcSet={uf.desktop} />
-          <source media="(min-width: 640px)"  srcSet={uf.tablet} />
-          <img src={uf.mobile} alt={d.userFlow.eyebrow} className="w-full h-auto rounded-lg" />
-        </picture>
+        <p className={tileBodyText}>{d.userFlow.body}</p>
+        <div className="mt-6 sm:mt-8">
+          <picture>
+            <source media="(min-width: 1024px)" srcSet={uf.desktop} />
+            <source media="(min-width: 640px)"  srcSet={uf.tablet} />
+            <img src={uf.mobile} alt={d.userFlow.eyebrow} className="w-full h-auto rounded-lg" />
+          </picture>
+        </div>
+        <div className="mt-6 sm:mt-8 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad]">{d.userFlow.footer}</div>
       </Tile>
 
       <Tile>
@@ -1513,35 +1516,32 @@ const EMPHASISE = {
     audience: {
       eyebrow: 'The audience',
       title:   'Who is the platform for?',
-      body: <>
-        <p>The user base was identified through client alignment sessions.</p>
-        <p><span role="img" aria-label="Insight">💡</span>Findings: <strong>internal stakeholders</strong> (sales agents) and <strong>external users</strong> (homeowners, investors).</p>
-      </>,
+      body: <><p>The platform served <strong>two primary audiences</strong>:</p><ul className="list-disc list-inside space-y-1"><li><strong>Sales agents:</strong> Required a <strong>logged-in experience</strong> with availability features during launches.</li><li><strong>Buyers:</strong> Needed an <strong>intuitive, engaging</strong> way to explore properties and <strong>request a callback</strong> from agents quickly.</li></ul></>,
     },
     goal: {
       eyebrow: 'The goal',
       title:   'What value will the platform provide to users?',
-      body:    <><p>We found that most sales occur during client launch events, with additional sales expected in the days following launch.</p><ul className="list-disc list-inside space-y-1"><li>Sales agents require a <strong>logged-in experience</strong> with availability features, at launch.</li><li>Buyers need a simple and efficient <strong>way to request callback</strong> from sales agents.</li></ul></>,
+      body:    <><p>Create a platform that delivered value to both user groups by:</p><ul className="list-disc list-inside space-y-1"><li>Supporting sales agents in <strong>high-pressure launch events</strong>.</li><li>Enabling buyers to <strong>explore projects worldwide</strong>, progressively drilling down from <strong>global to interior views</strong>.</li><li>Maintaining a <strong>luxury, user-friendly experience</strong> that aligned with the client's brand.</li></ul></>,
     },
     market: {
       eyebrow: 'The market',
-      body:    <><p>We conducted a <strong>competitors analysis</strong> to gain a better understanding of the sector’s landscape, industry standards, and opportunities to surpass both client and user expectations.</p><p>The real-estate market would benefit a more engaging way to present and sell properties. Our vision was to create a <strong>user-centric</strong>, <strong>3D-first</strong> experience that allows users to explore unbuilt spaces interactively, transitioning seamlessly from a global view to interior views.</p><p><span role="img" aria-label="Prerequisites">📋</span>Prerequisites:</p><ul className="list-disc list-inside space-y-1"><li>Scalability <strong>from a macro</strong>, globe view, <strong>to micro</strong> interior views.</li><li><strong>3D computer-generated</strong> imagery to enhance immersion, navigation and UX clarity.</li></ul></>,
+      body:    <><p>Competitor analysis revealed that existing platforms were <strong>visually appealing</strong> but lacked <strong>interactive, immersive experiences</strong> for unbuilt properties.</p><p><strong>Vision:</strong> Create a <strong>3D-first</strong>, <strong>user-centric experience</strong>, with smooth navigation from <strong>global overviews</strong> to <strong>detailed interiors</strong>.</p><p><strong>Key Design Prerequisites:</strong></p><ul className="list-disc list-inside space-y-1"><li><strong>Scalability:</strong> Users could navigate from a <strong>macro, global view</strong> down to <strong>micro, interior-level</strong> detail.</li><li><strong>Immersive 3D visuals:</strong> Computer-generated imagery enhanced both <strong>navigation clarity</strong> and <strong>emotional engagement</strong> with the properties.</li></ul></>,
     },
   },
   fr: {
     audience: {
       eyebrow: "L'audience",
       title:   'À qui s’adresse la plateforme ?',
-      body:    <><p>La base d’utilisateurs de la plateforme a été définie lors de sessions d'alignement avec le client.</p> <p><span role="img" aria-label="Insight">💡</span>Ce qu’on a appris : </p> <p> Deux groupes, les <strong>parties prenantes internes</strong> (agents commerciaux) et les <strong>utilisateurs externes</strong> (propriétaires, investisseurs).</p></>,
+      body:    <><p>La plateforme s’adressait à <strong>deux audiences principales</strong> :</p><ul className="list-disc list-inside space-y-1"><li><strong>Agents commerciaux :</strong> Nécessitaient une <strong>expérience connectée</strong> avec les disponibilités lors des lancements.</li><li><strong>Acheteurs :</strong> Avaient besoin d’une façon <strong>intuitive et engageante</strong> d’explorer les biens et de <strong>demander à être rappelés</strong> rapidement.</li></ul></>,
     },
     goal: {
       eyebrow: "L'objectif",
       title:   'Quelle valeur pour les utilisateurs ?',
-      body: <><p>Nous avons appris que la majorité des ventes se produisaient lors des journées de lancement. La plupart des ventes restantes pourraient se faire dans les jours suivants.</p><ul className="list-disc list-inside space-y-1"><li>Les commerciaux ont besoin d’une <strong>expérience connectée</strong> avec les disponibilités dès le lancement.</li><li>Les acheteurs ont besoin d’un moyen simple de <strong>demander à être rappelés</strong> par un commercial.</li></ul></>,
+      body: <><p>Créer une plateforme apportant de la valeur aux deux groupes d’utilisateurs en :</p><ul className="list-disc list-inside space-y-1"><li>Accompagnant les agents commerciaux lors des <strong>lancements sous haute pression</strong>.</li><li>Permettant aux acheteurs d’<strong>explorer des projets dans le monde entier</strong>, en progressant de la <strong>vue globale aux vues intérieures</strong>.</li><li>Offrant une <strong>expérience luxueuse et intuitive</strong> alignée avec la marque du client.</li></ul></>,
     },
     market: {
       eyebrow: 'Le marché',
-      body:    <><p>Nous avons mené une <strong>analyse concurentielle</strong> afin de mieux comprendre le secteur, les normes, et les opportunités pour dépasser les attentes du client et des utilisateurs.</p><p>Le marché bénéficierait d’une maniére plus engageante de présenter et vendre des biens. Notre vision était de créer une <strong>expérience 3D centrée sur l’utilisateur</strong>, permettant d’explorer des bien non-construits, en passant de manière fluide d’une vue globale à des vues intérieures.</p><p><span role="img" aria-label="Prerequisites">📋</span> Prérequis :</p><ul className="list-disc list-inside space-y-1"><li>Passer d’une échelle <strong>macro</strong> (vue globale) <strong>à micro</strong> (vues intérieures).</li><li>Une <strong>imagerie 3D</strong> pour améliorer l’immersion, la clarté de l’expérience utilisateur.</li></ul></>,
+      body:    <><p>L’analyse concurrentielle a révélé que les plateformes existantes étaient <strong>visuellement attrayantes</strong> mais manquaient d’<strong>expériences interactives et immersives</strong> pour les biens non construits.</p><p><strong>Vision :</strong> Créer une <strong>expérience 3D-first</strong> et <strong>centrée utilisateur</strong>, avec une navigation fluide des <strong>vues globales</strong> jusqu’aux <strong>intérieurs détaillés</strong>.</p><p><strong>Prérequis de design clés :</strong></p><ul className="list-disc list-inside space-y-1"><li><strong>Évolutivité :</strong> Navigation possible d’une <strong>vue macro et globale</strong> jusqu’aux <strong>détails micro et intérieurs</strong>.</li><li><strong>Visuels 3D immersifs :</strong> L’imagerie de synthèse a renforcé à la fois la <strong>clarté de navigation</strong> et l’<strong>engagement émotionnel</strong> envers les biens.</li></ul></>,
     },
   },
 };
@@ -1549,7 +1549,7 @@ const EMPHASISE = {
 function EmphasiseContent({ lang }) {
   const d = EMPHASISE[lang] ?? EMPHASISE.en;
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-6 sm:gap-7 lg:gap-8">
+    <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
       <Tile>
         <TileEyebrow>{d.audience.eyebrow}</TileEyebrow>
         <TileTitle>{d.audience.title}</TileTitle>
@@ -1569,6 +1569,84 @@ function EmphasiseContent({ lang }) {
 }
 
 // ── Collapsible section ───────────────────────────────────────────────────────
+// ── Scroll utility ────────────────────────────────────────────────────────────
+const scrollToSection = (id) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  el.focus({ preventScroll: true });
+};
+
+// ── Desktop secondary nav ─────────────────────────────────────────────────────
+function SecondaryNav({ sections, activeId, onNavigate }) {
+  return (
+    <nav aria-label="Page sections">
+      <ol className="grid gap-2" style={{ gridTemplateColumns: 'max-content' }}>
+        {sections.map((s) => {
+          const isActive = activeId === s.id;
+          return (
+            <li key={s.id}>
+              <button
+                onClick={() => onNavigate(s.id)}
+                aria-current={isActive ? 'location' : undefined}
+                className={`relative text-[13px] leading-snug py-1.5 px-2 rounded-lg text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+                  isActive
+                    ? 'text-[#1f1f1f] dark:text-[#f6f6f6] font-semibold bg-black/[0.04] dark:bg-white/[0.06]'
+                    : 'text-[#5c5c5c] dark:text-[#adadad] font-normal hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
+                }`}
+              >
+                <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.title}</span>
+                <span className="absolute inset-0 py-1.5 px-2 whitespace-nowrap">{s.title}</span>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
+// ── Mobile secondary nav ──────────────────────────────────────────────────────
+function MobileSecondaryNav({ sections, activeId, onNavigate }) {
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    if (!trackRef.current || !activeId) return;
+    const btn = trackRef.current.querySelector(`[data-section="${activeId}"]`);
+    btn?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, [activeId]);
+
+  return (
+    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] p-[10px]">
+      <div className="overflow-hidden rounded-[16px]">
+        <ul ref={trackRef} className="w-full flex items-center gap-1 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+          {sections.map((s) => {
+            const isActive = activeId === s.id;
+            return (
+              <li key={s.id} className="shrink-0">
+                <button
+                  data-section={s.id}
+                  onClick={() => onNavigate(s.id)}
+                  aria-label={s.title}
+                  aria-current={isActive ? 'location' : undefined}
+                  className={`h-8 px-3 rounded-2xl text-[13px] font-medium whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+                    isActive
+                      ? 'bg-[#161616] dark:bg-white text-white dark:text-[#161616]'
+                      : 'text-[#5c5c5c] dark:text-[#adadad]'
+                  }`}
+                >
+                  {s.title}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </nav>
+  );
+}
+
+// ── Accordion section ─────────────────────────────────────────────────────────
 function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgClass, openHeaderDark = false, contentBgClass = 'bg-[#f6f6f6] dark:bg-[#1f1f1f]' }) {
   const [open, setOpen] = useState(true);
   const [hidden, setHidden] = useState(false);
@@ -1676,10 +1754,57 @@ const SECTIONS = {
 
 function SalesPlatform({ lang, isDark }) {
   const sections = SECTIONS[lang] ?? SECTIONS.en;
+  const [activeId, setActiveId]         = useState('');
+  const [scrolledDown, setScrolledDown] = useState(false);
+  const [atBottom, setAtBottom]         = useState(false);
+  const scrollTarget = useRef(null);
+
+  const handleNavigate = (id) => {
+    setActiveId(id);
+    scrollTarget.current = id;
+    scrollToSection(id);
+    setTimeout(() => { scrollTarget.current = null; }, 2000);
+  };
 
   useEffect(() => {
     document.title = lang === 'fr' ? 'Web App • Atelier Digital' : 'Web App • Atelier Digital';
     trackEvent('case_study_view', { study: 'sales_platform' });
+  }, [lang]);
+
+  // Active section via IntersectionObserver
+  useEffect(() => {
+    const observers = sections.map(s => {
+      const el = document.getElementById(s.id);
+      if (!el) return null;
+      const obs = new IntersectionObserver(
+        ([e]) => {
+          if (!e.isIntersecting) return;
+          if (scrollTarget.current) {
+            if (s.id === scrollTarget.current) { scrollTarget.current = null; setActiveId(s.id); }
+          } else {
+            setActiveId(s.id);
+          }
+        },
+        { rootMargin: '-10% 0px -70% 0px' }
+      );
+      obs.observe(el);
+      return obs;
+    });
+    return () => observers.forEach(o => o?.disconnect());
+  }, [lang]);
+
+  // Show/hide navs based on scroll position
+  useEffect(() => {
+    const firstEl = document.getElementById(sections[0].id);
+    const lastEl  = document.getElementById(sections[sections.length - 1].id);
+    if (!firstEl || !lastEl) return;
+    const update = () => {
+      setScrolledDown(firstEl.getBoundingClientRect().top < 150);
+      setAtBottom(lastEl.getBoundingClientRect().bottom < 200);
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
   }, [lang]);
 
   return (
@@ -1725,8 +1850,33 @@ function SalesPlatform({ lang, isDark }) {
             </Link>
           </div>
         </div>
-
       </main>
+
+      {/* ── Desktop secondary nav — fixed, visible once scrolled past hero ── */}
+      <div
+        inert={scrolledDown && !atBottom ? undefined : true}
+        className={`hidden xl:block fixed z-10 transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        style={{ top: '80px', right: '24px' }}
+      >
+        <SecondaryNav sections={sections} activeId={activeId} onNavigate={handleNavigate} />
+      </div>
+
+      {/* ── Mobile floating nav ── */}
+      <div
+        inert={scrolledDown && !atBottom ? undefined : true}
+        className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      >
+        <div className="pointer-events-auto w-full">
+          <MobileSecondaryNav sections={sections} activeId={activeId} onNavigate={handleNavigate} />
+        </div>
+      </div>
+
+      {/* ── Chat button backdrop circle ── */}
+      <div
+        aria-hidden="true"
+        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0'}`}
+        style={{ width: 52, height: 52, left: 8, bottom: 8 }}
+      />
 
       <Footer lang={lang} />
     </>

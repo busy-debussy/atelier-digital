@@ -64,7 +64,7 @@ const T = {
         heading: 'One shot at a first impression',
         body: [
           <>We were given the opportunity to reveal one of the most ambitious urban developments ever proposed, to a <strong>global audience of investors</strong>. Every detail had to make the project's scale and ambition instantly tangible.</>,
-          { type: 'callout', variant: 'goal', label: 'The goal', body: <>Ensure every visitor leaves <strong>convinced</strong> this was <strong>a redefinition of what a city could be</strong>.</> },
+          { type: 'callout', variant: 'goal', label: 'The goal', body: <>Ensure visitors leave <strong>convinced</strong> this was <strong>a redefinition of what a city could be</strong>.</> },
         ],
       },
       {
@@ -166,13 +166,13 @@ const T = {
             <li><strong>VR (Meta Quest 3):</strong> Immersive walkthrough at human scale, with mirrored view for observers</li>
             <li><strong>Digital twin:</strong> Built for cross-platform accessibility</li>
           </ul>,
-          <><strong>Design strategies for scale and clarity</strong></>,
+          { type: 'h3', text: 'Design strategies for scale and clarity' },
           <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
             <li>In AR, visual cues communicated the central building's volume immediately</li>
             <li>VR Wadis were crafted to feel vast but navigable</li>
             <li>On the interactive map, each district had a distinct identity to clarify the development</li>
           </ul>,
-          <><strong>Interaction patterns</strong></>,
+          { type: 'h3', text: 'Interaction patterns' },
           <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
             <li>Shared AR experience was guided by a single narrator to preserve narrative clarity</li>
             <li>Table placement and mirrored screens enabled multiple participants and passersby to engage naturally</li>
@@ -180,7 +180,7 @@ const T = {
             <li>Consistent interaction patterns across touch, AR/VR controllers, and gamepad/mouse allowed seamless transitions between experiences</li>
           </ul>,
           <>Every decision balanced technical feasibility, user experience, and storytelling impact, creating a coherent and immersive journey across all six experiences.</>,
-          <><strong>Approaches</strong></>,
+          { type: 'h3', text: 'Approaches' },
           <>Our initial plan let users choose solo or shared modes on the AR table, but friction points in selecting the app, scanning the AR tracker, and placing the 3D model slowed engagement. I streamlined it into a single, presenter-led, pre-calibrated flow, keeping participation smooth and intuitive.</>,
           <>This approach reflected a broader principle applied across all six experiences. Every interaction was designed to minimize friction, maximize clarity, and preserve narrative flow, whether users were engaging with AR, VR, touchscreens, or the digital twin.</>,
           <><strong>Key decisions</strong></>,
@@ -365,13 +365,13 @@ const T = {
             <li><strong>VR (Meta Quest 3) :</strong> Visite immersive à échelle humaine, avec vue miroir pour les observateurs</li>
             <li><strong>Jumeau numérique :</strong> Conçu pour l'accessibilité multiplateforme</li>
           </ul>,
-          <><strong>Stratégies de design pour l'échelle et la clarté</strong></>,
+          { type: 'h3', text: "Stratégies de design pour l'échelle et la clarté" },
           <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
             <li>En AR, des repères visuels communiquaient immédiatement le volume du bâtiment central</li>
             <li>Les Wadis en VR ont été conçus pour paraître vastes mais navigables</li>
             <li>Sur la carte interactive, chaque quartier avait une identité distincte pour clarifier le développement</li>
           </ul>,
-          <><strong>Patterns d'interaction</strong></>,
+          { type: 'h3', text: "Patterns d'interaction" },
           <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
             <li>L'expérience AR partagée était guidée par un seul narrateur pour préserver la clarté narrative</li>
             <li>La disposition de la table et les écrans en miroir permettaient à plusieurs participants et passants de s'engager naturellement</li>
@@ -379,7 +379,7 @@ const T = {
             <li>Des patterns d'interaction cohérents sur tactile, contrôleurs AR/VR et manette/souris permettaient des transitions fluides entre les expériences</li>
           </ul>,
           <>Chaque décision équilibrait faisabilité technique, expérience utilisateur et impact narratif, créant un parcours cohérent et immersif.</>,
-          <><strong>Approches</strong></>,
+          { type: 'h3', text: 'Approches' },
           <>Notre plan initial laissait les utilisateurs choisir entre les modes solo et partagé sur la table AR, mais des points de friction dans la sélection de l'application, le scan du marqueur AR et le placement du modèle 3D ralentissaient l'engagement. J'ai simplifié en un flux unique, guidé par un présentateur et pré-calibré, gardant la participation fluide et intuitive.</>,
           <>Cette approche reflétait un principe plus large appliqué à l'ensemble des six expériences. Chaque interaction était conçue pour minimiser les frictions, maximiser la clarté et préserver le flux narratif, que les utilisateurs s'engagent avec l'AR, la VR, les écrans tactiles ou le jumeau numérique.</>,
           <><strong>Décisions clés</strong></>,
@@ -983,7 +983,11 @@ const SVG_FR = {
 // ── Flowchart lightbox ────────────────────────────────────────────────────────
 function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
   const [index, setIndex]   = useState(initialIndex);
+  const [zoom, setZoom]     = useState(1);
+  const [pan, setPan]       = useState({ x: 0, y: 0 });
   const indexRef            = useRef(initialIndex);
+  const zoomRef             = useRef(1);
+  const panRef              = useRef({ x: 0, y: 0 });
   const dialogRef           = useRef(null);
   const closeButtonRef      = useRef(null);
   const returnFocusRef      = useRef(typeof document !== 'undefined' ? document.activeElement : null);
@@ -1004,29 +1008,93 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
     return () => clearTimeout(id);
   }, []);
 
-  const go = (i) => { indexRef.current = i; setIndex(i); };
+  // go also resets zoom/pan so each slide starts fresh
+  const goRef = useRef(null);
+  goRef.current = (i) => {
+    indexRef.current = i; setIndex(i);
+    zoomRef.current = 1; panRef.current = { x: 0, y: 0 };
+    setZoom(1); setPan({ x: 0, y: 0 });
+  };
+  const go = (i) => goRef.current(i);
 
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === 'Escape')    onClose();
-      if (e.key === 'ArrowLeft')  go(Math.max(0, indexRef.current - 1));
-      if (e.key === 'ArrowRight') go(Math.min(slides.length - 1, indexRef.current + 1));
+      if (e.key === 'Escape')     onClose();
+      if (e.key === 'ArrowLeft')  goRef.current(Math.max(0, indexRef.current - 1));
+      if (e.key === 'ArrowRight') goRef.current(Math.min(slides.length - 1, indexRef.current + 1));
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [slides.length, onClose]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [slides.length, onClose]);
 
-  // Swipe to navigate on mobile
-  const swipeStartX = useRef(null);
-  const onTouchStart = (e) => { swipeStartX.current = e.touches[0].clientX; };
-  const onTouchEnd   = (e) => {
-    if (swipeStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - swipeStartX.current;
-    swipeStartX.current = null;
-    if (Math.abs(dx) < 40) return;
-    if (dx < 0) go(Math.min(slides.length - 1, indexRef.current + 1));
-    else         go(Math.max(0, indexRef.current - 1));
-  };
+  // Touch: swipe (1-finger, not zoomed) · pan (1-finger, zoomed) · pinch-to-zoom (2-finger)
+  useEffect(() => {
+    const el = dialogRef.current;
+    if (!el) return;
+
+    let mode = null;
+    let swipeStartX = null;
+    let pinchStartDist = null, pinchStartZoom = 1;
+    let panStartX = 0, panStartY = 0, panStartPanX = 0, panStartPanY = 0;
+
+    const touchDist = (t) => {
+      const dx = t[1].clientX - t[0].clientX, dy = t[1].clientY - t[0].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    };
+
+    const onStart = (e) => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        mode = 'pinch';
+        pinchStartDist = touchDist(e.touches);
+        pinchStartZoom = zoomRef.current;
+      } else if (e.touches.length === 1) {
+        if (zoomRef.current > 1) {
+          mode = 'pan';
+          panStartX = e.touches[0].clientX; panStartY = e.touches[0].clientY;
+          panStartPanX = panRef.current.x;  panStartPanY = panRef.current.y;
+        } else {
+          mode = 'swipe';
+          swipeStartX = e.touches[0].clientX;
+        }
+      }
+    };
+
+    const onMove = (e) => {
+      if (mode === 'pinch' && e.touches.length === 2) {
+        e.preventDefault();
+        const newZoom = Math.max(1, Math.min(4, pinchStartZoom * (touchDist(e.touches) / pinchStartDist)));
+        zoomRef.current = newZoom;
+        if (newZoom === 1) { panRef.current = { x: 0, y: 0 }; setPan({ x: 0, y: 0 }); }
+        setZoom(newZoom);
+      } else if (mode === 'pan' && e.touches.length === 1) {
+        e.preventDefault();
+        const newPan = { x: panStartPanX + e.touches[0].clientX - panStartX, y: panStartPanY + e.touches[0].clientY - panStartY };
+        panRef.current = newPan; setPan(newPan);
+      }
+    };
+
+    const onEnd = (e) => {
+      if (mode === 'swipe' && swipeStartX !== null) {
+        const dx = e.changedTouches[0].clientX - swipeStartX;
+        if (Math.abs(dx) >= 40) {
+          if (dx < 0) goRef.current(Math.min(slides.length - 1, indexRef.current + 1));
+          else        goRef.current(Math.max(0, indexRef.current - 1));
+        }
+        swipeStartX = null;
+      }
+      if (e.touches.length < 2) mode = null;
+    };
+
+    el.addEventListener('touchstart', onStart, { passive: false });
+    el.addEventListener('touchmove',  onMove,  { passive: false });
+    el.addEventListener('touchend',   onEnd,   { passive: true });
+    return () => {
+      el.removeEventListener('touchstart', onStart);
+      el.removeEventListener('touchmove',  onMove);
+      el.removeEventListener('touchend',   onEnd);
+    };
+  }, [slides.length]);
 
   const closeLbl = lang === 'fr' ? 'Fermer' : 'Close';
   const prevLbl  = lang === 'fr' ? 'Diagramme précédent' : 'Previous chart';
@@ -1038,16 +1106,21 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
       role="dialog"
       aria-modal="true"
       aria-label={lang === 'fr' ? 'Diagramme en plein écran' : 'Fullscreen chart'}
-      className="fixed inset-0 z-[600] flex items-center justify-center"
+      className="fixed inset-0 z-[600] flex items-center justify-center overflow-hidden"
       style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.92)' }}
       onClick={onClose}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
     >
       {/* Chart */}
       <div
         className="flex items-center justify-center"
         onClick={(e) => e.stopPropagation()}
+        style={{
+          transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
+          transformOrigin: 'center',
+          transition: zoom === 1 && pan.x === 0 && pan.y === 0 ? 'transform 0.2s ease' : 'none',
+          willChange: 'transform',
+          touchAction: 'none',
+        }}
         dangerouslySetInnerHTML={{ __html: slides[index].lightboxSvg }}
       />
 
@@ -1529,6 +1602,8 @@ function XRExperiences({ lang, isDark }) {
                                 <p className={bodyText}>{p.body}</p>
                               </div>
                             )
+                            : p?.type === 'h3'
+                              ? <h3 className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold text-[#1f1f1f] dark:text-[#f6f6f6]">{p.text}</h3>
                             : p?.type === 'ul'
                               ? <div>{p}</div>
                               : <p className={bodyText}>{p}</p>}

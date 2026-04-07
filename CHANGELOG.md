@@ -1,5 +1,30 @@
 # Changelog 
 
+## [1.5.6] — 2026-04-08
+
+### Sales Platform — secondary navigation
+- **Desktop fixed nav** — sticky side nav (visible at `xl:` breakpoint+) appears once scrolled past the hero; fades out at the bottom of the page; same show/hide logic as mobile
+- **Mobile floating nav** — pill strip floats above the chat button when scrolling through sections; auto-scrolls active item into view
+- **Chat button backdrop** — frosted circle behind the chat button when the mobile nav is visible, matching XR pattern
+- **IntersectionObserver** — tracks active section with `rootMargin: '-10% 0px -70% 0px'`; scroll-lock prevents race condition on programmatic navigation
+
+### Sales Platform — content updates
+- **Outcome** — rewritten: leads with 48-hour sell-out + 20% YoY / £6.8B, followed by team coordination paragraph (EN + FR)
+- **Retrospective** — replaced with three focused paragraphs: early alignment, trade-offs/iterative approach, stakeholder communication (EN + FR)
+- **Tile 2 (industry)** — titles realigned left (removed `text-right`); body rewritten to "The client needed a platform to support growth and scale globally…" (EN + FR)
+- **Mission** — "allows buyers to explore" → "lets buyers explore"; removed "from a global overview down to detailed interiors" (EN + FR)
+- **Stakeholders** — ", marketing." → "and marketing" (EN + FR)
+- **Market** — first three paragraphs replaced with concise competitor analysis + vision statement; Key Design Prerequisites kept (EN + FR)
+- **Design Principle** — condensed to "Layered, progressive flow lets users explore at their own pace while supporting future global expansion." (EN + FR)
+- **Retrospective** — "Despite the fast-paced nature…" → "The team's agility and collaboration ensured we met tight deadlines." (EN + FR)
+- **3D exploration** — "Large 3D datasets took several minutes to load, creating a lag for users." → "Large 3D datasets caused multi-minute load times." (EN + FR)
+- **Incremental iterations** — "ensuring continuous improvements without delaying the initial launch" → "enabling continuous improvement without delaying launch" (EN + FR)
+
+### Accessibility
+- **WCAG empty list item** — added `filter(Boolean)` guard on `card.bullets.map` in hifi mock-up cards
+
+---
+
 ## [1.5.5] — 2026-04-07
 
 ### XR Experiences — content rewrite (EN + FR)
