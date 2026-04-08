@@ -349,7 +349,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                 onClick={(e) => openModal(i, e.currentTarget)}
                 aria-label={collab.name}
                 aria-haspopup="dialog"
-                className="w-[152px] h-[152px] sm:w-[176px] sm:h-[176px] lg:w-[200px] lg:h-[200px] flex items-center justify-center cursor-pointer motion-safe:transition-transform duration-200 sm:hover:scale-[1.06] rounded-[28px] sm:rounded-none border border-[#e0e0e0] dark:border-[#2a2a2a] sm:border-0 bg-white dark:bg-[#1f1f1f] sm:bg-transparent sm:dark:bg-transparent p-3 sm:p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
+                className="w-[152px] h-[152px] sm:w-[176px] sm:h-[176px] lg:w-[200px] lg:h-[200px] flex items-center justify-center cursor-pointer motion-safe:transition-[transform,background-color] duration-200 sm:hover:scale-[1.06] sm:hover:bg-white sm:dark:hover:bg-[#1f1f1f] rounded-[28px] sm:rounded-[28px] border border-[#e0e0e0] dark:border-[#2a2a2a] sm:border-0 sm:hover:border sm:hover:border-[#e0e0e0] dark:sm:hover:border-[#2a2a2a] bg-white dark:bg-[#1f1f1f] sm:bg-transparent sm:dark:bg-transparent p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
               >
                 {collab.logo ? (
                   <>

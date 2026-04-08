@@ -531,14 +531,14 @@ const SP_LEGEND_GROUPS = [
   { heading: 'Design',            group: 'design' },
   { heading: 'Studio',            group: 'studio' },
   { heading: 'Development',       group: 'dev' },
-  { heading: 'Quality Assurance', group: 'qa' },
+  { heading: 'QA', group: 'qa' },
   { heading: 'Marketing',         group: 'marketing' },
   { heading: 'Management',        group: 'management' },
 ];
 
 const SP_LEGEND_T = {
   en: {
-    headings:       { design: 'Design', studio: 'Studio', dev: 'Engineering', qa: 'Quality Assurance', marketing: 'Marketing', management: 'Management' },
+    headings:       { design: 'Design', studio: 'Studio', dev: 'Engineering', qa: 'QA', marketing: 'Marketing', management: 'Management' },
     labels:         { 'UX/UI': 'UX/UI', Interaction: 'Interaction', Visual: 'Visual', 'Creative Team': 'Creative Team', '3D Artists': '3D Artists', 'QA Testers': 'QA Testers', Marketing: 'Marketing', 'Project Manager': 'Project Manager', 'Product Manager': 'Product Manager', Developer: 'Developer', Cyprus: 'Cyprus', UAE: 'UAE' },
     mapCaption:     'Slide or hover over the map to explore time zones.',
     groupAriaLabel: 'Team members by location',
@@ -1823,6 +1823,7 @@ function SalesPlatform({ lang, isDark }) {
   const [activeId, setActiveId]         = useState('');
   const [scrolledDown, setScrolledDown] = useState(false);
   const [atBottom, setAtBottom]         = useState(false);
+  const [scrollingDown, setScrollingDown] = useState(false);
   const scrollTarget = useRef(null);
 
   const handleNavigate = (id) => {
@@ -1872,6 +1873,19 @@ function SalesPlatform({ lang, isDark }) {
     window.addEventListener('scroll', update, { passive: true });
     return () => window.removeEventListener('scroll', update);
   }, [lang]);
+
+  // Mobile only: track scroll direction
+  useEffect(() => {
+    if (!window.matchMedia('(max-width: 767px)').matches) return;
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrollingDown(y > lastY);
+      lastY = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <>
@@ -1937,8 +1951,8 @@ function SalesPlatform({ lang, isDark }) {
 
       {/* ── Mobile floating nav ── */}
       <div
-        inert={scrolledDown && !atBottom ? undefined : true}
-        className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        inert={scrolledDown && !atBottom && !scrollingDown ? undefined : true}
+        className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <div className="pointer-events-auto w-full">
           <MobileSecondaryNav sections={sections} activeId={activeId} onNavigate={handleNavigate} />
@@ -1948,7 +1962,7 @@ function SalesPlatform({ lang, isDark }) {
       {/* ── Chat button backdrop circle ── */}
       <div
         aria-hidden="true"
-        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0'}`}
+        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
         style={{ width: 52, height: 52, left: 8, bottom: 8 }}
       />
 

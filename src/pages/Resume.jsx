@@ -1507,7 +1507,7 @@ function Resume({ lang }) {
           to="/"
           data-spring
           onClick={() => setShowBack(false)}
-          className="flex items-center gap-2 h-9 bg-[#1f1f1f]/90 dark:bg-[#f6f6f6]/90 backdrop-blur-[12px] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-medium px-4 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.18)] ring-1 ring-white/[0.1] dark:ring-black/[0.1] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
+          className="flex items-center gap-2 h-9 bg-[#1f1f1f]/90 dark:bg-[#f6f6f6]/90 backdrop-blur-[12px] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-medium px-4 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.18)] ring-1 ring-white/[0.1] dark:ring-black/[0.1] hover:bg-[#f6f6f6] hover:text-[#1f1f1f] dark:hover:bg-[#1f1f1f] dark:hover:text-[#f6f6f6] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
           aria-label={lang === 'fr' ? "Retour à l'accueil" : 'Back to homepage'}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">

@@ -9,7 +9,7 @@ const MAX_TURNS = 6;
 const L = {
   en: {
     button:      'Ask about my work',
-    pill:        'Ask A.I. about David',
+    pill:        'Ask Claude about me',
     title:       'A.I. knows about me',
     empty:       "Ask anything about David's experience or work.",
     placeholder: 'Ask Claude…',
@@ -53,7 +53,7 @@ function renderContent(text) {
   });
 }
 
-export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = false }) {
+export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = false, fadeFloating = false }) {
   const l = L[lang] || L.en;
   const [open, setOpen] = useState(false);
 
@@ -256,23 +256,23 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
       </div>
 
       {/* Floating trigger button */}
-      <div inert={hideFloating || open || undefined} className={`fixed bottom-4 left-4 z-40 group transition-[opacity,transform] duration-300 ease-out ${hideFloating ? 'opacity-0 pointer-events-none translate-y-3' : open ? 'opacity-0 pointer-events-none translate-y-0' : 'opacity-100 pointer-events-auto translate-y-0'}`}>
+      <div inert={hideFloating || fadeFloating || open || undefined} className={`fixed bottom-4 left-4 z-40 group transition-[opacity,transform] duration-300 ease-out ${hideFloating ? 'opacity-0 pointer-events-none translate-y-3' : fadeFloating ? 'opacity-0 pointer-events-none' : open ? 'opacity-0 pointer-events-none translate-y-0' : 'opacity-100 pointer-events-auto translate-y-0'}`}>
         <button
           data-spring
           onClick={() => setOpen(o => !o)}
           aria-label={open ? 'Close chat' : l.button}
           aria-expanded={open}
           tabIndex={0}
-          className={`flex items-center justify-center rounded-full bg-[#1f1f1f] dark:bg-[#f6f6f6] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.08] dark:ring-black/[0.08] hover:scale-110 transition-[width,padding,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${pillExpanded ? 'h-9 px-4 gap-2' : 'w-9 h-9'}`}
+          className={`group flex items-center justify-center rounded-full bg-[#1f1f1f] dark:bg-[#f6f6f6] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.08] dark:ring-black/[0.08] hover:bg-[#f6f6f6] dark:hover:bg-[#1f1f1f] transition-[width,padding,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${pillExpanded ? 'h-9 px-4 gap-2' : 'w-9 h-9'}`}
         >
-          <span className="text-[16px] leading-none text-white dark:text-[#1f1f1f] shrink-0">💬</span>
-          <span className={`text-[13px] font-semibold text-white dark:text-[#1f1f1f] whitespace-nowrap overflow-hidden transition-[max-width,opacity] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${pillExpanded ? 'max-w-[160px] opacity-100' : 'max-w-0 opacity-0'}`}>
+          <span className="text-[16px] leading-none text-white dark:text-[#1f1f1f] group-hover:text-[#1f1f1f] dark:group-hover:text-white shrink-0">💬</span>
+          <span className={`text-[13px] font-semibold text-white dark:text-[#1f1f1f] group-hover:text-[#1f1f1f] dark:group-hover:text-white whitespace-nowrap overflow-hidden transition-[max-width,opacity,color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${pillExpanded ? 'max-w-[160px] opacity-100' : 'max-w-0 opacity-0'}`}>
             {l.pill}
           </span>
         </button>
         <div className="pointer-events-none absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
           <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-1.5">
-            {lang === 'fr' ? 'en savoir plus sur David' : 'learn about David'}
+            {lang === 'fr' ? 'Tchat avec Claude' : 'Chat with Claude'}
             <kbd className="text-[11px] font-medium w-[15px] h-[18px] flex items-center justify-center rounded bg-[#4a4a4a] dark:bg-[#2a2a2a] text-[#d4d4d4] not-italic">C</kbd>
           </div>
         </div>

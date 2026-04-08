@@ -1,5 +1,36 @@
 # Changelog 
 
+## [1.5.9] — 2026-04-08
+
+### Nav — press effects
+- **`data-spring` added** to résumé link, language button, and case studies button
+
+### Nav — résumé button tooltip & shortcut
+- **Tooltip** shows "back to top" / "retour en haut" when already on the résumé page; otherwise "view my CV"
+- **`R` shortcut** scrolls to top when on the résumé page; navigates there otherwise
+
+### Chat AI button
+- **Hover inverts colours** — bg and text flip on hover; scale-up on hover removed
+- **Hides on scroll down** — fades to opacity 0 (no position change) when scrolling down past 80 px; reappears on scroll up
+- **Tooltip added** — "Chat with Claude" / "Tchat avec Claude" with `C` keyboard shortcut badge
+
+### Collaborations — logos
+- **Desktop hover state** — card background, border and rounded corners appear on hover to signal clickability (matches existing mobile card style)
+
+### ScrollForMore button
+- **Press effect** — `data-spring` wrapper added; resolves conflict with `animate-bounce` by applying spring to a parent div
+
+### Back-to-homepage chip
+- **Hover inverts colours** on both the chip link and the close button
+
+### Sales Platform — world map legend
+- **"Quality Assurance" → "QA"** in the team legend heading (EN)
+
+### Sales Platform — mobile secondary nav
+- **Hides on scroll down** — mobile floating nav (and chat backdrop) fade out while scrolling down; reappear on scroll up; desktop nav unaffected
+
+---
+
 ## [1.5.8] — 2026-04-08
 
 ### Resume — Back-to-homepage chip

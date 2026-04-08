@@ -209,6 +209,7 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
   return (
     <div className="relative">
       <button
+        data-spring
         onClick={() => { hideTip(); onClick(); }}
         onMouseEnter={showTip}
         onMouseLeave={hideTip}
@@ -348,6 +349,7 @@ function LanguageButton({ lang, toggleLang, isDark }) {
         onClick={() => { hideTip(); toggleLang(); }}
         onMouseEnter={showTip}
         onMouseLeave={hideTip}
+        data-spring
         aria-label={`${label}, change language`}
         className="flex items-center gap-2 h-8 px-3 rounded-[12px] cursor-pointer active:opacity-[0.33] transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"
       >
@@ -392,6 +394,7 @@ function NavLink({ to, label, currentPage, tooltip, shortcut, isDark }) {
       <Link
         to={to}
         tabIndex={0}
+        data-spring
         onClick={handleClick}
         onMouseEnter={showTip}
         onMouseLeave={hideTip}
@@ -663,7 +666,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onCo
           )}
         </li>
 
-        <NavLink to="/resume"         label={T[lang].résumé}       currentPage={currentPage} tooltip={T[lang]['tip resume']} shortcut="R" isDark={isDark} />
+        <NavLink to="/resume"         label={T[lang].résumé}       currentPage={currentPage} tooltip={currentPage === '/resume' ? T[lang]['back to top'] : T[lang]['tip resume']} shortcut="R" isDark={isDark} />
         <LetsTalkButton lang={lang} isDark={isDark} onOpen={onContactOpen} />
 
         <li className="relative flex items-center gap-2">

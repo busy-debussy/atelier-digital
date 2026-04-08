@@ -38,28 +38,29 @@ export default function ScrollForMore({ lang, scrollTarget }) {
         </div>
       </div>
 
-      <button
-        onClick={() => {
-          trackEvent('scroll_for_more');
-          const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          const mobile = window.matchMedia('(max-width: 639px)').matches;
-          if (scrollTarget && mobile) {
-            document.getElementById(scrollTarget)?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'center' });
-          } else {
-            window.scrollBy({ top: window.innerHeight * 0.9, behavior: reduced ? 'instant' : 'smooth' });
-          }
-        }}
-        aria-label={label}
-        data-spring
-        className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-colors motion-safe:animate-bounce cursor-pointer"
-      >
-        <img
-          src={imgChevronDown}
-          alt=""
-          width={20} height={20}
-          className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] dark:brightness-0 dark:invert group-hover:brightness-0 group-hover:invert dark:group-hover:brightness-100 dark:group-hover:invert-0 transition-[filter]"
-        />
-      </button>
+      <div data-spring>
+        <button
+          onClick={() => {
+            trackEvent('scroll_for_more');
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const mobile = window.matchMedia('(max-width: 639px)').matches;
+            if (scrollTarget && mobile) {
+              document.getElementById(scrollTarget)?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'center' });
+            } else {
+              window.scrollBy({ top: window.innerHeight * 0.9, behavior: reduced ? 'instant' : 'smooth' });
+            }
+          }}
+          aria-label={label}
+          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-colors motion-safe:animate-bounce cursor-pointer"
+        >
+          <img
+            src={imgChevronDown}
+            alt=""
+            width={20} height={20}
+            className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] dark:brightness-0 dark:invert group-hover:brightness-0 group-hover:invert dark:group-hover:brightness-100 dark:group-hover:invert-0 transition-[filter]"
+          />
+        </button>
+      </div>
     </div>
   );
 }

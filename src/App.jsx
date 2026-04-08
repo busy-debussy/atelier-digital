@@ -61,7 +61,7 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
       const tag = document.activeElement?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA') return;
       if (e.code === 'KeyH') { pathname === '/' ? window.scrollTo({ top: 0, behavior: 'smooth' }) : navigate('/'); trackEvent('keyboard_shortcut', { key: 'H' }); }
-      if (e.code === 'KeyR') { navigate('/resume'); trackEvent('keyboard_shortcut', { key: 'R' }); }
+      if (e.code === 'KeyR') { pathname === '/resume' ? window.scrollTo({ top: 0, behavior: 'smooth' }) : navigate('/resume'); trackEvent('keyboard_shortcut', { key: 'R' }); }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
@@ -153,6 +153,7 @@ function App() {
 
   const [chatOpen, setChatOpen] = useState(false);
   const [secondaryNavVisible, setSecondaryNavVisible] = useState(false);
+  const [scrolledDown, setScrolledDown] = useState(false);
   const toggleDark = () => setIsDark(!isDark);
   const toggleLang = () => setLang(lang === 'en' ? 'fr' : 'en');
 
@@ -160,6 +161,18 @@ function App() {
     const handler = (e) => setSecondaryNavVisible(e.detail);
     window.addEventListener('secondary-nav-change', handler);
     return () => window.removeEventListener('secondary-nav-change', handler);
+  }, []);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > lastY && y > 80) setScrolledDown(true);
+      else if (y < lastY) setScrolledDown(false);
+      lastY = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
@@ -170,7 +183,7 @@ function App() {
         <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
         <CookieBanner lang={lang} hideFloating={secondaryNavVisible} />
       </div>
-      <ChatBot lang={lang} onOpenChange={setChatOpen} hideFloating={secondaryNavVisible} />
+      <ChatBot lang={lang} onOpenChange={setChatOpen} hideFloating={secondaryNavVisible} fadeFloating={scrolledDown} />
     </BrowserRouter>
   );
 }
