@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { trackEvent } from '../analytics';
 import Footer from '../components/Footer';
-import rawGlobe from '../assets/icons/globe-time-zones.svg?raw';
+import WorldMapDots from '../components/WorldMapDots';
 import imgArrowRight   from '../assets/icons/icon-arrow-right.svg';
 import imgClose        from '../assets/icons/icon-close.svg';
 import imgChevronLeft  from '../assets/icons/icon-chevron-left.svg';
@@ -20,6 +20,14 @@ import magicLeapControllerPhoto from '../assets/photos/photo-magic-leap-2-contro
 import rawXboxKeybinding from '../assets/icons/xbox-key-binding.svg?raw';
 import rawFlowInitial from '../assets/case-study/xr-experience/flowchart/shared-ar-experience-flow-inital.svg?raw';
 import rawFlowShipped from '../assets/case-study/xr-experience/flowchart/shared-ar-experience-flow-shipped.svg?raw';
+import imgToolFigma      from '../assets/logos/tools/logo-figma.webp';
+import imgToolBezi       from '../assets/logos/tools/logo-bezi.webp';
+import imgToolUnreal     from '../assets/logos/tools/logo-unreal-engine.svg';
+import imgToolJira       from '../assets/logos/tools/logo-atlassian-jira.webp';
+import imgToolConfluence from '../assets/logos/tools/logo-atlassian-confluence.webp';
+import imgToolMiro       from '../assets/logos/tools/logo-miro.webp';
+import imgToolUnity      from '../assets/logos/tools/logo-unity.webp';
+import imgToolTeams      from '../assets/logos/tools/logo-microsoft-teams.webp';
 
 // ── Accent colour ─────────────────────────────────────────────────────────────
 const GOLD        = '#C9A84C'; // dark-mode accent (~7.7:1 on #141414)
@@ -54,7 +62,8 @@ const T = {
             <li>Rapid navigation of <strong>trade-offs</strong> and <strong>technical constraints</strong></li>
             <li>Iteration of design in response to <strong>feedback</strong></li>
           </ul>,
-          { type: 'callout', label: 'UX Contribution', body: <>I maintained <strong>Figma as the source of truth</strong> for designs, <strong>Confluence for documentation</strong>, and <strong>Jira for task management</strong>, keeping the team aligned and productive.</> },
+          { type: 'h3', text: 'My role' },
+          <>As the <strong>sole UX/UI designer</strong>, I led the design strategy for this high-profile project, ensuring consistency and clarity across all experiences. I collaborated closely with developers, engineers, and project managers, establishing a seamless workflow across diverse teams. I made key decisions that balanced user needs with technical constraints, driving the design process forward efficiently, even under tight timelines.</>,
         ],
         map: true,
       },
@@ -63,7 +72,7 @@ const T = {
         eyebrow: 'Why',
         heading: 'One shot at a first impression',
         body: [
-          <>We were given the opportunity to reveal one of the most ambitious urban developments ever proposed, to a <strong>global audience of investors</strong>. Every detail had to make the project's scale and ambition instantly tangible.</>,
+          <>We were given the opportunity to reveal one of the most ambitious urban developments ever proposed, to a <strong>global audience of investors</strong>. Every detail had to communicate the scale, ambition, and innovative nature of the project.</>,
           { type: 'callout', variant: 'goal', label: 'The goal', body: <>Ensure visitors leave <strong>convinced</strong> this was <strong>a redefinition of what a city could be</strong>.</> },
         ],
       },
@@ -80,7 +89,7 @@ const T = {
             <li><strong>Builders</strong> Developers and architects looking for tangible ways to engage.</li>
             <li><strong>Visionaries</strong> Policymakers and strategists focused on long-term impact and legacy.</li>
           </ul>,
-          { type: 'callout', label: 'UX Insight', body: <>Experiences needed to <strong>flex across group sizes</strong> and engagement styles without losing narrative clarity. Design choices, from the AR presenter flow to mirrored iPad and VR screens, reflected insights from delegate behavior and high-investment audience research.</> },
+          { type: 'callout', label: 'UX Insight', body: <>We needed to design experiences that could <strong>adapt to different group sizes</strong> and <strong>engagement preferences</strong> while maintaining <strong>narrative clarity</strong> and <strong>storytelling integrity</strong>.</> },
         ],
       },
       {
@@ -89,8 +98,8 @@ const T = {
         heading: 'MIPIM, Cannes',
         body: [
           <>Experiences were deployed at the world’s largest real estate and investment event, hosted over <strong>one week</strong> at the Palais des Festivals.</>,
-          <>The client built a two-storey pavilion with a ground floor housing two projects. Layout, dwell time, and engagement had to capture attention quickly and leave impact within minutes.</>,
-          { type: 'callout', label: 'Spatial UX Consideration', body: 'Clear flow and spatial guidance were essential to direct visitors naturally through all experiences.' },
+          <>Our client constructed a <strong>two-story pavilion</strong> dedicated to showcasing the development. Given the event's scale, the experiences had to <strong>capture attention quickly</strong> and deliver impact within minutes.</>,
+          { type: 'callout', label: 'Spatial UX Consideration', body: 'The layout was designed to guide visitors smoothly from one experience to the next, maximizing engagement.' },
         ],
       },
       {
@@ -98,27 +107,27 @@ const T = {
         eyebrow: 'What',
         heading: 'Complementary experiences',
         body: [
-          <>Rather than a single installation, we designed <strong>a system of six experiences</strong>, each a unique entry point into the story.</>,
+          <>Instead of one large installation, we designed <strong>six separate, complementary experiences</strong>. Each served as an entry point to different aspects of the project's story.</>,
         ],
-        footerCallout: { label: 'UX/UI Contribution:', body: <>I designed the UI and interaction patterns for the five interactive experiences. This included intuitive flows across touch, AR/VR controllers, and mouse/gamepad, micro-interactions and onboarding, and visual flows aligned with the pavilion layout and narrative.</> },
+        footerCallout: { label: 'UX/UI Contribution:', body: <>I designed the UI and interaction patterns for the five interactive experiences. This included everything from <strong>AR/VR controller flows</strong> to interactions, onboarding, and visuals that aligned with the <strong>pavilion layout</strong> and overall narrative.</> },
         experiences: [
           {
             number: '01',
             title:  'Film installation',
             tech:   'three LCD walls',
-            body:   "A cinematic introduction establishing the project's vision and scale. Narrated and produced in-house, it set the context for everything that followed.",
+            body:   "A cinematic introduction showcasing the project's vision and scale.",
           },
           {
             number: '02',
             title:  'Interactive map app',
             tech:   'Transparent touchscreen display',
-            body:   'A satellite view of the full development, helping visitors understand geographic context and surrounding districts.',
+            body:   "A transparent touchscreen offering a satellite view of the development's geographic context.",
           },
           {
             number: '03',
             title:  'AR Experience',
             tech:   'Magic Leap 2 • Unity',
-            body:   'A shared augmented reality experience for up to five participants, revealing the central structure layer by layer.',
+            body:   'A shared augmented reality experience where visitors could explore the central building layer by layer.',
           },
           {
             number: '04',
@@ -136,7 +145,7 @@ const T = {
             number: '06',
             title:  'Digital Twin Exploration',
             tech:   'Unreal Engine',
-            body:   'A self-guided exploration of the full development and its districts.',
+            body:   'A self-guided exploration of the entire development, its districts and the city around it.',
           },
         ],
       },
@@ -147,8 +156,12 @@ const T = {
         body: [
           <>The AR table was prioritized as the centerpiece, due to expected engagement and logistics (built in Saudi Arabia, shipped to France). We designed the table for comfort and hardware needs, including each Magic Leap headset, controller, and computer power unit.</>,
           <>At the center of the table, I designed an AR tracker, derived from the client logo. Its size and pattern were critical as Magic Leap sensors and iPad cameras needed to detect it reliably, ensuring the 3D imagery remained precisely locked even as users moved around.</>,
+          { type: 'h3', text: 'What didn\'t make it' },
           <>We explored a multiplayer AR experience, but chose not to pursue it. While compelling, it required more devices than we could properly test or troubleshoot. In addition, network conditions at high-density events were unpredictable to rely on.</>,
-          <>The iPad companion was planned from the start as a potential value-add, though we did not include it in the client brief. With limited time and complex logistics, we were unsure we could deliver it, but it provided an opportunity to enhance the experience, and so we worked on it hoping to overdeliver.</>,
+          <>One element we did carry forward was the <strong>colour coded laser pointer</strong> from that early concept. Each participant was assigned a distinct colour, so they could see one another's focus point during the shared experience.</>,
+          { type: 'h3', text: 'What was overdelivered' },
+          <>While not initially in the brief, I pushed to develop an <strong>iPad companion app</strong>, as it added value by <strong>engaging non-headset users</strong> and enhancing the overall experience.</>,
+          { type: 'h3', text: 'What was scoped down' },
           <>The interactive map was intentionally scoped back to prioritise clarity and reliability over additional features, ensuring it delivered value without introducing risk.</>,
           { type: 'callout', label: 'UX Insight', body: 'Every constraint became an opportunity to maximize engagement and storytelling.' },
         ],
@@ -158,7 +171,7 @@ const T = {
         eyebrow: 'Solve',
         heading: 'Form follows constraint',
         body: [
-          <>Each experience carried unique technical and spatial demands, and every design decision had consequences:</>,
+          <>Every experience came with its own set of <strong>technical and spatial challenges</strong>, which shaped the design decisions:</>,
           <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
             <li><strong>Transparent display:</strong> Needed to show both interface and the space behind it clearly</li>
             <li><strong>AR (Magic Leap 2):</strong> Optimised 3D assets for device constraints; designed for up to five participants simultaneously</li>
@@ -207,6 +220,32 @@ const T = {
         ],
       },
     ],
+    toolsLabel: 'Tools Used',
+    toolCategories: [
+      {
+        label: 'Design',
+        tools: [
+          { name: 'Figma',  icon: imgToolFigma },
+          { name: 'Bezi',   icon: imgToolBezi },
+        ],
+      },
+      {
+        label: 'Development',
+        tools: [
+          { name: 'Unity',         icon: imgToolUnity, contain: 'w-[65%] h-[65%]' },
+          { name: 'Unreal Engine', icon: imgToolUnreal, darkInvert: true, circle: true },
+        ],
+      },
+      {
+        label: 'Project Management',
+        tools: [
+          { name: 'Jira',             icon: imgToolJira },
+          { name: 'Confluence',       icon: imgToolConfluence },
+          { name: 'Miro',             icon: imgToolMiro },
+          { name: 'Microsoft Teams',  icon: imgToolTeams, zoom: 1.5 },
+        ],
+      },
+    ],
     backLabel: 'Back to case studies',
     placeholderAsset: 'Asset — coming soon',
     flowLabels: {
@@ -222,7 +261,7 @@ const T = {
       tracker:   "This AR tracker ensured sensor reliability while remaining brand-compliant.",
       floorPlan: 'Floor plan of the experience space with the six installations.',
       arSession: 'Leading a presenter-led AR session at MIPIM.',
-      satellite: 'Representation of the vast size of the development site.',
+      satellite: 'Representation of the sheer size of the development site.',
       map:       'Interact with the map to explore time zones.',
     },
   },
@@ -253,7 +292,8 @@ const T = {
             <li>Navigation rapide des <strong>compromis</strong> et <strong>contraintes techniques</strong></li>
             <li>Itération du design en réponse aux <strong>retours</strong></li>
           </ul>,
-          { type: 'callout', label: 'Contribution UX', body: <>J'ai maintenu <strong>Figma comme source de vérité</strong> pour les designs, <strong>Confluence pour la documentation</strong> et <strong>Jira pour la gestion des tâches</strong>, maintenant l'équipe alignée et productive.</> },
+          { type: 'h3', text: 'Mon rôle' },
+          <>En tant que <strong>seul designer UX/UI</strong>, j'ai dirigé la stratégie design de ce projet d'envergure, en assurant cohérence et clarté sur l'ensemble des expériences. J'ai collaboré étroitement avec les développeurs, ingénieurs et chefs de projet, instaurant un flux de travail fluide entre des équipes diverses. J'ai pris des décisions clés équilibrant les besoins utilisateurs et les contraintes techniques, faisant avancer le processus de design efficacement, même dans des délais serrés.</>,
         ],
         map: true,
       },
@@ -279,7 +319,7 @@ const T = {
             <li><strong>Les bâtisseurs</strong> Promoteurs et architectes cherchant des moyens concrets de s'impliquer.</li>
             <li><strong>Les visionnaires</strong> Décideurs et stratèges axés sur l'impact à long terme et l'héritage.</li>
           </ul>,
-          { type: 'callout', label: 'UX Insight', body: <>Les expériences devaient <strong>s'adapter à la taille des groupes</strong> et aux styles d'engagement sans perdre la clarté narrative. Les choix de conception, du flux présentateur AR aux écrans iPad et VR en miroir, reflétaient les enseignements des comportements délégués et de la recherche sur les publics à fort investissement.</> },
+          { type: 'callout', label: 'UX Insight', body: <>Nous devions concevoir des expériences capables de <strong>s'adapter à différentes tailles de groupes</strong> et <strong>préférences d'engagement</strong>, tout en maintenant la <strong>clarté narrative</strong> et l'<strong>intégrité du storytelling</strong>.</> },
         ],
       },
       {
@@ -288,8 +328,8 @@ const T = {
         heading: 'MIPIM, Cannes',
         body: [
           <>Les expériences ont été déployées au plus grand événement mondial dédié à l'immobilier et à l'investissement, accueilli pendant <strong>une semaine</strong> au Palais des Festivals.</>,
-          <>Le client a construit un pavillon sur deux étages, avec un rez-de-chaussée accueillant deux projets. La disposition, le temps de présence et l'engagement devaient capter l'attention rapidement et laisser une impression en quelques minutes.</>,
-          { type: 'callout', label: 'Considération UX Spatiale', body: "Une circulation claire et un guidage spatial étaient essentiels pour diriger naturellement les visiteurs à travers toutes les expériences." },
+          <>Notre client a construit un <strong>pavillon sur deux niveaux</strong> dédié à la présentation du développement. Compte tenu de l'envergure de l'événement, les expériences devaient <strong>capter l'attention rapidement</strong> et produire un impact en quelques minutes.</>,
+          { type: 'callout', label: 'Considération UX Spatiale', body: "La disposition a été conçue pour guider les visiteurs fluidement d'une expérience à l'autre, en maximisant l'engagement." },
         ],
       },
       {
@@ -297,27 +337,27 @@ const T = {
         eyebrow: 'Quoi',
         heading: 'Des expériences complémentaires',
         body: [
-          <>Plutôt qu'une seule installation, nous avons conçu <strong>un système de six expériences</strong>, chacune offrant un point d'entrée unique dans la même histoire.</>,
+          <>Plutôt qu'une grande installation unique, nous avons conçu <strong>six expériences distinctes et complémentaires</strong>. Chacune servait de point d'entrée vers différents aspects de l'histoire du projet.</>,
         ],
-        footerCallout: { label: 'Contribution UX/UI :', body: <>J'ai conçu l'UI et les patterns d'interaction pour les cinq expériences interactives. Cela incluait des flux intuitifs sur tactile, contrôleurs AR/VR et souris/manette, des micro-interactions et l'onboarding, et des flux visuels alignés avec la disposition du pavillon et la narration.</> },
+        footerCallout: { label: 'Contribution UX/UI :', body: <>J'ai conçu l'UI et les patterns d'interaction pour les cinq expériences interactives. Cela incluait tout, des <strong>flux contrôleurs AR/VR</strong> aux interactions, à l'onboarding et aux visuels alignés avec la <strong>disposition du pavillon</strong> et la narration globale.</> },
         experiences: [
           {
             number: '01',
             title:  'Installation audiovisuelle',
             tech:   'Trois murs-écrans LCD',
-            body:   "Une introduction cinématographique présentant la vision et l'ampleur du projet. Narrée et produite en interne, elle posait le contexte pour la suite.",
+            body:   "Une introduction cinématographique présentant la vision et l'envergure du projet.",
           },
           {
             number: '02',
             title:  'Carte interactive',
             tech:   'Écran tactile transparent',
-            body:   "Une vue satellite de l'ensemble du développement, aidant les visiteurs à comprendre le contexte géographique et les quartiers environnants.",
+            body:   "Un écran tactile transparent offrant une vue satellite du contexte géographique du développement.",
           },
           {
             number: '03',
             title:  'Expérience AR',
             tech:   'Magic Leap 2 • Unity',
-            body:   "Une expérience de réalité augmentée partagée pour jusqu'à cinq participants, révélant la structure centrale couche par couche.",
+            body:   "Une expérience de réalité augmentée partagée où les visiteurs pouvaient explorer le bâtiment central couche par couche.",
           },
           {
             number: '04',
@@ -346,8 +386,12 @@ const T = {
         body: [
           <>La table AR a été priorisée comme pièce maîtresse, en raison de l'engagement attendu et des contraintes logistiques (construite en Arabie Saoudite, expédiée en France). Nous l'avons conçue pour le confort et les besoins matériels, incluant chaque casque Magic Leap, contrôleur et unité de traitement.</>,
           <>Au centre, j'ai conçu un marqueur AR dérivé du logo client. Sa taille et son motif étaient critiques : les capteurs Magic Leap et les caméras iPad devaient le détecter de manière fiable, maintenant les images 3D précisément ancrées même lors des déplacements des utilisateurs.</>,
+          { type: 'h3', text: 'Ce qui n\'a pas été retenu' },
           <>Nous avons exploré une expérience AR multijoueur, mais avons choisi de ne pas la poursuivre. Bien que prometteuse, elle nécessitait plus d'appareils que nous ne pouvions tester correctement, et les conditions réseau dans des environnements à forte densité étaient trop imprévisibles.</>,
-          <>Le compagnon iPad était prévu dès le départ comme valeur ajoutée potentielle, non inclus dans le brief client. Avec des délais serrés et une logistique complexe, nous n'étions pas certains de le livrer, mais il représentait une opportunité d'enrichir l'expérience.</>,
+          <>Un élément que nous avons conservé est le <strong>pointeur laser coloré</strong> issu de ce concept initial. Chaque participant se voyait attribuer une couleur distincte, lui permettant de voir le point de focus des autres pendant l'expérience partagée.</>,
+          { type: 'h3', text: 'Ce qui a été livré en plus' },
+          <>Non prévu initialement dans le brief, j'ai poussé pour développer une <strong>application compagnon iPad</strong>, car elle apportait de la valeur en <strong>engageant les participants sans casque</strong> et en enrichissant l'expérience globale.</>,
+          { type: 'h3', text: 'Ce qui a été simplifié' },
           <>La carte interactive a été intentionnellement simplifiée pour prioriser la clarté et la fiabilité plutôt que des fonctionnalités supplémentaires.</>,
           { type: 'callout', label: 'UX Insight', body: "Chaque contrainte est devenue une opportunité de maximiser l'engagement et la narration." },
         ],
@@ -357,7 +401,7 @@ const T = {
         eyebrow: 'Concevoir',
         heading: 'La forme suit la contrainte',
         body: [
-          <>Chaque expérience avait ses propres exigences techniques et spatiales, et chaque décision avait des conséquences :</>,
+          <>Chaque expérience avait ses propres <strong>défis techniques et spatiaux</strong>, qui ont façonné les décisions de design :</>,
           <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
             <li><strong>Écran transparent :</strong> Devait afficher l'interface et laisser voir l'espace derrière</li>
             <li><strong>AR (Magic Leap 2) :</strong> Assets 3D optimisés pour les contraintes de l'appareil ; conçu pour cinq participants simultanément</li>
@@ -406,6 +450,32 @@ const T = {
         ],
       },
     ],
+    toolsLabel: 'Outils utilisés',
+    toolCategories: [
+      {
+        label: 'Design',
+        tools: [
+          { name: 'Figma',  icon: imgToolFigma },
+          { name: 'Bezi',   icon: imgToolBezi },
+        ],
+      },
+      {
+        label: 'Développement',
+        tools: [
+          { name: 'Unity',         icon: imgToolUnity, contain: 'w-[65%] h-[65%]' },
+          { name: 'Unreal Engine', icon: imgToolUnreal, darkInvert: true, circle: true },
+        ],
+      },
+      {
+        label: 'Gestion de projet',
+        tools: [
+          { name: 'Jira',             icon: imgToolJira },
+          { name: 'Confluence',       icon: imgToolConfluence },
+          { name: 'Miro',             icon: imgToolMiro },
+          { name: 'Microsoft Teams',  icon: imgToolTeams, zoom: 1.5 },
+        ],
+      },
+    ],
     backLabel: "Retour aux études de cas",
     placeholderAsset: 'Asset — à venir',
     flowLabels: {
@@ -428,39 +498,7 @@ const T = {
 };
 
 // ── World map dots ────────────────────────────────────────────────────────────
-const COUNTRY_COLOR_MAP = {
-  Scotland: '#C9A84C',
-  England:  '#6B9CE8',
-  UAE:      '#E8836B',
-  Vietnam:  '#6BC4A0',
-};
 
-const TEAM_DOTS = [
-  { label: 'Designer',           group: 'design',     country: 'Scotland', color: '#C9A84C' },
-  { label: 'Unity',         group: 'dev',        country: 'Scotland', color: '#C9A84C' },
-  { label: 'Creative Team',      group: 'studio',     country: 'Scotland', color: '#C9A84C' },
-  { label: 'Project Manager',    group: 'management', country: 'England',  color: '#6B9CE8' },
-  { label: 'Product Manager',    group: 'management', country: 'UAE',      color: '#E8836B' },
-  { label: 'Unreal Engine', group: 'dev',        country: 'Vietnam',  color: '#6BC4A0' },
-];
-
-const LEGEND_GROUPS = [
-  { heading: 'Development', group: 'dev' },
-  { heading: 'Design',      group: 'design' },
-  { heading: 'Management',  group: 'management' },
-  { heading: 'Studio',      group: 'studio' },
-];
-
-// Flat ordered list of pills as rendered (by LEGEND_GROUPS order) — used for roving tabindex
-const FLAT_DOTS = LEGEND_GROUPS.flatMap(col => TEAM_DOTS.filter(d => d.group === col.group));
-
-const SVG_W = 1114, SVG_H = 561;
-
-// Extract normalised timezone string from a circle ID, e.g. "even+4-UAE" → "4", "odd-11-Sea" → "-11"
-function extractTz(id) {
-  const m = id.match(/^(?:even|odd)([+-]?\d+(?:\.\d+)?)-/);
-  return m ? String(parseFloat(m[1])) : null;
-}
 
 function useCountUp(target, duration, ready) {
   const [count, setCount] = useState(0);
@@ -485,463 +523,6 @@ function AnimatedStat({ prefix, countTo, suffix, ready }) {
   return <span>{prefix}{value}{suffix}</span>;
 }
 
-const LEGEND_T = {
-  en: {
-    headings:      { dev: 'Engineering', design: 'Design', management: 'Management', studio: 'Studio' },
-    labels:        { Designer: 'Designer', 'Unity': 'Unity', 'Creative Team': 'Creative Team', 'Project Manager': 'Project Manager', 'Product Manager': 'Product Manager', 'Unreal Engine': 'Unreal Engine' },
-    mapCaption:    'Slide or hover over the map to explore time zones.',
-    groupAriaLabel: 'Team members by location',
-    mapAriaLabel:   'World map showing team locations. Use left and right arrow keys to explore time zones.',
-  },
-  fr: {
-    headings:      { dev: 'Ingénierie', design: 'Design', management: 'Management', studio: 'Studio' },
-    labels:        { Designer: 'Designer', 'Unity': 'Unity', 'Creative Team': "Équipe créative", 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', 'Unreal Engine': 'Unreal Engine' },
-    mapCaption:    "Survolez la carte pour explorer les fuseaux horaires.",
-    groupAriaLabel: "Membres de l'équipe par localisation",
-    mapAriaLabel:   "Carte du monde montrant les localisations de l'équipe. Utilisez les flèches gauche et droite pour explorer les fuseaux horaires.",
-  },
-};
-
-function WorldMapDots({ isDark, lang = 'en' }) {
-  const lt = LEGEND_T[lang] ?? LEGEND_T.en;
-  const [hovered,    setHovered]    = useState(null); // { tz, country } | null — transient hover
-  const [selected,   setSelected]   = useState(null); // { tz, country } | null — locked by click
-  const [focusedIdx, setFocusedIdx] = useState(0);    // roving tabindex for legend pills
-  const containerRef    = useRef(null);
-  const mapRef          = useRef(null);
-  const touchOverlayRef = useRef(null);
-  const prevLitRef    = useRef([]);             // circles highlighted on last hover, cleared cheaply
-  const legendRef     = useRef(null);           // legend container for click-outside detection
-
-  // Deselect pill on click-outside or scroll
-  useEffect(() => {
-    const handleClick = (e) => {
-      // Don't deselect when interacting with the map or legend — let their own handlers run first
-      if (mapRef.current?.contains(e.target)) return;
-      if (legendRef.current?.contains(e.target)) return;
-      setSelected(null);
-    };
-    // Only deselect on scroll if it isn't triggered by a touch on the map
-    const handleScroll = () => {
-      if (mapRef.current?.dataset.touching) return;
-      setSelected(null);
-    };
-    document.addEventListener('click', handleClick);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      document.removeEventListener('click', handleClick);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  // Arrow key navigation on the map itself — cycles through all tz columns
-  const handleMapKeyDown = (e) => {
-    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-    e.preventDefault();
-    if (!tzList.length) return;
-    const curr = selected ? tzList.indexOf(selected.tz) : -1;
-    const next = e.key === 'ArrowRight'
-      ? (curr + 1) % tzList.length
-      : (curr - 1 + tzList.length) % tzList.length;
-    setSelected({ tz: tzList[next], country: null });
-  };
-
-  // Arrow key navigation across legend pills (roving tabindex pattern)
-  const handleLegendKeyDown = (e) => {
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-    e.preventDefault();
-    const buttons = [...legendRef.current.querySelectorAll('button')];
-    const curr = buttons.indexOf(document.activeElement);
-    if (curr === -1) return;
-    const next = e.key === 'ArrowRight'
-      ? (curr + 1) % buttons.length
-      : (curr - 1 + buttons.length) % buttons.length;
-    buttons[next].focus();
-    setFocusedIdx(next);
-    const dot   = FLAT_DOTS[next];
-    const dotTz = dot ? dotPositions[dot.country]?.tz ?? null : null;
-    if (dotTz) setSelected({ tz: dotTz, country: dot.country });
-  };
-
-  // Fallback: reset on any pointer movement outside the map container
-  useEffect(() => {
-    const handleMove = (e) => {
-      if (!mapRef.current) return;
-      const r = mapRef.current.getBoundingClientRect();
-      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
-        setHovered(prev => prev === null ? null : null);
-      }
-    };
-    document.addEventListener('pointermove', handleMove);
-    return () => document.removeEventListener('pointermove', handleMove);
-  }, []);
-
-  // Parse SVG once per dark-mode change: color named circles, tag every circle with data-tz
-  const { svgHtml, dotPositions, tzList } = useMemo(() => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(rawGlobe, 'image/svg+xml');
-    const svg = doc.documentElement;
-    svg.setAttribute('width', '100%');
-    svg.removeAttribute('height');
-    svg.setAttribute('overflow', 'visible');
-    svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-hidden', 'true'); // outer div carries the accessible label
-    svg.style.touchAction = 'none';          // iOS: hand all touch events to JS
-
-    const rect = svg.querySelector('rect');
-    if (rect) rect.setAttribute('fill', 'transparent');
-
-    const bgOpacity  = isDark ? 0.45 : 0.45;
-    const bgHoverDim = isDark ? 0.06 : 0.15;
-    const labelColor = isDark ? '#f6f6f6' : '#1f1f1f';
-
-    // CSS: [data-active] triggers blanket dim; matching elements get inline opacity overrides
-    const style = doc.createElementNS('http://www.w3.org/2000/svg', 'style');
-    style.textContent = `
-      svg { touch-action: none; }
-      .xr-bg    { opacity: ${bgOpacity}; cursor: crosshair; }
-      .xr-dot   { opacity: 1;            cursor: crosshair; }
-      .xr-label    { font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-                     font-size: 8px; font-weight: 700; text-anchor: middle; dominant-baseline: central;
-                     cursor: crosshair; fill: ${labelColor}; }
-      .xr-label-bg { cursor: crosshair; fill: ${isDark ? '#2e2e2e' : '#e4e4e4'}; opacity: 0; }
-      svg[data-active] .xr-bg       { opacity: ${bgHoverDim}; }
-      svg[data-active] .xr-dot      { opacity: 0.2; }
-      svg[data-active] .xr-label    { opacity: ${bgHoverDim}; }
-      svg[data-active] .xr-label-bg { opacity: 0; }
-    `;
-    svg.insertBefore(style, svg.firstChild);
-
-    const allCircles = Array.from(svg.querySelectorAll('circle'));
-    const positions  = {};
-
-    // Find the first two rows to compute row spacing, then place labels one row above the first dot row
-    const sortedCys  = [...new Set(allCircles.map(c => parseFloat(c.getAttribute('cy'))))].sort((a, b) => a - b);
-    const minCy      = sortedCys[0];
-    const maxCy      = sortedCys[sortedCys.length - 1];
-    const nextCy     = sortedCys[1] ?? minCy;
-    const rowSpacing = nextCy - minCy;
-    const dotRowY    = minCy - rowSpacing;       // new dot row sits one row above the map
-    const labelY     = minCy - rowSpacing * 2;   // labels sit one row above the dot row
-
-    // Extend the viewBox upward so labels + dot row are inside it — overflow:visible paints outside
-    // the viewBox but browsers clip pointer events to the viewBox boundary.
-    const vb   = (svg.getAttribute('viewBox') || `0 0 ${SVG_W} ${SVG_H}`).trim().split(/[\s,]+/);
-    const vbX  = parseFloat(vb[0]);
-    const vbY  = parseFloat(vb[1]) - rowSpacing * 2 - 30;
-    const vbW  = parseFloat(vb[2]);
-    const vbH  = parseFloat(vb[3]) + rowSpacing * 2 + 30;
-    svg.setAttribute('viewBox', `${vbX} ${vbY} ${vbW} ${vbH}`);
-
-    // Collect first-row cx values grouped by tz (to find the middle x of each group)
-    const lastRowByTz = {};
-    allCircles.forEach(c => {
-      if (Math.abs(parseFloat(c.getAttribute('cy')) - maxCy) > 0.5) return;
-      const tz = extractTz(c.getAttribute('id') || '');
-      if (!tz) return;
-      (lastRowByTz[tz] = lastRowByTz[tz] || []).push(parseFloat(c.getAttribute('cx')));
-    });
-
-    allCircles.forEach(circle => {
-      const id     = circle.getAttribute('id') || '';
-      const baseId = id.replace(/-\d+$/, ''); // strip incrementing suffix added to deduplicate SVG ids
-      const tz     = extractTz(baseId);
-      if (tz) circle.setAttribute('data-tz', tz);
-
-      let matched = null;
-      for (const country of Object.keys(COUNTRY_COLOR_MAP)) {
-        if (baseId.endsWith(`-${country}`)) { matched = country; break; }
-      }
-
-      if (matched) {
-        circle.setAttribute('fill', COUNTRY_COLOR_MAP[matched]);
-        circle.setAttribute('data-country', matched);
-        circle.setAttribute('class', 'xr-dot');
-        circle.setAttribute('r', '8');
-        positions[matched] = {
-          x: (parseFloat(circle.getAttribute('cx')) / SVG_W) * 100,
-          y: ((parseFloat(circle.getAttribute('cy')) - vbY) / vbH) * 100,
-          tz,
-        };
-      } else {
-        const fill = circle.getAttribute('fill');
-        if (fill === 'white') {
-          circle.setAttribute('fill', isDark ? 'transparent' : 'transparent');
-        } else {
-          circle.setAttribute('fill', '#C8C8C8');
-        }
-        circle.setAttribute('class', 'xr-bg');
-      }
-    });
-
-    // Add timezone label backgrounds + text at the last row positions
-    const labelsG = doc.createElementNS('http://www.w3.org/2000/svg', 'g');
-    Object.entries(lastRowByTz).forEach(([tz, cxArr]) => {
-      cxArr.sort((a, b) => a - b);
-      let midIdx = Math.floor(cxArr.length / 2);
-      if (tz === '10') midIdx = Math.max(0, midIdx - 1);
-      const midCx  = cxArr[midIdx];
-      const tzNum  = parseFloat(tz);
-      const label  = tzNum === 0 ? 'GMT' : tzNum > 0 ? `+${tzNum}` : String(tzNum);
-
-      // Default pill dimensions (sized for 8px label)
-      const dw = label.length * 7 + 10;
-      const dh = 14;
-
-      const bg = doc.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      bg.setAttribute('x',          String(midCx - dw / 2));
-      bg.setAttribute('y',          String(labelY - dh / 2));
-      bg.setAttribute('width',      String(dw));
-      bg.setAttribute('height',     String(dh));
-      bg.setAttribute('rx',         '4');
-      bg.setAttribute('data-tz',    tz);
-      bg.setAttribute('data-midx',  String(midCx));
-      bg.setAttribute('data-midy',  String(labelY));
-      bg.setAttribute('data-dw',    String(dw));
-      bg.setAttribute('data-dh',    String(dh));
-      bg.setAttribute('data-len',   String(label.length));
-      bg.setAttribute('class',      'xr-label-bg');
-      labelsG.appendChild(bg);
-
-      const text = doc.createElementNS('http://www.w3.org/2000/svg', 'text');
-      text.setAttribute('x',        String(midCx));
-      text.setAttribute('y',        String(labelY));
-      text.setAttribute('data-tz',  tz);
-      text.setAttribute('class',    'xr-label');
-      text.textContent = label;
-      labelsG.appendChild(text);
-
-      // Dot row — one circle per tz column, sits between labels and the map
-      const dot = doc.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      dot.setAttribute('cx',       String(midCx));
-      dot.setAttribute('cy',       String(dotRowY));
-      dot.setAttribute('r',        '4');
-      dot.setAttribute('data-tz',  tz);
-      dot.setAttribute('class',    'xr-bg');
-      labelsG.appendChild(dot);
-    });
-    svg.appendChild(labelsG);
-
-    const tzList = Object.keys(lastRowByTz).sort((a, b) => parseFloat(a) - parseFloat(b));
-    return { svgHtml: svg.outerHTML, dotPositions: positions, tzList };
-  }, [isDark]);
-
-  // Mobile: HTML overlay with non-passive direct listeners — the only approach iOS respects
-  useEffect(() => {
-    const overlay = touchOverlayRef.current;
-    const map     = mapRef.current;
-    if (!overlay || !map || !tzList.length) return;
-
-    const scrub = (clientX) => {
-      const r   = map.getBoundingClientRect();
-      const pct = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
-      setSelected({ tz: tzList[Math.min(tzList.length - 1, Math.floor(pct * tzList.length))], country: null });
-    };
-
-    let startX  = null;
-    let startY  = null;
-    let prevY   = null;
-    let isHoriz = null;
-
-    const onStart = (e) => {
-      e.preventDefault();
-      startX  = e.touches[0].clientX;
-      startY  = e.touches[0].clientY;
-      prevY   = startY;
-      isHoriz = null;
-      scrub(startX);
-    };
-
-    const onMove = (e) => {
-      e.preventDefault();
-      const t  = e.touches[0];
-      const dx = t.clientX - startX;
-      const dy = t.clientY - startY;
-      if (isHoriz === null && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
-        isHoriz = Math.abs(dx) >= Math.abs(dy);
-      }
-      if (isHoriz === false) {
-        window.scrollBy(0, prevY - t.clientY);
-        prevY = t.clientY;
-      } else if (isHoriz === true) {
-        scrub(t.clientX);
-      }
-    };
-
-    const onEnd = () => { setSelected(null); };
-
-    overlay.addEventListener('touchstart', onStart, { passive: false });
-    overlay.addEventListener('touchmove',  onMove,  { passive: false });
-    overlay.addEventListener('touchend',   onEnd,   { passive: true });
-
-    return () => {
-      overlay.removeEventListener('touchstart', onStart);
-      overlay.removeEventListener('touchmove',  onMove);
-      overlay.removeEventListener('touchend',   onEnd);
-    };
-  }, [tzList]);
-
-  // On hover/select change: toggle [data-active], restore previously lit circles, highlight new tz group
-  useLayoutEffect(() => {
-    const active = hovered ?? selected;
-    const svgEl  = containerRef.current?.querySelector('svg');
-    if (!svgEl) return;
-
-    // Restore previous highlights (inline styles removed, CSS defaults take over)
-    prevLitRef.current.forEach(c => {
-      c.style.opacity = '';
-      if (c.classList.contains('xr-label')) { c.style.fontSize = ''; c.style.fill = ''; }
-      if (c.classList.contains('xr-label-bg')) {
-        const midx = parseFloat(c.getAttribute('data-midx'));
-        const midy = parseFloat(c.getAttribute('data-midy'));
-        const dw   = parseFloat(c.getAttribute('data-dw'));
-        const dh   = parseFloat(c.getAttribute('data-dh'));
-        c.setAttribute('x',      String(midx - dw / 2));
-        c.setAttribute('y',      String(midy - dh / 2));
-        c.setAttribute('width',  String(dw));
-        c.setAttribute('height', String(dh));
-        c.setAttribute('rx',     '4');
-        c.style.fill = '';
-      }
-    });
-    prevLitRef.current = [];
-
-    if (!active) { svgEl.removeAttribute('data-active'); return; }
-
-    svgEl.setAttribute('data-active', '1');
-    const lit = [];
-
-    if (!hovered && selected && selected.country) {
-      // Pill-selected mode: un-dim the country dot; hide all labels so no tz info shows
-      const dot = svgEl.querySelector(`[data-country="${selected.country}"]`);
-      if (dot) { dot.style.opacity = '1'; lit.push(dot); }
-      svgEl.querySelectorAll('.xr-label, .xr-label-bg').forEach(el => {
-        el.style.opacity = '0'; lit.push(el);
-      });
-    } else {
-      // Map-hover mode: highlight every element in the tz column + expand the label
-      const bgActiveOpacity = isDark ? 0.9 : 0.8;
-      svgEl.querySelectorAll(`[data-tz="${active.tz}"]`).forEach(c => {
-        c.style.opacity = c.classList.contains('xr-dot') ? '1' : String(bgActiveOpacity);
-        if (c.classList.contains('xr-label')) {
-          c.style.opacity  = '1';
-          c.style.fontSize = '22px';
-          c.style.fill     = isDark ? '#000000' : '#ffffff';
-        }
-        if (c.classList.contains('xr-label-bg')) {
-          const midx = parseFloat(c.getAttribute('data-midx'));
-          const midy = parseFloat(c.getAttribute('data-midy'));
-          const len  = parseInt(c.getAttribute('data-len'), 10);
-          const aw   = len * 14 + 28;
-          const ah   = 38;
-          c.style.opacity = '1';
-          c.style.fill    = isDark ? '#ffffff' : '#000000';
-          c.setAttribute('x',      String(midx - aw / 2));
-          c.setAttribute('y',      String(midy - ah / 2));
-          c.setAttribute('width',  String(aw));
-          c.setAttribute('height', String(ah));
-          c.setAttribute('rx',     '16');
-        }
-        lit.push(c);
-      });
-    }
-    prevLitRef.current = lit;
-  }, [hovered, selected, isDark]);
-
-  return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-1">
-      {/* Inline SVG map — mouse events delegated to outer container */}
-      <div
-        ref={mapRef}
-        className="relative w-full mb-2 sm:mb-0 rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C9A84C]"
-        style={{ cursor: 'crosshair' }}
-        tabIndex={0}
-        role="img"
-        aria-label={lt.mapAriaLabel}
-        onKeyDown={handleMapKeyDown}
-        onMouseOver={(e) => {
-          const circle = e.target.closest?.('[data-tz]');
-          if (!circle) return;
-          const tz      = circle.getAttribute('data-tz');
-          const country = circle.getAttribute('data-country') || null;
-          setHovered(prev => (prev?.tz === tz && prev?.country === country) ? prev : { tz, country });
-        }}
-        onMouseLeave={() => setHovered(null)}
-      >
-        <div className="relative w-full">
-          <div ref={containerRef} className="w-full" dangerouslySetInnerHTML={{ __html: svgHtml }} />
-          <div ref={touchOverlayRef} className="absolute inset-0 sm:hidden" style={{ zIndex: 2, touchAction: 'none' }} aria-hidden="true" />
-        </div>
-        {/* Tooltips — purely visual, country name already in each button's aria-label */}
-        {Object.entries(dotPositions).map(([country, pos]) => (
-          <div
-            key={country}
-            aria-hidden="true"
-            className="absolute pointer-events-none"
-            style={{ left: `${pos.x}%`, top: `${pos.y}%`, transform: 'translate(-50%, -100%)' }}
-          >
-            <div
-              className="mb-2 whitespace-nowrap rounded-md px-2 py-1 text-[11px] font-medium bg-[#1f1f1f] text-white dark:bg-white dark:text-[#1f1f1f] transition-opacity duration-150"
-              style={{ opacity: (hovered ?? selected)?.country === country ? 1 : 0 }}
-            >
-              {country}
-            </div>
-          </div>
-        ))}
-      </div>
-      <p className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] mt-2 text-center" aria-hidden="true">{lt.mapCaption}</p>
-
-      {/* Screen-reader description of the map */}
-      <p className="sr-only">
-        World map showing the geographic distribution of the team across four countries and their time zones.
-        Use the buttons below to highlight each team member's location on the map.
-      </p>
-      </div>
-
-      {/* Legend */}
-      <div ref={legendRef} className="grid grid-cols-2 gap-x-10 gap-y-6 lg:flex lg:gap-y-0" role="group" aria-label={lt.groupAriaLabel} onKeyDown={handleLegendKeyDown}>
-        {LEGEND_GROUPS.map((col) => (
-          <div key={col.group} className="flex flex-col gap-2">
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad] mb-1" aria-hidden="true">{lt.headings[col.group]}</p>
-            {TEAM_DOTS.filter(d => d.group === col.group).map((dot) => {
-              const dotTz      = dotPositions[dot.country]?.tz ?? null;
-              const active     = hovered ?? selected;
-              const isSelected = selected?.tz === dotTz;
-              const flatIdx    = FLAT_DOTS.indexOf(dot);
-              return (
-                <button
-                  key={dot.label}
-                  type="button"
-                  tabIndex={flatIdx === focusedIdx ? 0 : -1}
-                  aria-pressed={isSelected}
-                  aria-label={`${lt.labels[dot.label] ?? dot.label}, ${dot.country}${isSelected ? ', selected' : ''}`}
-                  className={`flex items-center gap-2 px-3 py-1 rounded-full transition-colors self-start ${
-                    isSelected
-                      ? 'bg-black/[0.12] dark:bg-white/[0.16]'
-                      : 'bg-black/[0.05] dark:bg-white/[0.07] hover:bg-black/[0.1] dark:hover:bg-white/[0.13]'
-                  }`}
-                  style={{
-                    opacity: active && active.tz !== dotTz ? 0.2 : 1,
-                    transition: 'opacity 200ms ease',
-                  }}
-                  onFocus={() => setFocusedIdx(flatIdx)}
-                  onPointerEnter={(e) => { if (e.pointerType !== 'touch') setHovered({ tz: dotTz, country: dot.country }); }}
-                  onPointerLeave={(e) => { if (e.pointerType !== 'touch') setHovered(null); }}
-                  onPointerDown={(e) => { e.stopPropagation(); setSelected(prev => prev?.tz === dotTz ? null : { tz: dotTz, country: dot.country }); }}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: dot.color, flexShrink: 0 }} aria-hidden="true" />
-                  <span className="text-[13px] text-[#5c5c5c] dark:text-[#adadad] whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // ── Flowchart SVG translation ─────────────────────────────────────────────────
 const SVG_FR = {
@@ -1255,6 +836,58 @@ const scrollToSection = (id) => {
   el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   el.focus({ preventScroll: true });
 };
+
+// ── Tools grid ────────────────────────────────────────────────────────────────
+function XRToolIcon({ name, icon, darkInvert = false, circle = false, contain = false, zoom }) {
+  const [active, setActive] = useState(false);
+  const tooltipId = `xr-tip-${name.replace(/\s+/g, '-').toLowerCase()}`;
+  return (
+    <div className="relative flex flex-col items-center">
+      <div
+        id={tooltipId}
+        role="tooltip"
+        className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${active ? 'opacity-100' : 'opacity-0'}`}
+      >
+        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
+      </div>
+      <button
+        aria-label={name}
+        aria-describedby={active ? tooltipId : undefined}
+        onMouseEnter={() => { if (!window.matchMedia('(pointer: coarse)').matches) setActive(true); }}
+        onMouseLeave={() => setActive(false)}
+        onFocus={() => setActive(true)}
+        onBlur={() => setActive(false)}
+        onClick={() => setActive(a => !a)}
+        className={`w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center shrink-0 overflow-hidden bg-[#f6f6f6] dark:bg-[#2a2a2a] shadow-[1px_1px_8px_0px_rgba(0,0,0,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1f1f] dark:focus-visible:outline-[#f6f6f6] ${circle ? 'rounded-full' : 'rounded-[10px]'}`}
+      >
+        {icon
+          ? <img src={icon} alt="" className={`${contain ? `${contain} object-contain` : 'w-full h-full object-cover'}${darkInvert ? ' dark:invert' : ''}`} style={zoom ? { transform: `scale(${zoom})` } : undefined} />
+          : <span className="text-[7px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-tight px-[2px]">{name}</span>
+        }
+      </button>
+    </div>
+  );
+}
+
+function XRToolsSection({ label, categories }) {
+  return (
+    <div className="rounded-3xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-5 py-4 flex flex-col gap-4 sm:w-fit">
+      <p className="text-[12px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad]">{label}</p>
+      <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
+        {categories.map(cat => (
+          <div key={cat.label} className="flex flex-col gap-3">
+            <p className="text-[11px] font-medium uppercase tracking-widest text-[#9c9c9c] dark:text-[#5c5c5c]">{cat.label}</p>
+            <div className="flex flex-wrap gap-5">
+              {cat.tools.map(tool => (
+                <XRToolIcon key={tool.name} {...tool} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 // ── Desktop secondary nav ─────────────────────────────────────────────────────
 function SecondaryNav({ sections, activeId, onNavigate }) {
@@ -1603,7 +1236,7 @@ function XRExperiences({ lang, isDark }) {
                               </div>
                             )
                             : p?.type === 'h3'
-                              ? <h3 className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold text-[#1f1f1f] dark:text-[#f6f6f6]">{p.text}</h3>
+                              ? <h3 className="mt-4 text-[16px] sm:text-[17px] lg:text-[18px] font-semibold text-[#1f1f1f] dark:text-[#f6f6f6]">{p.text}</h3>
                             : p?.type === 'ul'
                               ? <div>{p}</div>
                               : <p className={bodyText}>{p}</p>}
@@ -1651,6 +1284,10 @@ function XRExperiences({ lang, isDark }) {
 
                 </section>
               ))}
+              {/* ── Tools row ── */}
+              <div className="pb-16 sm:pb-20 flex justify-center">
+                <XRToolsSection label={t.toolsLabel} categories={t.toolCategories} />
+              </div>
             </div>
 
             <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />

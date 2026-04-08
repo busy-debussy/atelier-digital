@@ -1,5 +1,47 @@
 # Changelog 
 
+## [1.5.7] — 2026-04-08
+
+### Shared component — WorldMapDots
+- **Extracted to `src/components/WorldMapDots.jsx`** — moved from XRExperiences.jsx into a shared component; accepts `teamDots`, `legendGroups`, `countryColorMap`, `translations`, `dotIdMap`, and `tooltipOffsets` as props with XR defaults
+- **Multi-country pills** — dots now support `countries: string[]` in addition to `country: string`; clicking a multi-country pill highlights all matching dots on the map simultaneously
+- **`dotIdMap` prop** — pins a country to a specific SVG circle ID, enabling single-dot display for countries with multiple circles (Australia, Brazil, Indonesia, Thailand, Cyprus)
+- **`tooltipOffsets` prop** — per-country x/y nudge to prevent overlapping tooltips (e.g. England/Scotland)
+- **Pill key fix** — pill keys and selection state now use `label-primaryCountry` composite to avoid React key conflicts when multiple pills share a label
+
+### Sales Platform — Our Team tile
+- **World map added** — team distribution map with legend rendered inside the Our Team tile
+- **SP-specific team data** — custom `SP_TEAM_DOTS`, `SP_LEGEND_GROUPS`, `SP_COUNTRY_COLOR_MAP`, `SP_LEGEND_T`, `SP_DOT_ID_MAP`, `SP_TOOLTIP_OFFSETS`
+- **Legend groups** — Design (UX/UI · Interaction · Visual), Studio (Creative Team · 3D Artists), Engineering, QA, Marketing, Management
+- **Design** — UX/UI across Scotland/India/Australia; Interaction in Malaysia; Visual in Scotland
+- **Studio** — Creative Team (Scotland); 3D Artists single pill covering Portugal, Brazil, Nigeria (all same colour)
+- **Engineering** — Developer pill covering Scotland and England
+- **Quality Assurance** — QA Testers pill covering Indonesia and Thailand
+- **Marketing** — pill covering England and Scotland
+- **Management** — Project Manager covering England and Cyprus; Product Manager in UAE
+- **Team description** — updated to "Fully remote, with the flexibility to work from anywhere, distributed globally"
+
+### Sales Platform — Tools Used
+- **Moved to bottom of page** — tools section removed from context tiles and placed before the outro, matching XR pattern; centered with `flex justify-center`
+- **Category layout** — flat grid replaced with labelled category groups (Design · Development · Production · Project Management); per-icon `useState` replacing shared `activeName` state
+- **Our Team tile** — now full-width; Tools Used tile removed from the two-column grid
+- **Container** — `rounded-3xl`, `sm:w-fit`, gradient bottom on impact section fades to white
+
+### Sales Platform — tool icons
+- **`zoom` prop** — replaces old `contain` boolean; applies `scale()` transform to zoom past baked-in padding (Teams `1.5×`, Unity `65%` contain)
+- **`contain` prop** — now accepts a size string (e.g. `w-[75%] h-[75%]`) for object-contain icons
+
+### XR Experiences — section 1 (Team)
+- **"My role"** — UX Contribution callout removed; paragraph rewritten: "As the sole UX/UI designer, I led the design strategy for this high-profile project…" (EN + FR)
+- **h3 spacing** — `mt-4` added before all `type: 'h3'` body items
+
+### XR Experiences — Tools Used
+- **Unity icon** — `logo-unity.webp` imported; replaces text fallback; `contain: 'w-[65%] h-[65%]'`
+- **Microsoft Teams icon** — `logo-microsoft-teams.webp` imported; `zoom: 1.5` to fill container
+- **Container** — `rounded-3xl`; moved inside the main content column with `flex justify-center`; `gap-5` between icons
+
+---
+
 ## [1.5.6] — 2026-04-08
 
 ### Sales Platform — secondary navigation

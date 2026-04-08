@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { trackEvent } from '../analytics';
 import Footer from '../components/Footer';
+import WorldMapDots from '../components/WorldMapDots';
 import imgHero           from '../assets/photos/photo-cgi-sales-platform-hero.webp';
 import imgHeroMobile     from '../assets/photos/photo-cgi-sales-platform-mobile.webp';
 import imgChevronUp      from '../assets/icons/icon-chevron-up.svg';
@@ -393,32 +394,30 @@ function TileBody({ children }) {
 }
 
 // ── Tool icon with tooltip ────────────────────────────────────────────────────
-const AUTO_HIDE_DELAY = 3000;
-
-function ToolIcon({ name, icon, darkInvert = false, circle = false, isActive, onActivate, onDeactivate }) {
+function ToolIcon({ name, icon, darkInvert = false, circle = false, contain = false, zoom }) {
+  const [active, setActive] = useState(false);
   const tooltipId = `tooltip-${name.replace(/\s+/g, '-').toLowerCase()}`;
   return (
     <div className="relative flex flex-col items-center">
       <div
         id={tooltipId}
         role="tooltip"
-        className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${isActive ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${active ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[12px] font-semibold px-2 py-[3px] rounded-[6px] whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
-        <div className="w-0 h-0 border-l-[4px] border-r-[4px] border-t-[4px] border-l-transparent border-r-transparent border-t-[#1f1f1f] dark:border-t-[#f6f6f6]" />
+        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
       </div>
       <button
         aria-label={name}
-        aria-describedby={isActive ? tooltipId : undefined}
-        onMouseEnter={() => { if (!window.matchMedia('(pointer: coarse)').matches) onActivate(false); }}
-        onMouseLeave={() => { if (!window.matchMedia('(pointer: coarse)').matches) onDeactivate(); }}
-        onFocus={() => onActivate(false)}
-        onBlur={() => onDeactivate()}
-        onClick={() => isActive ? onDeactivate() : onActivate(true)}
-        className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex items-center justify-center shrink-0 overflow-hidden bg-[#f6f6f6] dark:bg-[#2a2a2a] shadow-[1px_1px_8px_0px_rgba(0,0,0,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1f1f] dark:focus-visible:outline-[#f6f6f6] ${circle ? 'rounded-full' : 'rounded-[8px] sm:rounded-[10px] lg:rounded-[12px]'}`}
+        aria-describedby={active ? tooltipId : undefined}
+        onMouseEnter={() => { if (!window.matchMedia('(pointer: coarse)').matches) setActive(true); }}
+        onMouseLeave={() => setActive(false)}
+        onFocus={() => setActive(true)}
+        onBlur={() => setActive(false)}
+        onClick={() => setActive(a => !a)}
+        className={`w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center shrink-0 overflow-hidden bg-[#f6f6f6] dark:bg-[#2a2a2a] shadow-[1px_1px_8px_0px_rgba(0,0,0,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1f1f] dark:focus-visible:outline-[#f6f6f6] ${circle ? 'rounded-full' : 'rounded-[10px]'}`}
       >
         {icon
-          ? <img src={icon} alt="" className={`w-full h-full object-cover${darkInvert ? ' dark:invert' : ''}`} />
+          ? <img src={icon} alt="" className={`${contain ? `${contain} object-contain` : 'w-full h-full object-cover'}${darkInvert ? ' dark:invert' : ''}`} style={zoom ? { transform: `scale(${zoom})` } : undefined} />
           : <span className="text-[7px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-tight px-[2px]">{name}</span>
         }
       </button>
@@ -426,49 +425,24 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false, isActive, on
   );
 }
 
-function ToolsGrid({ label }) {
-  const [activeName, setActiveName] = useState(null);
-  const autoHideRef  = useRef(null);
-  const containerRef = useRef(null);
-
-  const activate = (name, withTimer) => {
-    clearTimeout(autoHideRef.current);
-    setActiveName(name);
-    if (withTimer) autoHideRef.current = setTimeout(() => setActiveName(null), AUTO_HIDE_DELAY);
-  };
-
-  const deactivate = () => {
-    clearTimeout(autoHideRef.current);
-    setActiveName(null);
-  };
-
-  useEffect(() => {
-    if (!activeName) return;
-    const handler = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) deactivate();
-    };
-    document.addEventListener('pointerdown', handler);
-    return () => document.removeEventListener('pointerdown', handler);
-  }, [activeName]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => () => clearTimeout(autoHideRef.current), []);
-
+function ToolsGrid({ lang }) {
+  const label = (CONTEXT_EYEBROWS[lang] ?? CONTEXT_EYEBROWS.en)[5];
   return (
-    <ul ref={containerRef} role="list" aria-label={label} className="list-none grid grid-cols-5 md:grid-cols-10 lg:grid-cols-4 mt-3 sm:mt-0 gap-x-3 gap-y-8 md:gap-x-2 md:gap-y-4 lg:gap-x-3 lg:gap-y-6">
-      {CONTEXT_TOOLS.map(tool => (
-        <li key={tool.name}>
-          <ToolIcon
-            name={tool.name}
-            icon={tool.icon}
-            darkInvert={tool.darkInvert}
-            circle={tool.circle}
-            isActive={activeName === tool.name}
-            onActivate={(withTimer) => activate(tool.name, withTimer)}
-            onDeactivate={deactivate}
-          />
-        </li>
-      ))}
-    </ul>
+    <div className="rounded-3xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-5 py-4 flex flex-col gap-4 sm:w-fit">
+      <p className="text-[12px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad]">{label}</p>
+      <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
+        {CONTEXT_TOOLS.map(cat => (
+          <div key={cat.label.en} className="flex flex-col gap-3">
+            <p className="text-[11px] font-medium uppercase tracking-widest text-[#9c9c9c] dark:text-[#5c5c5c]">{cat.label[lang] ?? cat.label.en}</p>
+            <div className="flex flex-wrap gap-5">
+              {cat.tools.map(tool => (
+                <ToolIcon key={tool.name} {...tool} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -487,8 +461,8 @@ const CONTEXT_BODIES = {
   // index matches eyebrows array (0 = client, body handled inline, 1 = industry, handled inline)
   mission:      { en: <>Design a <strong>luxury-first</strong>, <strong>user-centric web platform</strong> that lets buyers explore unbuilt properties interactively while supporting sales agents during high-pressure launch events.</>, fr: <>Concevoir une plateforme web <strong>haut de gamme</strong> et <strong>centrée sur l'utilisateur</strong> permettant aux acheteurs d'explorer des biens non construits de manière interactive, tout en accompagnant les agents commerciaux lors des lancements sous haute pression.</> },
   stakeholders: {
-    en: <><ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong> and marketing.</li></ul><div className="mt-4 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad]">🎨 <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">Design Team:</strong> Coordinated <strong>cross-functional communications</strong> and served as the <strong>source of truth</strong> for product and design decisions.</div></>,
-    fr: <><ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong> et marketing.</li></ul><div className="mt-4 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad]">🎨 <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">Équipe Design :</strong> Coordination des <strong>communications transverses</strong> et référent de <strong>source de vérité</strong> pour les décisions produit et design.</div></>,
+    en: <><ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong> and marketing.</li></ul><div className="mt-4 sm:w-fit rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad]">🎨 <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">Design Team:</strong> Coordinated <strong>cross-functional communications</strong> and served as the <strong>source of truth</strong> for product and design decisions.</div></>,
+    fr: <><ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong> et marketing.</li></ul><div className="mt-4 sm:w-fit rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad]">🎨 <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">Équipe Design :</strong> Coordination des <strong>communications transverses</strong> et référent de <strong>source de vérité</strong> pour les décisions produit et design.</div></>,
   },
   myRole: {
     en: {
@@ -507,25 +481,112 @@ const CONTEXT_BODIES = {
     },
   },
   team: {
-    en: <>Fully remote, distributed globally 🌏. The <strong>design team</strong> collaborated closely with <strong>developers</strong> and the <strong>studio team</strong>, ensuring <strong>consistent communication</strong> and alignment across all launches.</>,
-    fr: <>100% télétravail, dans le monde 🌏. L’<strong>équipe design</strong> a collaboré étroitement avec les <strong>développeurs</strong> et l’<strong>équipe studio</strong>, garantissant une <strong>communication cohérente</strong> et un alignement tout au long des lancements.</>,
+    en: <>Fully remote, with the flexibility to work from anywhere, distributed globally 🌏. The <strong>design team</strong> collaborated closely with <strong>developers</strong> and the <strong>studio team</strong>, ensuring <strong>consistent communication</strong> and alignment across all launches.</>,
+    fr: <>100% télétravail, avec la flexibilité de travailler de n’importe où, dans le monde 🌏. L’<strong>équipe design</strong> a collaboré étroitement avec les <strong>développeurs</strong> et l’<strong>équipe studio</strong>, garantissant une <strong>communication cohérente</strong> et un alignement tout au long des lancements.</>,
+  },
+};
+
+const SP_COUNTRY_COLOR_MAP = {
+  Scotland:  '#C9A84C',
+  England:   '#6B9CE8',
+  UAE:       '#E8836B',
+  Cyprus:    '#E8836B',
+  Portugal:  '#B07FE8',
+  Brazil:    '#B07FE8',
+  Nigeria:   '#B07FE8',
+  India:     '#E86B9C',
+  Australia: '#6BB8E8',
+  Malaysia:  '#A8E86B',
+  Indonesia: '#E8A86B',
+  Thailand:  '#E8A86B',
+};
+
+const SP_TOOLTIP_OFFSETS = {
+  England: { y: 28 }, // shift down to avoid overlapping Scotland
+};
+
+// Pin specific SVG dots for countries with multiple circles
+const SP_DOT_ID_MAP = {
+  Australia: 'even+10-Australia_5', // eastern Australia, further south
+  Brazil:    'odd-3-Brazil',      // Brasília
+  Cyprus:    'even+2-Greece',     // no Cyprus dot in SVG, reuse Greece
+  Indonesia: 'odd+7-Indonesia_3', // Jakarta, shifted east
+  Thailand:  'odd+7-Thailand',    // Bangkok
+};
+
+const SP_TEAM_DOTS = [
+  { label: 'UX/UI',          group: 'design',     countries: ['Scotland', 'India', 'Australia'], color: '#C9A84C' },
+  { label: 'Interaction',    group: 'design',     country: 'Malaysia',  color: '#A8E86B' },
+  { label: 'Visual',         group: 'design',     country: 'Scotland',  color: '#C9A84C' },
+  { label: 'Creative Team',  group: 'studio',     country: 'Scotland', color: '#C9A84C' },
+  { label: '3D Artists',     group: 'studio',     countries: ['Portugal', 'Brazil', 'Nigeria'], color: '#B07FE8' },
+  { label: 'Project Manager',group: 'management', countries: ['England', 'Cyprus'], color: '#6B9CE8' },
+  { label: 'Product Manager',group: 'management', country: 'UAE',                  color: '#E8836B' },
+  { label: 'Developer',      group: 'dev',        countries: ['Scotland', 'England'], color: '#C9A84C' },
+  { label: 'QA Testers',     group: 'qa',         countries: ['Indonesia', 'Thailand'], color: '#E8A86B' },
+  { label: 'Marketing',      group: 'marketing',  countries: ['England', 'Scotland'],   color: '#6B9CE8' },
+];
+
+const SP_LEGEND_GROUPS = [
+  { heading: 'Design',            group: 'design' },
+  { heading: 'Studio',            group: 'studio' },
+  { heading: 'Development',       group: 'dev' },
+  { heading: 'Quality Assurance', group: 'qa' },
+  { heading: 'Marketing',         group: 'marketing' },
+  { heading: 'Management',        group: 'management' },
+];
+
+const SP_LEGEND_T = {
+  en: {
+    headings:       { design: 'Design', studio: 'Studio', dev: 'Engineering', qa: 'Quality Assurance', marketing: 'Marketing', management: 'Management' },
+    labels:         { 'UX/UI': 'UX/UI', Interaction: 'Interaction', Visual: 'Visual', 'Creative Team': 'Creative Team', '3D Artists': '3D Artists', 'QA Testers': 'QA Testers', Marketing: 'Marketing', 'Project Manager': 'Project Manager', 'Product Manager': 'Product Manager', Developer: 'Developer', Cyprus: 'Cyprus', UAE: 'UAE' },
+    mapCaption:     'Slide or hover over the map to explore time zones.',
+    groupAriaLabel: 'Team members by location',
+    mapAriaLabel:   'World map showing team locations. Use left and right arrow keys to explore time zones.',
+  },
+  fr: {
+    headings:       { design: 'Design', studio: 'Studio', dev: 'Ingénierie', qa: 'Qualité', marketing: 'Marketing', management: 'Management' },
+    labels:         { 'UX/UI': 'UX/UI', Interaction: 'Interaction', Visual: 'Visuel', 'Creative Team': 'Équipe créative', '3D Artists': 'Artistes 3D', 'QA Testers': 'Testeurs QA', Marketing: 'Marketing', 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', Developer: 'Développeur', Cyprus: 'Chypre', UAE: 'EAU' },
+    mapCaption:     'Survolez la carte pour explorer les fuseaux horaires.',
+    groupAriaLabel: "Membres de l'équipe par localisation",
+    mapAriaLabel:   "Carte du monde montrant les localisations de l'équipe. Utilisez les flèches gauche et droite pour explorer les fuseaux horaires.",
   },
 };
 
 const CONTEXT_TOOLS = [
-  { name: "Figma",                icon: imgToolFigma },
-  { name: "Adobe Illustrator",    icon: imgToolIllustrator },
-  { name: "Adobe Photoshop",      icon: imgToolPhotoshop },
-  { name: "DaVinci Resolve",      icon: imgToolDaVinci },
-  { name: "Atlassian Confluence", icon: imgToolConfluence },
-  { name: "Atlassian Jira",       icon: imgToolJira },
-  { name: "Visual Studio Code",   icon: imgToolVSCode },
-  { name: "Unreal Engine",        icon: imgToolUnreal, darkInvert: true, circle: true },
-  { name: "Autodesk 3DS Max",     icon: imgTool3dsMax },
-  { name: "Miro",                 icon: imgToolMiro },
+  {
+    label: { en: 'Design', fr: 'Design' },
+    tools: [
+      { name: "Figma",             icon: imgToolFigma },
+      { name: "Adobe Illustrator", icon: imgToolIllustrator },
+      { name: "Adobe Photoshop",   icon: imgToolPhotoshop },
+    ],
+  },
+  {
+    label: { en: 'Development', fr: 'Développement' },
+    tools: [
+      { name: "Visual Studio Code", icon: imgToolVSCode },
+      { name: "Unreal Engine",      icon: imgToolUnreal, darkInvert: true, circle: true, contain: 'w-[75%] h-[75%]' },
+      { name: "Autodesk 3DS Max",   icon: imgTool3dsMax },
+    ],
+  },
+  {
+    label: { en: 'Production', fr: 'Production' },
+    tools: [
+      { name: "DaVinci Resolve", icon: imgToolDaVinci },
+    ],
+  },
+  {
+    label: { en: 'Project Management', fr: 'Gestion de projet' },
+    tools: [
+      { name: "Atlassian Confluence", icon: imgToolConfluence },
+      { name: "Atlassian Jira",       icon: imgToolJira },
+      { name: "Miro",                 icon: imgToolMiro },
+    ],
+  },
 ];
 
-function ContextContent({ lang }) {
+function ContextContent({ lang, isDark }) {
   const eyebrows = CONTEXT_EYEBROWS[lang] ?? CONTEXT_EYEBROWS.en;
   const clientPill = CONTEXT_CLIENT_PILL[lang] ?? CONTEXT_CLIENT_PILL.en;
   const l = lang in CONTEXT_BODIES.mission ? lang : 'en';
@@ -564,14 +625,22 @@ function ContextContent({ lang }) {
         <TileBody>{CONTEXT_BODIES.myRole[l].body}</TileBody>
       </Tile>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-6 sm:gap-7 lg:gap-8">
-        <Tile>
-          <TileEyebrow>{eyebrows[5]}</TileEyebrow>
-          {/* mobile: 5×2 · tablet (md): 10×1 · desktop (lg): 4×3 */}
-          <ToolsGrid label={eyebrows[5]} />
-        </Tile>
-        <Tile><TileEyebrow>{eyebrows[6]}</TileEyebrow><TileBody>{CONTEXT_BODIES.team[l]}</TileBody></Tile>
-      </div>
+      <Tile>
+        <TileEyebrow>{eyebrows[6]}</TileEyebrow>
+        <TileBody>{CONTEXT_BODIES.team[l]}</TileBody>
+        <div className="mt-6">
+          <WorldMapDots
+            isDark={isDark}
+            lang={lang}
+            teamDots={SP_TEAM_DOTS}
+            legendGroups={SP_LEGEND_GROUPS}
+            countryColorMap={SP_COUNTRY_COLOR_MAP}
+            translations={SP_LEGEND_T}
+            dotIdMap={SP_DOT_ID_MAP}
+            tooltipOffsets={SP_TOOLTIP_OFFSETS}
+          />
+        </div>
+      </Tile>
     </div>
   );
 }
@@ -1647,7 +1716,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
 }
 
 // ── Accordion section ─────────────────────────────────────────────────────────
-function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgClass, openHeaderDark = false, contentBgClass = 'bg-[#f6f6f6] dark:bg-[#1f1f1f]' }) {
+function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgClass, openHeaderDark = false, contentBgClass = 'bg-[#f6f6f6] dark:bg-[#1f1f1f]', contentInnerBgClass }) {
   const [open, setOpen] = useState(true);
   const [hidden, setHidden] = useState(false);
   const darkHeader = open && openHeaderDark;
@@ -1720,7 +1789,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
         inert={!open}
       >
         <div ref={contentRef} className="overflow-hidden min-h-0">
-          <div className={contentBgClass}>
+          <div className={contentInnerBgClass ?? contentBgClass}>
             <div className="max-w-5xl mx-auto px-6 py-8 sm:py-10 lg:py-12">
               {children ?? (
                 <p className="text-[#5c5c5c] dark:text-[#adadad] text-[16px] sm:text-[17px] lg:text-[18px]">Content coming soon.</p>
@@ -1826,16 +1895,24 @@ function SalesPlatform({ lang, isDark }) {
             }
             openHeaderBgClass={id === 'impact' ? 'bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]' : undefined}
             contentBgClass={
-              id === 'define' || id === 'design' ? 'bg-white dark:bg-[#141414]' : 'bg-[#f6f6f6] dark:bg-[#1f1f1f]'
+              id === 'define' || id === 'design' ? 'bg-white dark:bg-[#141414]' :
+              id === 'impact' ? 'bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]' :
+              'bg-[#f6f6f6] dark:bg-[#1f1f1f]'
             }
+            contentInnerBgClass={id === 'impact' ? '' : undefined}
           >
-            {id === 'context'   && <ContextContent lang={lang} />}
+            {id === 'context'   && <ContextContent lang={lang} isDark={isDark} />}
             {id === 'emphasise' && <EmphasiseContent lang={lang} />}
             {id === 'define'    && <DefineContent lang={lang} />}
             {id === 'design'    && <DesignContent lang={lang} isDark={isDark} />}
             {id === 'impact'    && <ImpactContent lang={lang} />}
           </Section>
         ))}
+
+        {/* ── Tools row ── */}
+        <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pt-16 sm:pt-20 pb-16 sm:pb-20 flex justify-center">
+          <ToolsGrid lang={lang} />
+        </div>
 
         {/* ── Outro ── */}
         <div className="py-16 sm:py-20">
@@ -1856,7 +1933,7 @@ function SalesPlatform({ lang, isDark }) {
       <div
         inert={scrolledDown && !atBottom ? undefined : true}
         className={`hidden xl:block fixed z-10 transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        style={{ top: '80px', right: '24px' }}
+        style={{ top: '80px', right: 'max(16px, calc(50% - 32rem - 10rem))' }}
       >
         <SecondaryNav sections={sections} activeId={activeId} onNavigate={handleNavigate} />
       </div>
