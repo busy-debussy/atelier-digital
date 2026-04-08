@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams, Link } from 'react-router-dom';
 import imgPortrait     from '../assets/photos/portrait.webp';
 import imgSend         from '../assets/icons/icon-send.svg';
 import imgLinkedIn     from '../assets/icons/icon-linkedin.svg';
@@ -729,7 +729,7 @@ function ExperienceSection({ t }) {
   };
 
   return (
-    <section id="experience" className={`${divider} py-16 scroll-mt-24`}>
+    <section id="experience" className={`${divider} py-16 scroll-mt-0`}>
 
       <div className="max-w-5xl mx-auto px-6">
         <h2 className={h2class}>{t.experience}</h2>
@@ -1411,6 +1411,37 @@ function SkillsCertSection({ t }) {
 function Resume({ lang }) {
   const t = T[lang];
   const { hash } = useLocation();
+  const [searchParams] = useSearchParams();
+  const fromHome = searchParams.get('from') === 'home';
+  const [showBack, setShowBack] = useState(fromHome);
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    if (!fromHome) return;
+    const onScroll = () => {
+      if (window.scrollY <= 80) setShowBack(false);
+    };
+    const attachTimer = setTimeout(() => {
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }, 1200);
+    return () => {
+      clearTimeout(attachTimer);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [fromHome]);
+
+  useEffect(() => {
+    if (!fromHome) return;
+    const footer = document.querySelector('footer');
+    if (!footer) return;
+    footerRef.current = footer;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setShowBack(false); },
+      { threshold: 0 }
+    );
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, [fromHome]);
 
   useEffect(() => {
     document.title = lang === 'fr' ? 'CV interactif • Atelier Digital' : 'Résumé • Atelier Digital';
@@ -1464,6 +1495,38 @@ function Resume({ lang }) {
         <Contact lang={lang} variant="resume" lgAlignWidth={720} smAlignWidth={536} />
 
       </main>
+
+      {/* Back-to-homepage chip — shown when arriving from the "experienced in" pills */}
+      <div
+        aria-live="polite"
+        className={`fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center transition-opacity duration-300 ease-out ${
+          showBack ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <Link
+          to="/"
+          data-spring
+          onClick={() => setShowBack(false)}
+          className="flex items-center gap-2 h-9 bg-[#1f1f1f]/90 dark:bg-[#f6f6f6]/90 backdrop-blur-[12px] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-medium px-4 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.18)] ring-1 ring-white/[0.1] dark:ring-black/[0.1] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
+          aria-label={lang === 'fr' ? "Retour à l'accueil" : 'Back to homepage'}
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M8.5 2.5L4 7l4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          {lang === 'fr' ? "Retour à l'accueil" : 'Back to homepage'}
+        </Link>
+        <button
+          onClick={() => setShowBack(false)}
+          data-spring
+          aria-label={lang === 'fr' ? 'Fermer' : 'Dismiss'}
+          className="ml-1 flex items-center justify-center w-8 h-8 rounded-full bg-[#1f1f1f]/90 dark:bg-[#f6f6f6]/90 backdrop-blur-[12px] text-[#f6f6f6] dark:text-[#1f1f1f] ring-1 ring-white/[0.1] dark:ring-black/[0.1] hover:bg-[#f6f6f6] hover:text-[#1f1f1f] dark:hover:bg-[#1f1f1f] dark:hover:text-[#f6f6f6] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] cursor-pointer"
+        >
+          <svg width="14" height="14" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+            <path d="M2 2l6 6M8 2L2 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+        </button>
+      </div>
+
       <Footer lang={lang} />
     </>
   );

@@ -1,5 +1,33 @@
 # Changelog 
 
+## [1.5.8] — 2026-04-08
+
+### Resume — Back-to-homepage chip
+- **New chip** — appears at `bottom-4` (centred) when arriving from the "experienced in" pills (`?from=home`); `h-9` matches chat button height
+- **Visibility logic** — hides when `scrollY ≤ 80` (avoids overlap with ScrollForMore), when the footer enters the viewport, or on manual dismiss; scroll listener delayed 1.2 s to avoid the initial anchor scroll triggering hide
+- **Fade only** — opacity transition in place, no Y movement on hide/show
+- **Close button** — matches chip styling; larger × icon; inverts colours on hover; `data-spring` press effect
+- **`pointer-events` fix** — removed always-present `pointer-events-none` base class; mutually exclusive with `pointer-events-auto`
+- **`#experience` scroll** — `scroll-mt-0` so arrival scrolls as far down as possible
+
+### Hero
+- **"Experienced in" link** — updated to `/resume?from=home#experience` to trigger the back-to-home chip
+
+### Nav — Dark mode toggle
+- **Hover fix** — hover in dark mode now lightens (`#262626 → #383838`) instead of darkening to black
+- **Press ripple** — semi-transparent grey circle (`rgba(128,128,128,0.1)`) centred on the knob; starts at knob size (hidden behind it), expands to `scale(1.7)` with spring bounce (`cubic-bezier(0.34,1.56,0.64,1)`) on press, contracts on release
+- **Toggle on release** — dark mode now switches on `pointerUp` instead of `onClick`
+
+### Nav — Typo fix
+- `'digital twin'` → `'digital twins'` in both EN and FR case-studies menu
+
+### Sales Platform — minor fixes
+- FR label: `'QA Testers'` → `'Testeurs'`
+- Duplicate `aria-label` removed from CGI concepts and wireframes carousels (attribute moved to correct element)
+- Stray `aria-label` removed from high-fidelity mock-ups carousel
+
+---
+
 ## [1.5.7] — 2026-04-08
 
 ### Shared component — WorldMapDots

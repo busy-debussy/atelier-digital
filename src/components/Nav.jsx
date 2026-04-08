@@ -21,7 +21,7 @@ import imgPortrait     from '../assets/photos/portrait.webp';
 const T = {
   en: {
     projects:          'case studies',
-    'digital twin':    'digital twin',
+    'digital twin':    'digital twins',
     'sales platform':  'sales platform',
     'extended reality':'extended reality',
     holograms:         'holograms',
@@ -37,7 +37,7 @@ const T = {
   },
   fr: {
     projects:          'études de cas',
-    'digital twin':    'digital twin',
+    'digital twin':    'digital twins',
     'sales platform':  'plateforme web',
     'extended reality':'réalité étendue',
     holograms:         'hologrammes',
@@ -133,6 +133,7 @@ function useDelayedTooltip(delay = 600) {
 // DarkModeToggle
 function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
   const [hovered, setHovered]           = useState(false);
+  const [pressed, setPressed]           = useState(false);
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
   const suppressRef = useRef(false);
   const suppressTimer = useRef(null);
@@ -149,19 +150,35 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
   const handleClick = () => { suppress(); onToggle(); };
 
   const bgStyle = isDark
-    ? { background: hovered ? '#000000' : '#262626' }
+    ? { background: hovered ? '#383838' : '#262626' }
     : hovered
       ? { backgroundImage: 'linear-gradient(rgba(0,0,0,0.32),rgba(0,0,0,0.32)),linear-gradient(rgba(0,0,0,0.16),rgba(0,0,0,0.16))' }
       : { backgroundImage: 'linear-gradient(rgba(0,0,0,0.32),rgba(0,0,0,0.32)),linear-gradient(rgba(255,255,255,0.32),rgba(255,255,255,0.32))' };
 
   const Knob = () => (
-    <div className="shrink-0 rounded-full bg-white" style={{ width:26, height:26, boxShadow:'0 1px 4px rgba(0,0,0,0.30),0 0 0 0.5px rgba(0,0,0,0.08)' }} />
+    <div className="relative shrink-0 flex items-center justify-center" style={{ width: 26, height: 26 }}>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 rounded-full"
+        style={{
+          background: 'rgba(128,128,128,0.33)',
+          transform: pressed ? 'scale(1.7)' : 'scale(1)',
+          transition: pressed ? 'transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)' : 'transform 300ms ease-out',
+        }}
+      />
+      <div
+        className="absolute inset-0 rounded-full bg-white"
+        style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.30),0 0 0 0.5px rgba(0,0,0,0.08)' }}
+      />
+    </div>
   );
 
   return (
     <div className="relative">
       <button
-        onClick={handleClick}
+        onPointerDown={() => setPressed(true)}
+        onPointerUp={() => { setPressed(false); handleClick(); }}
+        onPointerLeave={() => setPressed(false)}
         onMouseEnter={() => { setHovered(true);  if (!noTooltip && !suppressRef.current) showTip(); }}
         onMouseLeave={() => { setHovered(false); hideTip(); }}
         onBlur={() => { setHovered(false); hideTip(); }}

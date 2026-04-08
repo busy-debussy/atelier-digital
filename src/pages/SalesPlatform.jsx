@@ -546,7 +546,7 @@ const SP_LEGEND_T = {
   },
   fr: {
     headings:       { design: 'Design', studio: 'Studio', dev: 'Ingénierie', qa: 'Qualité', marketing: 'Marketing', management: 'Management' },
-    labels:         { 'UX/UI': 'UX/UI', Interaction: 'Interaction', Visual: 'Visuel', 'Creative Team': 'Équipe créative', '3D Artists': 'Artistes 3D', 'QA Testers': 'Testeurs QA', Marketing: 'Marketing', 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', Developer: 'Développeur', Cyprus: 'Chypre', UAE: 'EAU' },
+    labels:         { 'UX/UI': 'UX/UI', Interaction: 'Interaction', Visual: 'Visuel', 'Creative Team': 'Équipe créative', '3D Artists': 'Artistes 3D', 'QA Testers': 'Testeurs', Marketing: 'Marketing', 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', Developer: 'Développeur', Cyprus: 'Chypre', UAE: 'EAU' },
     mapCaption:     'Survolez la carte pour explorer les fuseaux horaires.',
     groupAriaLabel: "Membres de l'équipe par localisation",
     mapAriaLabel:   "Carte du monde montrant les localisations de l'équipe. Utilisez les flèches gauche et droite pour explorer les fuseaux horaires.",
@@ -1057,7 +1057,7 @@ function ConceptsCarousel({ lang, isDark }) {
       <div
         ref={trackRef}
         role="region"
-        aria-label={lang === 'fr' ? 'Carrousel des concepts CGI' : 'CGI concepts carousel'}
+        aria-label={lang === 'fr' ? `Carrousel des concepts CGI — utilisez les flèches pour naviguer, Entrée pour agrandir` : `CGI concepts carousel — use arrow keys to navigate, Enter to expand`}
         onScroll={handleScroll}
         tabIndex={0}
         onKeyDown={(e) => {
@@ -1065,7 +1065,6 @@ function ConceptsCarousel({ lang, isDark }) {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxIndex(activeIndex); }
         }}
-        aria-label={lang === 'fr' ? `Carrousel des concepts CGI — utilisez les flèches pour naviguer, Entrée pour agrandir` : `CGI concepts carousel — use arrow keys to navigate, Enter to expand`}
         className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-xl sm:rounded-2xl lg:rounded-3xl touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
         style={{ scrollbarWidth: 'none' }}
       >
@@ -1262,7 +1261,7 @@ function WireframesCarousel({ lang, isDark }) {
       <div
         ref={trackRef}
         role="region"
-        aria-label={lang === 'fr' ? 'Carrousel des maquettes filaires' : 'Wireframes carousel'}
+        aria-label={lang === 'fr' ? `Carrousel des maquettes filaires — utilisez les flèches pour naviguer, Entrée pour agrandir` : `Wireframes carousel — use arrow keys to navigate, Enter to expand`}
         onScroll={handleScroll}
         tabIndex={0}
         onKeyDown={(e) => {
@@ -1270,7 +1269,6 @@ function WireframesCarousel({ lang, isDark }) {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxIndex(activeIndex); }
         }}
-        aria-label={lang === 'fr' ? `Carrousel des maquettes filaires — utilisez les flèches pour naviguer, Entrée pour agrandir` : `Wireframes carousel — use arrow keys to navigate, Enter to expand`}
         className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
         style={{ scrollbarWidth: 'none' }}
       >
@@ -1424,7 +1422,6 @@ function HifiCarousel({ lang, isDark }) {
         <div
           ref={trackRef}
           role="region"
-          aria-label={lang === 'fr' ? 'Carrousel des maquettes haute-fidélité' : 'High-fidelity mock-ups carousel'}
           onScroll={handleScroll}
           tabIndex={0}
           onKeyDown={(e) => {
