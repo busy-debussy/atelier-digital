@@ -1007,7 +1007,9 @@ function XRExperiences({ lang, isDark }) {
   const [activeId, setActiveId]       = useState('');
   const [scrolledDown, setScrolledDown] = useState(false);
   const [atBottom, setAtBottom]       = useState(false);
-  const scrollTarget = useRef(null);
+  const [scrollingDown, setScrollingDown] = useState(false);
+  const scrollTarget  = useRef(null);
+  const navScrollRef  = useRef(false);
 
   const xboxSvg = useMemo(() =>
     rawXboxKeybinding
@@ -1017,9 +1019,11 @@ function XRExperiences({ lang, isDark }) {
   const handleNavigate = (id) => {
     setActiveId(id);
     scrollTarget.current = id;
+    navScrollRef.current = true;
+    setScrollingDown(false);
+    window.dispatchEvent(new CustomEvent('nav-scroll-start'));
     scrollToSection(id);
-    // Fallback: release lock after 2s in case target never intersects
-    setTimeout(() => { scrollTarget.current = null; }, 2000);
+    setTimeout(() => { scrollTarget.current = null; navScrollRef.current = false; setScrollingDown(false); }, 1500);
   };
 
   useEffect(() => { setMounted(true); }, []);
@@ -1062,6 +1066,19 @@ function XRExperiences({ lang, isDark }) {
     window.addEventListener('scroll', update, { passive: true });
     return () => window.removeEventListener('scroll', update);
   }, [t]);
+
+  // Mobile only: track scroll direction to hide nav on scroll down
+  useEffect(() => {
+    if (!window.matchMedia('(max-width: 767px)').matches) return;
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (!navScrollRef.current) setScrollingDown(y > lastY);
+      lastY = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <>
@@ -1312,8 +1329,8 @@ function XRExperiences({ lang, isDark }) {
 
       {/* ── Mobile floating nav ── */}
       <div
-        inert={scrolledDown && !atBottom ? undefined : true}
-        className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        inert={scrolledDown && !atBottom && !scrollingDown ? undefined : true}
+        className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <div className="pointer-events-auto w-full">
           <MobileSecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
@@ -1323,7 +1340,7 @@ function XRExperiences({ lang, isDark }) {
       {/* ── Chat button circular wrapper — centred behind the trigger when sec nav is visible ── */}
       <div
         aria-hidden="true"
-        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0'}`}
+        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
         style={{ width: 52, height: 52, left: 8, bottom: 8 }}
       />
 

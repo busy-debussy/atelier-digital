@@ -1,5 +1,33 @@
 # Changelog 
 
+## [1.5.10] — 2026-04-09
+
+### WorldMapDots — legend pill interactions (XR & Sales Platform)
+- **Immediate dimming on first click** — root cause was CSS inside SVG `<style>` not applying in Chrome for innerHTML-injected SVGs; fixed by generating a document-level `<style>` element driven by a React-managed `data-ca` prop on the container div, so the CSS and attribute land atomically during React's commit phase before paint
+- **Click-outside deselect** — switched from `click` to capture-phase `pointerdown` on `document`; fires reliably on iOS Safari where `click` does not propagate on non-interactive elements
+- **Legend whitespace deselects** — refined the capture handler to only skip deselection when the target is inside a `<button>` within the legend; heading text and gaps now correctly deselect
+
+### Mobile secondary nav — hide on scroll down
+- **XR Experiences, Sales Platform, Privacy, Cookies, Terms** — floating secondary nav and its chat-button backdrop now hide while scrolling down and reappear on scroll up (mobile only, `< 768px`)
+- **`nav-scroll-start` event** — dispatched when a nav item is tapped; suppresses hide logic in both the local scroll listener and the global header scroll listener for 1.5 s, preventing the nav from flashing away during programmatic scroll-to-section
+
+### Global header — nav-scroll suppression
+- **`App.jsx`** — listens for `nav-scroll-start` and freezes `scrolledDown` state for 1.5 s so the header doesn't auto-hide during section jumps triggered by the secondary nav
+
+### Sales Platform — Cyprus tooltip
+- **Offset fix** — Cyprus tooltip nudged `x: +80, y: −12` to prevent overlap with the England tooltip when "Project Manager" is selected on the team map
+
+### Resume — back-to-homepage chip
+- **Responsive label** — "Back to home" on mobile (`< sm`), "Back to homepage" on desktop
+
+### Cookie banner — mobile position
+- **Raised on mobile** — banner now sits at `bottom-[60px]` on small screens (above bottom nav area) instead of `bottom-4`
+
+### Figma integration
+- **Capture script** — `mcp.figma.com` capture script added to `index.html` for MCP Figma design capture workflow
+
+---
+
 ## [1.5.9] — 2026-04-08
 
 ### Nav — press effects

@@ -1513,7 +1513,8 @@ function Resume({ lang }) {
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <path d="M8.5 2.5L4 7l4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-          {lang === 'fr' ? "Retour à l'accueil" : 'Back to homepage'}
+          <span className="sm:hidden">{lang === 'fr' ? "Retour à l'accueil" : 'Back to home'}</span>
+          <span className="hidden sm:inline">{lang === 'fr' ? "Retour à l'accueil" : 'Back to homepage'}</span>
         </Link>
         <button
           onClick={() => setShowBack(false)}

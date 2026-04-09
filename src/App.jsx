@@ -163,12 +163,25 @@ function App() {
     return () => window.removeEventListener('secondary-nav-change', handler);
   }, []);
 
+  const navScrollRef = useRef(false);
+  useEffect(() => {
+    const onNavScroll = () => {
+      navScrollRef.current = true;
+      setScrolledDown(false);
+      setTimeout(() => { navScrollRef.current = false; setScrolledDown(false); }, 1500);
+    };
+    window.addEventListener('nav-scroll-start', onNavScroll);
+    return () => window.removeEventListener('nav-scroll-start', onNavScroll);
+  }, []);
+
   useEffect(() => {
     let lastY = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      if (y > lastY && y > 80) setScrolledDown(true);
-      else if (y < lastY) setScrolledDown(false);
+      if (!navScrollRef.current) {
+        if (y > lastY && y > 80) setScrolledDown(true);
+        else if (y < lastY) setScrolledDown(false);
+      }
       lastY = y;
     };
     window.addEventListener('scroll', onScroll, { passive: true });

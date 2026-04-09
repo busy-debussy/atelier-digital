@@ -503,6 +503,7 @@ const SP_COUNTRY_COLOR_MAP = {
 
 const SP_TOOLTIP_OFFSETS = {
   England: { y: 28 }, // shift down to avoid overlapping Scotland
+  Cyprus:  { x: 80, y: -12 }, // shift right+up to avoid overlapping England tooltip
 };
 
 // Pin specific SVG dots for countries with multiple circles
@@ -1824,13 +1825,17 @@ function SalesPlatform({ lang, isDark }) {
   const [scrolledDown, setScrolledDown] = useState(false);
   const [atBottom, setAtBottom]         = useState(false);
   const [scrollingDown, setScrollingDown] = useState(false);
-  const scrollTarget = useRef(null);
+  const scrollTarget  = useRef(null);
+  const navScrollRef  = useRef(false);
 
   const handleNavigate = (id) => {
     setActiveId(id);
     scrollTarget.current = id;
+    navScrollRef.current = true;
+    setScrollingDown(false);
+    window.dispatchEvent(new CustomEvent('nav-scroll-start'));
     scrollToSection(id);
-    setTimeout(() => { scrollTarget.current = null; }, 2000);
+    setTimeout(() => { scrollTarget.current = null; navScrollRef.current = false; setScrollingDown(false); }, 1500);
   };
 
   useEffect(() => {
@@ -1880,7 +1885,7 @@ function SalesPlatform({ lang, isDark }) {
     let lastY = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      setScrollingDown(y > lastY);
+      if (!navScrollRef.current) setScrollingDown(y > lastY);
       lastY = y;
     };
     window.addEventListener('scroll', onScroll, { passive: true });

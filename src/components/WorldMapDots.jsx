@@ -71,24 +71,14 @@ export default function WorldMapDots({
   const touchOverlayRef = useRef(null);
   const prevLitRef      = useRef([]);
   const legendRef       = useRef(null);
-
-  // Deselect on click-outside or scroll
+  // Deselect on pointer-outside (capture phase fires on all elements incl. iOS non-interactive)
   useEffect(() => {
-    const handleClick = (e) => {
-      if (mapRef.current?.contains(e.target)) return;
-      if (legendRef.current?.contains(e.target)) return;
+    const handlePointerDown = (e) => {
+      if (legendRef.current?.contains(e.target) && e.target.closest('button')) return;
       setSelected(null);
     };
-    const handleScroll = () => {
-      if (mapRef.current?.dataset.touching) return;
-      setSelected(null);
-    };
-    document.addEventListener('click', handleClick);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      document.removeEventListener('click', handleClick);
-      window.removeEventListener('scroll', handleScroll);
-    };
+    document.addEventListener('pointerdown', handlePointerDown, true);
+    return () => document.removeEventListener('pointerdown', handlePointerDown, true);
   }, []);
 
   // Arrow key navigation on the map
@@ -132,6 +122,22 @@ export default function WorldMapDots({
     document.addEventListener('pointermove', handleMove);
     return () => document.removeEventListener('pointermove', handleMove);
   }, []);
+
+  // CSS for country-selection dimming — lives outside the SVG so it survives innerHTML
+  const countriesCSS = useMemo(() => {
+    if (!selected?.key) return '';
+    const bgDim = isDark ? '0.06' : '0.15';
+    const selectors = (selected.countries ?? [])
+      .map(c => `.xr-map-root[data-ca] .xr-dot[data-country="${c}"]`)
+      .join(', ');
+    return [
+      `.xr-map-root[data-ca] .xr-bg { opacity: ${bgDim} !important; }`,
+      `.xr-map-root[data-ca] .xr-dot { opacity: 0.2 !important; }`,
+      selectors ? `${selectors} { opacity: 1 !important; }` : '',
+      `.xr-map-root[data-ca] .xr-label { opacity: 0 !important; }`,
+      `.xr-map-root[data-ca] .xr-label-bg { opacity: 0 !important; }`,
+    ].filter(Boolean).join('\n');
+  }, [selected, isDark]);
 
   // Parse SVG once per dark-mode change
   const { svgHtml, dotPositions, tzList } = useMemo(() => {
@@ -348,14 +354,8 @@ export default function WorldMapDots({
     svgEl.setAttribute('data-active', '1');
     const lit = [];
 
-    if (!hovered && selected && selected.countries?.length) {
-      selected.countries.forEach(country => {
-        const dotEl = svgEl.querySelector(`[data-country="${country}"]`);
-        if (dotEl) { dotEl.style.opacity = '1'; lit.push(dotEl); }
-      });
-      svgEl.querySelectorAll('.xr-label, .xr-label-bg').forEach(el => {
-        el.style.opacity = '0'; lit.push(el);
-      });
+    if (selected?.key) {
+      // Opacity is handled by the <style countriesCSS> element above — no inline style needed here.
     } else {
       const bgActiveOpacity = isDark ? 0.9 : 0.8;
       svgEl.querySelectorAll(`[data-tz="${active.tz}"]`).forEach(c => {
@@ -406,7 +406,8 @@ export default function WorldMapDots({
           onMouseLeave={() => setHovered(null)}
         >
           <div className="relative w-full">
-            <div ref={containerRef} className="w-full" dangerouslySetInnerHTML={{ __html: svgHtml }} />
+            {countriesCSS && <style>{countriesCSS}</style>}
+            <div ref={containerRef} className="w-full xr-map-root" data-ca={selected?.key ? '1' : undefined} dangerouslySetInnerHTML={{ __html: svgHtml }} />
             <div ref={touchOverlayRef} className="absolute inset-0 sm:hidden" style={{ zIndex: 2, touchAction: 'none' }} aria-hidden="true" />
           </div>
           {Object.entries(dotPositions).map(([country, pos]) => (
@@ -418,7 +419,7 @@ export default function WorldMapDots({
             >
               <div
                 className="mb-2 whitespace-nowrap rounded-md px-2 py-1 text-[11px] font-medium bg-[#1f1f1f] text-white dark:bg-white dark:text-[#1f1f1f] transition-opacity duration-150"
-                style={{ opacity: (hovered ?? selected)?.countries?.includes(country) || (hovered ?? selected)?.country === country ? 1 : 0 }}
+                style={{ opacity: (selected?.key ? selected : (hovered ?? selected))?.countries?.includes(country) || (!selected?.key && (hovered ?? selected)?.country === country) ? 1 : 0 }}
               >
                 {country}
               </div>
@@ -432,44 +433,87 @@ export default function WorldMapDots({
         </p>
       </div>
 
-      <div ref={legendRef} className="grid grid-cols-2 gap-x-10 gap-y-6 lg:flex lg:gap-y-0" role="group" aria-label={lt.groupAriaLabel} onKeyDown={handleLegendKeyDown}>
-        {legendGroups.map((col) => (
-          <div key={col.group} className="flex flex-col gap-2">
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad] mb-1" aria-hidden="true">{lt.headings[col.group]}</p>
-            {teamDots.filter(d => d.group === col.group).map((dot) => {
-              const dotCountries = Array.isArray(dot.countries) ? dot.countries : dot.country ? [dot.country] : [];
-              const primaryTz    = dotPositions[dotCountries[0]]?.tz ?? null;
-              const active       = hovered ?? selected;
-              const dotKey       = `${dot.label}-${dotCountries[0] ?? ''}`;
-              const isSelected   = selected?.key === dotKey;
-              const flatIdx      = flatDots.indexOf(dot);
-              const isActiveTz   = active && dotCountries.every(c => dotPositions[c]?.tz !== active.tz) && !isSelected;
-              return (
-                <button
-                  key={dotKey}
-                  type="button"
-                  tabIndex={flatIdx === focusedIdx ? 0 : -1}
-                  aria-pressed={isSelected}
-                  aria-label={`${lt.labels[dot.label] ?? dot.label}${dotCountries.length === 1 ? `, ${dotCountries[0]}` : ''}${isSelected ? ', selected' : ''}`}
-                  className={`flex items-center gap-2 px-3 py-1 rounded-full transition-colors self-start ${
-                    isSelected
-                      ? 'bg-black/[0.12] dark:bg-white/[0.16]'
-                      : 'bg-black/[0.05] dark:bg-white/[0.07] hover:bg-black/[0.1] dark:hover:bg-white/[0.13]'
-                  }`}
-                  style={{ opacity: isActiveTz ? 0.2 : 1, transition: 'opacity 200ms ease' }}
-                  onFocus={() => setFocusedIdx(flatIdx)}
-                  onPointerEnter={(e) => { if (e.pointerType !== 'touch') setHovered({ tz: primaryTz, country: dotCountries[0] ?? null }); }}
-                  onPointerLeave={(e) => { if (e.pointerType !== 'touch') setHovered(null); }}
-                  onPointerDown={(e) => { e.stopPropagation(); setSelected(prev => prev?.key === dotKey ? null : { tz: primaryTz, countries: dotCountries, label: dot.label, key: dotKey }); }}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: dot.color, flexShrink: 0 }} aria-hidden="true" />
-                  <span className="text-[13px] text-[#5c5c5c] dark:text-[#adadad] whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        ))}
+      <div ref={legendRef} role="group" aria-label={lt.groupAriaLabel} onKeyDown={handleLegendKeyDown}>
+        {/* Mobile: two independent flex columns (odd groups → col 1, even → col 2) */}
+        <div className="md:hidden flex gap-x-10">
+          {[legendGroups.filter((_, i) => i % 2 === 0), legendGroups.filter((_, i) => i % 2 === 1)].map((colGroups, ci) => (
+            <div key={ci} className="flex-1 flex flex-col gap-6">
+              {colGroups.map((col) => (
+                <div key={col.group} className="flex flex-col gap-2">
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad] mb-1" aria-hidden="true">{lt.headings[col.group]}</p>
+                  {teamDots.filter(d => d.group === col.group).map((dot) => {
+                    const dotCountries = Array.isArray(dot.countries) ? dot.countries : dot.country ? [dot.country] : [];
+                    const primaryTz    = dotPositions[dotCountries[0]]?.tz ?? null;
+                    const active       = hovered ?? selected;
+                    const dotKey       = `${dot.label}-${dotCountries[0] ?? ''}`;
+                    const isSelected   = selected?.key === dotKey;
+                    const flatIdx      = flatDots.indexOf(dot);
+                    const isActiveTz   = !isSelected && active && (active.key ? true : dotCountries.every(c => dotPositions[c]?.tz !== active.tz));
+                    return (
+                      <button
+                        key={dotKey}
+                        type="button"
+                        tabIndex={flatIdx === focusedIdx ? 0 : -1}
+                        aria-pressed={isSelected}
+                        aria-label={`${lt.labels[dot.label] ?? dot.label}${dotCountries.length === 1 ? `, ${dotCountries[0]}` : ''}${isSelected ? ', selected' : ''}`}
+                        className={`flex items-center gap-2 px-3 py-1 rounded-full transition-colors self-start ${isSelected ? 'bg-black/[0.12] dark:bg-white/[0.16]' : 'bg-black/[0.05] dark:bg-white/[0.07] hover:bg-black/[0.1] dark:hover:bg-white/[0.13]'}`}
+                        style={{ opacity: isActiveTz ? 0.2 : 1, transition: 'opacity 200ms ease' }}
+                        onFocus={() => setFocusedIdx(flatIdx)}
+                        onPointerEnter={(e) => { if (e.pointerType !== 'touch') setHovered({ tz: primaryTz, country: dotCountries[0] ?? null }); }}
+                        onPointerLeave={(e) => { if (e.pointerType !== 'touch') setHovered(null); }}
+                        onPointerDown={(e) => { e.stopPropagation(); setHovered(null); setSelected(prev => prev?.key === dotKey ? null : { tz: primaryTz, countries: dotCountries, label: dot.label, key: dotKey }); }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: dot.color, flexShrink: 0 }} aria-hidden="true" />
+                        <span className="text-[13px] text-[#5c5c5c] dark:text-[#adadad] whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        {/* md+: grid / desktop flex */}
+        <div className="hidden md:grid grid-cols-2 gap-x-10 gap-y-6 lg:flex lg:gap-y-0">
+          {legendGroups.map((col) => (
+            <div key={col.group} className="flex flex-col gap-2">
+              <p className="text-[11px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad] mb-1" aria-hidden="true">{lt.headings[col.group]}</p>
+              {teamDots.filter(d => d.group === col.group).map((dot) => {
+                const dotCountries = Array.isArray(dot.countries) ? dot.countries : dot.country ? [dot.country] : [];
+                const primaryTz    = dotPositions[dotCountries[0]]?.tz ?? null;
+                const active       = hovered ?? selected;
+                const dotKey       = `${dot.label}-${dotCountries[0] ?? ''}`;
+                const isSelected   = selected?.key === dotKey;
+                const flatIdx      = flatDots.indexOf(dot);
+                const isActiveTz   = active && dotCountries.every(c => dotPositions[c]?.tz !== active.tz) && !isSelected;
+                return (
+                  <button
+                    key={dotKey}
+                    type="button"
+                    tabIndex={flatIdx === focusedIdx ? 0 : -1}
+                    aria-pressed={isSelected}
+                    aria-label={`${lt.labels[dot.label] ?? dot.label}${dotCountries.length === 1 ? `, ${dotCountries[0]}` : ''}${isSelected ? ', selected' : ''}`}
+                    className={`flex items-center gap-2 px-3 py-1 rounded-full transition-colors self-start ${
+                      isSelected
+                        ? 'bg-black/[0.12] dark:bg-white/[0.16]'
+                        : 'bg-black/[0.05] dark:bg-white/[0.07] hover:bg-black/[0.1] dark:hover:bg-white/[0.13]'
+                    }`}
+                    style={{ opacity: isActiveTz ? 0.2 : 1, transition: 'opacity 200ms ease' }}
+                    onFocus={() => setFocusedIdx(flatIdx)}
+                    onPointerEnter={(e) => { if (e.pointerType !== 'touch') setHovered({ tz: primaryTz, country: dotCountries[0] ?? null }); }}
+                    onPointerLeave={(e) => { if (e.pointerType !== 'touch') setHovered(null); }}
+                    onPointerDown={(e) => { e.stopPropagation(); setHovered(null); setSelected(prev => prev?.key === dotKey ? null : { tz: primaryTz, countries: dotCountries, label: dot.label, key: dotKey }); }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: dot.color, flexShrink: 0 }} aria-hidden="true" />
+                    <span className="text-[13px] text-[#5c5c5c] dark:text-[#adadad] whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

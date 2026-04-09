@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-04-06');
+const LAST_UPDATED = new Date('2026-04-09');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -194,6 +194,7 @@ function Privacy({ lang }) {
   const [activeId, setActiveId] = useState('');
   const [mounted,     setMounted]     = useState(false);
   const [scrolledDown, setScrolledDown] = useState(false);
+  const [scrollingDown, setScrollingDown] = useState(false);
   const suppressRef = useRef(false);
 
   useEffect(() => { setMounted(true); }, []);
@@ -235,11 +236,21 @@ function Privacy({ lang }) {
     // secondary-nav-change intentionally not dispatched — chat button coexists with sec nav
   }, [secondaryNavVisible]);
 
+  useEffect(() => {
+    if (!window.matchMedia('(max-width: 767px)').matches) return;
+    let lastY = window.scrollY;
+    const onScroll = () => { const y = window.scrollY; if (!suppressRef.current) setScrollingDown(y > lastY); lastY = y; };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const handleNavigate = (id) => {
     setActiveId(id);
     suppressRef.current = true;
+    setScrollingDown(false);
+    window.dispatchEvent(new CustomEvent('nav-scroll-start'));
     scrollToSection(id);
-    setTimeout(() => { suppressRef.current = false; }, 1500);
+    setTimeout(() => { suppressRef.current = false; setScrollingDown(false); }, 1500);
   };
 
   return (
@@ -284,12 +295,12 @@ function Privacy({ lang }) {
             {t.outro}
           </p>
         </div>
-        <div inert={scrolledDown && !atBottom ? undefined : true} className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div inert={scrolledDown && !atBottom && !scrollingDown ? undefined : true} className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <div className="pointer-events-auto w-full">
             <MobileSecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
           </div>
         </div>
-        <div aria-hidden="true" className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0'}`} style={{ width: 52, height: 52, left: 8, bottom: 8 }} />
+        <div aria-hidden="true" className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`} style={{ width: 52, height: 52, left: 8, bottom: 8 }} />
       </main>
       <Footer lang={lang} />
     </>

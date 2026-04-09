@@ -59,7 +59,7 @@ function CookieBanner({ lang, hideFloating = false }) {
         ref={dialogRef}
         tabIndex={-1}
         inert={!visible || (hideFloating && !explicit)}
-        className={`fixed bottom-4 left-1/2 -translate-x-1/2 z-[300] w-[340px] md:w-auto md:max-w-[760px] bg-[#1f1f1f]/95 dark:bg-[#f6f6f6]/95 backdrop-blur-sm border border-white/[0.08] dark:border-black/[0.08] rounded-3xl shadow-[0_4px_24px_rgba(0,0,0,0.10)] p-5 flex flex-col md:flex-row md:items-center gap-5 md:gap-6 transition-all duration-300 ease-out ${
+        className={`fixed bottom-[60px] sm:bottom-4 left-1/2 -translate-x-1/2 z-[300] w-[340px] md:w-auto md:max-w-[760px] bg-[#1f1f1f]/95 dark:bg-[#f6f6f6]/95 backdrop-blur-sm border border-white/[0.08] dark:border-black/[0.08] rounded-3xl shadow-[0_4px_24px_rgba(0,0,0,0.10)] p-5 flex flex-col md:flex-row md:items-center gap-5 md:gap-6 transition-all duration-300 ease-out ${
           visible && (!hideFloating || explicit) ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
         }`}
       >
