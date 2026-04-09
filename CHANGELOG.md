@@ -1,5 +1,15 @@
 # Changelog 
 
+## [1.5.11] — 2026-04-09
+
+### Sales Platform — world map tooltip positioning
+- **Selection-aware offsets** — `SP_TOOLTIP_OFFSETS` converted from a static object to a function `(selected) => offsets`, allowing tooltip positions to vary by active pill; `WorldMapDots` updated to accept either format
+- **Developer / Marketing** — England tooltip pushed below its dot (`y: 40`) when Scotland + England are both visible
+- **Project Manager** — Cyprus tooltip pushed below its dot (`y: 40`, centred) when England + Cyprus are both visible; England tooltip remains above
+- **QA Testers** — Indonesia tooltip pushed below its dot (`y: 40`) when Indonesia + Thailand are both visible
+
+---
+
 ## [1.5.10] — 2026-04-09
 
 ### WorldMapDots — legend pill interactions (XR & Sales Platform)

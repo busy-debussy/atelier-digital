@@ -410,12 +410,14 @@ export default function WorldMapDots({
             <div ref={containerRef} className="w-full xr-map-root" data-ca={selected?.key ? '1' : undefined} dangerouslySetInnerHTML={{ __html: svgHtml }} />
             <div ref={touchOverlayRef} className="absolute inset-0 sm:hidden" style={{ zIndex: 2, touchAction: 'none' }} aria-hidden="true" />
           </div>
-          {Object.entries(dotPositions).map(([country, pos]) => (
+          {Object.entries(dotPositions).map(([country, pos]) => {
+            const off = (typeof tooltipOffsets === 'function' ? tooltipOffsets(selected) : tooltipOffsets)[country];
+            return (
             <div
               key={country}
               aria-hidden="true"
               className="absolute pointer-events-none"
-              style={{ left: `calc(${pos.x}% + ${tooltipOffsets[country]?.x ?? 0}px)`, top: `calc(${pos.y}% + ${tooltipOffsets[country]?.y ?? 0}px)`, transform: 'translate(-50%, -100%)' }}
+              style={{ left: `calc(${pos.x}% + ${off?.x ?? 0}px)`, top: `calc(${pos.y}% + ${off?.y ?? 0}px)`, transform: 'translate(-50%, -100%)' }}
             >
               <div
                 className="mb-2 whitespace-nowrap rounded-md px-2 py-1 text-[11px] font-medium bg-[#1f1f1f] text-white dark:bg-white dark:text-[#1f1f1f] transition-opacity duration-150"
@@ -424,7 +426,8 @@ export default function WorldMapDots({
                 {country}
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
         <p className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] mt-2 text-center" aria-hidden="true">{lt.mapCaption}</p>
         <p className="sr-only">

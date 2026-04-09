@@ -501,9 +501,21 @@ const SP_COUNTRY_COLOR_MAP = {
   Thailand:  '#E8A86B',
 };
 
-const SP_TOOLTIP_OFFSETS = {
-  England: { y: 28 }, // shift down to avoid overlapping Scotland
-  Cyprus:  { x: 80, y: -12 }, // shift right+up to avoid overlapping England tooltip
+const SP_TOOLTIP_OFFSETS = (selected) => {
+  const key = selected?.key ?? '';
+  // Developer / Marketing: Scotland + England visible → push England below its dot
+  if (key === 'Developer-Scotland' || key === 'Marketing-England') {
+    return { England: { y: 40 } };
+  }
+  // Project Manager: England + Cyprus visible → push Cyprus below its dot, centred
+  if (key === 'Project Manager-England') {
+    return { Cyprus: { y: 40 } };
+  }
+  // QA Testers: Indonesia + Thailand visible → push Indonesia below its dot
+  if (key === 'QA Testers-Indonesia') {
+    return { Indonesia: { y: 40 } };
+  }
+  return {};
 };
 
 // Pin specific SVG dots for countries with multiple circles
