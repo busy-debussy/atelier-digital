@@ -126,7 +126,7 @@ export default function WorldMapDots({
   // CSS for country-selection dimming — lives outside the SVG so it survives innerHTML
   const countriesCSS = useMemo(() => {
     if (!selected?.key) return '';
-    const bgDim = isDark ? '0.06' : '0.15';
+    const bgDim = '0.3';
     const selectors = (selected.countries ?? [])
       .map(c => `.xr-map-root[data-ca] .xr-dot[data-country="${c}"]`)
       .join(', ');
@@ -154,22 +154,21 @@ export default function WorldMapDots({
     const rect = svg.querySelector('rect');
     if (rect) rect.setAttribute('fill', 'transparent');
 
-    const bgOpacity  = isDark ? 0.45 : 0.45;
-    const bgHoverDim = isDark ? 0.06 : 0.15;
-    const labelColor = isDark ? '#f6f6f6' : '#1f1f1f';
+    const dotRestFill = isDark ? '#404040' : '#d4d4d4';
+    const labelColor  = isDark ? '#fafafa' : '#1f1f1f';
 
     const style = doc.createElementNS('http://www.w3.org/2000/svg', 'style');
     style.textContent = `
       svg { touch-action: none; }
-      .xr-bg    { opacity: ${bgOpacity}; cursor: crosshair; }
-      .xr-dot   { opacity: 1;            cursor: crosshair; }
+      .xr-bg    { cursor: crosshair; }
+      .xr-dot   { opacity: 1;        cursor: crosshair; }
       .xr-label    { font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
                      font-size: 8px; font-weight: 700; text-anchor: middle; dominant-baseline: central;
                      cursor: crosshair; fill: ${labelColor}; }
-      .xr-label-bg { cursor: crosshair; fill: ${isDark ? '#2e2e2e' : '#e4e4e4'}; opacity: 0; }
-      svg[data-active] .xr-bg       { opacity: ${bgHoverDim}; }
+      .xr-label-bg { cursor: crosshair; opacity: 0; }
+      svg[data-active] .xr-bg       { opacity: 0.3; }
       svg[data-active] .xr-dot      { opacity: 0.2; }
-      svg[data-active] .xr-label    { opacity: ${bgHoverDim}; }
+      svg[data-active] .xr-label    { opacity: 0.3; }
       svg[data-active] .xr-label-bg { opacity: 0; }
     `;
     svg.insertBefore(style, svg.firstChild);
@@ -227,7 +226,7 @@ export default function WorldMapDots({
         if (fill === 'white') {
           circle.setAttribute('fill', 'transparent');
         } else {
-          circle.setAttribute('fill', '#C8C8C8');
+          circle.setAttribute('fill', dotRestFill);
         }
         circle.setAttribute('class', 'xr-bg');
       }
@@ -363,7 +362,7 @@ export default function WorldMapDots({
         if (c.classList.contains('xr-label')) {
           c.style.opacity  = '1';
           c.style.fontSize = '22px';
-          c.style.fill     = isDark ? '#000000' : '#ffffff';
+          c.style.fill     = isDark ? '#1f1f1f' : '#fafafa';
         }
         if (c.classList.contains('xr-label-bg')) {
           const midx = parseFloat(c.getAttribute('data-midx'));
@@ -372,7 +371,7 @@ export default function WorldMapDots({
           const aw   = len * 14 + 28;
           const ah   = 38;
           c.style.opacity = '1';
-          c.style.fill    = isDark ? '#ffffff' : '#000000';
+          c.style.fill    = isDark ? '#fafafa' : '#1f1f1f';
           c.setAttribute('x',      String(midx - aw / 2));
           c.setAttribute('y',      String(midy - ah / 2));
           c.setAttribute('width',  String(aw));
@@ -390,7 +389,7 @@ export default function WorldMapDots({
       <div className="flex flex-col gap-1">
         <div
           ref={mapRef}
-          className="relative w-full mb-2 sm:mb-0 rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C9A84C]"
+          className="relative w-full mb-2 sm:mb-0 rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-gold"
           style={{ cursor: 'crosshair' }}
           tabIndex={0}
           role="img"
@@ -420,7 +419,7 @@ export default function WorldMapDots({
               style={{ left: `calc(${pos.x}% + ${off?.x ?? 0}px)`, top: `calc(${pos.y}% + ${off?.y ?? 0}px)`, transform: 'translate(-50%, -100%)' }}
             >
               <div
-                className="mb-2 whitespace-nowrap rounded-md px-2 py-1 text-[11px] font-medium bg-[#1f1f1f] text-white dark:bg-white dark:text-[#1f1f1f] transition-opacity duration-150"
+                className="mb-2 whitespace-nowrap rounded-radius-2 px-2 py-1 text-[11px] font-medium bg-[#1f1f1f] text-white dark:bg-white dark:text-fg-primary-inverse transition-opacity duration-150"
                 style={{ opacity: (selected?.key ? selected : (hovered ?? selected))?.countries?.includes(country) || (!selected?.key && (hovered ?? selected)?.country === country) ? 1 : 0 }}
               >
                 {country}
@@ -429,7 +428,7 @@ export default function WorldMapDots({
             );
           })}
         </div>
-        <p className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] mt-2 text-center" aria-hidden="true">{lt.mapCaption}</p>
+        <p className="text-[12px] leading-normal text-fg-muted mt-2 text-center" aria-hidden="true">{lt.mapCaption}</p>
         <p className="sr-only">
           World map showing the geographic distribution of the team across four countries and their time zones.
           Use the buttons below to highlight each team member&apos;s location on the map.
@@ -443,7 +442,7 @@ export default function WorldMapDots({
             <div key={ci} className="flex-1 flex flex-col gap-6">
               {colGroups.map((col) => (
                 <div key={col.group} className="flex flex-col gap-2">
-                  <p className="text-[11px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad] mb-1" aria-hidden="true">{lt.headings[col.group]}</p>
+                  <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted mb-1" aria-hidden="true">{lt.headings[col.group]}</p>
                   {teamDots.filter(d => d.group === col.group).map((dot) => {
                     const dotCountries = Array.isArray(dot.countries) ? dot.countries : dot.country ? [dot.country] : [];
                     const primaryTz    = dotPositions[dotCountries[0]]?.tz ?? null;
@@ -468,7 +467,7 @@ export default function WorldMapDots({
                         onClick={(e) => e.stopPropagation()}
                       >
                         <div style={{ width: 8, height: 8, borderRadius: '50%', background: dot.color, flexShrink: 0 }} aria-hidden="true" />
-                        <span className="text-[13px] text-[#5c5c5c] dark:text-[#adadad] whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
+                        <span className="text-label-s font-medium leading-[1.2] text-fg-muted whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
                       </button>
                     );
                   })}
@@ -481,7 +480,7 @@ export default function WorldMapDots({
         <div className="hidden md:grid grid-cols-2 gap-x-10 gap-y-6 lg:flex lg:gap-y-0">
           {legendGroups.map((col) => (
             <div key={col.group} className="flex flex-col gap-2">
-              <p className="text-[11px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad] mb-1" aria-hidden="true">{lt.headings[col.group]}</p>
+              <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted mb-1" aria-hidden="true">{lt.headings[col.group]}</p>
               {teamDots.filter(d => d.group === col.group).map((dot) => {
                 const dotCountries = Array.isArray(dot.countries) ? dot.countries : dot.country ? [dot.country] : [];
                 const primaryTz    = dotPositions[dotCountries[0]]?.tz ?? null;
@@ -510,7 +509,7 @@ export default function WorldMapDots({
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: dot.color, flexShrink: 0 }} aria-hidden="true" />
-                    <span className="text-[13px] text-[#5c5c5c] dark:text-[#adadad] whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
+                    <span className="text-[13px] text-fg-muted whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
                   </button>
                 );
               })}

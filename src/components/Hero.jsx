@@ -225,11 +225,11 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
         <div>
           <h1
             aria-label={heading}
-            className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.15] md:leading-none text-[#1f1f1f] dark:text-[#f6f6f6]"
+            className="text-display-1 font-bold tracking-tight leading-tight text-fg-primary"
           >
             {displayed}
             {!typingDone && (
-              <span aria-hidden="true" className={`inline-block w-[3px] h-[0.85em] ml-1 align-middle bg-[#1f1f1f] dark:bg-[#f6f6f6] rounded-sm ${caretBlinking ? 'motion-safe:animate-[blink_1s_step-end_infinite]' : ''}`} />
+              <span aria-hidden="true" className={`inline-block w-[3px] h-[0.85em] ml-1 align-middle bg-tooltip-bg rounded-radius-half ${caretBlinking ? 'motion-safe:animate-[blink_1s_step-end_infinite]' : ''}`} />
             )}
           </h1>
         </div>
@@ -239,20 +239,21 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
           <div className="mt-6 sm:mt-8">
             <h2
               aria-label={subtitle}
-              className="text-3xl md:text-5xl font-medium text-[#5c5c5c] dark:text-[#adadad]"
+              className="text-display-2 font-semibold leading-tight text-fg-muted"
             >
-              {subtitleChars.map((char, i) => (
-                <span
-                  key={i}
-                  style={{
-                    opacity: i < visibleChars ? 1 : 0,
-                    transition: 'opacity 300ms cubic-bezier(0.22,1,0.36,1)',
-                    whiteSpace: 'pre',
-                  }}
-                >
-                  {char}
-                </span>
-              ))}
+              {subtitleChars.map((char, i) =>
+                char === ' ' ? ' ' : (
+                  <span
+                    key={i}
+                    style={{
+                      opacity: i < visibleChars ? 1 : 0,
+                      transition: 'opacity 300ms cubic-bezier(0.22,1,0.36,1)',
+                    }}
+                  >
+                    {char}
+                  </span>
+                )
+              )}
             </h2>
           </div>
         )}
@@ -269,11 +270,11 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
               <Link
                 data-spring
                 to="/resume?from=home#experience"
-                className="group block border border-black/[0.08] dark:border-white/[0.08] hover:border-black/[0.18] dark:hover:border-white/[0.18] rounded-[32px] px-6 py-5 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_20px_rgba(255,255,255,0.04)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2 cursor-pointer"
+                className="group block border border-black/[0.06] dark:border-white/[0.06] hover:border-black/[0.16] dark:hover:border-white/[0.16] rounded-radius-8 px-6 py-5 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-s dark:hover:shadow-s-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 cursor-pointer"
               >
-                <p className="text-[14px] sm:text-[15px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad]">
+                <h3 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted">
                   {expLabel}
-                </p>
+                </h3>
                 <ul
                   aria-label={expLabel}
                   className="list-none grid grid-cols-3 gap-2 p-0 m-0"
@@ -281,7 +282,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                   {pills.map((pill, i) => (
                     <li
                       key={pill}
-                      className="px-2 py-1 sm:px-4 sm:py-2 rounded-full text-[10px] sm:text-[15px] font-medium flex items-center justify-center"
+                      className="px-2 py-1 sm:px-4 sm:py-2 rounded-full text-[10px] sm:text-[14px] lg:text-[15px] font-medium leading-normal flex items-center justify-center"
                       style={{
                         opacity: i < visiblePills ? 1 : 0,
                         transform: prefersReduced ? undefined : (i < visiblePills ? 'translateY(0px)' : 'translateY(8px)'),
@@ -316,14 +317,14 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                   document.getElementById('case-studies')?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: mobile ? 'center' : 'start' });
                 }}
                 data-spring
-                className="px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
+                className="px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
               >
                 {btnCases}
               </a>
               <Link
                 to="/resume"
                 data-spring
-                className="px-6 py-3 text-[#0152EC] hover:text-[#0142cc] dark:text-[#7aabff] dark:hover:text-[#9ec0ff] font-medium text-[15px] sm:text-[16px] rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
+                className="px-6 py-3 text-cta-600 hover:text-cta-700 dark:text-fg-primary dark:hover:opacity-80 font-medium text-[15px] sm:text-[16px] rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary focus-visible:ring-offset-2"
               >
                 {btnCV}
               </Link>

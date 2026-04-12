@@ -1,5 +1,20 @@
 # Changelog 
 
+## [2.0.0] — 2026-04-12
+
+### Design token system — full site migration
+- **Semantic color tokens** — all hardcoded hex values replaced with `fg-*`, `bg-*`, `border-*`, `cta-*`, and `tooltip-*` tokens across all 19 components and pages; remaining hardcoded values are documented exceptions (opacity variants, intentional DS gaps, always-dark XR sections)
+- **Typography short aliases** — `text-font-size-headings-display-h1` → `text-display-1`, `text-font-size-copy-copy-m` → `text-copy-m`, etc.; full short alias set added to `tailwind.config.js`, long-form names removed
+- **Border radius scale** — `rounded-[Npx]` replaced with `rounded-radius-N` tokens (radius-half=2px through radius-full=9999px) across all files; `radius-half` added to `generate-tokens.mjs`
+- **Shadow scale** — `shadow-[...]` replaced with `shadow-xs/s/m/l` tokens; `shadows.css` created as hand-maintained file for effect style tokens (not exportable as Figma variables); `shadow-s-dark` added for dark-mode white-tint variant
+- **Button nav tokens** — `bg-[#f6f6f6] dark:bg-[#262626]` carousel/nav button rest state → `bg-btn-nav-bg-rest`; hover → `bg-btn-nav-bg-hover`; white/dark variant → `bg-btn-nav-bg-rest-subtle`
+- **Inverted surface tokens** — `bg-[#1f1f1f] dark:bg-[#fafafa]` solid panels → `bg-tooltip-bg`; nav active states → `bg-nav-active-bg-solid`; carousel dot active → `bg-fg-dot-active`; kbd badges → `bg-tooltip-keyboard-shortcut-bg / text-tooltip-keyboard-shortcut-fg`
+- **Divider tokens** — `bg-[#d4d4d4] dark:bg-[#404040]` → `bg-border-subtle`; inverted divider → `bg-border-subtle-inverted`
+- **Typography breakpoints fixed** — token CSS and style-dictionary config updated from 768px/1280px to 640px/1024px to match site's Tailwind `sm:`/`lg:` breakpoints
+- **`shadows.css`** — new hand-maintained token file imported in `index.css`; holds shadow effect style vars and any tokens not yet in Figma export pipeline
+
+---
+
 ## [1.5.11] — 2026-04-09
 
 ### Sales Platform — world map tooltip positioning

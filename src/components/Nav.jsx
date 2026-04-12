@@ -56,7 +56,7 @@ const T = {
 // Flags, local exports, fixed container so nav width never shifts
 function Flag({ code }) {
   return (
-    <div className="shrink-0 rounded-[6px] overflow-hidden" style={{ width: 24, height: 24, minWidth: 24 }}>
+    <div className="shrink-0 rounded-radius-2 overflow-hidden" style={{ width: 24, height: 24, minWidth: 24 }}>
       <img
         src={code === 'gb' ? imgFlagGB : imgFlagFR}
         alt={`${code.toUpperCase()} flag`}
@@ -113,9 +113,9 @@ function Tooltip({ label, isDark, offset = 8, shortcut }) {
   const txt = isDark ? '#1f1f1f' : '#f6f6f6';
   return (
     <div style={{ top: `calc(100% + ${offset}px)` }} className="absolute left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center">
-<div style={{ background: bg, color: txt }} className={`relative z-0 text-[13px] font-light leading-4 pl-2 ${shortcut ? 'pr-[4px]' : 'pr-2'} py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-1.5`}>
+<div style={{ background: bg, color: txt }} className={`relative z-0 text-[13px] font-light leading-[1.2] pl-2 ${shortcut ? 'pr-[4px]' : 'pr-2'} py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-2`}>
         {label}
-        {shortcut && <kbd className="text-[11px] font-medium w-[18px] h-[18px] flex items-center justify-center rounded-md bg-[#f6f6f6] dark:bg-[#2a2a2a] text-[#1f1f1f] dark:text-[#d4d4d4] not-italic">{shortcut}</kbd>}
+        {shortcut && <kbd className="text-[11px] font-medium w-[18px] h-[18px] flex items-center justify-center rounded-[6px] bg-tooltip-keyboard-shortcut-bg text-tooltip-keyboard-shortcut-fg not-italic">{shortcut}</kbd>}
       </div>
     </div>
   );
@@ -150,7 +150,7 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
   const handleClick = () => { suppress(); onToggle(); };
 
   const bgStyle = isDark
-    ? { background: hovered ? '#383838' : '#262626' }
+    ? { background: hovered ? '#383838' : '#404040' }
     : hovered
       ? { backgroundImage: 'linear-gradient(rgba(0,0,0,0.32),rgba(0,0,0,0.32)),linear-gradient(rgba(0,0,0,0.16),rgba(0,0,0,0.16))' }
       : { backgroundImage: 'linear-gradient(rgba(0,0,0,0.32),rgba(0,0,0,0.32)),linear-gradient(rgba(255,255,255,0.32),rgba(255,255,255,0.32))' };
@@ -183,7 +183,7 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
         onMouseLeave={() => { setHovered(false); hideTip(); }}
         onBlur={() => { setHovered(false); hideTip(); }}
         aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-        className="relative flex items-center h-8 w-[51px] rounded-[16px] cursor-pointer transition-colors"
+        className="relative flex items-center h-8 w-[51px] rounded-radius-4 cursor-pointer transition-colors"
         style={{ padding: isDark ? '3px 3px 3px 4px' : '3px 4px 3px 3px', gap:2, ...bgStyle }}
       >
         {isDark ? (
@@ -217,11 +217,11 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
         aria-expanded={isOpen}
         aria-controls={isOpen ? 'projects-menu' : undefined}
         aria-label={isOpen ? `Close ${T[lang].projects} menu` : `Open ${T[lang].projects} menu`}
-        className={`flex items-center justify-center gap-2 h-8 px-4 rounded-[12px] cursor-pointer active:opacity-[0.33] transition-colors ${
-          isOpen ? 'bg-[#161616] dark:bg-white' : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
+        className={`flex items-center justify-center gap-2 h-8 px-4 rounded-radius-3 cursor-pointer active:opacity-[0.33] transition-colors ${
+          isOpen ? 'bg-nav-active-bg-solid' : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'
         }`}
       >
-        <span className={`font-medium text-base leading-6 whitespace-nowrap ${isOpen ? 'text-white dark:text-[#161616]' : 'text-black dark:text-white'}`}>
+        <span className={`font-medium text-base leading-6 whitespace-nowrap ${isOpen ? 'text-fg-primary-inverse' : 'text-fg-primary'}`}>
           {T[lang].projects}
         </span>
         <Chevron isOpen={isOpen} isDark={isDark} />
@@ -254,7 +254,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
       aria-label={lang === 'fr' ? 'Études de cas' : 'Case studies'}
       ref={dropdownRef}
       style={portalStyle}
-      className="w-[198px] backdrop-blur-[12px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] rounded-2xl overflow-hidden shadow-[0px_4px_20px_rgba(0,0,0,0.12)]"
+      className="w-[198px] backdrop-blur-[12px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] rounded-radius-4 overflow-hidden shadow-s"
     >
       <ul role="none" className="p-2 flex flex-col">
         {items.map(({ key, to, locked }) => (
@@ -269,19 +269,19 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
                   if (e.key === 'Escape') { e.preventDefault(); onClose(); anchorRef?.current?.querySelector('button')?.focus(); }
                   else if (e.key === 'Tab') { onClose(); }
                 }}
-                className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
+                className="flex items-center gap-2 px-3 py-2 rounded-radius-3 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
               >
                 <div className="size-6 shrink-0 flex items-center justify-center">
                   <img src={imgArrowRight} alt="" width={16} height={16} style={{ transform:'none' }} />
                 </div>
-                <span className="font-semibold text-base leading-6 text-black dark:text-white whitespace-nowrap">{T[lang][key]}</span>
+                <span className="font-medium text-base leading-6 text-fg-primary whitespace-nowrap">{T[lang][key]}</span>
               </Link>
             ) : (
               <div role="menuitem" aria-disabled="true" className="flex items-center gap-2 px-3 py-2 cursor-default">
                 <div className="size-6 shrink-0 flex items-center justify-center">
                   <img src={imgLockIcon} alt="" width={16} height={16} className="dark:invert" />
                 </div>
-                <span className="font-semibold text-base leading-6 text-[#161616] dark:text-white whitespace-nowrap">{T[lang][key]}</span>
+                <span className="font-medium text-base leading-6 text-fg-primary whitespace-nowrap">{T[lang][key]}</span>
               </div>
             )}
           </li>
@@ -312,7 +312,7 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
       aria-label={lang === 'en' ? 'Language selection' : 'Sélection de la langue'}
       ref={dropdownRef}
       style={portalStyle}
-      className="backdrop-blur-[12px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] rounded-2xl overflow-hidden shadow-[0px_4px_20px_rgba(0,0,0,0.12)]"
+      className="backdrop-blur-[12px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] rounded-radius-4 overflow-hidden shadow-s"
     >
       <ul role="none" className="p-2">
         <li role="none">
@@ -324,10 +324,10 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
               if (e.key === 'Escape') { e.preventDefault(); onClose(); anchorRef?.current?.querySelector('button')?.focus(); }
               else if (e.key === 'Tab') { onClose(); }
             }}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
+            className="flex items-center gap-2 px-3 py-2 rounded-radius-3 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
           >
             <Flag code={other === 'en' ? 'gb' : 'fr'} />
-            <span className="font-semibold text-base leading-6 text-[#1f1f1f] dark:text-white">{other === 'en' ? 'GB' : 'FR'}</span>
+            <span className="font-semibold text-base leading-6 text-fg-primary">{other === 'en' ? 'GB' : 'FR'}</span>
           </button>
         </li>
       </ul>
@@ -351,10 +351,10 @@ function LanguageButton({ lang, toggleLang, isDark }) {
         onMouseLeave={hideTip}
         data-spring
         aria-label={`${label}, change language`}
-        className="flex items-center gap-2 h-8 px-3 rounded-[12px] cursor-pointer active:opacity-[0.33] transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"
+        className="flex items-center gap-2 h-8 px-3 rounded-radius-3 cursor-pointer active:opacity-[0.33] transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"
       >
         <Flag code={flagCode} />
-        <span className="font-medium text-base leading-6 whitespace-nowrap text-[#161616] dark:text-white">
+        <span className="font-medium text-base leading-6 whitespace-nowrap text-fg-primary">
           {label}
         </span>
       </button>
@@ -398,13 +398,13 @@ function NavLink({ to, label, currentPage, tooltip, shortcut, isDark }) {
         onClick={handleClick}
         onMouseEnter={showTip}
         onMouseLeave={hideTip}
-        className={`flex items-center justify-center h-8 px-4 rounded-[12px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+        className={`flex items-center justify-center h-8 px-4 rounded-radius-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
           isActive
-            ? 'bg-[#161616] dark:bg-white'
-            : 'active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
+            ? 'bg-nav-active-bg-solid'
+            : 'active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'
         }`}
       >
-        <span className={`font-medium text-base leading-6 whitespace-nowrap ${isActive ? 'text-white dark:text-[#161616]' : 'text-black dark:text-white'}`}>
+        <span className={`font-medium text-base leading-6 whitespace-nowrap ${isActive ? 'text-fg-primary-inverse' : 'text-fg-primary'}`}>
           {label}
         </span>
       </Link>
@@ -437,16 +437,16 @@ function ContactModal({ lang, onClose }) {
   }, [onClose]);
 
   // Inverted: dark card in light mode, light card in dark mode
-  const lbl = 'text-[11px] font-semibold uppercase tracking-widest text-[#adadad] dark:text-[#5c5c5c] mb-1';
-  const val = 'text-[16px] font-medium text-[#f6f6f6] dark:text-[#1f1f1f]';
-  const row = 'block py-4 px-6 -mx-6 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC] hover:bg-white/[0.04] dark:hover:bg-black/[0.04]';
+  const lbl = 'text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted-inverse mb-1';
+  const val = 'text-[14px] font-normal leading-relaxed text-fg-primary-inverse';
+  const row = 'block py-4 px-6 -mx-6 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus hover:bg-white/[0.04] dark:hover:bg-black/[0.04]';
 
   return createPortal(
     <>
       <div
         aria-hidden="true"
         onClick={onClose}
-        className="fixed inset-0 z-[600] bg-black/40 backdrop-blur-[2px]"
+        className="fixed inset-0 z-[600] bg-black/40 backdrop-blur-[4px]"
         style={{ animation: 'fade-in 0.2s ease both' }}
       />
       {/* Centering wrapper — flex centering is more reliable than top/left/transform */}
@@ -458,7 +458,7 @@ function ContactModal({ lang, onClose }) {
             onClick={onClose}
             aria-label={lang === 'fr' ? 'Fermer' : 'Close'}
             data-spring
-          className="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 rounded-full text-[#f6f6f6] dark:text-[#1f1f1f] hover:bg-[#f6f6f6] dark:hover:bg-[#1f1f1f] hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] active:opacity-[0.33] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] cursor-pointer"
+          className="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 rounded-full text-fg-primary-inverse hover:bg-bg-surface hover:text-fg-primary active:opacity-[0.33] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus cursor-pointer"
           style={{ animation: 'fade-in 0.3s ease 0.25s both' }}
           >
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
@@ -466,7 +466,7 @@ function ContactModal({ lang, onClose }) {
             </svg>
           </button>
           <div
-            className="bg-[#1f1f1f] dark:bg-[#f6f6f6] rounded-[28px] shadow-[0px_24px_64px_rgba(0,0,0,0.32)] ring-1 ring-white/[0.08] dark:ring-black/[0.08] px-6 pt-6 pb-6"
+            className="bg-tooltip-bg rounded-radius-7 shadow-l px-6 pt-6 pb-6"
             style={{ animation: 'modal-card-in 0.35s cubic-bezier(0.22,1,0.36,1) both' }}
           >
         {/* Header */}
@@ -476,26 +476,26 @@ function ContactModal({ lang, onClose }) {
             alt="David V."
             width={48}
             height={48}
-            className="rounded-full shrink-0 object-cover ring-2 ring-white/[0.12] dark:ring-black/[0.10]"
+            className="rounded-full shrink-0 object-cover"
             style={{ width: 48, height: 48 }}
           />
           <div>
-            <h2 id="contact-modal-title" className="text-[17px] font-semibold text-[#f6f6f6] dark:text-[#1f1f1f] leading-tight">
+            <h1 id="contact-modal-title" className="text-h3 font-semibold text-fg-primary-inverse leading-snug">
               David V.
-            </h2>
-            <p className="text-[13px] text-[#adadad] dark:text-[#5c5c5c]">
+            </h1>
+            <p className="text-subheading font-medium leading-snug text-fg-muted-inverse">
               {lang === 'fr' ? 'Designer produit senior' : 'Senior Product Designer'}
             </p>
           </div>
         </div>
 
-        <div className="h-px bg-white/[0.08] dark:bg-black/[0.08] -mx-6" />
+        <div className="h-px bg-border-subtle-inverted -mx-6" />
 
         <ul>
-          <li className="border-b border-white/[0.06] dark:border-black/[0.06]">
+          <li className="border-b border-border-subtle-inverted">
             <a data-spring href={`mailto:${u}@${d}?subject=${encodeURIComponent(subject)}`} onClick={() => trackEvent('contact_email_click')} className={`${row} flex items-center justify-between gap-3`}>
               <div className="min-w-0">
-                <p className={lbl}>{lang === 'fr' ? 'E-mail' : 'Email'}</p>
+                <h2 className={lbl}>{lang === 'fr' ? 'E-mail' : 'Email'}</h2>
                 <span className={`${val} obf-email block`} data-u={u} data-d={d} aria-hidden="true" />
                 <span className="sr-only">d@AtelierDigital.co.uk</span>
               </div>
@@ -503,7 +503,7 @@ function ContactModal({ lang, onClose }) {
                 data-spring
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigator.clipboard.writeText(`${u}@${d}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
                 aria-label={lang === 'fr' ? "Copier l'adresse e-mail" : 'Copy email address'}
-                className="flex items-center gap-1.5 px-3 h-7 rounded-full text-[12px] font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] bg-white/[0.06] dark:bg-black/[0.05] hover:bg-white/[0.12] dark:hover:bg-black/[0.1] shrink-0 text-[#f6f6f6] dark:text-[#1f1f1f]"
+                className="flex items-center gap-2 px-3 h-7 rounded-full text-[12px] font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus bg-white/[0.06] dark:bg-black/[0.06] hover:bg-white/[0.12] dark:hover:bg-black/[0.1] shrink-0 text-fg-primary-inverse"
               >
                 {copied ? (
                   <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -519,13 +519,13 @@ function ContactModal({ lang, onClose }) {
               </button>
             </a>
           </li>
-          <li className="border-b border-white/[0.06] dark:border-black/[0.06]">
+          <li className="border-b border-border-subtle-inverted">
             <button
               data-spring
               onClick={() => { trackEvent('contact_linkedin_click'); window.open(liHref(), '_blank', 'noopener,noreferrer'); }}
-              className="py-4 px-6 -ml-6 w-[calc(100%+3rem)] text-left cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC] hover:bg-white/[0.04] dark:hover:bg-black/[0.04]"
+              className="py-4 px-6 -ml-6 w-[calc(100%+3rem)] text-left cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus hover:bg-white/[0.04] dark:hover:bg-black/[0.04]"
             >
-              <p className={lbl}>LinkedIn</p>
+              <h2 className={lbl}>LinkedIn</h2>
               <p className={`${val} flex items-center gap-2`}>
                 <img src={imgLinkedIn} alt="" width={16} height={16} className="invert dark:invert-0 shrink-0" />
                 David V.
@@ -540,7 +540,7 @@ function ContactModal({ lang, onClose }) {
               rel="noopener noreferrer"
               className={row}
             >
-              <p className={lbl}>{lang === 'fr' ? 'Localisation' : 'Location'}</p>
+              <h2 className={lbl}>{lang === 'fr' ? 'Localisation' : 'Location'}</h2>
               <p className={val}>
                 🏴󠁧󠁢󠁳󠁣󠁴󠁿 {lang === 'fr' ? 'Édimbourg, Royaume-Uni' : 'Edinburgh, United Kingdom'}
               </p>
@@ -554,7 +554,7 @@ function ContactModal({ lang, onClose }) {
             href="/david-v.vcf"
             download="david-v.vcf"
             onClick={() => trackEvent('vcard_download')}
-            className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl border border-white/[0.12] dark:border-black/[0.10] text-[#f6f6f6] dark:text-[#1f1f1f] font-medium text-[15px] hover:bg-white/[0.06] dark:hover:bg-black/[0.04] active:opacity-[0.33] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
+            className="flex items-center justify-center gap-2 w-full py-3 rounded-radius-4 border border-border-subtle-inverted text-fg-primary-inverse font-medium text-label-s leading-[1.2] hover:bg-white/[0.06] dark:hover:bg-black/[0.04] active:opacity-[0.33] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -581,9 +581,9 @@ function LetsTalkButton({ lang, isDark, onOpen }) {
         onClick={() => { hideTip(); onOpen(); }}
         onMouseEnter={showTip}
         onMouseLeave={hideTip}
-        className="flex items-center justify-center h-8 px-4 rounded-[12px] transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] cursor-pointer"
+        className="flex items-center justify-center h-8 px-4 rounded-radius-3 transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus cursor-pointer"
       >
-        <span className="font-medium text-base leading-6 whitespace-nowrap text-black dark:text-white">
+        <span className="font-medium text-base leading-6 whitespace-nowrap text-fg-primary">
           {T[lang]["let's talk"]}
         </span>
       </button>
@@ -634,7 +634,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onCo
   return (
     <nav
       ref={navRef}
-      className="flex items-center pr-2 backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16]"
+      className="flex items-center pr-2 backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-radius-6 shadow-xs dark:ring-1 dark:ring-white/[0.16]"
       style={{ gap: isTablet ? '32px' : '192px' }}
     >
       <div className="relative">
@@ -646,11 +646,11 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onCo
           aria-label="Atelier Digital, back to top"
           onMouseEnter={showLogoTip}
           onMouseLeave={hideLogoTip}
-          className="flex items-center p-2 rounded-3xl group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
+          className="flex items-center p-2 rounded-radius-6 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
         >
-          <div className="flex items-center gap-1 py-1 pl-1 pr-3 rounded-[20px] group-hover:bg-black/[0.04] dark:group-hover:bg-white/[0.08] transition-colors">
+          <div className="flex items-center gap-1 py-1 pl-1 pr-3 rounded-radius-5 group-hover:bg-black/[0.04] dark:group-hover:bg-white/[0.08] transition-colors">
             <img src={imgLogo} alt="" width={24} height={24} className="shrink-0" />
-            <span className="font-bold text-base leading-6 text-[#1f1f1f] dark:text-white whitespace-nowrap" style={{ letterSpacing:'-0.8px' }}>
+            <span className="font-bold text-base leading-4 text-fg-primary whitespace-nowrap" style={{ letterSpacing:'-0.8px' }}>
               ATELIER DIGITAL
             </span>
           </div>
@@ -709,16 +709,16 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
 
   return (
     <div className="w-full flex flex-col items-center gap-4">
-      <div className="w-full flex items-center backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16]">
-        <a data-spring href="/" tabIndex={0} onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-1 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]">
-          <div className="flex items-center gap-1 pl-1 pr-4 py-1 rounded-[20px]">
+      <div className="w-full flex items-center backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-radius-6 shadow-xs dark:ring-1 dark:ring-white/[0.16]">
+        <a data-spring href="/" tabIndex={0} onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-1 rounded-radius-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus">
+          <div className="flex items-center gap-1 pl-1 pr-4 py-1 rounded-radius-5">
             <img src={imgLogo} alt="" width={36} height={36} className="shrink-0" />
-            <span className="font-bold text-base text-[#1f1f1f] dark:text-white whitespace-nowrap leading-4" style={{ letterSpacing:'-0.8px' }}>
+            <span className="font-bold text-base text-fg-primary whitespace-nowrap leading-4" style={{ letterSpacing:'-0.8px' }}>
               ATELIER DIGITAL
             </span>
           </div>
         </a>
-        <button onClick={() => { const opening = !menuOpen; setMenuOpen(opening); if (opening) setProjectsOpen(true); }} aria-label={menuOpen ? 'Close menu' : 'Open menu'} className="flex-1 flex items-center justify-end p-2 pr-3 rounded-r-3xl">
+        <button onClick={() => { const opening = !menuOpen; setMenuOpen(opening); if (opening) setProjectsOpen(true); }} aria-label={menuOpen ? 'Close menu' : 'Open menu'} className="flex-1 flex items-center justify-end p-2 pr-3 rounded-r-[24px]">
           <span data-spring className="flex items-center justify-center">
             <img
               src={menuOpen ? imgClose : imgHamburger}
@@ -737,16 +737,16 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
       )}
 
       {menuOpen && (
-        <div className="w-full backdrop-blur-[8px] bg-white/[0.88] dark:bg-black/[0.88] border border-black/[0.16] dark:border-white/[0.16] rounded-[32px] overflow-hidden">
+        <div className="w-full backdrop-blur-[8px] bg-white/90 dark:bg-black/90 border border-black/[0.16] dark:border-white/[0.16] rounded-radius-8 overflow-hidden">
           <ol className="flex flex-col gap-2 p-4">
             {mobilePages.map(({ key, to, modal }) => (
               <li key={key}>
                 {modal ? (
                   <button
                     onClick={() => { setMenuOpen(false); onContactOpen(); }}
-                    className="flex items-center h-12 px-4 rounded-2xl transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08] w-full text-left cursor-pointer"
+                    className="flex items-center h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08] w-full text-left cursor-pointer"
                   >
-                    <span data-spring className="font-medium text-2xl leading-8 text-black dark:text-white">
+                    <span data-spring className="font-medium text-2xl leading-8 text-fg-primary">
                       {T[lang][key]}
                     </span>
                   </button>
@@ -768,9 +768,9 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
                       setMenuOpen(false);
                       if (currentPage === p && !h) { window.scrollTo({ top: 0, behavior: 'smooth' }); }
                     }}
-                    className="flex items-center h-12 px-4 rounded-2xl transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"
+                    className="flex items-center h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"
                   >
-                    <span data-spring className="font-medium text-2xl leading-8 text-black dark:text-white">
+                    <span data-spring className="font-medium text-2xl leading-8 text-fg-primary">
                       {T[lang][key]}
                     </span>
                   </Link>
@@ -778,10 +778,10 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
                   <>
                     <button
                       onClick={() => setProjectsOpen(!projectsOpen)}
-                      className="flex items-center justify-start gap-2 w-full h-12 px-4 rounded-2xl hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors active:opacity-[0.33]"
+                      className="flex items-center justify-start gap-2 w-full h-12 px-4 rounded-radius-4 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors active:opacity-[0.33]"
                     >
                       <span data-spring className="flex items-center gap-2">
-                        <span className="font-medium text-2xl leading-8 text-black dark:text-white">{T[lang][key]}</span>
+                        <span className="font-medium text-2xl leading-8 text-fg-primary">{T[lang][key]}</span>
                         <img
                           src={imgChevronDown}
                           alt=""
@@ -796,20 +796,20 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
                       <div className="pl-4 pt-2 flex flex-col gap-2">
                         {subItems.map(({ key: sk, to: st, locked }) => (
                           locked ? (
-                            <div key={sk} className="flex items-center gap-3 h-12 px-4 rounded-2xl opacity-[0.32] cursor-default">
+                            <div key={sk} className="flex items-center gap-3 h-12 px-4 rounded-radius-4 opacity-[0.32] cursor-default">
                               <img src={imgLockIcon} alt="" width={20} height={20} className="shrink-0 dark:invert" />
-                              <span className="font-medium text-2xl leading-8 text-black dark:text-white">{T[lang][sk]}</span>
+                              <span className="font-medium text-2xl leading-8 text-fg-primary">{T[lang][sk]}</span>
                             </div>
                           ) : (
                             <Link
                               key={sk}
                               to={st}
                               onClick={() => { setMenuOpen(false); setProjectsOpen(false); }}
-                              className="flex items-center gap-3 h-12 px-4 rounded-2xl hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors"
+                              className="flex items-center gap-3 h-12 px-4 rounded-radius-4 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors"
                             >
                               <span data-spring className="flex items-center gap-3">
                                 <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" style={{ transform:'none' }} />
-                                <span className="font-medium text-2xl leading-8 text-black dark:text-white">{T[lang][sk]}</span>
+                                <span className="font-medium text-2xl leading-8 text-fg-primary">{T[lang][sk]}</span>
                               </span>
                             </Link>
                           )
@@ -822,24 +822,24 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
             ))}
           </ol>
 
-          <div className="mx-4 h-px bg-black/[0.10] dark:bg-white/[0.10]" />
+          <div className="mx-4 h-px bg-black/[0.12] dark:bg-white/[0.12]" />
 
           <div className="flex items-center justify-around px-6 py-4">
             <button
               data-spring
               onClick={() => { if (lang !== 'en') toggleLang(); }}
-              className={`flex items-center gap-2 h-12 px-4 rounded-2xl transition-colors active:opacity-[0.33] ${lang !== 'en' ? 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer' : 'bg-[#161616] dark:bg-white cursor-default'}`}
+              className={`flex items-center gap-2 h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] ${lang !== 'en' ? 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer' : 'bg-nav-active-bg-solid cursor-default'}`}
             >
               <Flag code="gb" />
-              <span className={`font-medium text-xl ${lang === 'en' ? 'text-white dark:text-[#161616]' : 'text-[#5c5c5c] dark:text-white/40'}`}>GB</span>
+              <span className={`font-medium text-2xl ${lang === 'en' ? 'text-fg-primary-inverse' : 'text-fg-muted'}`}>GB</span>
             </button>
             <button
               data-spring
               onClick={() => { if (lang !== 'fr') toggleLang(); }}
-              className={`flex items-center gap-2 h-12 px-4 rounded-2xl transition-colors active:opacity-[0.33] ${lang !== 'fr' ? 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer' : 'bg-[#161616] dark:bg-white cursor-default'}`}
+              className={`flex items-center gap-2 h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] ${lang !== 'fr' ? 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer' : 'bg-nav-active-bg-solid cursor-default'}`}
             >
               <Flag code="fr" />
-              <span className={`font-medium text-xl ${lang === 'fr' ? 'text-white dark:text-[#161616]' : 'text-[#5c5c5c] dark:text-white/40'}`}>FR</span>
+              <span className={`font-medium text-2xl ${lang === 'fr' ? 'text-fg-primary-inverse' : 'text-fg-muted'}`}>FR</span>
             </button>
             <DarkModeToggle isDark={isDark} onToggle={toggleDark} lang={lang} noTooltip />
           </div>

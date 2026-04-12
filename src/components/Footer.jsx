@@ -6,13 +6,10 @@ function CopyrightTag({ year, tooltip }) {
   return (
     <span className="relative inline-block group cursor-default">
       © {year} Atelier Digital
-      <div className="pointer-events-none absolute bottom-[calc(100%+8px)] left-0 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200 flex flex-col items-start">
-        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-semibold leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+      <div className="pointer-events-none absolute bottom-[calc(100%+8px)] left-0 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
+        <div className="bg-tooltip-bg text-fg-primary-inverse text-[13px] font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
           {tooltip}
         </div>
-        <svg width="12" height="6" viewBox="0 0 12 6" aria-hidden="true" className="shrink-0 ml-3" style={{ display: 'block', marginTop: '-1px' }}>
-          <path d="M0,0 L5.2,5.1 Q6,6 6.8,5.1 L12,0 Z" className="fill-[#1f1f1f] dark:fill-[#f6f6f6]" />
-        </svg>
       </div>
     </span>
   );
@@ -65,11 +62,11 @@ const T = {
   },
 };
 
-const strong    = 'font-bold text-[#1f1f1f] dark:text-[#f6f6f6]';
-const muted     = 'text-[#5c5c5c] dark:text-[#adadad]';
-const hover     = 'hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] transition-colors';
-const row       = 'block leading-[3rem] whitespace-nowrap';
-const focusRing = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] rounded';
+const strong    = 'font-bold text-fg-primary';
+const muted     = 'text-fg-secondary';
+const hover     = 'hover:text-fg-primary transition-colors';
+const row       = 'block text-copy-m leading-[3rem] whitespace-nowrap';
+const focusRing = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus rounded';
 
 function Locked({ label }) {
   return (
@@ -112,7 +109,7 @@ function Footer({ lang }) {
       data-spring
       aria-label={t.manageCookies}
       onClick={() => window.dispatchEvent(new Event('show-cookie-banner'))}
-      className={`px-2 py-1 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer whitespace-nowrap`}
+      className={`px-2 py-1 rounded-radius-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer whitespace-nowrap`}
     >{t.manageCookies}</button>
   );
 
@@ -124,23 +121,23 @@ function Footer({ lang }) {
         to={to}
         tabIndex={0}
         onClick={() => { if (isActive) window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-        className={`px-2 py-1 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+        className={`px-2 py-1 rounded-radius-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
           isActive
-            ? 'bg-[#161616] dark:bg-white text-white dark:text-[#161616] font-semibold'
-            : 'hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
+            ? 'bg-nav-active-bg-solid text-fg-inverse font-semibold'
+            : 'hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
         }`}
       >{label}</Link>
     );
   };
 
   return (
-    <footer className="bg-white dark:bg-[#141414]">
+    <footer className="bg-bg-page">
 
       <nav aria-label="Site navigation and contact details">
         <div className="max-w-5xl mx-auto px-6 py-16 lg:py-28 flex flex-col md:flex-row gap-12 md:gap-24 lg:gap-40">
 
           <div>
-            <h2 className={`text-[30px] sm:text-[36px] lg:text-[44px] leading-tight font-semibold mb-8 sm:mb-12 lg:mb-16 ${strong}`}>
+            <h2 className={`text-h2 leading-tight font-bold mb-8 sm:mb-12 lg:mb-16 ${strong}`}>
               {t.sitemap}
             </h2>
             <ul className="flex flex-col sm:flex-row gap-6 sm:gap-10 lg:gap-16">
@@ -185,7 +182,7 @@ function Footer({ lang }) {
           </div>
 
           <div id="footer-contact">
-            <h2 className={`text-[30px] sm:text-[36px] lg:text-[44px] leading-tight font-semibold mb-8 sm:mb-12 lg:mb-16 whitespace-nowrap ${strong}`}>
+            <h2 className={`text-h2 leading-tight font-bold mb-8 sm:mb-12 lg:mb-16 whitespace-nowrap ${strong}`}>
               {t.contact}
             </h2>
             <ul className="flex flex-col">
@@ -200,11 +197,11 @@ function Footer({ lang }) {
       </nav>
 
       <div>
-        <div className="max-w-5xl mx-auto px-6 py-10 text-sm text-[#5c5c5c] dark:text-[#adadad]">
+        <div className="max-w-5xl mx-auto px-6 py-10 text-label-s leading-[1.2] text-fg-muted">
           <div className="flex flex-col items-center gap-4 sm:hidden">
             <ul className="flex items-center gap-1" aria-label="Legal">
-              <li className="flex items-center gap-1">{legalLink('/privacy', t.privacy)}<div aria-hidden="true" className="w-px h-3 bg-black/20 dark:bg-white/20 shrink-0" /></li>
-              <li className="flex items-center gap-1">{manageCookiesBtn()}<div aria-hidden="true" className="w-px h-3 bg-black/20 dark:bg-white/20 shrink-0" /></li>
+              <li className="flex items-center gap-1">{legalLink('/privacy', t.privacy)}<div aria-hidden="true" className="w-px h-3 bg-border-subtle shrink-0" /></li>
+              <li className="flex items-center gap-1">{manageCookiesBtn()}<div aria-hidden="true" className="w-px h-3 bg-border-subtle shrink-0" /></li>
               <li>{legalLink('/terms', t.terms)}</li>
             </ul>
             <ul className="flex justify-center gap-6" aria-label="Copyright">
@@ -215,8 +212,8 @@ function Footer({ lang }) {
           <div className="hidden sm:grid sm:grid-cols-3 items-center">
             <CopyrightTag year={year} tooltip={t.techTooltip} />
             <ul className="flex items-center gap-1 justify-center" aria-label="Legal">
-              <li className="flex items-center gap-1">{legalLink('/privacy', t.privacy)}<div aria-hidden="true" className="w-px h-3 bg-black/20 dark:bg-white/20 shrink-0" /></li>
-              <li className="flex items-center gap-1">{manageCookiesBtn()}<div aria-hidden="true" className="w-px h-3 bg-black/20 dark:bg-white/20 shrink-0" /></li>
+              <li className="flex items-center gap-1">{legalLink('/privacy', t.privacy)}<div aria-hidden="true" className="w-px h-3 bg-border-subtle shrink-0" /></li>
+              <li className="flex items-center gap-1">{manageCookiesBtn()}<div aria-hidden="true" className="w-px h-3 bg-border-subtle shrink-0" /></li>
               <li>{legalLink('/terms', t.terms)}</li>
             </ul>
             <span className="text-right">{t.thanks}</span>

@@ -46,7 +46,7 @@ import Collaborations from '../components/Collaborations';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 
-const strong   = 'font-bold text-[#1f1f1f] dark:text-[#f6f6f6]';
+const strong   = 'font-bold text-fg-primary';
 
 function B({ children }) {
   return <strong className={strong}>{children}</strong>;
@@ -55,7 +55,6 @@ function B({ children }) {
 const T = {
   en: {
     title:          'Summary',
-    summary:        'Summary',
     experience:     'Experience',
     expertise:      'Expertise',
     topSkills:      'Top skills',
@@ -165,9 +164,9 @@ const T = {
         logo:        imgLogoEdinburghNapierLight,
         logoDark:    imgLogoEdinburghNapierDark,
         drawers: [
-          { label: 'Digital Anthropology', content: 'Comprehensive understanding of how people use and respond to emerging technologies and media.' },
-          { label: 'Competence building', content: 'Development of adaptable, practical and theoretical skills.' },
-          { label: 'Tools', content: '3D (Autodesk Maya), Visual effects (After Effects), and multimedia production tools.' },
+          { label: 'Digital Anthropology', content: <>Comprehensive understanding of how people <strong>use and respond</strong> to <strong>emerging technologies</strong> and media.</> },
+          { label: 'Competence building', content: <>Development of <strong>adaptable</strong>, practical and <strong>theoretical skills</strong>.</> },
+          { label: 'Tools', content: <><strong>3D</strong> (Autodesk Maya), <strong>Visual effects</strong> (After Effects), and multimedia production tools.</> },
         ],
       },
       {
@@ -181,8 +180,8 @@ const T = {
         logoDark:    null,
         logoClass:   'max-h-[48px] sm:max-h-[72px] lg:max-h-[80px]',
         drawers: [
-          { label: 'Practice', content: 'Design and production of multimedia products and services.' },
-          { label: 'Theory', content: 'Study of aesthetics, ergonomics, marketing, web development, project methodologies, and project management.' },
+          { label: 'Practice', content: <>Design and production of <strong>multimedia products</strong> and services.</> },
+          { label: 'Theory', content: <>Study of <strong>aesthetics</strong>, <strong>ergonomics</strong>, marketing, <strong>web development</strong>, project methodologies, and <strong>project management</strong>.</> },
         ],
       },
       {
@@ -196,7 +195,7 @@ const T = {
         logoDark:    null,
         logoClass:   'max-h-[80px] sm:max-h-[112px] lg:max-h-[128px]',
         drawers: [
-          { label: 'More info', content: 'A multidisciplinary program focusing mainly on three areas: communication, graphic design and software development.' },
+          { label: 'More info', content: <>A <strong>multidisciplinary program</strong> focusing mainly on three areas: <strong>communication</strong>, <strong>graphic design</strong> and <strong>software development</strong>.</> },
         ],
       },
       {
@@ -209,7 +208,7 @@ const T = {
         logo:        imgLogoBenjaminFranklinLight,
         logoDark:    imgLogoBenjaminFranklinDark,
         drawers: [
-          { label: 'More info', content: 'Study of engineering physics, mathematics and materials science to design, analyse and manufacture mechanical systems and industrial products for mass production.' },
+          { label: 'More info', content: <>Study of <strong>engineering physics</strong>, mathematics and <strong>materials science</strong> to design, analyse and manufacture <strong>mechanical systems</strong> and <strong>industrial products</strong> for mass production.</> },
         ],
       },
     ],
@@ -223,9 +222,9 @@ const T = {
         logo:     imgLogoSoluisLight,
         logoDark: imgLogoSoluisDark,
         drawers: [
-          { label: 'Digital twin',   content: 'Led the design of digital twin solutions (Unreal Engine) accelerating macro-engineering projects, and featuring real-time simulation, measuring, and viewing tools, accessible via multiple inputs.' },
-          { label: 'Sales platform', content: 'Responsive web-based app allowing users to explore 3D generated representations of unbuilt properties. The platform facilitated sales of £5B+ in the first year of collab, 24% increase YoY.' },
-          { label: 'AR/VR',          content: 'Designed interactive and immersive 3D experiences using augmented reality technologies (Magic Leap 2, iPad), and virtual reality headsets (Meta Quest) for international trade shows.' },
+          { label: 'Digital twin',   content: <>Led the design of <strong>digital twin solutions</strong> (Unreal Engine) accelerating <strong>macro-engineering projects</strong>, featuring <strong>real-time simulation</strong>, measuring, and viewing tools, accessible via multiple inputs.</> },
+          { label: 'Sales platform', content: <>Responsive web-based app allowing users to explore <strong>3D generated representations</strong> of unbuilt properties. The platform facilitated sales of <strong>£5B+</strong> in the first year of collab, <strong>24% increase YoY</strong>.</> },
+          { label: 'AR/VR',          content: <>Designed <strong>interactive and immersive 3D experiences</strong> using augmented reality technologies (<strong>Magic Leap 2</strong>, iPad), and virtual reality headsets (<strong>Meta Quest</strong>) for international trade shows.</> },
         ],
       },
       {
@@ -237,9 +236,9 @@ const T = {
         logo:     imgLogoHoloxica,
         logoDark: imgLogoHoloxicaDark,
         drawers: [
-          { label: 'Digital twins', content: 'UK Ministry of Defence projects: designed a method to accurately generate humans and a XR system integrating 3D cameras and robotics for remote operations in hazardous environments.' },
-          { label: 'UX/UI',         content: 'Design lead for enterprise applications visualising diverse 3D data, real-time, volumetric and more, on 3D light field displays.' },
-          { label: '3D Graphics',   content: 'Over a decade of experience designing holographic display content, primarily for medical imaging and scientific visualisation, with applications across diverse industries.' },
+          { label: 'Digital twins', content: <><strong>UK Ministry of Defence</strong> projects: designed a method to accurately generate humans and a <strong>XR system</strong> integrating <strong>3D cameras and robotics</strong> for remote operations in hazardous environments.</> },
+          { label: 'UX/UI',         content: <>Design lead for <strong>enterprise applications</strong> visualising diverse <strong>3D data</strong>, real-time, volumetric and more, on <strong>3D light field displays</strong>.</> },
+          { label: '3D Graphics',   content: <>Over a decade of experience designing <strong>holographic display content</strong>, primarily for <strong>medical imaging</strong> and <strong>scientific visualisation</strong>, with applications across diverse industries.</> },
         ],
       },
       {
@@ -258,7 +257,7 @@ const T = {
       },
       {
         company:  'Creative Mode',
-        role:     'Web Designer / Videographer',
+        role:     'Web Designer',
         flag:     '🇦🇺',
         location: 'Brisbane, Australia',
         period:   '2009',
@@ -267,14 +266,13 @@ const T = {
         logoDark: null,
         drawers: [
           { label: 'Web Design' },
-          { label: 'Video' },
+          { label: 'Videography' },
         ],
       },
     ],
   },
   fr: {
     title:          'Résumé',
-    summary:        'Profil',
     experience:     'Expérience',
     expertise:      'Savoir-faire',
     topSkills:      'Compétences',
@@ -492,17 +490,17 @@ const T = {
 };
 
 const divider  = '';
-const h2class  = 'text-[24px] sm:text-[28px] lg:text-[30px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6] mb-8';
-const bodyMuted = 'text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#5c5c5c] dark:text-[#adadad]';
+const h2class  = 'text-h2 font-bold leading-tight text-fg-primary mb-8';
+const bodyMuted = 'text-copy-m font-normal leading-loose text-fg-secondary';
 
 // ── Summary ────────────────────────────────────────────────────────────────────
 
 function SummarySection({ t, lang }) {
-  const btnBase = 'flex items-center justify-center gap-2 px-3 py-2 rounded-2xl transition-colors bg-[#f6f6f6] dark:bg-white/[0.07] sm:bg-transparent sm:dark:bg-transparent hover:bg-black/[0.04] dark:hover:bg-white/[0.08]';
-  const btnLabel = 'font-medium text-[18px] sm:text-[20px] text-[#1f1f1f] dark:text-[#f6f6f6] whitespace-nowrap';
+  const btnBase = 'flex items-center justify-center gap-2 px-3 py-2 rounded-radius-4 transition-colors bg-bg-surface sm:bg-transparent sm:dark:bg-transparent hover:bg-black/[0.04] dark:hover:bg-white/[0.08]';
+  const btnLabel = 'font-medium text-btn-m leading-[1.2] text-fg-primary whitespace-nowrap';
 
   return (
-    <section id="summary" className={`${divider} scroll-mt-24 pt-8 pb-16 sm:py-16`}>
+    <section id="summary" className={`${divider} scroll-mt-24 pt-32 pb-16 sm:pt-32 sm:pb-16 lg:pt-48 lg:pb-16`}>
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
 
         {/* ── Left column: photo + buttons ───────────────────────────── */}
@@ -510,16 +508,16 @@ function SummarySection({ t, lang }) {
           <img
             src={imgPortrait}
             alt="Portrait of David V."
-            className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-[56px] sm:rounded-[64px] lg:rounded-[72px] object-cover"
+            className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-radius-14 sm:rounded-radius-16 lg:rounded-radius-18 object-cover"
           />
 
-          <h2 className={`lg:hidden text-[30px] sm:text-[36px] font-semibold text-center text-[#1f1f1f] dark:text-[#f6f6f6]`}>
+          <h1 className="lg:hidden text-h1 font-bold text-center text-fg-primary">
             David V.
-          </h2>
+          </h1>
 
           <ul className="flex flex-col gap-4 sm:gap-3 w-56" aria-label="Contact and download">
             <li>
-              <a data-spring tabIndex={0} href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(lang === 'fr' ? 'Prise de contact' : 'Getting in touch')}`} className={`${btnBase} w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]`}>
+              <a data-spring tabIndex={0} href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(lang === 'fr' ? 'Prise de contact' : 'Getting in touch')}`} className={`${btnBase} w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus`}>
                 <img src={imgSend} alt="" width={24} height={24} className="shrink-0 dark:invert" />
                 <span className={btnLabel}>{t.sendEmail}</span>
               </a>
@@ -538,7 +536,7 @@ function SummarySection({ t, lang }) {
                 tabIndex={0}
                 aria-label={lang === 'fr' ? 'Télécharger PDF via Google Drive' : 'Download PDF via Google Drive'}
                 data-spring
-                className="w-full flex items-center justify-center py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[18px] sm:text-[20px] rounded-2xl border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0152EC]"
+                className="w-full flex items-center justify-center py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-btn-m leading-[1.2] rounded-radius-4 border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus"
               >
                 {t.downloadPdf}
               </a>
@@ -547,9 +545,9 @@ function SummarySection({ t, lang }) {
         </div>
 
         <div className="flex flex-col gap-8 w-full px-4 sm:px-16 lg:px-0">
-          <p className="hidden lg:block text-[44px] font-semibold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
+          <h1 className="hidden lg:block text-[44px] lg:text-[48px] font-bold leading-tight text-fg-primary">
             David V.
-          </p>
+          </h1>
 
           <div id="summary-bio" className={`flex flex-col gap-6 ${bodyMuted}`}>
             {t.bio.map((para, i) => para && <p key={i}>{para}</p>)}
@@ -567,13 +565,13 @@ function SummarySection({ t, lang }) {
 function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
   const anyOpen = openDrawers.some(Boolean);
   return (
-    <li className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] bg-white dark:bg-[#141414] border border-[#d6d6d6] dark:border-[#2a2a2a] overflow-hidden">
+    <li className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-radius-6 sm:rounded-radius-7 lg:rounded-radius-8 bg-bg-page border border-border-subtle overflow-hidden">
 
-      <div className="px-4 sm:px-5 lg:px-6 pt-2 sm:pt-3 lg:pt-3.5 pb-0">
-        <p className="text-[14px] sm:text-[16px] lg:text-[18px] font-medium leading-snug text-black dark:text-[#f6f6f6]">{card.company}</p>
-        <p className="text-[18px] sm:text-[20px] lg:text-[24px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">{card.role}</p>
+      <div className="px-4 sm:px-5 lg:px-6 pt-2 sm:pt-3 lg:pt-4 pb-0">
+        <p className="text-subheading font-medium leading-snug text-fg-secondary">{card.company}</p>
+        <h3 className="text-h3 font-semibold leading-snug text-fg-primary">{card.role}</h3>
         {card.location && (
-          <p className="text-[14px] sm:text-[16px] lg:text-[18px] font-medium text-[#5c5c5c] dark:text-[#adadad]">{card.flag} {card.location}</p>
+          <p className="text-subheading font-medium leading-snug text-fg-muted">{card.flag} {card.location}</p>
         )}
       </div>
 
@@ -585,7 +583,7 @@ function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
             {card.logoDark && <img src={card.logoDark} alt={card.company} loading="lazy" width="300" height="104" className="hidden dark:block max-h-[66px] sm:max-h-[96px] lg:max-h-[104px] w-full object-contain" />}
           </>
         ) : (
-          <span className="text-[18px] sm:text-[20px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6]">{card.company}</span>
+          <span className="text-h4 font-bold leading-tight text-fg-primary">{card.company}</span>
         )}
       </div>
 
@@ -593,24 +591,25 @@ function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
       <div className="shrink-0" style={{ height: card.drawers.length * 76 }} />
 
       {/* Drawers — absolutely positioned at bottom so they overlay without shifting the logo */}
-      <ul className="absolute bottom-0 left-0 right-0 flex flex-col bg-white dark:bg-[#141414] pb-2">
+      <ul className="absolute bottom-0 left-0 right-0 flex flex-col bg-bg-page pb-2">
         {card.drawers.map((drawer, di) => (
           <li key={di}>
-            <div className="mx-4 sm:mx-5 lg:mx-6 h-px bg-[#adadad] dark:bg-[#3a3a3a]" />
+            <div className="mx-4 sm:mx-5 lg:mx-6 h-px bg-border-subtle" />
             {card.static ? (
-              <div className="w-full flex items-center px-4 sm:px-5 lg:px-6 py-3 sm:py-3.5 lg:py-4">
-                <span className="text-[18px] sm:text-[20px] lg:text-[24px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6]">{drawer.label}</span>
+              <div className="w-full flex items-center px-4 sm:px-5 lg:px-6 py-3 sm:py-4 lg:py-4">
+                <h4 className="text-h4 font-bold leading-tight text-fg-primary">{drawer.label}</h4>
               </div>
             ) : (
               <>
+                <h4>
                 <button
                   onClick={() => onToggle(di)}
                   aria-expanded={openDrawers[di]}
                   aria-controls={`exp-drawer-${cardIdx}-${di}`}
-                  className="w-full flex items-center justify-between px-4 sm:px-5 lg:px-6 py-3 sm:py-3.5 lg:py-4 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
+                  className="group/btn w-full flex items-center justify-between px-4 sm:px-5 lg:px-6 py-3 sm:py-4 lg:py-4 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
                 >
-                  <span className="text-[18px] sm:text-[20px] lg:text-[24px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6]">{drawer.label}</span>
-                  <span data-spring className="shrink-0 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-colors hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] group">
+                  <span className="inline-block text-h4 font-bold leading-tight text-fg-primary origin-center sm:transition-transform sm:duration-200 sm:group-hover/btn:scale-[1.04]">{drawer.label}</span>
+                  <span data-spring className="shrink-0 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-colors hover:bg-btn-nav-bg-hover group">
                     <img
                       src={imgChevronDown}
                       alt=""
@@ -619,6 +618,7 @@ function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
                     />
                   </span>
                 </button>
+                </h4>
                 <div
                   id={`exp-drawer-${cardIdx}-${di}`}
                   inert={!openDrawers[di]}
@@ -626,7 +626,7 @@ function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
                   className={`grid transition-[grid-template-rows] duration-300 ease-out cursor-pointer ${openDrawers[di] ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-4 sm:px-5 lg:px-6 pb-4 sm:pb-5 text-[16px] sm:text-[17px] lg:text-[18px] leading-relaxed text-[#262626] dark:text-[#adadad]">
+                    <p className="px-4 sm:px-5 lg:px-6 pb-4 sm:pb-5 text-copy-m font-normal leading-relaxed text-fg-secondary">
                       {drawer.content ?? ''}
                     </p>
                   </div>
@@ -749,7 +749,7 @@ function ExperienceSection({ t }) {
             if (e.key === 'ArrowLeft') { e.preventDefault(); scrollToCard(Math.max(0, activeIndex - 1)); }
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCard(Math.min(cards.length - 1, activeIndex + 1)); }
           }}
-          className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
+          className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
           style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x pan-y' }}
         >
           {cards.map((card, ci) => (
@@ -765,7 +765,7 @@ function ExperienceSection({ t }) {
       </div>
 
       <p
-        className="mt-2 text-[13px] sm:text-[14px] font-medium text-[#5c5c5c] dark:text-[#adadad] text-center transition-transform duration-300"
+        className="mt-2 text-label-s leading-[1.2] font-medium text-fg-muted text-center transition-transform duration-300"
         style={{ transform: `translateX(${getDateOffset()}px)` }}
       >
         {cards[activeIndex]?.period}
@@ -777,8 +777,8 @@ function ExperienceSection({ t }) {
           {cards.map((_, i) => {
             const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
             return (
-              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
               </button>
             );
           })}
@@ -789,7 +789,7 @@ function ExperienceSection({ t }) {
             disabled={activeIndex === 0}
             data-spring
             aria-label={t.navPrev}
-            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
           >
             <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]" />
           </button>
@@ -798,7 +798,7 @@ function ExperienceSection({ t }) {
             disabled={activeIndex === cards.length - 1}
             data-spring
             aria-label={t.navNext}
-            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
           >
             <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]" />
           </button>
@@ -827,7 +827,7 @@ function ToolIcon({ name, icon, noBg, darkInvert }) {
   return (
     <div className="relative flex flex-col items-center">
       <div className={`absolute bottom-[calc(100%+8px)] left-1/2 -translate-x-1/2 pointer-events-none z-10 transition-opacity duration-150 ${visible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+        <div className="bg-tooltip-bg text-fg-primary-inverse text-[13px] font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
           {name}
         </div>
       </div>
@@ -839,11 +839,11 @@ function ToolIcon({ name, icon, noBg, darkInvert }) {
         onFocus={() => setVisible(true)}
         onBlur={() => setVisible(false)}
         onClick={() => { if (window.matchMedia('(pointer: coarse)').matches) setVisible(v => !v); }}
-        className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex items-center justify-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${noBg ? 'rounded-lg' : 'rounded-[8px] sm:rounded-[10px] lg:rounded-[12px] overflow-hidden bg-[#f6f6f6] dark:bg-[#2a2a2a] shadow-[1px_1px_8px_0px_rgba(0,0,0,0.08)]'}`}
+        className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex items-center justify-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${noBg ? 'rounded-radius-2' : 'rounded-radius-2 sm:rounded-radius-3 lg:rounded-radius-3 overflow-hidden shadow-xs'}`}
       >
         {icon
           ? <img src={icon} alt={name} loading="lazy" className={`w-full h-full ${noBg ? 'object-contain' : 'object-cover'} ${darkInvert ? 'dark:brightness-0 dark:invert' : ''}`} />
-          : <span className="text-[7px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-tight px-[2px]">{name}</span>
+          : <span className="text-[7px] font-bold text-fg-muted text-center leading-tight px-[2px]">{name}</span>
         }
       </button>
     </div>
@@ -852,21 +852,21 @@ function ToolIcon({ name, icon, noBg, darkInvert }) {
 
 function ExpertiseCard({ card }) {
   return (
-    <li className="shrink-0 w-[calc(100vw-8rem)] sm:w-[536px] lg:w-[720px] h-[472px] sm:h-[444px] lg:h-[536px] flex flex-col justify-between snap-center rounded-[32px] sm:rounded-[64px] lg:rounded-[72px] bg-white dark:bg-[#141414] p-6 sm:p-10 lg:p-16">
+    <li className="shrink-0 w-[calc(100vw-8rem)] sm:w-[536px] lg:w-[720px] h-[472px] sm:h-[444px] lg:h-[536px] flex flex-col justify-between snap-center rounded-radius-8 sm:rounded-radius-16 lg:rounded-radius-18 bg-bg-page p-6 sm:p-10 lg:p-16">
 
       <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-        <div className="w-16 h-16 sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] bg-white dark:bg-[#141414] flex items-center justify-center shrink-0 overflow-hidden">
+        <div className="w-16 h-16 sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 rounded-radius-6 sm:rounded-radius-7 lg:rounded-radius-8 bg-bg-page flex items-center justify-center shrink-0 overflow-hidden">
           {card.icon
             ? <img src={card.icon} alt="" width={64} height={64} loading="lazy" className="sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 object-contain dark:brightness-0 dark:invert dark:opacity-[0.965]" />
-            : <span className="text-[10px] text-[#5c5c5c] dark:text-[#adadad] font-medium text-center px-1">icon</span>
+            : <span className="text-[10px] text-fg-muted font-medium text-center px-1">icon</span>
           }
         </div>
 
-        <h3 className="text-[24px] sm:text-[26px] lg:text-[30px] font-bold leading-[32px] sm:leading-[36px] lg:leading-[40px] tracking-[0.12px] text-[#1f1f1f] dark:text-[#f6f6f6]">
+        <h3 className="text-h3 font-semibold leading-snug text-fg-primary">
           {card.title}
         </h3>
 
-        <p className="text-[16px] sm:text-[17px] lg:text-[18px] leading-[36px] sm:leading-[34px] lg:leading-[40px] text-[#5c5c5c] dark:text-[#adadad]">
+        <p className="text-copy-m font-normal leading-loose text-fg-secondary">
           {card.description}
         </p>
       </div>
@@ -944,7 +944,7 @@ function ExpertiseSection({ t }) {
   };
 
   return (
-    <section id="expertise" className={`${divider} py-16 scroll-mt-24 bg-[#f6f6f6] dark:bg-[#1f1f1f]`}>
+    <section id="expertise" className={`${divider} py-16 scroll-mt-24 bg-bg-surface`}>
 
       <div className="max-w-5xl mx-auto px-6">
         <h2 className={h2class}>{t.expertise}</h2>
@@ -964,7 +964,7 @@ function ExpertiseSection({ t }) {
             if (e.key === 'ArrowLeft') { e.preventDefault(); scrollToCard(Math.max(0, activeIndex - 1)); }
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCard(Math.min(cards.length - 1, activeIndex + 1)); }
           }}
-          className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
+          className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
           style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x pan-y' }}
         >
           {cards.map((card, ci) => (
@@ -979,8 +979,8 @@ function ExpertiseSection({ t }) {
           {cards.map((_, i) => {
             const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
             return (
-              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
               </button>
             );
           })}
@@ -991,7 +991,7 @@ function ExpertiseSection({ t }) {
             disabled={activeIndex === 0}
             data-spring
             aria-label={t.xpNavPrev}
-            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-btn-nav-bg-rest-subtle enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
           >
             <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]" />
           </button>
@@ -1000,7 +1000,7 @@ function ExpertiseSection({ t }) {
             disabled={activeIndex === cards.length - 1}
             data-spring
             aria-label={t.xpNavNext}
-            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-btn-nav-bg-rest-subtle enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
           >
             <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]" />
           </button>
@@ -1016,14 +1016,13 @@ function ExpertiseSection({ t }) {
 function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
   const anyOpen = openDrawers.some(Boolean);
   return (
-    <li className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] bg-white dark:bg-[#141414] border border-[#d6d6d6] dark:border-[#2a2a2a] overflow-hidden">
+    <li className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-radius-6 sm:rounded-radius-7 lg:rounded-radius-8 bg-bg-page border border-border-subtle overflow-hidden">
 
-      <div className="px-4 sm:px-5 lg:px-6 pt-2 sm:pt-3 lg:pt-3.5 pb-0">
-        <p className="text-[14px] sm:text-[16px] lg:text-[18px] font-medium leading-snug text-black dark:text-[#f6f6f6]">{card.institution}</p>
-        <p className="text-[18px] sm:text-[20px] lg:text-[24px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">{card.degree}</p>
-        <p className="text-[14px] sm:text-[16px] lg:text-[18px] font-medium leading-snug text-[#1f1f1f] dark:text-[#f6f6f6]">{card.course}</p>
+      <div className="px-4 sm:px-5 lg:px-6 pt-2 sm:pt-3 lg:pt-4 pb-0">
+        <p className="text-subheading font-medium leading-snug text-fg-primary">{card.institution}</p>
+        <h3 className="text-h3 font-semibold leading-snug text-fg-primary">{card.degree}{' '}<br aria-hidden="true" />{card.course.charAt(0).toUpperCase() + card.course.slice(1)}</h3>
         {card.location && (
-          <p className="text-[14px] sm:text-[16px] lg:text-[18px] font-medium text-[#5c5c5c] dark:text-[#adadad]">{card.flag} {card.location}</p>
+          <p className="text-subheading font-medium leading-snug text-fg-muted">{card.flag} {card.location}</p>
         )}
       </div>
 
@@ -1035,7 +1034,7 @@ function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
             {card.logoDark && <img src={card.logoDark} alt={card.institution} loading="lazy" width="300" height="128" className={`hidden dark:block ${card.logoClass ?? 'max-h-[66px] sm:max-h-[96px] lg:max-h-[104px]'} w-full object-contain`} />}
           </>
         ) : (
-          <span className="text-[18px] sm:text-[20px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6]">{card.institution}</span>
+          <span className="text-h4 font-bold leading-tight text-fg-primary">{card.institution}</span>
         )}
       </div>
 
@@ -1043,18 +1042,19 @@ function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
       <div className="shrink-0" style={{ height: card.drawers.length * 76 }} />
 
       {/* Drawers — absolutely positioned at bottom so they overlay without shifting the logo */}
-      <ul className="absolute bottom-0 left-0 right-0 flex flex-col bg-white dark:bg-[#141414] pb-2">
+      <ul className="absolute bottom-0 left-0 right-0 flex flex-col bg-bg-page pb-2">
         {card.drawers.map((drawer, di) => (
           <li key={di}>
-            <div className="mx-4 sm:mx-5 lg:mx-6 h-px bg-[#adadad] dark:bg-[#3a3a3a]" />
+            <div className="mx-4 sm:mx-5 lg:mx-6 h-px bg-border-subtle" />
+            <h4>
             <button
               onClick={() => onToggle(di)}
               aria-expanded={openDrawers[di]}
               aria-controls={`edu-drawer-${cardIdx}-${di}`}
-              className="w-full flex items-center justify-between px-4 sm:px-5 lg:px-6 py-3 sm:py-3.5 lg:py-4 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
+              className="group/btn w-full flex items-center justify-between px-4 sm:px-5 lg:px-6 py-3 sm:py-4 lg:py-4 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
             >
-              <span className="text-[18px] sm:text-[20px] lg:text-[24px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6]">{drawer.label}</span>
-              <span data-spring className="shrink-0 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-colors hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] group">
+              <span className="inline-block text-h4 font-bold leading-tight text-fg-primary origin-center sm:transition-transform sm:duration-200 sm:group-hover/btn:scale-[1.04]">{drawer.label}</span>
+              <span data-spring className="shrink-0 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-colors hover:bg-btn-nav-bg-hover group">
                 <img
                   src={imgChevronDown}
                   alt=""
@@ -1063,6 +1063,7 @@ function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
                 />
               </span>
             </button>
+            </h4>
             <div
               id={`edu-drawer-${cardIdx}-${di}`}
               inert={!openDrawers[di]}
@@ -1070,7 +1071,7 @@ function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
               className={`grid transition-[grid-template-rows] duration-300 ease-out cursor-pointer ${openDrawers[di] ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
             >
               <div className="overflow-hidden">
-                <p className="px-4 sm:px-5 lg:px-6 pb-4 sm:pb-5 text-[16px] sm:text-[17px] lg:text-[18px] leading-relaxed text-[#262626] dark:text-[#adadad]">
+                <p className="px-4 sm:px-5 lg:px-6 pb-4 sm:pb-5 text-copy-m font-normal leading-relaxed text-fg-secondary">
                   {drawer.content ?? ''}
                 </p>
               </div>
@@ -1191,7 +1192,7 @@ function EducationSection({ t }) {
             if (e.key === 'ArrowLeft') { e.preventDefault(); scrollToCard(Math.max(0, activeIndex - 1)); }
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCard(Math.min(cards.length - 1, activeIndex + 1)); }
           }}
-          className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC]"
+          className="flex gap-8 sm:gap-12 lg:gap-16 overflow-x-auto snap-x snap-mandatory pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
           style={{ scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, touchAction: 'pan-x pan-y' }}
         >
           {cards.map((card, ci) => (
@@ -1201,7 +1202,7 @@ function EducationSection({ t }) {
       </div>
 
       <p
-        className="mt-2 text-[13px] sm:text-[14px] font-medium text-[#5c5c5c] dark:text-[#adadad] text-center transition-transform duration-300"
+        className="mt-2 text-label-s leading-[1.2] font-medium text-fg-muted text-center transition-transform duration-300"
         style={{ transform: `translateX(${getDateOffset()}px)` }}
       >
         {cards[activeIndex]?.period}
@@ -1213,8 +1214,8 @@ function EducationSection({ t }) {
           {cards.map((_, i) => {
             const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
             return (
-              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
               </button>
             );
           })}
@@ -1225,7 +1226,7 @@ function EducationSection({ t }) {
             disabled={activeIndex === 0}
             data-spring
             aria-label={t.eduNavPrev}
-            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
           >
             <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]" />
           </button>
@@ -1234,7 +1235,7 @@ function EducationSection({ t }) {
             disabled={activeIndex === cards.length - 1}
             data-spring
             aria-label={t.eduNavNext}
-            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+            className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
           >
             <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]" />
           </button>
@@ -1264,25 +1265,25 @@ function CertificationCard({ card }) {
       aria-pressed={flipped}
       onClick={() => setFlipped(f => !f)}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFlipped(f => !f); } }}
-      className="cursor-pointer [perspective:800px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] rounded-[32px] sm:rounded-[40px] lg:rounded-[48px]"
+      className="cursor-pointer [perspective:800px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12"
     >
       <div className="transition-transform duration-200 sm:hover:scale-[1.04]">
       <div
         className="relative [transform-style:preserve-3d] motion-safe:transition-transform motion-safe:duration-500"
         style={{ transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
       >
-        <div inert={flipped} className="flex flex-col items-center pt-3 sm:pt-[14px] lg:pt-4 pb-5 sm:pb-5 lg:pb-6 px-3 sm:px-[14px] lg:px-4 bg-white dark:bg-[#1f1f1f] rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] border border-[#d6d6d6] dark:border-[#2a2a2a] [backface-visibility:hidden]">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-white dark:bg-[#1f1f1f] flex items-center justify-center mb-2 sm:mb-[10px] lg:mb-3 overflow-hidden shrink-0">
+        <div inert={flipped} className="flex flex-col items-center pt-3 sm:pt-[14px] lg:pt-4 pb-5 sm:pb-5 lg:pb-6 px-3 sm:px-[14px] lg:px-4 bg-bg-page dark:bg-bg-surface rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 border border-border-subtle [backface-visibility:hidden]">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-radius-4 sm:rounded-radius-5 lg:rounded-radius-6 bg-bg-page dark:bg-bg-surface flex items-center justify-center mb-2 sm:mb-[10px] lg:mb-3 overflow-hidden shrink-0">
             {card.icon
               ? <img src={card.icon} alt="" loading="lazy" className={`w-full h-full object-contain${isSvg ? ' dark:brightness-0 dark:invert' : ''}`} />
-              : <span className="text-[8px] text-[#5c5c5c] dark:text-[#adadad]">icon</span>
+              : <span className="text-[8px] text-fg-muted">icon</span>
             }
           </div>
-          <p className="text-[15px] sm:text-[16px] lg:text-[18px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-snug">{nameEl}</p>
+          <p className="text-card-m font-bold text-fg-primary text-center leading-snug">{nameEl}</p>
         </div>
 
-        <div inert={!flipped} className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-[#141414] rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] border border-[#d6d6d6] dark:border-[#2a2a2a] [backface-visibility:hidden] [transform:rotateY(180deg)]">
-          <p className="text-[15px] sm:text-[16px] lg:text-[18px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6] text-center leading-snug px-4">{card.issuer}</p>
+        <div inert={!flipped} className="absolute inset-0 flex flex-col items-center justify-center bg-bg-page rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 border border-border-subtle [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <p className="text-card-m font-bold text-fg-primary text-center leading-snug px-4">{card.issuer}</p>
         </div>
       </div>
       </div>
@@ -1331,7 +1332,7 @@ function SkillsCertSection({ t }) {
             {t.topSkillsList.map((skill, i) => (
               <li
                 key={i}
-                className="px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 lg:py-3 rounded-full border border-[#d6d6d6] dark:border-[#3a3a3a] font-semibold text-[14px] sm:text-[15px] lg:text-[16px] text-[#1f1f1f] dark:text-[#f6f6f6] whitespace-nowrap select-none"
+                className="px-3 sm:px-4 lg:px-5 py-2 sm:py-3 lg:py-3 rounded-full border border-border-subtle font-semibold text-tag-m leading-normal text-fg-primary whitespace-nowrap select-none"
               >
                 {skill}
               </li>
@@ -1362,7 +1363,7 @@ function SkillsCertSection({ t }) {
                 if (e.key === 'ArrowLeft') { e.preventDefault(); scrollToCertPage(Math.max(0, activePage - 1)); }
                 if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCertPage(Math.min(certPages.length - 1, activePage + 1)); }
               }}
-              className="flex overflow-x-auto snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0152EC] py-3 -my-3"
+              className="flex overflow-x-auto snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus py-3 -my-3"
               style={{ scrollbarWidth: 'none', touchAction: 'pan-x pan-y' }}
             >
               {certPages.map((page, pi) => (
@@ -1381,7 +1382,7 @@ function SkillsCertSection({ t }) {
                 disabled={activePage === 0}
                 data-spring
                 aria-label={t.certNavPrev}
-                className="group p-2 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+                className="group p-2 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
               >
                 <img src={imgChevronLeft} alt="" width={20} height={20}
                   className="brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]"
@@ -1392,7 +1393,7 @@ function SkillsCertSection({ t }) {
                 disabled={activePage === certPages.length - 1}
                 data-spring
                 aria-label={t.certNavNext}
-                className="group p-2 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color,color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer"
+                className="group p-2 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
               >
                 <img src={imgChevronRight} alt="" width={20} height={20}
                   className="group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]"
@@ -1459,17 +1460,11 @@ function Resume({ lang }) {
 
   return (
     <>
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:ring-2 focus:ring-[#0152EC] focus:bg-white focus:text-[#1f1f1f] focus:outline-none">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-radius-2 focus:ring-2 focus:ring-border-focus focus:bg-white focus:text-fg-primary focus:outline-none">
         {t.skipToMain}
       </a>
-      <main id="main-content" aria-label={t.title} className="bg-white dark:bg-[#141414] min-h-screen" tabIndex={-1}>
+      <main id="main-content" aria-label={t.title} className="bg-bg-page min-h-screen" tabIndex={-1}>
         <div className="max-w-5xl mx-auto px-6">
-
-          <div className="pt-32 pb-4">
-            <h1 className="text-[24px] sm:text-[28px] lg:text-[30px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
-              {t.title}
-            </h1>
-          </div>
 
           {/* 1. Summary */}
           <SummarySection t={t} lang={lang} />
@@ -1507,7 +1502,7 @@ function Resume({ lang }) {
           to="/"
           data-spring
           onClick={() => setShowBack(false)}
-          className="flex items-center gap-2 h-9 bg-[#1f1f1f]/90 dark:bg-[#f6f6f6]/90 backdrop-blur-[12px] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-medium px-4 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.18)] ring-1 ring-white/[0.1] dark:ring-black/[0.1] hover:bg-[#f6f6f6] hover:text-[#1f1f1f] dark:hover:bg-[#1f1f1f] dark:hover:text-[#f6f6f6] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]"
+          className="flex items-center gap-2 h-9 bg-[#1f1f1f]/90 dark:bg-[#fafafa]/90 backdrop-blur-[12px] text-fg-primary-inverse text-[13px] font-medium px-4 rounded-full shadow-m hover:bg-bg-surface hover:text-fg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           aria-label={lang === 'fr' ? "Retour à l'accueil" : 'Back to homepage'}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -1520,7 +1515,7 @@ function Resume({ lang }) {
           onClick={() => setShowBack(false)}
           data-spring
           aria-label={lang === 'fr' ? 'Fermer' : 'Dismiss'}
-          className="ml-1 flex items-center justify-center w-8 h-8 rounded-full bg-[#1f1f1f]/90 dark:bg-[#f6f6f6]/90 backdrop-blur-[12px] text-[#f6f6f6] dark:text-[#1f1f1f] ring-1 ring-white/[0.1] dark:ring-black/[0.1] hover:bg-[#f6f6f6] hover:text-[#1f1f1f] dark:hover:bg-[#1f1f1f] dark:hover:text-[#f6f6f6] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] cursor-pointer"
+          className="ml-2 flex items-center justify-center w-8 h-8 rounded-full bg-[#1f1f1f]/90 dark:bg-[#fafafa]/90 backdrop-blur-[12px] text-fg-primary-inverse hover:bg-bg-surface hover:text-fg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus cursor-pointer"
         >
           <svg width="14" height="14" viewBox="0 0 10 10" fill="none" aria-hidden="true">
             <path d="M2 2l6 6M8 2L2 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>

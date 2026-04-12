@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-04-09');
+const LAST_UPDATED = new Date('2026-04-12');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -53,9 +53,9 @@ const T = {
 };
 
 const card = 'py-12 scroll-mt-24';
-const h2   = 'text-[24px] sm:text-[28px] lg:text-[30px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6] mb-6';
-const body = 'text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]';
-const lnk  = 'underline hover:opacity-60 transition-opacity rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC]';
+const h2   = 'text-h2 font-bold leading-tight text-fg-primary mb-6';
+const body = 'text-copy-m font-normal leading-loose text-fg-secondary';
+const lnk  = 'underline hover:opacity-60 transition-opacity rounded-radius-half focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus';
 
 function TermsSection({ s, num, t, delay }) {
   return (
@@ -88,11 +88,11 @@ function TermsSection({ s, num, t, delay }) {
       {s.contact && (
         <address className={`${body} not-italic space-y-3`}>
           <p className={body}>{t.contactIntro}</p>
-          <p className="font-semibold text-[#1f1f1f] dark:text-[#f6f6f6]">David V. — Senior Product Designer</p>
+          <p className="font-semibold text-fg-primary">David V. — Senior Product Designer</p>
           <p>
             <button
               onClick={() => window.location.href = 'mailto:d@AtelierDigital.co.uk'}
-              className={`${body} ${lnk} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] rounded`}
+              className={`${body} ${lnk} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus rounded`}
               aria-label="Send an email to David"
             >
               <span className="obf-email" data-u="d" data-d="AtelierDigital.co.uk" aria-hidden="true" />
@@ -122,8 +122,8 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   }, [activeId]);
 
   return (
-    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] p-[10px]">
-      <div className="overflow-hidden rounded-[16px]">
+    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-radius-6 shadow-xs dark:ring-1 dark:ring-white/[0.16] p-[10px]">
+      <div className="overflow-hidden rounded-radius-4">
         <ul ref={trackRef} className="w-full flex items-center gap-1 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
           {sections.map((s) => {
             const isActive = activeId === s.id;
@@ -133,10 +133,10 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
                   data-section={s.id}
                   onClick={() => onNavigate(s.id)}
                   aria-current={isActive ? 'location' : undefined}
-                  className={`h-8 px-3 rounded-2xl text-[13px] font-medium whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+                  className={`h-8 px-3 rounded-radius-4 text-[13px] font-medium whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                     isActive
-                      ? 'bg-[#161616] dark:bg-white text-white dark:text-[#161616]'
-                      : 'text-[#5c5c5c] dark:text-[#adadad]'
+                      ? 'bg-nav-active-bg-solid text-fg-inverse'
+                      : 'text-fg-muted'
                   }`}
                 >
                   {s.heading}
@@ -162,15 +162,15 @@ function SecondaryNav({ sections, activeId, onNavigate }) {
                 onClick={() => onNavigate(s.id)}
                 aria-label={s.heading}
                 aria-current={isActive ? 'location' : undefined}
-                className={`relative text-[13px] leading-snug py-1.5 px-2 rounded-lg text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+                className={`relative text-[13px] leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
-                    ? 'text-[#1f1f1f] dark:text-[#f6f6f6] font-semibold bg-black/[0.04] dark:bg-white/[0.06]'
-                    : 'text-[#5c5c5c] dark:text-[#adadad] font-normal hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
+                    ? 'text-fg-primary font-semibold bg-black/[0.04] dark:bg-white/[0.06]'
+                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
                 }`}
               >
                 {/* Invisible bold copy locks the button height to its semibold size — prevents 1→2 line reflow on hover */}
                 <span aria-hidden="true" className="font-semibold invisible block select-none">{s.heading}</span>
-                <span className="absolute inset-0 py-1.5 px-2">{s.heading}</span>
+                <span className="absolute inset-0 py-2 px-2">{s.heading}</span>
               </button>
             </li>
           );
@@ -246,10 +246,10 @@ function Terms({ lang }) {
 
   return (
     <>
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:ring-2 focus:ring-[#0152EC] focus:bg-white focus:text-[#1f1f1f] focus:outline-none font-medium">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-radius-2 focus:ring-2 focus:ring-border-focus focus:bg-white focus:text-fg-primary focus:outline-none font-medium">
         {t.skipToMain}
       </a>
-      <main id="main-content" aria-label={t.title} className={`bg-white dark:bg-[#1f1f1f] min-h-screen transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`} tabIndex={-1}>
+      <main id="main-content" aria-label={t.title} className={`bg-bg-page dark:bg-bg-surface min-h-screen transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`} tabIndex={-1}>
         <div className="px-6 flex flex-col items-center">
           <div className="flex items-start gap-10 w-full max-w-6xl">
             {/* Left spacer — smaller than the secondary nav to shift content left without losing all whitespace */}
@@ -258,17 +258,17 @@ function Terms({ lang }) {
             {/* Main column */}
             <div className="flex-1 min-w-0">
               <div className="pt-32 pb-4">
-                <p className="text-sm text-[#5c5c5c] dark:text-[#adadad] mb-3">
+                <p className="text-label-s font-medium leading-[1.2] text-fg-muted mb-3">
                   {t.updated} {formatDate(LAST_UPDATED, lang)}
                 </p>
-                <h1 className="text-[36px] sm:text-[44px] font-semibold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
+                <h1 className="text-h1 font-bold leading-tight text-fg-primary">
                   {t.title}
                 </h1>
               </div>
 
               <div className="py-8">
                 <div className="mb-8" style={{ animation: 'fade-in 0.5s cubic-bezier(0.22,1,0.36,1) both', animationDelay: '0.05s' }}>
-                  <p className={`${body} font-semibold text-[#1f1f1f] dark:text-[#f6f6f6] mb-1`}>{t.intro1}</p>
+                  <p className={`${body} font-semibold text-fg-primary mb-1`}>{t.intro1}</p>
                   <p className={body}>{t.intro2}</p>
                 </div>
                 <ol className="space-y-0">
@@ -283,7 +283,7 @@ function Terms({ lang }) {
           </div>
 
           {/* Outro — outside flex row so sticky nav stops before it */}
-          <p className="text-[22px] sm:text-[26px] font-bold text-center text-[#1f1f1f] dark:text-[#f6f6f6] py-16">
+          <p className="text-h3 font-semibold leading-snug text-center text-fg-primary py-16">
             © {year} David V.{lang === 'fr' ? ' Tous droits réservés.' : ' All rights reserved.'}
           </p>
         </div>
@@ -292,7 +292,7 @@ function Terms({ lang }) {
             <MobileSecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
           </div>
         </div>
-        <div aria-hidden="true" className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`} style={{ width: 52, height: 52, left: 8, bottom: 8 }} />
+        <div aria-hidden="true" className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-xs dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`} style={{ width: 52, height: 52, left: 8, bottom: 8 }} />
       </main>
       <Footer lang={lang} />
     </>

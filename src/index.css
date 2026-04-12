@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@config "../tailwind.config.js";
+@import "./tokens/base.css";
+@import "./tokens/semantic.css";
+@import "./tokens/typography.css";
+@import "./tokens/shadows.css";
 @source "./**/*.{jsx,tsx,js,ts,html}";
 
 @custom-variant dark (&:is(.dark *));
@@ -7,10 +12,14 @@ html {
   background-color: #ffffff;
   scroll-behavior: smooth;
   overflow-x: clip;
+  --card-panel: #003464;
+  --card-panel-locked: #1f1f1f;
 }
 
 html.dark {
   background-color: #141414;
+  --card-panel: #002040;
+  --card-panel-locked: #000000;
 }
 
 html.dark strong {

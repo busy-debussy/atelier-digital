@@ -13,7 +13,7 @@ import imgBgXR         from '../assets/photos/photo-xr-experiences.webp';
 import imgBgTwin       from '../assets/photos/photo-digital-twins.webp';
 
 // Nav button styles
-const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer';
+const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer';
 const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]';
 const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]';
 
@@ -26,7 +26,6 @@ const T = {
     restricted:    'Restricted access',
     restrictedBody:'Get in touch to learn more\nabout this project.',
     restrictedCta: 'Message',
-    viewCaseStudy: 'view case study',
     cards: [
       {
         bg:           imgBgSales,
@@ -68,7 +67,6 @@ const T = {
     restricted:    'Accès restreint',
     restrictedBody:'Prenez contact pour en savoir plus\nsur ce projet.',
     restrictedCta: 'Message',
-    viewCaseStudy: "voir l'étude de cas",
     cards: [
       {
         bg:           imgBgSales,
@@ -109,28 +107,28 @@ const T = {
 function CsCard({ card, t }) {
   const [showRestricted, setShowRestricted] = useState(false);
 
-  const panelBg = card.tint === 'blue' ? '#003464' : '#000000';
+  const panelBg = card.tint === 'blue' ? 'var(--card-panel)' : 'var(--card-panel-locked)';
 
   const inner = (
     <>
       <img src={card.bg} alt="" className="absolute inset-0 w-full h-full object-cover" />
 
       <div
-        className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 lg:p-4 flex flex-col gap-2 sm:gap-2.5 lg:gap-3 backdrop-blur-[30px]"
+        className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 lg:p-4 flex flex-col gap-2 sm:gap-3 lg:gap-3 backdrop-blur-[32px]"
         style={{ background: panelBg }}
       >
-        <div className="flex flex-wrap gap-1 sm:gap-1.5">
-          <div className="flex items-center gap-1 px-2 py-1 rounded-xl bg-white/[0.16] overflow-hidden">
+        <div className="flex flex-wrap gap-1 sm:gap-2">
+          <div className="flex items-center gap-1 px-2 py-1 rounded-radius-3 bg-white/[0.16] overflow-hidden">
             {card.primaryChip.icon && (
               <img src={card.primaryChip.icon} alt="" className="w-3 h-3 shrink-0 brightness-0 invert" />
             )}
-            <span className="text-[9px] sm:text-[11px] lg:text-[12px] font-medium text-white leading-none whitespace-nowrap">
+            <span className="text-chip-xs font-medium text-white leading-none whitespace-nowrap">
               {card.primaryChip.label}
             </span>
           </div>
           {card.secondaryChips.map((chip, i) => (
-            <div key={i} className="flex items-center px-2 py-1 rounded-xl bg-black/[0.32]">
-              <span className="text-[9px] sm:text-[11px] lg:text-[12px] font-medium text-white/60 leading-none whitespace-nowrap">
+            <div key={i} className="flex items-center px-2 py-1 rounded-radius-3 bg-black/[0.32]">
+              <span className="text-chip-xs font-medium text-white/60 leading-none whitespace-nowrap">
                 {chip.label}
               </span>
             </div>
@@ -138,21 +136,21 @@ function CsCard({ card, t }) {
         </div>
 
         <div className="flex items-end justify-between gap-2">
-          <div className="flex flex-col gap-0.5 sm:gap-1">
-            <h3 className="text-[18px] sm:text-[20px] lg:text-[24px] font-bold text-white leading-tight tracking-[0.12px]">
+          <div className="flex flex-col gap-1">
+            <h3 className="text-h4 font-bold text-white leading-tight">
               {card.title}
             </h3>
-            <p className="text-[13px] sm:text-[15px] lg:text-[18px] font-medium text-[#d6d6d6] leading-snug">
+            <p className="text-subheading font-medium text-[#d6d6d6] leading-snug">
               {card.subtitle}
             </p>
           </div>
 
           {card.cta === 'go' ? (
-            <div className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 rounded-[14px] sm:rounded-[16px] lg:rounded-[20px] bg-white flex items-center justify-center">
+            <div className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 rounded-radius-4 sm:rounded-radius-4 lg:rounded-radius-5 bg-white flex items-center justify-center">
               <img src={imgArrowRight} alt="" className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
             </div>
           ) : (
-            <div className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 rounded-[14px] sm:rounded-[16px] lg:rounded-[20px] bg-white/[0.24] flex items-center justify-center">
+            <div className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 rounded-radius-4 sm:rounded-radius-4 lg:rounded-radius-5 bg-white/[0.24] flex items-center justify-center">
               <img src={imgLock} alt="" className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 brightness-0 invert opacity-60" />
             </div>
           )}
@@ -167,14 +165,14 @@ function CsCard({ card, t }) {
         >
           <img src={imgLockLg} alt="" width={80} height={80} className="brightness-0 invert" />
           <div className="flex flex-col items-center gap-2 text-center">
-            <p className="text-[20px] sm:text-[22px] lg:text-[24px] font-bold text-white leading-tight">{t.restricted}</p>
-            <p className="text-[14px] sm:text-[16px] lg:text-[18px] text-[#d6d6d6] leading-relaxed whitespace-pre-line">{t.restrictedBody}</p>
+            <p className="text-h3 font-semibold text-white leading-snug">{t.restricted}</p>
+            <p className="text-copy-m font-normal text-[#d6d6d6] leading-relaxed whitespace-pre-line">{t.restrictedBody}</p>
           </div>
           <a
             href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(card.mailSubject)}`}
             onClick={(e) => e.stopPropagation()}
             data-spring
-            className="mt-2 px-5 py-1.5 sm:px-6 sm:py-2 bg-[#0152ec] border border-[#5289f2] rounded-full text-white font-medium text-[14px] sm:text-[16px] hover:bg-[#0142cc] transition-colors"
+            className="mt-2 px-5 py-2 sm:px-6 sm:py-2 bg-cta-600 border border-[#5289f2] rounded-full text-white/95 font-medium text-label-s leading-[1.2] hover:bg-cta-700 transition-colors"
           >
             {t.restrictedCta}
           </a>
@@ -183,22 +181,16 @@ function CsCard({ card, t }) {
     </>
   );
 
-  const liClass = 'relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] rounded-[28px] sm:rounded-[32px] overflow-hidden group snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer bg-[#fff] dark:bg-[#111111]';
+  const liClass = 'relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] rounded-radius-7 sm:rounded-radius-8 overflow-hidden group snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer bg-bg-page';
 
   if (card.cta === 'go') {
     return (
       <li data-spring-desktop className="group/card relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer">
         {/* Inner wrapper carries overflow-hidden so the spring scale on the li isn't clipped */}
-        <div className="absolute inset-0 rounded-[28px] sm:rounded-[32px] overflow-hidden group bg-[#fff] dark:bg-[#111111]">
+        <div className="absolute inset-0 rounded-radius-7 sm:rounded-radius-8 overflow-hidden group bg-bg-page">
           {inner}
         </div>
-        <Link to={card.href} className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white rounded-[28px] sm:rounded-[32px]" aria-label={card.title} />
-        {/* Tooltip below the arrow button — outside overflow-hidden, triggered by group/card hover */}
-        <div className="absolute top-full right-3 sm:right-3.5 lg:right-4 pt-2 z-20 pointer-events-none opacity-0 group-hover/card:opacity-100 group-hover/card:delay-[600ms] transition-opacity duration-200">
-          <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
-            {t.viewCaseStudy}
-          </div>
-        </div>
+        <Link to={card.href} className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white rounded-radius-7 sm:rounded-radius-8" aria-label={card.title} />
       </li>
     );
   }
@@ -308,7 +300,7 @@ function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
     <section id="case-studies" aria-labelledby="cs-heading" className="py-16 scroll-mt-24" tabIndex={-1}>
 
       <div className="max-w-5xl mx-auto px-6">
-        <h2 id="cs-heading" className="text-[24px] sm:text-[28px] lg:text-[30px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6] mb-8">
+        <h2 id="cs-heading" className="text-h2 font-bold leading-tight text-fg-primary mb-8">
           {t.heading}
         </h2>
       </div>
@@ -320,7 +312,7 @@ function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
       <ul
         ref={trackRef}
         onScroll={handleScroll}
-        className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+        className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
         style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, paddingTop: '28px', paddingBottom: '52px', touchAction: 'pan-x pan-y' }}
         aria-label={t.heading}
       >
@@ -334,8 +326,8 @@ function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
           {cards.map((_, i) => {
             const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
             return (
-              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
               </button>
             );
           })}

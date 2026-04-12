@@ -1,0 +1,105 @@
+:root {
+  --font-size-headings-display-h1: 48px;
+  --font-size-headings-display-h2: 30px;
+  --font-size-headings-h1: 36px;
+  --font-size-headings-h2: 32px;
+  --font-size-headings-h3: 24px;
+  --font-size-headings-h4: 18px;
+  --font-size-headings-h5: 14px;
+  --font-size-headings-h6: 15px;
+  --font-size-labels-subheading: 14px;
+  --font-size-labels-label-s: 13px;
+  --font-size-labels-legal: 13px;
+  --font-size-labels-fine-print: 12px;
+  --font-size-labels-overline-m: 13px;
+  --font-size-labels-overline-s: 11px;
+  --font-size-copy-copy-m: 16px;
+  --font-size-copy-copy-s: 14px;
+  --font-size-copy-copy-xs: 12px;
+  --font-size-ui-button-m: 18px;
+  --font-size-ui-button-s: 13px;
+  --font-size-ui-card-m: 15px;
+  --font-size-ui-tag-m: 14px;
+  --font-size-ui-tag-s: 10px;
+  --font-size-ui-caption: 13px;
+  --font-size-ui-nav-l: 24px;
+  --font-size-ui-nav-m: 16px;
+  --font-size-ui-nav-s: 13px;
+  --font-size-ui-tooltip: 13px;
+  --font-size-ui-chip-s: 13px;
+  --font-size-ui-chip-xs: 9px;
+  --font-size-brand-logo: 16px;
+  --letter-spacing-overline: 0.55px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --font-size-headings-display-h1: 64px;
+    --font-size-headings-display-h2: 40px;
+    --font-size-headings-h1: 44px;
+    --font-size-headings-h2: 34px;
+    --font-size-headings-h3: 26px;
+    --font-size-headings-h4: 20px;
+    --font-size-headings-h5: 15px;
+    --font-size-headings-h6: 15px;
+    --font-size-labels-subheading: 16px;
+    --font-size-labels-label-s: 14px;
+    --font-size-labels-legal: 14px;
+    --font-size-labels-fine-print: 12px;
+    --font-size-labels-overline-m: 14px;
+    --font-size-labels-overline-s: 12px;
+    --font-size-copy-copy-m: 17px;
+    --font-size-copy-copy-s: 14px;
+    --font-size-copy-copy-xs: 13px;
+    --font-size-ui-button-m: 19px;
+    --font-size-ui-button-s: 14px;
+    --font-size-ui-card-m: 16px;
+    --font-size-ui-tag-m: 15px;
+    --font-size-ui-tag-s: 14px;
+    --font-size-ui-caption: 14px;
+    --font-size-ui-nav-l: 24px;
+    --font-size-ui-nav-m: 16px;
+    --font-size-ui-nav-s: 13px;
+    --font-size-ui-tooltip: 13px;
+    --font-size-ui-chip-s: 13px;
+    --font-size-ui-chip-xs: 11px;
+    --font-size-brand-logo: 16px;
+    --letter-spacing-overline: 0.6px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --font-size-headings-display-h1: 72px;
+    --font-size-headings-display-h2: 48px;
+    --font-size-headings-h1: 48px;
+    --font-size-headings-h2: 36px;
+    --font-size-headings-h3: 30px;
+    --font-size-headings-h4: 22px;
+    --font-size-headings-h5: 16px;
+    --font-size-headings-h6: 15px;
+    --font-size-labels-subheading: 18px;
+    --font-size-labels-label-s: 15px;
+    --font-size-labels-legal: 15px;
+    --font-size-labels-fine-print: 12px;
+    --font-size-labels-overline-m: 15px;
+    --font-size-labels-overline-s: 13px;
+    --font-size-copy-copy-m: 18px;
+    --font-size-copy-copy-s: 14px;
+    --font-size-copy-copy-xs: 14px;
+    --font-size-ui-button-m: 20px;
+    --font-size-ui-button-s: 15px;
+    --font-size-ui-card-m: 18px;
+    --font-size-ui-tag-m: 16px;
+    --font-size-ui-tag-s: 15px;
+    --font-size-ui-caption: 15px;
+    --font-size-ui-nav-l: 24px;
+    --font-size-ui-nav-m: 16px;
+    --font-size-ui-nav-s: 13px;
+    --font-size-ui-tooltip: 13px;
+    --font-size-ui-chip-s: 13px;
+    --font-size-ui-chip-xs: 12px;
+    --font-size-brand-logo: 16px;
+    --letter-spacing-overline: 0.65px;
+  }
+}

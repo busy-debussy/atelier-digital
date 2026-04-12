@@ -56,7 +56,7 @@ const T = {
         body: [
           <>Our core team of five, spanning four countries, led the <strong>end-to-end design</strong> and <strong>development</strong> of all applications. Film production was handled by our studio team.</>,
           <>We operated in <strong>two-week sprints</strong> with daily <strong>stand-ups</strong> aligned to UK core hours, enabling:</>,
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
             <li><strong>Alignment</strong> on design and development progress</li>
             <li>Early identification of <strong>blockers</strong></li>
             <li>Rapid navigation of <strong>trade-offs</strong> and <strong>technical constraints</strong></li>
@@ -84,7 +84,7 @@ const T = {
           <>I had previously designed large-scale events in the tech industry (100k+ attendees). To tailor experiences for this high-investment, time-constrained audience, I quickly collaborated with a colleague experienced in Architecture, Engineering, and Construction events, reviewing delegate behavior, engagement patterns, and decision drivers.</>,
           <>With delegate passes costing €2,500–€3,000 each, designing for such a time-constrained, high-investment audience demanded clarity, engagement, and efficiency.</>,
           <>We targeted three audience types:</>,
-          <ul className="list-none flex flex-col gap-2 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-none flex flex-col gap-2 text-copy-m font-normal leading-loose text-fg-secondary">
             <li><strong>Backers</strong> Investors seeking credibility, scale, and clear investable opportunity.</li>
             <li><strong>Builders</strong> Developers and architects looking for tangible ways to engage.</li>
             <li><strong>Visionaries</strong> Policymakers and strategists focused on long-term impact and legacy.</li>
@@ -172,7 +172,7 @@ const T = {
         heading: 'Form follows constraint',
         body: [
           <>Every experience came with its own set of <strong>technical and spatial challenges</strong>, which shaped the design decisions:</>,
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
             <li><strong>Transparent display:</strong> Needed to show both interface and the space behind it clearly</li>
             <li><strong>AR (Magic Leap 2):</strong> Optimised 3D assets for device constraints; designed for up to five participants simultaneously</li>
             <li><strong>iPad app:</strong> Mirrored the AR session in real time for non-headset users, boosting engagement and curiosity</li>
@@ -180,13 +180,13 @@ const T = {
             <li><strong>Digital twin:</strong> Built for cross-platform accessibility</li>
           </ul>,
           { type: 'h3', text: 'Design strategies for scale and clarity' },
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
             <li>In AR, visual cues communicated the central building's volume immediately</li>
             <li>VR Wadis were crafted to feel vast but navigable</li>
             <li>On the interactive map, each district had a distinct identity to clarify the development</li>
           </ul>,
           { type: 'h3', text: 'Interaction patterns' },
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
             <li>Shared AR experience was guided by a single narrator to preserve narrative clarity</li>
             <li>Table placement and mirrored screens enabled multiple participants and passersby to engage naturally</li>
             <li>iPad ensured non-headset participants remained connected and curious</li>
@@ -197,7 +197,7 @@ const T = {
           <>Our initial plan let users choose solo or shared modes on the AR table, but friction points in selecting the app, scanning the AR tracker, and placing the 3D model slowed engagement. I streamlined it into a single, presenter-led, pre-calibrated flow, keeping participation smooth and intuitive.</>,
           <>This approach reflected a broader principle applied across all six experiences. Every interaction was designed to minimize friction, maximize clarity, and preserve narrative flow, whether users were engaging with AR, VR, touchscreens, or the digital twin.</>,
           <><strong>Key decisions</strong></>,
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
             <li><strong>Magic Leap AR table:</strong> Single guided flow; iPad mirrored the session for observers, sparking curiosity</li>
             <li><strong>VR walkthrough:</strong> Mirrored wall display ensured bystanders could follow without interrupting immersion</li>
             <li><strong>Interactive map and Digital Twin:</strong> Simplified navigation, optimised for touch, mouse, and gamepad</li>
@@ -286,7 +286,7 @@ const T = {
         body: [
           <>Notre équipe de cinq personnes, répartie dans quatre pays, a assuré la <strong>conception et le développement</strong> de bout en bout de toutes les applications. La production vidéo a été prise en charge par notre équipe studio.</>,
           <>Nous avons fonctionné en <strong>sprints de deux semaines</strong> avec des <strong>réunions quotidiennes</strong> alignées sur les horaires du Royaume-Uni, permettant :</>,
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
             <li><strong>Coordination</strong> sur l'avancement du design et du développement</li>
             <li>Identification précoce des <strong>blocages</strong></li>
             <li>Navigation rapide des <strong>compromis</strong> et <strong>contraintes techniques</strong></li>
@@ -314,7 +314,7 @@ const T = {
           <>J'avais précédemment conçu des événements à grande échelle dans l'industrie tech (100k+ participants). Pour adapter les expériences à ce public à fort investissement et contraintes de temps, j'ai rapidement collaboré avec un collègue expérimenté dans les événements Architecture, Ingénierie et Construction, en analysant les comportements délégués, les schémas d'engagement et les facteurs de décision.</>,
           <>Avec des pass délégués à 2 500–3 000 € chacun, concevoir pour un public aussi investi et contraint par le temps exigeait clarté, engagement et efficacité.</>,
           <>Nous avons ciblé trois types de public :</>,
-          <ul className="list-none flex flex-col gap-2 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-none flex flex-col gap-2 text-copy-m font-normal leading-loose text-fg-secondary">
             <li><strong>Les investisseurs</strong> À la recherche de crédibilité, d'ampleur et d'opportunités d'investissement claires.</li>
             <li><strong>Les bâtisseurs</strong> Promoteurs et architectes cherchant des moyens concrets de s'impliquer.</li>
             <li><strong>Les visionnaires</strong> Décideurs et stratèges axés sur l'impact à long terme et l'héritage.</li>
@@ -402,7 +402,7 @@ const T = {
         heading: 'La forme suit la contrainte',
         body: [
           <>Chaque expérience avait ses propres <strong>défis techniques et spatiaux</strong>, qui ont façonné les décisions de design :</>,
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
             <li><strong>Écran transparent :</strong> Devait afficher l'interface et laisser voir l'espace derrière</li>
             <li><strong>AR (Magic Leap 2) :</strong> Assets 3D optimisés pour les contraintes de l'appareil ; conçu pour cinq participants simultanément</li>
             <li><strong>Application iPad :</strong> Miroir de la session AR en temps réel pour les participants sans casque, renforçant l'engagement et la curiosité</li>
@@ -410,13 +410,13 @@ const T = {
             <li><strong>Jumeau numérique :</strong> Conçu pour l'accessibilité multiplateforme</li>
           </ul>,
           { type: 'h3', text: "Stratégies de design pour l'échelle et la clarté" },
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
             <li>En AR, des repères visuels communiquaient immédiatement le volume du bâtiment central</li>
             <li>Les Wadis en VR ont été conçus pour paraître vastes mais navigables</li>
             <li>Sur la carte interactive, chaque quartier avait une identité distincte pour clarifier le développement</li>
           </ul>,
           { type: 'h3', text: "Patterns d'interaction" },
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
             <li>L'expérience AR partagée était guidée par un seul narrateur pour préserver la clarté narrative</li>
             <li>La disposition de la table et les écrans en miroir permettaient à plusieurs participants et passants de s'engager naturellement</li>
             <li>L'iPad maintenait les participants sans casque connectés et curieux</li>
@@ -427,7 +427,7 @@ const T = {
           <>Notre plan initial laissait les utilisateurs choisir entre les modes solo et partagé sur la table AR, mais des points de friction dans la sélection de l'application, le scan du marqueur AR et le placement du modèle 3D ralentissaient l'engagement. J'ai simplifié en un flux unique, guidé par un présentateur et pré-calibré, gardant la participation fluide et intuitive.</>,
           <>Cette approche reflétait un principe plus large appliqué à l'ensemble des six expériences. Chaque interaction était conçue pour minimiser les frictions, maximiser la clarté et préserver le flux narratif, que les utilisateurs s'engagent avec l'AR, la VR, les écrans tactiles ou le jumeau numérique.</>,
           <><strong>Décisions clés</strong></>,
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]">
+          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
             <li><strong>Table AR Magic Leap :</strong> Flux guidé unique ; l'iPad reflétait la session pour les observateurs, suscitant la curiosité</li>
             <li><strong>Visite VR :</strong> L'écran mural en miroir permettait aux passants de suivre sans interrompre l'immersion</li>
             <li><strong>Carte interactive et jumeau numérique :</strong> Navigation simplifiée, optimisée pour le tactile, la souris et la manette</li>
@@ -688,7 +688,7 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
       aria-modal="true"
       aria-label={lang === 'fr' ? 'Diagramme en plein écran' : 'Fullscreen chart'}
       className="fixed inset-0 z-[600] flex items-center justify-center overflow-hidden"
-      style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.92)' }}
+      style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.95)' }}
       onClick={onClose}
     >
       {/* Chart */}
@@ -706,7 +706,7 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
       />
 
       {/* Counter */}
-      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-[13px] font-medium text-white/60 tabular-nums pointer-events-none">
+      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-[13px] font-medium text-white/[0.64] tabular-nums pointer-events-none">
         {index + 1} / {slides.length}
       </span>
 
@@ -716,7 +716,7 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
         onClick={onClose}
         aria-label={closeLbl}
         data-spring
-        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/[0.64]"
       >
         <img src={imgClose} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
@@ -727,7 +727,7 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
         onClick={(e) => { e.stopPropagation(); go(Math.max(0, index - 1)); }}
         disabled={index === 0}
         aria-label={prevLbl}
-        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/[0.64]"
       >
         <img src={imgChevronLeft} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
@@ -738,7 +738,7 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
         onClick={(e) => { e.stopPropagation(); go(Math.min(slides.length - 1, index + 1)); }}
         disabled={index === slides.length - 1}
         aria-label={nextLbl}
-        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/[0.64]"
       >
         <img src={imgChevronRight} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
@@ -797,11 +797,11 @@ function FlowSection({ isDark, lang, labels }) {
                 type="button"
                 onClick={() => setLightboxIndex(i)}
                 aria-label={`${expandLbl}: ${slide.ariaLabel}`}
-                className="w-full text-left cursor-zoom-in rounded-[16px] sm:rounded-[20px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C]"
+                className="w-full text-left cursor-zoom-in rounded-radius-4 sm:rounded-radius-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold"
               >
-                <div className="bg-white dark:bg-[#141414] rounded-[16px] sm:rounded-[20px] p-4 w-full overflow-hidden" dangerouslySetInnerHTML={{ __html: slide.svg }} />
+                <div className="bg-bg-page rounded-radius-4 sm:rounded-radius-5 p-4 w-full overflow-hidden" dangerouslySetInnerHTML={{ __html: slide.svg }} />
               </button>
-              <figcaption className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] text-center">{slide.label}</figcaption>
+              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{slide.label}</figcaption>
             </figure>
           ))}
         </div>
@@ -827,7 +827,7 @@ function translateFlowSvg(svg, lang) {
 }
 
 // ── Shared styles ─────────────────────────────────────────────────────────────
-const bodyText = 'text-[16px] sm:text-[17px] lg:text-[18px] leading-loose text-[#262626] dark:text-[#adadad]';
+const bodyText = 'text-copy-m font-normal leading-loose text-fg-secondary';
 
 // ── Scroll helper ─────────────────────────────────────────────────────────────
 const scrollToSection = (id) => {
@@ -848,7 +848,7 @@ function XRToolIcon({ name, icon, darkInvert = false, circle = false, contain = 
         role="tooltip"
         className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${active ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
+        <div className="bg-tooltip-bg text-fg-primary-inverse text-[13px] font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
       </div>
       <button
         aria-label={name}
@@ -858,11 +858,11 @@ function XRToolIcon({ name, icon, darkInvert = false, circle = false, contain = 
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
         onClick={() => setActive(a => !a)}
-        className={`w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center shrink-0 overflow-hidden bg-[#f6f6f6] dark:bg-[#2a2a2a] shadow-[1px_1px_8px_0px_rgba(0,0,0,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1f1f] dark:focus-visible:outline-[#f6f6f6] ${circle ? 'rounded-full' : 'rounded-[10px]'}`}
+        className={`w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center shrink-0 overflow-hidden bg-btn-nav-bg-rest shadow-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1f1f] dark:focus-visible:outline-[#fafafa] ${circle ? 'rounded-full' : 'rounded-radius-3'}`}
       >
         {icon
           ? <img src={icon} alt="" className={`${contain ? `${contain} object-contain` : 'w-full h-full object-cover'}${darkInvert ? ' dark:invert' : ''}`} style={zoom ? { transform: `scale(${zoom})` } : undefined} />
-          : <span className="text-[7px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-tight px-[2px]">{name}</span>
+          : <span className="text-[7px] font-bold text-fg-muted text-center leading-tight px-[2px]">{name}</span>
         }
       </button>
     </div>
@@ -871,12 +871,12 @@ function XRToolIcon({ name, icon, darkInvert = false, circle = false, contain = 
 
 function XRToolsSection({ label, categories }) {
   return (
-    <div className="rounded-3xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-5 py-4 flex flex-col gap-4 sm:w-fit">
-      <p className="text-[12px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad]">{label}</p>
+    <div className="rounded-radius-6 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] px-5 py-4 flex flex-col gap-4 sm:w-fit">
+      <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</p>
       <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
         {categories.map(cat => (
           <div key={cat.label} className="flex flex-col gap-3">
-            <p className="text-[11px] font-medium uppercase tracking-widest text-[#9c9c9c] dark:text-[#5c5c5c]">{cat.label}</p>
+            <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label}</p>
             <div className="flex flex-wrap gap-5">
               {cat.tools.map(tool => (
                 <XRToolIcon key={tool.name} {...tool} />
@@ -901,14 +901,14 @@ function SecondaryNav({ sections, activeId, onNavigate }) {
               <button
                 onClick={() => onNavigate(s.id)}
                 aria-current={isActive ? 'location' : undefined}
-                className={`relative text-[13px] leading-snug py-1.5 px-2 rounded-lg text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+                className={`relative text-[13px] leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
-                    ? 'text-[#1f1f1f] dark:text-[#f6f6f6] font-semibold bg-black/[0.04] dark:bg-white/[0.06]'
-                    : 'text-[#5c5c5c] dark:text-[#adadad] font-normal hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
+                    ? 'text-fg-primary font-semibold bg-black/[0.04] dark:bg-white/[0.06]'
+                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
                 }`}
               >
                 <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.eyebrow}</span>
-                <span className="absolute inset-0 py-1.5 px-2 whitespace-nowrap">{s.eyebrow}</span>
+                <span className="absolute inset-0 py-2 px-2 whitespace-nowrap">{s.eyebrow}</span>
               </button>
             </li>
           );
@@ -929,8 +929,8 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   }, [activeId]);
 
   return (
-    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] p-[10px]">
-      <div className="overflow-hidden rounded-[16px]">
+    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-radius-6 shadow-xs dark:ring-1 dark:ring-white/[0.16] p-[10px]">
+      <div className="overflow-hidden rounded-radius-4">
         <ul ref={trackRef} className="w-full flex items-center gap-1 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
           {sections.map((s) => {
             const isActive = activeId === s.id;
@@ -941,10 +941,10 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
                   onClick={() => onNavigate(s.id)}
                   aria-label={s.eyebrow || s.heading}
                   aria-current={isActive ? 'location' : undefined}
-                  className={`h-8 px-3 rounded-2xl text-[13px] font-medium whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+                  className={`h-8 px-3 rounded-radius-4 text-[13px] font-medium leading-[1.4] whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                     isActive
-                      ? 'bg-[#161616] dark:bg-white text-white dark:text-[#161616]'
-                      : 'text-[#5c5c5c] dark:text-[#adadad]'
+                      ? 'bg-black/[0.04] dark:bg-white/[0.04] text-fg-primary font-semibold'
+                      : 'text-fg-muted hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'
                   }`}
                 >
                   {s.eyebrow}
@@ -958,27 +958,18 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   );
 }
 
-// ── Placeholder asset zone ────────────────────────────────────────────────────
-function AssetPlaceholder({ label }) {
-  return (
-    <div className="w-full rounded-[24px] sm:rounded-[32px] aspect-video flex items-center justify-center border-2 border-dashed border-black/[0.12] dark:border-white/[0.12]">
-      <p className="text-[13px] font-medium text-[#5c5c5c] dark:text-[#adadad] uppercase tracking-widest">{label}</p>
-    </div>
-  );
-}
-
 // ── Experience card ───────────────────────────────────────────────────────────
 function ExperienceCard({ exp, lang }) {
   return (
     <div className="flex gap-6 sm:gap-8 py-6 sm:py-8">
-      <span className="text-[13px] font-bold uppercase tracking-widest shrink-0 pt-0.5 gold-text">{exp.number}</span>
+      <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider shrink-0 pt-0.5 gold-text">{exp.number}</span>
       <div className="flex flex-col gap-2">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <h3 className="text-[17px] sm:text-[18px] font-bold text-[#1f1f1f] dark:text-[#f6f6f6] leading-snug">{exp.title}</h3>
-          <span className="text-[12px] font-medium uppercase tracking-wider text-[#5c5c5c] dark:text-[#adadad]">{exp.tech}</span>
+          <h3 className="text-h3 font-semibold leading-snug text-fg-primary">{exp.title}</h3>
+          <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{exp.tech}</span>
         </div>
         {(Array.isArray(exp.body) ? exp.body : [exp.body]).map((para, i) => (
-          <p key={i} className="text-[15px] sm:text-[16px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad]">{para}</p>
+          <p key={i} className="text-copy-m font-normal leading-relaxed text-fg-muted">{para}</p>
         ))}
       </div>
     </div>
@@ -991,8 +982,8 @@ function TeamTable({ members }) {
     <div className="flex flex-col divide-y divide-black/[0.06] dark:divide-white/[0.06]">
       {members.map((m, i) => (
         <div key={i} className="flex items-baseline justify-between gap-4 py-3">
-          <span className="text-[15px] sm:text-[16px] font-medium text-[#1f1f1f] dark:text-[#f6f6f6]">{m.role}</span>
-          <span className="text-[14px] sm:text-[15px] text-[#5c5c5c] dark:text-[#adadad] text-right shrink-0">{m.detail}</span>
+          <span className="text-[15px] sm:text-[16px] font-medium text-fg-primary">{m.role}</span>
+          <span className="text-[14px] sm:text-[15px] text-fg-muted text-right shrink-0">{m.detail}</span>
         </div>
       ))}
     </div>
@@ -1082,7 +1073,7 @@ function XRExperiences({ lang, isDark }) {
 
   return (
     <>
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:ring-2 focus:ring-[#0152EC] focus:bg-white focus:text-[#1f1f1f] focus:outline-none font-medium">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-radius-2 focus:ring-2 focus:ring-border-focus focus:bg-white focus:text-fg-primary focus:outline-none font-medium">
         {t.skipToMain}
       </a>
 
@@ -1090,38 +1081,38 @@ function XRExperiences({ lang, isDark }) {
         id="main-content"
         aria-label={t.title}
         tabIndex={-1}
-        className={`bg-white dark:bg-[#141414] min-h-screen transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`}
+        className={`bg-bg-page min-h-screen transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`}
       >
 
         {/* ── Hero ── */}
         <section
           aria-labelledby="xr-hero-heading"
-          className="relative min-h-screen flex flex-col bg-[#0e0e0e] overflow-hidden"
+          className="relative min-h-screen flex flex-col bg-[#141414] overflow-hidden"
         >
           <img src={mipimPhoto} alt="" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} />
-          <div className="absolute inset-0 pointer-events-none transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0, background: 'linear-gradient(to bottom, rgba(14,14,14,0.2) 0%, rgba(14,14,14,1) 100%)' }} />
+          <div className="absolute inset-0 pointer-events-none transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0, background: 'linear-gradient(to bottom, rgba(20,20,20,0.2) 0%, rgba(20,20,20,1) 100%)' }} />
 
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 mt-auto relative z-10 pb-24 sm:pb-28 lg:pb-32 pt-40 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
             <div className="flex flex-col gap-6 sm:gap-8">
-              <p className="text-[12px] sm:text-[13px] font-semibold uppercase tracking-widest text-white">
+              <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-white">
                 {t.label}
               </p>
               <h1
                 id="xr-hero-heading"
-                className="text-[40px] sm:text-[56px] lg:text-[72px] font-bold leading-[1.05] text-white"
+                className="text-display-1 font-bold leading-tight text-white"
               >
                 {t.title}
               </h1>
-              <p className="text-[17px] sm:text-[19px] lg:text-[21px] leading-relaxed text-white/80 max-w-2xl">
+              <p className="text-display-2 font-semibold leading-tight text-white/90 max-w-2xl lg:whitespace-nowrap">
                 {t.tagline}
               </p>
               <ul className="grid grid-cols-2 gap-x-6 gap-y-6 sm:flex sm:flex-wrap sm:gap-x-16 mt-2" aria-label="Key figures">
                 {t.stats.map((s, i) => (
                   <li key={i} className="flex flex-col gap-1">
-                    <span className="text-[32px] sm:text-[40px] font-bold leading-none tabular-nums whitespace-nowrap" style={{ color: GOLD }}>
+                    <span className="text-display-2 font-semibold leading-tight tabular-nums whitespace-nowrap" style={{ color: GOLD }}>
                       <AnimatedStat prefix={s.prefix} countTo={s.countTo} suffix={s.suffix} ready={heroReady} />
                     </span>
-                    <span className="text-[13px] sm:text-[14px] text-white/70 uppercase tracking-widest font-medium">{s.label}</span>
+                    <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-white/[0.64]">{s.label}</span>
                   </li>
                 ))}
               </ul>
@@ -1147,12 +1138,12 @@ function XRExperiences({ lang, isDark }) {
                 >
                   {/* Eyebrow + heading */}
                   <div className="flex flex-col gap-3">
-                    <p className="text-[12px] sm:text-[13px] font-bold uppercase tracking-widest gold-text">
+                    <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider gold-text">
                       {section.eyebrow}
                     </p>
                     <h2
                       id={`${section.id}-heading`}
-                      className="text-[28px] sm:text-[36px] lg:text-[44px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]"
+                      className="text-[28px] sm:text-[34px] lg:text-[40px] font-bold leading-tight text-fg-primary"
                     >
                       {section.heading}
                     </h2>
@@ -1185,9 +1176,9 @@ function XRExperiences({ lang, isDark }) {
                               <img
                                 src={satelliteSitePhoto}
                                 alt="Satellite view of the development site"
-                                className="w-full rounded-[16px] sm:rounded-[20px] object-cover"
+                                className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover"
                               />
-                              <figcaption className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] text-center">{t.captions.satellite}</figcaption>
+                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.satellite}</figcaption>
                             </figure>
                           )}
                           {/* AR session photo — before Reflection text in Measure */}
@@ -1196,17 +1187,17 @@ function XRExperiences({ lang, isDark }) {
                               <img
                                 src={eventPresentationPhoto}
                                 alt="Leading a presenter-led AR session at MIPIM"
-                                className="w-full rounded-[16px] sm:rounded-[20px] object-cover"
+                                className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover"
                               />
-                              <figcaption className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] text-center">{t.captions.arSession}</figcaption>
+                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.arSession}</figcaption>
                             </figure>
                           )}
                           {/* Xbox keybinding — after list in Solve */}
                           {section.id === 'solve' && i === 1 && (
                             <figure className="flex flex-col gap-2">
-                              <div className="bg-[#141414] rounded-[16px] sm:rounded-[20px] p-6"
+                              <div className="bg-[#141414] rounded-radius-4 sm:rounded-radius-5 p-6"
                                    dangerouslySetInnerHTML={{ __html: xboxSvg }} />
-                              <figcaption className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] text-center">{t.captions.xbox}</figcaption>
+                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.xbox}</figcaption>
                             </figure>
                           )}
                           {/* Flowcharts — after Approaches heading in Solve */}
@@ -1216,10 +1207,10 @@ function XRExperiences({ lang, isDark }) {
                           {section.id === 'prioritise' && i === 0 && (
                             <figure className="flex flex-col gap-2 max-w-sm mx-auto">
                               <div className="grid" style={{ gridTemplateColumns: '4fr 1fr' }}>
-                                <img src={magicLeapPhoto} alt="Magic Leap 2 AR glasses" className="w-full rounded-[12px] sm:rounded-[16px] object-cover" />
-                                <img src={magicLeapControllerPhoto} alt="Magic Leap 2 controller" className="w-full rounded-[12px] sm:rounded-[16px] object-cover" />
+                                <img src={magicLeapPhoto} alt="Magic Leap 2 AR glasses" className="w-full rounded-radius-3 sm:rounded-radius-4 object-cover" />
+                                <img src={magicLeapControllerPhoto} alt="Magic Leap 2 controller" className="w-full rounded-radius-3 sm:rounded-radius-4 object-cover" />
                               </div>
-                              <figcaption className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] text-center">{t.captions.magicLeap}</figcaption>
+                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.magicLeap}</figcaption>
                             </figure>
                           )}
                           {section.id === 'when-where' && i === 0 && (
@@ -1227,33 +1218,33 @@ function XRExperiences({ lang, isDark }) {
                               <img
                                 src={eventBuildingPhoto}
                                 alt="Two-storey building constructed by our client at MIPIM"
-                                className="w-full rounded-[16px] sm:rounded-[20px] object-cover"
+                                className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover"
                               />
-                              <figcaption className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] text-center">{t.captions.building}</figcaption>
+                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.building}</figcaption>
                             </figure>
                           )}
                           {section.id === 'prioritise' && i === 1 && (
                             <figure className="flex flex-col gap-2 max-w-sm mx-auto">
-                              <img src={tableTopLogo} alt="Client logo design on the AR table top" className="w-full rounded-[16px] sm:rounded-[20px] object-cover dark:[filter:invert(0.92)_hue-rotate(180deg)]" />
-                              <figcaption className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] text-center">{t.captions.tracker}</figcaption>
+                              <img src={tableTopLogo} alt="Client logo design on the AR table top" className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover dark:[filter:invert(0.92)_hue-rotate(180deg)]" />
+                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.tracker}</figcaption>
                             </figure>
                           )}
                           {p?.type === 'callout'
                             ? p.variant === 'goal'
                               ? (
-                                <div className="mt-6 -mb-4 rounded-2xl bg-[#16a34a]/[0.06] dark:bg-[#16a34a]/[0.12] border border-[#16a34a]/20 px-5 py-4 flex flex-col gap-3">
-                                  <span className="text-[11px] font-semibold uppercase tracking-widest text-[#15803d] dark:text-[#4ade80]">{p.label}</span>
+                                <div className="mt-6 -mb-4 rounded-radius-4 bg-[#16a34a]/[0.06] dark:bg-[#16a34a]/[0.12] border border-[#16a34a]/20 px-5 py-4 flex flex-col gap-3">
+                                  <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-[#15803d] dark:text-[#4ade80]">{p.label}</span>
                                   <p className={bodyText}>{p.body}</p>
                                 </div>
                               )
                               : (
-                              <div className="mt-6 -mb-4 rounded-2xl bg-[#C9A84C]/[0.08] dark:bg-[#C9A84C]/[0.10] border border-[#C9A84C]/25 px-5 py-4 flex flex-col gap-3">
-                                <span className="text-[11px] font-semibold uppercase tracking-widest text-[#7A5C00] dark:text-[#C9A84C]">{p.label}</span>
+                              <div className="mt-6 -mb-4 rounded-radius-4 bg-[#C9A84C]/[0.08] dark:bg-[#C9A84C]/[0.10] border border-[#C9A84C]/25 px-5 py-4 flex flex-col gap-3">
+                                <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-[#7A5C00] dark:text-[#C9A84C]">{p.label}</span>
                                 <p className={bodyText}>{p.body}</p>
                               </div>
                             )
                             : p?.type === 'h3'
-                              ? <h3 className="mt-4 text-[16px] sm:text-[17px] lg:text-[18px] font-semibold text-[#1f1f1f] dark:text-[#f6f6f6]">{p.text}</h3>
+                              ? <h3 className="mt-4 text-h3 font-semibold leading-snug text-fg-primary">{p.text}</h3>
                             : p?.type === 'ul'
                               ? <div>{p}</div>
                               : <p className={bodyText}>{p}</p>}
@@ -1277,9 +1268,9 @@ function XRExperiences({ lang, isDark }) {
                       <img
                         src={eventSpacePhoto}
                         alt="Floor plan sketch of the event space showing the six experience locations"
-                        className="w-full rounded-[16px] sm:rounded-[20px] object-cover dark:[filter:invert(0.92)]"
+                        className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover dark:[filter:invert(0.92)]"
                       />
-                      <figcaption className="text-[12px] text-[#5c5c5c] dark:text-[#adadad] text-center">{t.captions.floorPlan}</figcaption>
+                      <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.floorPlan}</figcaption>
                     </figure>
                   )}
 
@@ -1293,8 +1284,8 @@ function XRExperiences({ lang, isDark }) {
                   )}
 
                   {section.footerCallout && (
-                    <div className="mt-6 -mb-4 rounded-2xl bg-[#C9A84C]/[0.08] dark:bg-[#C9A84C]/[0.10] border border-[#C9A84C]/25 px-5 py-4 flex flex-col gap-3 max-w-3xl">
-                      <span className="text-[11px] font-semibold uppercase tracking-widest text-[#7A5C00] dark:text-[#C9A84C]">{section.footerCallout.label}</span>
+                    <div className="mt-6 -mb-4 rounded-radius-4 bg-[#C9A84C]/[0.08] dark:bg-[#C9A84C]/[0.10] border border-[#C9A84C]/25 px-5 py-4 flex flex-col gap-3 max-w-3xl">
+                      <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-[#7A5C00] dark:text-[#C9A84C]">{section.footerCallout.label}</span>
                       <div className={bodyText}>{section.footerCallout.body}</div>
                     </div>
                   )}
@@ -1317,7 +1308,7 @@ function XRExperiences({ lang, isDark }) {
             <Link
               data-spring
               to="/#case-studies"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-tag-m leading-[1.2] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
             >
               <img src={imgArrowRight} alt="" width={16} height={16} className="brightness-0 invert" style={{ transform: 'rotate(180deg)' }} />
               {t.backLabel}
@@ -1340,7 +1331,7 @@ function XRExperiences({ lang, isDark }) {
       {/* ── Chat button circular wrapper — centred behind the trigger when sec nav is visible ── */}
       <div
         aria-hidden="true"
-        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
+        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-xs dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
         style={{ width: 52, height: 52, left: 8, bottom: 8 }}
       />
 

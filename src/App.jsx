@@ -68,8 +68,8 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
   }, [pathname, navigate]);
 
   return (
-    <div id="app-shell" className="min-h-screen bg-white dark:bg-[#141414] text-gray-900 dark:text-white">
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-[#1f1f1f] focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">
+    <div id="app-shell" className="min-h-screen bg-bg-page text-gray-900 dark:text-white">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-tooltip-bg focus:text-white focus:rounded-radius-2 focus:text-sm focus:font-semibold">
         {lang === 'fr' ? 'Aller au contenu principal' : 'Skip to main content'}
       </a>
       <Nav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} />

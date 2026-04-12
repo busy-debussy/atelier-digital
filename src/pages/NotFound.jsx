@@ -41,23 +41,23 @@ export default function NotFound({ lang }) {
         >
           {t.code}
         </span>
-        <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center text-[72px] sm:text-[96px] lg:text-[120px] font-bold leading-none tracking-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
+        <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center text-[72px] sm:text-[96px] lg:text-[120px] font-bold leading-none tracking-tight text-fg-primary">
           {t.code}
         </span>
       </div>
 
       {/* Eyebrow */}
-      <p className="text-[13px] sm:text-[14px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad] mb-4">
+      <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted mb-4">
         {t.eyebrow}
       </p>
 
       {/* Heading */}
-      <h1 className="text-[28px] sm:text-[36px] lg:text-[44px] font-bold leading-tight tracking-tight text-[#1f1f1f] dark:text-[#f6f6f6] mb-4 whitespace-pre-line">
+      <h1 className="text-h2 font-bold leading-tight text-fg-primary mb-4 whitespace-pre-line">
         {t.heading}
       </h1>
 
       {/* Body */}
-      <p className="max-w-sm text-[16px] sm:text-[17px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad] mb-10">
+      <p className="max-w-sm text-copy-m font-normal leading-loose text-fg-muted mb-10">
         {t.body}
       </p>
 
@@ -65,7 +65,7 @@ export default function NotFound({ lang }) {
       <Link
         to="/"
         data-spring
-        className="px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
+        className="px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-label-s leading-[1.2] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
       >
         {t.cta}
       </Link>

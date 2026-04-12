@@ -99,8 +99,8 @@ const T = {
 };
 
 // Nav button styles (same as other carousels)
-const navBtnClass      = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]';
-const modalNavBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-[0.15] disabled:cursor-default disabled:pointer-events-none cursor-pointer';
+const navBtnClass      = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-btn-nav-bg-rest hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default disabled:pointer-events-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary';
+const modalNavBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-btn-nav-bg-rest hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:opacity-[0.15] disabled:cursor-default disabled:pointer-events-none cursor-pointer';
 const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-hover:brightness-100 dark:brightness-100 dark:group-hover:brightness-0 transition-[filter]';
 const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-hover:brightness-0 group-hover:invert dark:brightness-0 dark:invert dark:group-hover:brightness-100 dark:group-hover:invert-0 transition-[filter]';
 
@@ -316,7 +316,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
       className="scroll-mt-24 py-16"
     >
       <div {...(activeModal !== null ? { inert: '' } : {})} className="max-w-5xl mx-auto px-6 mb-12 sm:mb-14 lg:mb-16">
-        <h2 id="collab-heading" className="text-[24px] sm:text-[28px] lg:text-[30px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
+        <h2 id="collab-heading" className="text-h2 font-bold leading-tight text-fg-primary">
           {t.heading}
         </h2>
       </div>
@@ -349,18 +349,12 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                 onClick={(e) => openModal(i, e.currentTarget)}
                 aria-label={collab.name}
                 aria-haspopup="dialog"
-                className="w-[152px] h-[152px] sm:w-[176px] sm:h-[176px] lg:w-[200px] lg:h-[200px] flex items-center justify-center cursor-pointer motion-safe:transition-[transform,background-color] duration-200 sm:hover:scale-[1.06] sm:hover:bg-white sm:dark:hover:bg-[#1f1f1f] rounded-[28px] sm:rounded-[28px] border border-[#e0e0e0] dark:border-[#2a2a2a] sm:border-0 sm:hover:border sm:hover:border-[#e0e0e0] dark:sm:hover:border-[#2a2a2a] bg-white dark:bg-[#1f1f1f] sm:bg-transparent sm:dark:bg-transparent p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] focus-visible:ring-offset-2"
+                className="w-[152px] h-[152px] sm:w-[176px] sm:h-[176px] lg:w-[200px] lg:h-[200px] flex items-center justify-center cursor-pointer motion-safe:transition-[transform,background-color] duration-200 sm:hover:scale-[1.06] sm:hover:bg-white sm:dark:hover:bg-[#1f1f1f] rounded-radius-7 sm:rounded-radius-7 border border-border-subtle sm:border-0 sm:hover:border sm:hover:border-border-subtle bg-bg-page dark:bg-bg-surface sm:bg-transparent sm:dark:bg-transparent p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary focus-visible:ring-offset-2"
               >
-                {collab.logo ? (
-                  <>
-                    <img src={collab.logo} alt="" className={`w-full h-full object-contain ${collab.logoDark ? 'dark:hidden' : ''}`} />
-                    {collab.logoDark && <img src={collab.logoDark} alt="" className="hidden dark:block w-full h-full object-contain" />}
-                  </>
-                ) : (
-                  <span className="text-[13px] sm:text-[14px] lg:text-[15px] font-semibold text-[#5c5c5c] dark:text-[#adadad] text-center px-2 leading-snug">
-                    {collab.name}
-                  </span>
-                )}
+                <>
+                  <img src={collab.logo} alt="" className={`w-full h-full object-contain ${collab.logoDark ? 'dark:hidden' : ''}`} />
+                  {collab.logoDark && <img src={collab.logoDark} alt="" className="hidden dark:block w-full h-full object-contain" />}
+                </>
               </button>
             </li>
           ))}
@@ -373,8 +367,8 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
             {collaborators.map((_, i) => {
               const win = Math.min(5, collaborators.length); const start = Math.min(Math.max(0, activeIndex - 2), collaborators.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < collaborators.length));
               return (
-                <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToIndex(i)} aria-label={`Go to collaborator ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                  <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+                <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToIndex(i)} aria-label={`Go to collaborator ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                  <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
                 </button>
               );
             })}
@@ -408,7 +402,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
             role="dialog"
             aria-modal="true"
             aria-label={collaborators[activeModal]?.name}
-            className="absolute inset-x-0 top-0 h-[240px] sm:h-[176px] lg:h-[200px] flex items-center px-2 sm:px-6 lg:px-8 gap-2 sm:gap-4 lg:gap-6 sm:max-w-3xl lg:max-w-4xl sm:mx-auto"
+            className="absolute inset-x-0 top-0 h-[240px] sm:h-[192px] lg:h-[214px] flex items-center px-2 sm:px-6 lg:px-8 gap-2 sm:gap-4 lg:gap-6 sm:max-w-3xl lg:max-w-4xl sm:mx-auto"
           >
             <div style={{ animation: 'modal-in 0.25s cubic-bezier(0.22,1,0.36,1) 0.35s both' }}>
               <button
@@ -416,7 +410,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                 onClick={() => navigateModal(Math.max(0, activeModal - 1))}
                 disabled={activeModal === 0}
                 aria-label={t.navPrev}
-                className={`${modalNavBtnClass} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]`}
+                className={`${modalNavBtnClass} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary`}
               >
                 <img src={imgChevronLeft} alt="" width={20} height={20} className={chevL} />
               </button>
@@ -424,7 +418,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
 
             {/* Card wrapper: shadow + rounded corners, overflow-hidden clips the sliding track */}
             <div
-              className="relative flex-1 self-stretch overflow-hidden rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] bg-white dark:bg-[#2a2a2a] shadow-[0px_18px_20px_0px_rgba(0,0,0,0.06)]"
+              className="relative flex-1 self-stretch overflow-hidden rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 bg-bg-page dark:bg-bg-surface shadow-m"
               style={{ animation: 'modal-card-in 0.5s cubic-bezier(0.34,1.56,0.64,1) both' }}
             >
               {/* Close button — sits above the track */}
@@ -433,7 +427,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                 ref={closeButtonRef}
                 onClick={closeModal}
                 aria-label={t.close}
-                className="group absolute top-3 right-3 lg:top-4 lg:right-4 z-10 flex items-center justify-center p-1.5 sm:p-2 rounded-full hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-[background-color] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+                className="group absolute top-3 right-3 lg:top-4 lg:right-4 z-10 flex items-center justify-center p-1.5 sm:p-2 rounded-full bg-btn-nav-bg-rest hover:bg-btn-nav-bg-hover transition-[background-color] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
               >
                 <img
                   src={imgClose}
@@ -460,22 +454,16 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                     style={{ scrollSnapAlign: 'start' }}
                   >
                     <div className="flex-1 min-h-0 overflow-hidden" style={{ opacity: contentVisible ? 1 : 0, transition: 'opacity 150ms ease' }}>
-                      <p className="text-[15px] sm:text-[16px] lg:text-[17px] leading-[28px] sm:leading-[30px] lg:leading-[34px] text-[#5c5c5c] dark:text-[#adadad] [&_strong]:text-[#1f1f1f] dark:[&_strong]:text-[#f6f6f6] pr-7 sm:pr-8">
+                      <p className="text-copy-m leading-relaxed lg:leading-loose text-fg-secondary [&_strong]:text-fg-primary pr-7 sm:pr-8">
                         <span dangerouslySetInnerHTML={{ __html: collab.description }} />
                       </p>
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3" style={{ opacity: contentVisible ? 1 : 0, transition: 'opacity 150ms ease' }}>
-                      {collab.logoSmall ? (
-                        <>
-                          <img src={collab.logoSmall} alt="" className={`w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0 ${collab.logoSmallDark ? 'dark:hidden' : ''}`} />
-                          {collab.logoSmallDark && <img src={collab.logoSmallDark} alt="" className="hidden dark:block w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0" />}
-                        </>
-                      ) : (
-                        <div className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 bg-[#f6f6f6] dark:bg-[#2a2a2a] rounded-[8px] sm:rounded-[10px] lg:rounded-[12px] shrink-0 flex items-center justify-center overflow-hidden">
-                          <span className="text-[6px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-tight px-[2px]">{collab.name}</span>
-                        </div>
-                      )}
-                      <span className="text-[12px] sm:text-[14px] lg:text-[15px] font-semibold text-[#1f1f1f] dark:text-[#f6f6f6]">
+                      <>
+                        <img src={collab.logoSmall} alt="" className={`w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0 ${collab.logoSmallDark ? 'dark:hidden' : ''}`} />
+                        {collab.logoSmallDark && <img src={collab.logoSmallDark} alt="" className="hidden dark:block w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0" />}
+                      </>
+                      <span className="text-[12px] sm:text-[14px] lg:text-[15px] font-semibold text-fg-primary">
                         {collab.name}
                       </span>
                     </div>
@@ -490,7 +478,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                 onClick={() => navigateModal(Math.min(collaborators.length - 1, activeModal + 1))}
                 disabled={activeModal === collaborators.length - 1}
                 aria-label={t.navNext}
-                className={`${modalNavBtnClass} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]`}
+                className={`${modalNavBtnClass} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary`}
               >
                 <img src={imgChevronRight} alt="" width={20} height={20} className={chevR} />
               </button>

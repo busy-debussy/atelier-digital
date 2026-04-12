@@ -86,7 +86,7 @@ const T = {
 };
 
 // ── Card button ───────────────────────────────────────────────────────────────
-const btnClass = 'block w-full py-3 sm:py-[14px] lg:py-4 rounded-2xl sm:rounded-[20px] lg:rounded-3xl bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[20px] sm:text-[22px] lg:text-[24px] leading-6 sm:leading-7 lg:leading-8 text-center transition-colors border border-[#5289f2] after:absolute after:inset-0 after:content-[\'\'] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0152EC]';
+const btnClass = 'block w-full py-3 sm:py-[14px] lg:py-4 rounded-radius-4 sm:rounded-radius-5 lg:rounded-radius-6 bg-cta-600 hover:bg-cta-700 text-white font-medium text-btn-m leading-[1.2] text-center transition-colors border border-[#5289f2] after:absolute after:inset-0 after:content-[\'\'] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-cta-600';
 
 const liHref = () => ['https://www.link','edin.com','/in/','dav','idvi','all','ard'].join('');
 
@@ -98,17 +98,17 @@ function CardButton({ action, label }) {
   if (action.type === 'link')
     return <Link tabIndex={0} to={action.href} className={btnClass}>{label}</Link>;
   if (action.type === 'linkedin')
-    return <button onClick={() => window.open(liHref(), '_blank', 'noopener,noreferrer')} className={`${btnClass} cursor-pointer`}>{label}<span className="sr-only">{' (opens in new tab)'}</span></button>;
+    return <button onClick={() => { const u = liHref(); setTimeout(() => window.open(u, '_blank', 'noopener,noreferrer'), 80); }} className={`${btnClass} cursor-pointer`}>{label}<span className="sr-only">{' (opens in new tab)'}</span></button>;
   return <a tabIndex={0} href={action.href} target="_blank" rel="noopener noreferrer" className={btnClass}>{label}</a>;
 }
 
 // ── Single card ───────────────────────────────────────────────────────────────
 function ContactCard({ card, glass }) {
   const cardBg = glass
-    ? 'backdrop-blur-[16px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)]'
-    : 'bg-white dark:bg-[#141414]';
+    ? 'backdrop-blur-[16px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] shadow-xs'
+    : 'bg-bg-page';
   return (
-    <li data-spring-desktop className={`relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] flex flex-col snap-center rounded-[32px] sm:rounded-[40px] lg:rounded-[48px] ${cardBg} p-8 sm:p-9 lg:p-10 gap-8 sm:gap-9 lg:gap-10 motion-safe:transition-transform duration-200 motion-safe:hover:scale-[1.03] cursor-pointer`}>
+    <li data-spring-desktop className={`relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] flex flex-col snap-center rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 ${cardBg} p-8 sm:p-9 lg:p-10 gap-8 sm:gap-9 lg:gap-10 motion-safe:transition-transform duration-200 motion-safe:hover:scale-[1.03] cursor-pointer`}>
 
       <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
 
@@ -121,14 +121,14 @@ function ContactCard({ card, glass }) {
               </>
             )}
           </div>
-          <h3 className="text-[23px] sm:text-[26px] lg:text-[30px] font-bold leading-6 sm:leading-7 lg:leading-10 tracking-[0.12px] text-[#1f1f1f] dark:text-[#f6f6f6]">
+          <h3 className="text-h3 font-semibold leading-snug text-fg-primary">
             {card.title}
           </h3>
         </div>
 
         {/* Description — fixed height so all cards are the same height */}
         <div className="h-[84px] sm:h-[96px] lg:h-[120px]">
-          <p className="font-normal text-[16px] sm:text-[17px] lg:text-[18px] leading-[30px] sm:leading-[34px] lg:leading-10 text-[#5c5c5c] dark:text-[#adadad]">
+          <p className="text-copy-m font-normal leading-loose text-[#5c5c5c] dark:text-[#adadad]">
             {card.description}
           </p>
         </div>
@@ -233,10 +233,10 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
   };
 
   return (
-    <section id="contact" aria-labelledby="contact-heading" className={`py-16 scroll-mt-24 ${noBg ? '' : 'bg-[#f6f6f6] dark:bg-[#1f1f1f]'}`}>
+    <section id="contact" aria-labelledby="contact-heading" className={`py-16 scroll-mt-24 ${noBg ? '' : 'bg-bg-surface'}`}>
 
       <div className="max-w-5xl mx-auto px-6">
-        <h2 id="contact-heading" className="text-[24px] sm:text-[28px] lg:text-[30px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6] mb-8">
+        <h2 id="contact-heading" className="text-h2 font-bold leading-tight text-fg-primary mb-8">
           {t.heading}
         </h2>
       </div>
@@ -254,7 +254,7 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
           const idx = items.findIndex(c => c.contains(e.target));
           if (idx >= 0) scrollToCard(idx);
         }}
-        className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+        className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
         style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, paddingTop: '28px', paddingBottom: '28px', touchAction: 'pan-x pan-y' }}
         aria-label={t.heading}
       >
@@ -271,7 +271,7 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
               onClick={() => scrollToCard(i)}
               aria-label={`Go to card ${i + 1}`}
               aria-current={i === activeIndex ? 'true' : undefined}
-              className="group cursor-pointer p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200"
+              className="group cursor-pointer p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200"
             >
               <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
             </button>

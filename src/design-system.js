@@ -47,7 +47,7 @@ export const color = {
     rest:         { light: '#f6f6f6',  dark: '#2a2a2a' },              // button/icon resting
     hover:        { light: '#1f1f1f',  dark: '#f6f6f6' },              // button/icon hover
     hoverSubtle:  { light: 'rgba(0,0,0,0.04)', dark: 'rgba(255,255,255,0.08)' },  // ghost hover
-    activeInvert: { light: '#161616',  dark: '#ffffff' },              // nav pill active (projects, lang)
+    activeInvert: { light: '#141414',  dark: '#ffffff' },              // nav pill active (projects, lang)
     pressed:      'opacity-[0.33]',                                    // active/tap feedback
   },
 
@@ -304,7 +304,7 @@ export const radius = {
 
   // Case study tiles & carousels
   tile:             { mobile: '24px', tablet: '32px', desktop: '48px' },      // rounded-[24/32/48px]
-  carouselTrack:    { mobile: '12px', tablet: '16px', desktop: '24px' },      // rounded-xl/2xl/3xl
+  carouselTrack:    { mobile: '12px', tablet: '16px', desktop: '24px' },      // rounded-[12px]/2xl/3xl
   toolIcon:         { mobile: '8px',  tablet: '10px', desktop: '12px' },      // rounded-[8/10/12px]
   uiConceptCard:    '16px',                                                    // rounded-[16px]
   pill:             '9999px',                                                  // rounded-full
@@ -312,13 +312,13 @@ export const radius = {
   carouselDot:      '9999px',                                                  // rounded-full
 
   // Navigation
-  navBar:           '9999px',                                                  // rounded-3xl
+  navBar:           '9999px',                                                  // rounded-[24px]
   navButton:        '12px',                                                    // rounded-[12px]
-  navDropdown:      '16px',                                                    // rounded-2xl
-  navDropdownItem:  '12px',                                                    // rounded-xl
+  navDropdown:      '16px',                                                    // rounded-[16px]
+  navDropdownItem:  '12px',                                                    // rounded-[12px]
   flagIcon:         '6px',                                                     // rounded-[6px]
   mobileMenu:       '32px',                                                    // rounded-[32px]
-  mobileMenuItem:   '16px',                                                    // rounded-2xl
+  mobileMenuItem:   '16px',                                                    // rounded-[16px]
 
   // Home cards
   caseStudyCard:    { mobile: '28px', tablet: '32px', desktop: '9999px' },    // → rounded-full on desktop
@@ -329,7 +329,7 @@ export const radius = {
   contactButton:    { mobile: '16px', tablet: '20px', desktop: '24px' },
 
   // Footer
-  footerLegalLink:  '8px',                                                     // rounded-lg
+  footerLegalLink:  '8px',                                                     // rounded-[8px]
 };
 
 // Shadows─────────────────────────────────────────────────────────────────

@@ -33,7 +33,7 @@ export default function ScrollForMore({ lang, scrollTarget }) {
       onMouseLeave={hideTip}
     >
       <div className={`absolute bottom-[calc(100%+20px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none transition-opacity duration-150 ${tipVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+        <div className="bg-tooltip-bg text-fg-primary-inverse text-[13px] font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
           {label}
         </div>
       </div>
@@ -51,7 +51,7 @@ export default function ScrollForMore({ lang, scrollTarget }) {
             }
           }}
           aria-label={label}
-          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6] transition-colors motion-safe:animate-bounce cursor-pointer"
+          className="group p-2 sm:p-2.5 lg:p-3 rounded-full bg-btn-nav-bg-rest hover:bg-btn-nav-bg-hover transition-colors motion-safe:animate-bounce cursor-pointer"
         >
           <img
             src={imgChevronDown}

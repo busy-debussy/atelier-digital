@@ -329,11 +329,11 @@ function Hero({ lang }) {
       {/* Main content, bottom */}
       <div className="relative z-10 mt-auto max-w-5xl mx-auto w-full px-6 sm:px-8 lg:px-10 pb-24 sm:pb-28 lg:pb-32 flex flex-col gap-6 sm:gap-8 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
 
-        <p className="text-[12px] sm:text-[13px] font-semibold tracking-widest uppercase text-white/70">
+        <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-white/[0.64]">
           {h.category}
         </p>
 
-        <h1 id="hero-heading" className="text-[40px] sm:text-[56px] lg:text-[72px] font-bold leading-[1.05] text-white max-w-3xl">
+        <h1 id="hero-heading" className="text-display-1 font-bold leading-tight text-white max-w-3xl">
           {h.title}
         </h1>
 
@@ -342,11 +342,11 @@ function Hero({ lang }) {
             const finalValue = s.decimals > 0 ? s.countTo.toFixed(s.decimals) : s.countTo;
             return (
               <li key={i} className="flex flex-col gap-1">
-                <span className="text-[28px] sm:text-[36px] lg:text-[44px] font-bold leading-tight text-white tabular-nums whitespace-nowrap">
+                <span className="text-display-2 font-semibold leading-tight text-white tabular-nums whitespace-nowrap">
                   <span className="sr-only">{s.prefix}{finalValue}{s.suffix}</span>
                   <span><AnimatedStat prefix={s.prefix} countTo={s.countTo} decimals={s.decimals} suffix={s.suffix} ready={heroReady} /></span>
                 </span>
-                <span className="text-[12px] sm:text-[13px] lg:text-[14px] text-white/70 uppercase tracking-widest font-medium leading-snug max-w-[100px] sm:max-w-none">{s.label}</span>
+                <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-white/[0.64] max-w-[100px] sm:max-w-none">{s.label}</span>
               </li>
             );
           })}
@@ -358,9 +358,9 @@ function Hero({ lang }) {
 }
 
 // ── Tile primitives ───────────────────────────────────────────────────────────
-function Tile({ children, fullWidth = false, bgClass = 'bg-white dark:bg-[#141414]' }) {
+function Tile({ children, fullWidth = false, bgClass = 'bg-bg-page' }) {
   return (
-    <div className={`${bgClass} rounded-[24px] sm:rounded-[32px] lg:rounded-[48px] p-6 sm:p-12 lg:p-[60px] flex flex-col gap-4 sm:gap-5 lg:gap-6${fullWidth ? ' lg:col-span-2' : ''}`}>
+    <div className={`${bgClass} rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 p-6 sm:p-12 lg:p-[60px] flex flex-col gap-4 sm:gap-5 lg:gap-6${fullWidth ? ' lg:col-span-2' : ''}`}>
       {children}
     </div>
   );
@@ -368,7 +368,7 @@ function Tile({ children, fullWidth = false, bgClass = 'bg-white dark:bg-[#14141
 
 function TileEyebrow({ children }) {
   return (
-    <h3 className="text-[24px] sm:text-[26px] lg:text-[30px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
+    <h3 className="text-h3 font-semibold leading-snug text-fg-primary">
       {children}
     </h3>
   );
@@ -376,14 +376,14 @@ function TileEyebrow({ children }) {
 
 function TileTitle({ children }) {
   return (
-    <h3 className="text-[30px] sm:text-[36px] lg:text-[44px] font-semibold leading-[40px] sm:leading-[48px] lg:leading-[56px] text-[#5c5c5c] dark:text-[#adadad]">
+    <p className="text-display-2 font-semibold leading-tight text-fg-muted">
       {children}
-    </h3>
+    </p>
   );
 }
 
 
-const tileBodyText = 'text-[16px] sm:text-[17px] lg:text-[18px] font-normal leading-[30px] sm:leading-[34px] lg:leading-10 text-[#262626] dark:text-[#adadad] [&_strong]:dark:text-[#f6f6f6]';
+const tileBodyText = 'text-copy-m font-normal leading-loose text-fg-secondary [&_strong]:text-fg-primary';
 
 function TileBody({ children }) {
   return (
@@ -404,7 +404,7 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false, contain = fa
         role="tooltip"
         className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${active ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="bg-[#1f1f1f] dark:bg-[#f6f6f6] text-[#f6f6f6] dark:text-[#1f1f1f] text-[13px] font-light leading-4 px-2 py-[4px] rounded-lg whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
+        <div className="bg-tooltip-bg text-fg-primary-inverse text-[13px] font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
       </div>
       <button
         aria-label={name}
@@ -414,12 +414,9 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false, contain = fa
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
         onClick={() => setActive(a => !a)}
-        className={`w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center shrink-0 overflow-hidden bg-[#f6f6f6] dark:bg-[#2a2a2a] shadow-[1px_1px_8px_0px_rgba(0,0,0,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1f1f] dark:focus-visible:outline-[#f6f6f6] ${circle ? 'rounded-full' : 'rounded-[10px]'}`}
+        className={`w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center shrink-0 overflow-hidden bg-btn-nav-bg-rest shadow-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f1f1f] dark:focus-visible:outline-[#fafafa] ${circle ? 'rounded-full' : 'rounded-radius-3'}`}
       >
-        {icon
-          ? <img src={icon} alt="" className={`${contain ? `${contain} object-contain` : 'w-full h-full object-cover'}${darkInvert ? ' dark:invert' : ''}`} style={zoom ? { transform: `scale(${zoom})` } : undefined} />
-          : <span className="text-[7px] font-bold text-[#5c5c5c] dark:text-[#adadad] text-center leading-tight px-[2px]">{name}</span>
-        }
+        <img src={icon} alt="" className={`${contain ? `${contain} object-contain` : 'w-full h-full object-cover'}${darkInvert ? ' dark:invert' : ''}`} style={zoom ? { transform: `scale(${zoom})` } : undefined} />
       </button>
     </div>
   );
@@ -428,12 +425,12 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false, contain = fa
 function ToolsGrid({ lang }) {
   const label = (CONTEXT_EYEBROWS[lang] ?? CONTEXT_EYEBROWS.en)[5];
   return (
-    <div className="rounded-3xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-5 py-4 flex flex-col gap-4 sm:w-fit">
-      <p className="text-[12px] font-semibold uppercase tracking-widest text-[#5c5c5c] dark:text-[#adadad]">{label}</p>
+    <div className="rounded-radius-6 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] px-5 py-4 flex flex-col gap-4 sm:w-fit">
+      <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</p>
       <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
         {CONTEXT_TOOLS.map(cat => (
           <div key={cat.label.en} className="flex flex-col gap-3">
-            <p className="text-[11px] font-medium uppercase tracking-widest text-[#9c9c9c] dark:text-[#5c5c5c]">{cat.label[lang] ?? cat.label.en}</p>
+            <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label[lang] ?? cat.label.en}</p>
             <div className="flex flex-wrap gap-5">
               {cat.tools.map(tool => (
                 <ToolIcon key={tool.name} {...tool} />
@@ -461,8 +458,8 @@ const CONTEXT_BODIES = {
   // index matches eyebrows array (0 = client, body handled inline, 1 = industry, handled inline)
   mission:      { en: <>Design a <strong>luxury-first</strong>, <strong>user-centric web platform</strong> that lets buyers explore unbuilt properties interactively while supporting sales agents during high-pressure launch events.</>, fr: <>Concevoir une plateforme web <strong>haut de gamme</strong> et <strong>centrée sur l'utilisateur</strong> permettant aux acheteurs d'explorer des biens non construits de manière interactive, tout en accompagnant les agents commerciaux lors des lancements sous haute pression.</> },
   stakeholders: {
-    en: <><ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong> and marketing.</li></ul><div className="mt-4 sm:w-fit rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad]">🎨 <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">Design Team:</strong> Coordinated <strong>cross-functional communications</strong> and served as the <strong>source of truth</strong> for product and design decisions.</div></>,
-    fr: <><ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong> et marketing.</li></ul><div className="mt-4 sm:w-fit rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad]">🎨 <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">Équipe Design :</strong> Coordination des <strong>communications transverses</strong> et référent de <strong>source de vérité</strong> pour les décisions produit et design.</div></>,
+    en: <><ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong> and marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-[14px] font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Design Team:</strong> Coordinated <strong>cross-functional communications</strong> and served as the <strong>source of truth</strong> for product and design decisions.</span></div></>,
+    fr: <><ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong> et marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-[14px] font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Équipe Design :</strong> Coordination des <strong>communications transverses</strong> et référent de <strong>source de vérité</strong> pour les décisions produit et design.</span></div></>,
   },
   myRole: {
     en: {
@@ -611,12 +608,12 @@ function ContextContent({ lang, isDark }) {
         <TileBody>{lang === 'fr' ? <>L'un des <strong>principaux promoteurs immobiliers</strong> des Émirats arabes unis (EAU), qui connaissait une croissance annuelle de son chiffre d'affaires et étendait ses activités à travers trois Émirats.</> : <>One of the <strong>leading real estate developers</strong> in the United Arab Emirates (UAE), was experiencing annual revenue growth and expanding operations across three Emirates.</>}</TileBody>
       </Tile>
       <Tile>
-        <p className="text-[30px] sm:text-[36px] lg:text-[44px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">
+        <p className="text-display-2 font-semibold leading-tight text-fg-primary">
           {CONTEXT_INDUSTRY.stat[lang] ?? CONTEXT_INDUSTRY.stat.en}
         </p>
-        <p className="text-[24px] sm:text-[26px] lg:text-[30px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">{eyebrows[1]}</p>
+        <p className="text-h3 font-semibold leading-snug text-fg-primary">{eyebrows[1]}</p>
         <TileBody>{CONTEXT_INDUSTRY.body[l]}</TileBody>
-        <p className="text-[13px] sm:text-[14px] text-[#5c5c5c] dark:text-[#adadad]">
+        <p className="text-[12px] leading-normal text-fg-muted">
           {CONTEXT_INDUSTRY.footnote[lang] ?? CONTEXT_INDUSTRY.footnote.en}
         </p>
       </Tile>
@@ -628,9 +625,9 @@ function ContextContent({ lang, isDark }) {
           <TileEyebrow>{eyebrows[4]}</TileEyebrow>
           <div className="flex items-start gap-8 sm:gap-12 shrink-0 my-4 sm:my-0 sm:-mt-2">
             {CONTEXT_BODIES.myRole[l].stats.map((s, i) => (
-              <div key={i} className="flex flex-col items-start sm:items-end gap-0.5">
-                <span className="text-[28px] sm:text-[32px] lg:text-[36px] font-bold leading-tight text-[#1f1f1f] dark:text-[#f6f6f6]">{s.value}</span>
-                <span className="text-[13px] sm:text-[14px] text-[#5c5c5c] dark:text-[#adadad] text-left sm:text-right">{s.label}</span>
+              <div key={i} className="flex flex-col items-start sm:items-end gap-1">
+                <span className="text-h3 font-semibold leading-snug text-fg-primary">{s.value}</span>
+                <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted text-left sm:text-right">{s.label}</span>
               </div>
             ))}
           </div>
@@ -703,37 +700,37 @@ function ImpactContent({ lang }) {
 // ── Define section content ────────────────────────────────────────────────────
 function TileH4({ children }) {
   return (
-    <h4 className="text-[18px] sm:text-[20px] lg:text-[24px] font-bold leading-[24px] sm:leading-[28px] lg:leading-[32px] text-[#1f1f1f] dark:text-[#f6f6f6]">
+    <h4 className="text-h4 font-bold leading-tight text-fg-primary">
       {children}
     </h4>
   );
 }
 
 const TIMELINE_PROJECTS = [
-  { label: "Project A", weeks: 15, color: "rgba(72,230,184,0.5)",  roundedL: true  },
-  { label: "Project B", weeks: 10, color: "#48e6b8"                               },
-  { label: "C",         weeks: 4,  color: "#f26f21"                               },
-  { label: "D",         weeks: 5,  color: "rgba(242,111,33,0.5)"                  },
-  { label: "E",         weeks: 3,  color: "#9747ff"                               },
-  { label: "F",         weeks: 6,  color: "rgba(151,71,255,0.5)"                  },
-  { label: "G",         weeks: 2,  color: "#339bfc"                               },
-  { label: "H",         weeks: 2,  color: "rgba(51,155,252,0.5)"                  },
-  { label: "I",         weeks: 2,  color: "#ffd953"                               },
-  { label: "J",         weeks: 3,  color: "rgba(255,217,83,0.5)",  roundedR: true },
+  { label: "Project A", weeks: 15, color: "#FF8BDE",               colorDark: "#B04692",               roundedL: true  },
+  { label: "Project B", weeks: 10, color: "#FFABE7",               colorDark: "#441638"                               },
+  { label: "C",         weeks: 4,  color: "#FFB13C",               colorDark: "#994F00"                               },
+  { label: "D",         weeks: 5,  color: "#FFC773",               colorDark: "#462C15"                               },
+  { label: "E",         weeks: 3,  color: "#CB8AFC",               colorDark: "#7A38AB"                               },
+  { label: "F",         weeks: 6,  color: "#DAABFD",               colorDark: "#3B1A53"                               },
+  { label: "G",         weeks: 2,  color: "#68B6FF",               colorDark: "#286DAD"                               },
+  { label: "H",         weeks: 2,  color: "#92CAFF",               colorDark: "#1E3248"                               },
+  { label: "I",         weeks: 2,  color: "#F9BC04",               colorDark: "#916404"                               },
+  { label: "J",         weeks: 3,  color: "#FBCF4A",               colorDark: "#483A05",               roundedR: true },
 ];
 
-function LaunchesTimeline() {
+function LaunchesTimeline({ isDark }) {
   return (
     <div className="overflow-hidden">
       <div className="flex w-full">
         {TIMELINE_PROJECTS.map(p => (
-          <div key={p.label} className="flex flex-col gap-1.5 sm:gap-2" style={{ flex: p.weeks }}>
-            <p className="text-[9px] sm:text-[11px] lg:text-[12px] font-medium text-[#5c5c5c] dark:text-[#adadad] whitespace-nowrap">{p.label}</p>
+          <div key={p.label} className="flex flex-col gap-2" style={{ flex: p.weeks }}>
+            <p className="text-chip-xs font-medium leading-none text-fg-muted whitespace-nowrap">{p.label}</p>
             <div
               className={`h-6 sm:h-8${p.roundedL ? " rounded-l-[10px] sm:rounded-l-[12px]" : ""}${p.roundedR ? " rounded-r-[10px] sm:rounded-r-[12px]" : ""}`}
-              style={{ backgroundColor: p.color }}
+              style={{ backgroundColor: isDark ? p.colorDark : p.color }}
             />
-            <p className="text-[9px] sm:text-[11px] lg:text-[12px] font-medium text-[#5c5c5c] dark:text-[#adadad] whitespace-nowrap">
+            <p className="text-chip-xs font-medium leading-none text-fg-muted whitespace-nowrap">
               {p.weeks >= 10 ? `${p.weeks} weeks` : `${p.weeks}w`}
             </p>
           </div>
@@ -747,7 +744,7 @@ const DEFINE = {
   en: {
     challenge: {
       eyebrow: "The challenge",
-      body: <>How can we help real estate buyers experience <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">unbuilt spaces</strong> across multiple geographies in a way that is <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">emotionally engaging</strong> and <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">contextually relevant?</strong></>,
+      body: <>How can we help real estate buyers experience <strong className="text-fg-primary">unbuilt spaces</strong> across multiple geographies in a way that is <strong className="text-fg-primary">emotionally engaging</strong> and <strong className="text-fg-primary">contextually relevant?</strong></>,
       description: <><p>Key constraints included:</p><ul className="list-disc list-inside space-y-1"><li><strong>Technical limitations:</strong> Large 3D datasets made real-time rendering expensive and slow.</li><li><strong>Tight deadlines:</strong> The first launch was only <strong>a few weeks away</strong>, leaving limited time for research or extensive feature development.</li><li><strong>Client expectations:</strong> The client wanted a <strong>premium, user-friendly experience</strong> and made final decisions on key features.</li></ul></>,
     },
     exploration: {
@@ -781,7 +778,7 @@ const DEFINE = {
   fr: {
     challenge: {
       eyebrow: "Le défi",
-      body: <>Comment pouvons-nous aider des acheteurs immobiliers à se projeter dans des <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">espaces non-bâtis</strong> de façon <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">émotionnellement engageante</strong> et <strong className="text-[#1f1f1f] dark:text-[#f6f6f6]">contextuellement pertinente</strong>, dans divers environnements géographiques<strong className="text-[#1f1f1f] dark:text-[#f6f6f6]"> ?</strong></>,
+      body: <>Comment pouvons-nous aider des acheteurs immobiliers à se projeter dans des <strong className="text-fg-primary">espaces non-bâtis</strong> de façon <strong className="text-fg-primary">émotionnellement engageante</strong> et <strong className="text-fg-primary">contextuellement pertinente</strong>, dans divers environnements géographiques<strong className="text-fg-primary"> ?</strong></>,
       description: <><p>Les principales contraintes incluaient :</p><ul className="list-disc list-inside space-y-1"><li><strong>Limitations techniques :</strong> Les grandes bases de données 3D rendaient le rendu en temps réel coûteux et lent.</li><li><strong>Délais serrés :</strong> Le premier lancement n'était qu'à <strong>15 semaines</strong>, laissant peu de temps pour la recherche ou le développement de fonctionnalités.</li><li><strong>Attentes du client :</strong> Le client souhaitait une <strong>expérience premium et intuitive</strong> et prenait les décisions finales sur les fonctionnalités clés.</li></ul></>,
     },
     exploration: {
@@ -814,11 +811,11 @@ const DEFINE = {
   },
 };
 
-function DefineContent({ lang }) {
+function DefineContent({ lang, isDark }) {
   const d = DEFINE[lang] ?? DEFINE.en;
   return (
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-      <Tile bgClass="bg-[#f6f6f6] dark:bg-[#1f1f1f]">
+      <Tile bgClass="bg-bg-surface">
         <TileEyebrow>{d.challenge.eyebrow}</TileEyebrow>
         <TileTitle>{d.challenge.body}</TileTitle>
         <div className="mt-4 sm:mt-6"><TileBody>{d.challenge.description}</TileBody></div>
@@ -837,7 +834,7 @@ function DefineContent({ lang }) {
         {d.uxStrategy.subsections.map((s, i) => (
           <div key={i} className="flex flex-col gap-4 sm:gap-5 lg:gap-6 pt-2">
             <TileH4>{s.h4}</TileH4>
-            {s.body ? <TileBody>{s.body}</TileBody> : <><TileBody>{s.before}</TileBody><div className="my-8 sm:my-10"><LaunchesTimeline /></div><TileBody>{s.after}</TileBody></>}
+            {s.body ? <TileBody>{s.body}</TileBody> : <><TileBody>{s.before}</TileBody><div className="my-8 sm:my-10"><LaunchesTimeline isDark={isDark} /></div><TileBody>{s.after}</TileBody></>}
           </div>
         ))}
       </Tile>
@@ -851,11 +848,11 @@ const CONCEPTS_TITLES = {
   fr: ['Vue Globe', 'Vue Pays', 'Vue Ville', 'Vue Projet', 'Vue Tour'],
 };
 const CONCEPTS_COLORS = [
-  { bg: '#ffeeb3', color: '#916404', bgDark: '#2c2200', colorDark: '#ffd97d' },
-  { bg: '#ffe2ca', color: '#994f00', bgDark: '#2c1500', colorDark: '#ffb27a' },
-  { bg: '#ffd5d5', color: '#962628', bgDark: '#2c0000', colorDark: '#ff9090' },
-  { bg: '#f4e5ff', color: '#7a38ab', bgDark: '#1c0035', colorDark: '#cc88ff' },
-  { bg: '#d7e2f6', color: '#254c96', bgDark: '#001030', colorDark: '#88aaee' },
+  { bg: '#ffeeb3', fg: '#916404', bgDark: '#2c2200', fgDark: '#ffd97d' }, // palette/yellow
+  { bg: '#ffe2ca', fg: '#994f00', bgDark: '#2c1500', fgDark: '#ffb27a' }, // palette/orange
+  { bg: '#ffd5d5', fg: '#962628', bgDark: '#2c0000', fgDark: '#ff9090' }, // palette/red
+  { bg: '#f4e5ff', fg: '#7a38ab', bgDark: '#1c0035', fgDark: '#cc88ff' }, // palette/purple
+  { bg: '#d7e2f6', fg: '#254c96', bgDark: '#001030', fgDark: '#88aaee' }, // palette/blue
 ];
 
 const CONCEPTS_SLIDES = {
@@ -946,7 +943,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
       aria-modal="true"
       aria-label={lang === 'fr' ? 'Image en plein écran' : 'Fullscreen image'}
       className="fixed inset-0 z-[600]"
-      style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.92)' }}
+      style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.95)' }}
     >
       {/* Slide track */}
       <div
@@ -969,7 +966,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
               src={slide.desktop ?? slide.mobile}
               alt={lang === 'fr' ? `Diapositive ${i + 1} sur ${slides.length}` : `Slide ${i + 1} of ${slides.length}`}
               draggable="false"
-              className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl"
+              className="max-w-[92vw] max-h-[88vh] object-contain rounded-radius-2 shadow-l"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
@@ -977,7 +974,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
       </div>
 
       {/* Counter */}
-      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-[13px] font-medium text-white/60 tabular-nums pointer-events-none">
+      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-label-s font-medium leading-[1.2] text-white/[0.64] tabular-nums pointer-events-none">
         {index + 1} / {slides.length}
       </span>
 
@@ -987,7 +984,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
         onClick={onClose}
         aria-label={closeLbl}
         data-spring
-        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/[0.64]"
       >
         <img src={imgClose} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
@@ -998,7 +995,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
         onClick={() => scrollToSlide(Math.max(0, index - 1))}
         disabled={index === 0}
         aria-label={prevLbl}
-        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/[0.64]"
       >
         <img src={imgChevronLeft} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
@@ -1009,7 +1006,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
         onClick={() => scrollToSlide(Math.min(slides.length - 1, index + 1))}
         disabled={index === slides.length - 1}
         aria-label={nextLbl}
-        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/[0.64]"
       >
         <img src={imgChevronRight} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
@@ -1078,11 +1075,11 @@ function ConceptsCarousel({ lang, isDark }) {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxIndex(activeIndex); }
         }}
-        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-xl sm:rounded-2xl lg:rounded-3xl touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
         style={{ scrollbarWidth: 'none' }}
       >
         {slides.map((slide, i) => (
-          <button key={i} tabIndex={-1} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Concept CGI ${i + 1}` : `Expand: CGI concept ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+          <button key={i} tabIndex={-1} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Concept CGI ${i + 1}` : `Expand: CGI concept ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
             <picture>
               <source media="(min-width: 1024px)" srcSet={slide.desktop} />
               <source media="(min-width: 640px)"  srcSet={slide.tablet} />
@@ -1095,28 +1092,28 @@ function ConceptsCarousel({ lang, isDark }) {
 
       <div className="flex flex-col gap-2">
         <div className="sm:hidden">
-          <span className="inline-block text-[15px] font-semibold leading-none px-3 py-1.5 rounded-md whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: CONCEPTS_COLORS[activeIndex][isDark ? 'colorDark' : 'color'] }}>
+          <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: CONCEPTS_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
             {titles[activeIndex]}
           </span>
         </div>
         <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[1fr_auto_1fr] items-center">
           <div className="hidden sm:block">
-            <span className="inline-block text-[15px] sm:text-[16px] font-semibold leading-none px-3 py-1.5 rounded-md whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: CONCEPTS_COLORS[activeIndex][isDark ? 'colorDark' : 'color'] }}>
+            <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: CONCEPTS_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
               {titles[activeIndex]}
             </span>
           </div>
           <div className="flex items-center">
             {slides.map((_, i) => { const win = Math.min(5, slides.length); const start = Math.min(Math.max(0, activeIndex - 2), slides.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < slides.length)); return (
-              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToSlide(i)} aria-label={lang === 'fr' ? `Aller à la diapositive ${i + 1}` : `Go to slide ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToSlide(i)} aria-label={lang === 'fr' ? `Aller à la diapositive ${i + 1}` : `Go to slide ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
               </button>
             ); })}
           </div>
           <div className="flex items-center gap-2 sm:gap-3 justify-self-end">
-            <button data-spring onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
               <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter] forced-colors:brightness-[unset]" />
             </button>
-            <button data-spring onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
               <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter] forced-colors:brightness-[unset] forced-colors:invert-0" />
             </button>
           </div>
@@ -1129,26 +1126,26 @@ function ConceptsCarousel({ lang, isDark }) {
 // ── UI concept cards data ─────────────────────────────────────────────────────
 const UI_CONCEPTS = {
   en: [
-    { title: "1. Globe view",     titleBg: "#ffeeb3", titleColor: "#916404", titleBgDark: "#2c2200", titleColorDark: "#ffd97d", bullets: ["Flight times", "Breadcrumbs"],        img: imgUiCard01 },
-    { title: "2. Country view",   titleBg: "#ffe2ca", titleColor: "#994f00", titleBgDark: "#2c1500", titleColorDark: "#ffb27a", bullets: ["City cards", "Compass, zoom"],        img: imgUiCard02 },
-    { title: "3. City view",      titleBg: "#ffd5d5", titleColor: "#962628", titleBgDark: "#2c0000", titleColorDark: "#ff9090", bullets: ["Points of interest", "Distances"],   img: imgUiCard03 },
-    { title: "4. Hero view",      titleBg: "#ffe9f9", titleColor: "#8f3575", titleBgDark: "#2c0022", titleColorDark: "#ffaaee", bullets: ["Project card", "Live weather"],       img: imgUiCard04 },
-    { title: "5. Project view",   titleBg: "#f4e5ff", titleColor: "#7a38ab", titleBgDark: "#1c0035", titleColorDark: "#cc88ff", bullets: ["Day/night", "Orbit controls"],        img: imgUiCard05 },
-    { title: "6. Tower view",     titleBg: "#d7e2f6", titleColor: "#254c96", titleBgDark: "#001030", titleColorDark: "#88aaee", bullets: ["Floor selector", "Filters"],          img: imgUiCard06 },
-    { title: "7. Floors view",    titleBg: "#e2ecff", titleColor: "#286dad", titleBgDark: "#00182c", titleColorDark: "#88ccff", bullets: ["Unit selector", "Distances"],         img: imgUiCard07 },
-    { title: "8. Unit view",      titleBg: "#daf5d3", titleColor: "#277a22", titleBgDark: "#001c00", titleColorDark: "#88ee80", bullets: ["Room selector", "Customisation"],     img: imgUiCard08 },
-    { title: "9. Interiors view", titleBg: "#e9f5d3", titleColor: "#5e760f", titleBgDark: "#101c00", titleColorDark: "#b8e050", bullets: ["Floor selector", "Request callback"], img: imgUiCard09 },
+    { title: "1. Globe view",     titleBg: "#ffeeb3", titleFg: "#916404", titleBgDark: "#2c2200", titleFgDark: "#ffd97d", bullets: ["Flight times", "Breadcrumbs"],        img: imgUiCard01 },
+    { title: "2. Country view",   titleBg: "#ffe2ca", titleFg: "#994f00", titleBgDark: "#2c1500", titleFgDark: "#ffb27a", bullets: ["City cards", "Compass, zoom"],        img: imgUiCard02 },
+    { title: "3. City view",      titleBg: "#ffd5d5", titleFg: "#962628", titleBgDark: "#2c0000", titleFgDark: "#ff9090", bullets: ["Points of interest", "Distances"],   img: imgUiCard03 },
+    { title: "4. Hero view",      titleBg: "#ffe9f9", titleFg: "#8F3575", titleBgDark: "#2c0022", titleFgDark: "#ffaaee", bullets: ["Project card", "Live weather"],       img: imgUiCard04 },
+    { title: "5. Project view",   titleBg: "#f4e5ff", titleFg: "#7a38ab", titleBgDark: "#1c0035", titleFgDark: "#cc88ff", bullets: ["Day/night", "Orbit controls"],        img: imgUiCard05 },
+    { title: "6. Tower view",     titleBg: "#d7e2f6", titleFg: "#20458B", titleBgDark: "#001030", titleFgDark: "#88aaee", bullets: ["Floor selector", "Filters"],          img: imgUiCard06 },
+    { title: "7. Floors view",    titleBg: "#e2ecff", titleFg: "#286dad", titleBgDark: "#00182c", titleFgDark: "#88ccff", bullets: ["Unit selector", "Distances"],         img: imgUiCard07 },
+    { title: "8. Unit view",      titleBg: "#daf5d3", titleFg: "#277a22", titleBgDark: "#001c00", titleFgDark: "#88ee80", bullets: ["Room selector", "Customisation"],     img: imgUiCard08 },
+    { title: "9. Interiors view", titleBg: "#e9f5d3", titleFg: "#5e760f", titleBgDark: "#101c00", titleFgDark: "#b8e050", bullets: ["Floor selector", "Request callback"], img: imgUiCard09 },
   ],
   fr: [
-    { title: "1. Vue Globe",      titleBg: "#ffeeb3", titleColor: "#916404", titleBgDark: "#2c2200", titleColorDark: "#ffd97d", bullets: ["Durées de vol", "Fil d'Ariane"],               img: imgUiCard01 },
-    { title: "2. Vue Pays",       titleBg: "#ffe2ca", titleColor: "#994f00", titleBgDark: "#2c1500", titleColorDark: "#ffb27a", bullets: ["Cartes de ville", "Boussole, zoom"],             img: imgUiCard02 },
-    { title: "3. Vue Ville",      titleBg: "#ffd5d5", titleColor: "#962628", titleBgDark: "#2c0000", titleColorDark: "#ff9090", bullets: ["Points d'intérêt", "Distances"],                 img: imgUiCard03 },
-    { title: "4. Vue Accueil",    titleBg: "#ffe9f9", titleColor: "#8f3575", titleBgDark: "#2c0022", titleColorDark: "#ffaaee", bullets: ["Fiche projet", "Météo en direct"],               img: imgUiCard04 },
-    { title: "5. Vue Projet",     titleBg: "#f4e5ff", titleColor: "#7a38ab", titleBgDark: "#1c0035", titleColorDark: "#cc88ff", bullets: ["Jour/nuit", "Contrôles orbitaux"],               img: imgUiCard05 },
-    { title: "6. Vue Tour",       titleBg: "#d7e2f6", titleColor: "#254c96", titleBgDark: "#001030", titleColorDark: "#88aaee", bullets: ["Sélecteur d'étage", "Filtres"],                  img: imgUiCard06 },
-    { title: "7. Vue Étages",     titleBg: "#e2ecff", titleColor: "#286dad", titleBgDark: "#00182c", titleColorDark: "#88ccff", bullets: ["Sélecteur d'unité", "Distances"],                img: imgUiCard07 },
-    { title: "8. Vue Unité",      titleBg: "#daf5d3", titleColor: "#277a22", titleBgDark: "#001c00", titleColorDark: "#88ee80", bullets: ["Sélecteur de pièce", "Personnalisation"],        img: imgUiCard08 },
-    { title: "9. Vue Intérieurs", titleBg: "#e9f5d3", titleColor: "#5e760f", titleBgDark: "#101c00", titleColorDark: "#b8e050", bullets: ["Sélecteur d'étage", "Demande de rappel"],        img: imgUiCard09 },
+    { title: "1. Vue Globe",      titleBg: "#ffeeb3", titleFg: "#916404", titleBgDark: "#2c2200", titleFgDark: "#ffd97d", bullets: ["Durées de vol", "Fil d'Ariane"],               img: imgUiCard01 },
+    { title: "2. Vue Pays",       titleBg: "#ffe2ca", titleFg: "#994f00", titleBgDark: "#2c1500", titleFgDark: "#ffb27a", bullets: ["Cartes de ville", "Boussole, zoom"],             img: imgUiCard02 },
+    { title: "3. Vue Ville",      titleBg: "#ffd5d5", titleFg: "#962628", titleBgDark: "#2c0000", titleFgDark: "#ff9090", bullets: ["Points d'intérêt", "Distances"],                 img: imgUiCard03 },
+    { title: "4. Vue Accueil",    titleBg: "#ffe9f9", titleFg: "#8F3575", titleBgDark: "#2c0022", titleFgDark: "#ffaaee", bullets: ["Fiche projet", "Météo en direct"],               img: imgUiCard04 },
+    { title: "5. Vue Projet",     titleBg: "#f4e5ff", titleFg: "#7a38ab", titleBgDark: "#1c0035", titleFgDark: "#cc88ff", bullets: ["Jour/nuit", "Contrôles orbitaux"],               img: imgUiCard05 },
+    { title: "6. Vue Tour",       titleBg: "#d7e2f6", titleFg: "#20458B", titleBgDark: "#001030", titleFgDark: "#88aaee", bullets: ["Sélecteur d'étage", "Filtres"],                  img: imgUiCard06 },
+    { title: "7. Vue Étages",     titleBg: "#e2ecff", titleFg: "#286dad", titleBgDark: "#00182c", titleFgDark: "#88ccff", bullets: ["Sélecteur d'unité", "Distances"],                img: imgUiCard07 },
+    { title: "8. Vue Unité",      titleBg: "#daf5d3", titleFg: "#277a22", titleBgDark: "#001c00", titleFgDark: "#88ee80", bullets: ["Sélecteur de pièce", "Personnalisation"],        img: imgUiCard08 },
+    { title: "9. Vue Intérieurs", titleBg: "#e9f5d3", titleFg: "#5e760f", titleBgDark: "#101c00", titleFgDark: "#b8e050", bullets: ["Sélecteur d'étage", "Demande de rappel"],        img: imgUiCard09 },
   ],
 };
 
@@ -1158,15 +1155,15 @@ const VIEW_SLIDE_TITLES = {
   fr: ['Intro', 'Mappemonde', 'Vue de la ville', 'Page héro', 'Vue du projet', "Vue d'une tour", 'Plan des étages', 'Plan du logement', 'Vue intérieure'],
 };
 const VIEW_SLIDE_COLORS = [
-  { bg: '#e8e8e8', color: '#5c5c5c', bgDark: '#2a2a2a', colorDark: '#adadad' }, // Intro
-  { bg: '#ffeeb3', color: '#916404', bgDark: '#2c2200', colorDark: '#ffd97d' }, // Globe
-  { bg: '#ffd5d5', color: '#962628', bgDark: '#2c0000', colorDark: '#ff9090' }, // City
-  { bg: '#ffe9f9', color: '#8f3575', bgDark: '#2c0022', colorDark: '#ffaaee' }, // Hero
-  { bg: '#f4e5ff', color: '#7a38ab', bgDark: '#1c0035', colorDark: '#cc88ff' }, // Project
-  { bg: '#d7e2f6', color: '#254c96', bgDark: '#001030', colorDark: '#88aaee' }, // Tower
-  { bg: '#e2ecff', color: '#286dad', bgDark: '#00182c', colorDark: '#88ccff' }, // Tower floor
-  { bg: '#daf5d3', color: '#277a22', bgDark: '#001c00', colorDark: '#88ee80' }, // Unit floor
-  { bg: '#e9f5d3', color: '#5e760f', bgDark: '#101c00', colorDark: '#b8e050' }, // Interior
+  { bg: '#d4d4d4', fg: '#1f1f1f', bgDark: '#262626', fgDark: '#adadad' }, // Intro — Z200/Z700 bg, fg/primary light, fg/secondary dark
+  { bg: '#ffeeb3', fg: '#916404', bgDark: '#2c2200', fgDark: '#ffd97d' }, // Globe — palette/yellow
+  { bg: '#ffd5d5', fg: '#962628', bgDark: '#2c0000', fgDark: '#ff9090' }, // City — palette/red
+  { bg: '#ffe9f9', fg: '#8f3575', bgDark: '#2c0022', fgDark: '#ffaaee' }, // Hero — palette/pink
+  { bg: '#f4e5ff', fg: '#7a38ab', bgDark: '#1c0035', fgDark: '#cc88ff' }, // Project — palette/purple
+  { bg: '#d7e2f6', fg: '#20458B', bgDark: '#001030', fgDark: '#88aaee' }, // Tower — palette/blue
+  { bg: '#e2ecff', fg: '#286dad', bgDark: '#00182c', fgDark: '#88ccff' }, // Tower floor — palette/sky
+  { bg: '#daf5d3', fg: '#277a22', bgDark: '#001c00', fgDark: '#88ee80' }, // Unit floor — palette/green
+  { bg: '#e9f5d3', fg: '#5e760f', bgDark: '#101c00', fgDark: '#b8e050' }, // Interior — palette/lime
 ];
 
 // ── Wireframes carousel ───────────────────────────────────────────────────────
@@ -1282,11 +1279,11 @@ function WireframesCarousel({ lang, isDark }) {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxIndex(activeIndex); }
         }}
-        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
         style={{ scrollbarWidth: 'none' }}
       >
         {slides.map((slide, i) => (
-          <button key={i} tabIndex={-1} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Maquette filaire ${i + 1}` : `Expand: wireframe ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+          <button key={i} tabIndex={-1} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Maquette filaire ${i + 1}` : `Expand: wireframe ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
             <picture>
               <source media="(min-width: 640px)" srcSet={slide.desktop} />
               <img src={slide.mobile} alt={lang === 'fr' ? `Maquette filaire, diapositive ${i + 1} sur ${slides.length}` : `Wireframe mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto" />
@@ -1298,28 +1295,28 @@ function WireframesCarousel({ lang, isDark }) {
 
       <div className="flex flex-col gap-2">
         <div className="sm:hidden">
-          <span className="inline-block text-[15px] font-semibold leading-none px-3 py-1.5 rounded-md whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'colorDark' : 'color'] }}>
+          <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
             {titles[activeIndex]}
           </span>
         </div>
         <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[1fr_auto_1fr] items-center">
           <div className="hidden sm:block">
-            <span className="inline-block text-[15px] sm:text-[16px] font-semibold leading-none px-3 py-1.5 rounded-md whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'colorDark' : 'color'] }}>
+            <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
               {titles[activeIndex]}
             </span>
           </div>
           <div className="flex items-center">
             {slides.map((_, i) => { const win = Math.min(5, slides.length); const start = Math.min(Math.max(0, activeIndex - 2), slides.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < slides.length)); return (
-              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToSlide(i)} aria-label={lang === 'fr' ? `Aller à la diapositive ${i + 1}` : `Go to slide ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToSlide(i)} aria-label={lang === 'fr' ? `Aller à la diapositive ${i + 1}` : `Go to slide ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
               </button>
             ); })}
           </div>
           <div className="flex items-center gap-2 sm:gap-3 justify-self-end">
-            <button data-spring onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
               <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter] forced-colors:brightness-[unset]" />
             </button>
-            <button data-spring onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
               <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter] forced-colors:brightness-[unset] forced-colors:invert-0" />
             </button>
           </div>
@@ -1443,11 +1440,11 @@ function HifiCarousel({ lang, isDark }) {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxIndex(activeIndex); }
           }}
           aria-label={lang === 'fr' ? `Carrousel des maquettes haute-fidélité — utilisez les flèches pour naviguer, Entrée pour agrandir` : `High-fidelity mock-ups carousel — use arrow keys to navigate, Enter to expand`}
-          className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-xl sm:rounded-2xl lg:rounded-3xl touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+          className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
           style={{ scrollbarWidth: 'none' }}
         >
           {slides.map((slide, i) => (
-            <button key={i} tabIndex={-1} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Maquette haute-fidélité ${i + 1}` : `Expand: high-fidelity mock-up ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button key={i} tabIndex={-1} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Maquette haute-fidélité ${i + 1}` : `Expand: high-fidelity mock-up ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
               <picture>
                 <source media="(min-width: 1024px)" srcSet={slide.desktop} />
                 <source media="(min-width: 640px)" srcSet={slide.tablet} />
@@ -1461,28 +1458,28 @@ function HifiCarousel({ lang, isDark }) {
 
       <div className="flex flex-col gap-2">
         <div className="sm:hidden">
-          <span className="inline-block text-[15px] font-semibold leading-none px-3 py-1.5 rounded-md whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'colorDark' : 'color'] }}>
+          <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
             {titles[activeIndex]}
           </span>
         </div>
         <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[1fr_auto_1fr] items-center">
           <div className="hidden sm:block">
-            <span className="inline-block text-[15px] sm:text-[16px] font-semibold leading-none px-3 py-1.5 rounded-md whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'colorDark' : 'color'] }}>
+            <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
               {titles[activeIndex]}
             </span>
           </div>
           <div className="flex items-center">
             {slides.map((_, i) => { const win = Math.min(5, slides.length); const start = Math.min(Math.max(0, activeIndex - 2), slides.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < slides.length)); return (
-              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToSlide(i)} aria-label={lang === 'fr' ? `Aller à la diapositive ${i + 1}` : `Go to slide ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6] rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/25 dark:bg-[#f6f6f6]/25' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToSlide(i)} aria-label={lang === 'fr' ? `Aller à la diapositive ${i + 1}` : `Go to slide ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
               </button>
             ); })}
           </div>
           <div className="flex items-center gap-2 sm:gap-3 justify-self-end">
-            <button data-spring onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'} className="group p-2 sm:p-2.5 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
               <img src={imgChevronLeft} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter] forced-colors:brightness-[unset]" />
             </button>
-            <button data-spring onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-[#f6f6f6] dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]">
+            <button data-spring onClick={() => scrollToSlide(Math.min(slides.length - 1, activeIndex + 1))} disabled={activeIndex === slides.length - 1} aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'} className="group p-2 sm:p-2.5 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
               <img src={imgChevronRight} alt="" width={20} height={20} className="sm:w-[22px] sm:h-[22px] group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter] forced-colors:brightness-[unset] forced-colors:invert-0" />
             </button>
           </div>
@@ -1495,7 +1492,7 @@ function HifiCarousel({ lang, isDark }) {
 // ── Design section content ────────────────────────────────────────────────────
 const DESIGN = {
   en: {
-    userFlow: { eyebrow: "User flow", body: <>The platform was designed to allow users to <strong>explore client projects worldwide</strong>, progressing seamlessly from <strong>macro to micro views</strong>. This hierarchical structure supported <strong>scalability</strong> and an <strong>intuitive browsing experience</strong>.</>, footer: <>💡 <strong>Design Principle:</strong> Layered, <strong>progressive flow</strong> lets users explore at their own pace while supporting future <strong>global expansion</strong>.</> },
+    userFlow: { eyebrow: "User flow", body: <>The platform was designed to allow users to <strong>explore client projects worldwide</strong>, progressing seamlessly from <strong>macro to micro views</strong>. This hierarchical structure supported <strong>scalability</strong> and an <strong>intuitive browsing experience</strong>.</>, footer: { emoji: "💡", content: <><strong>Design Principle:</strong> Layered, <strong>progressive flow</strong> lets users explore at their own pace while supporting future <strong>global expansion</strong>.</> } },
     concepts: {
       eyebrow: "Concepts",
       subsections: [
@@ -1507,7 +1504,7 @@ const DESIGN = {
     },
   },
   fr: {
-    userFlow: { eyebrow: "Flux utilisateur", body: <>La plateforme a été conçue pour permettre aux utilisateurs d’<strong>explorer les projets clients à travers le monde</strong>, en progressant de manière fluide des <strong>vues macro aux vues micro</strong>. Cette structure hiérarchique favorise l’<strong>évolutivité</strong> et une <strong>expérience de navigation intuitive</strong>.</>, footer: <>💡 <strong>Principe de design :</strong> Un <strong>flux progressif</strong> en couches permet aux utilisateurs d’explorer à leur propre rythme tout en soutenant une future <strong>expansion mondiale</strong>.</> },
+    userFlow: { eyebrow: "Flux utilisateur", body: <>La plateforme a été conçue pour permettre aux utilisateurs d’<strong>explorer les projets clients à travers le monde</strong>, en progressant de manière fluide des <strong>vues macro aux vues micro</strong>. Cette structure hiérarchique favorise l’<strong>évolutivité</strong> et une <strong>expérience de navigation intuitive</strong>.</>, footer: { emoji: "💡", content: <><strong>Principe de design :</strong> Un <strong>flux progressif</strong> en couches permet aux utilisateurs d’explorer à leur propre rythme tout en soutenant une future <strong>expansion mondiale</strong>.</> } },
     concepts: {
       eyebrow: "Conceptualisation",
       subsections: [
@@ -1521,21 +1518,18 @@ const DESIGN = {
 };
 
 function UiConceptCard({ card, isDark }) {
-  const titleBg    = isDark ? card.titleBgDark    : card.titleBg;
-  const titleColor = isDark ? card.titleColorDark : card.titleColor;
+  const titleBg = isDark ? card.titleBgDark : card.titleBg;
+  const titleFg = isDark ? card.titleFgDark : card.titleFg;
   return (
-    <div className="rounded-xl sm:rounded-2xl overflow-hidden">
+    <div className="rounded-radius-3 sm:rounded-radius-4 overflow-hidden">
       <div className="aspect-[8/5] overflow-hidden">
-        {card.img
-          ? <img src={card.img} alt={card.title} draggable="false" loading="lazy" className="w-full h-full object-cover" />
-          : <div className="w-full h-full bg-[#e0e0e0] dark:bg-[#2a2a2a]" />
-        }
+        <img src={card.img} alt={card.title} draggable="false" loading="lazy" className="w-full h-full object-cover" />
       </div>
-      <div className="flex flex-col gap-1.5 px-3 py-2.5" style={{ backgroundColor: titleBg }}>
-        <h5 className="font-bold text-[13px] sm:text-[14px] lg:text-[15px] leading-snug" style={{ color: titleColor }}>
+      <div className="flex flex-col gap-2 px-3 py-3" style={{ backgroundColor: titleBg }}>
+        <h5 className="font-semibold text-tag-m leading-snug" style={{ color: titleFg }}>
           {card.title}
         </h5>
-        <ul className="flex flex-col gap-0.5 text-[12px] sm:text-[13px] leading-snug list-disc list-inside" style={{ color: titleColor }}>
+        <ul className="flex flex-col gap-1 text-[12px] sm:text-[13px] lg:text-[14px] font-normal leading-snug list-disc list-inside" style={{ color: titleFg }}>
           {card.bullets.filter(Boolean).map((b, k) => <li key={k}>{b}</li>)}
         </ul>
       </div>
@@ -1552,17 +1546,20 @@ function DesignContent({ lang, isDark }) {
                      : { desktop: imgUserflowDesktopLightEn, tablet: imgUserflowTabletLightEn, mobile: imgUserflowMobileLightEn });
   return (
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-      <Tile bgClass="bg-[#f6f6f6] dark:bg-[#1f1f1f]">
+      <Tile bgClass="bg-bg-surface">
         <TileEyebrow>{d.userFlow.eyebrow}</TileEyebrow>
         <p className={tileBodyText}>{d.userFlow.body}</p>
         <div className="mt-6 sm:mt-8">
           <picture>
             <source media="(min-width: 1024px)" srcSet={uf.desktop} />
             <source media="(min-width: 640px)"  srcSet={uf.tablet} />
-            <img src={uf.mobile} alt={d.userFlow.eyebrow} className="w-full h-auto rounded-lg" />
+            <img src={uf.mobile} alt={d.userFlow.eyebrow} className="w-full h-auto rounded-radius-2" />
           </picture>
         </div>
-        <div className="mt-6 sm:mt-8 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed text-[#5c5c5c] dark:text-[#adadad]">{d.userFlow.footer}</div>
+        <div className="mt-6 sm:mt-8 rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] px-4 py-3 flex gap-2 text-[14px] font-normal leading-relaxed text-fg-muted">
+          <span aria-hidden="true" className="shrink-0">{d.userFlow.footer.emoji}</span>
+          <span>{d.userFlow.footer.content}</span>
+        </div>
       </Tile>
 
       <Tile>
@@ -1668,14 +1665,14 @@ function SecondaryNav({ sections, activeId, onNavigate }) {
               <button
                 onClick={() => onNavigate(s.id)}
                 aria-current={isActive ? 'location' : undefined}
-                className={`relative text-[13px] leading-snug py-1.5 px-2 rounded-lg text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+                className={`relative text-[13px] leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
-                    ? 'text-[#1f1f1f] dark:text-[#f6f6f6] font-semibold bg-black/[0.04] dark:bg-white/[0.06]'
-                    : 'text-[#5c5c5c] dark:text-[#adadad] font-normal hover:text-[#1f1f1f] dark:hover:text-[#f6f6f6] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
+                    ? 'text-fg-primary font-semibold bg-black/[0.04] dark:bg-white/[0.04]'
+                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
                 }`}
               >
                 <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.title}</span>
-                <span className="absolute inset-0 py-1.5 px-2 whitespace-nowrap">{s.title}</span>
+                <span className="absolute inset-0 py-2 px-2 whitespace-nowrap">{s.title}</span>
               </button>
             </li>
           );
@@ -1696,8 +1693,8 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   }, [activeId]);
 
   return (
-    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-3xl shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] p-[10px]">
-      <div className="overflow-hidden rounded-[16px]">
+    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-radius-6 shadow-xs dark:ring-1 dark:ring-white/[0.16] p-[10px]">
+      <div className="overflow-hidden rounded-radius-4">
         <ul ref={trackRef} className="w-full flex items-center gap-1 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
           {sections.map((s) => {
             const isActive = activeId === s.id;
@@ -1708,10 +1705,10 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
                   onClick={() => onNavigate(s.id)}
                   aria-label={s.title}
                   aria-current={isActive ? 'location' : undefined}
-                  className={`h-8 px-3 rounded-2xl text-[13px] font-medium whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] ${
+                  className={`h-8 px-3 rounded-radius-4 text-[13px] font-medium leading-snug whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                     isActive
-                      ? 'bg-[#161616] dark:bg-white text-white dark:text-[#161616]'
-                      : 'text-[#5c5c5c] dark:text-[#adadad]'
+                      ? 'bg-nav-active-bg-solid text-fg-inverse'
+                      : 'text-fg-muted'
                   }`}
                 >
                   {s.title}
@@ -1726,7 +1723,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
 }
 
 // ── Accordion section ─────────────────────────────────────────────────────────
-function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgClass, openHeaderDark = false, contentBgClass = 'bg-[#f6f6f6] dark:bg-[#1f1f1f]', contentInnerBgClass }) {
+function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgClass, openHeaderDark = false, contentBgClass = 'bg-bg-surface', contentInnerBgClass }) {
   const [open, setOpen] = useState(true);
   const [hidden, setHidden] = useState(false);
   const darkHeader = open && openHeaderDark;
@@ -1776,12 +1773,12 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
         }
         aria-expanded={open}
         aria-controls={`${id}-content`}
-        className="w-full max-w-5xl mx-auto px-6 py-6 sm:py-7 lg:py-8 flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#1f1f1f] dark:focus-visible:ring-[#f6f6f6]"
+        className="w-full max-w-5xl mx-auto px-6 py-6 sm:py-7 lg:py-8 flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary"
       >
-        <h2 id={headingId} className={`text-[20px] sm:text-[22px] lg:text-[24px] font-bold leading-tight ${darkHeader ? 'text-white' : 'text-[#1f1f1f] dark:text-[#f6f6f6]'}`}>
+        <h2 id={headingId} className={`text-h2 font-bold leading-tight ${darkHeader ? 'text-white' : 'text-fg-primary'}`}>
           {title}
         </h2>
-        <div className={`group shrink-0 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center transition-colors ${darkHeader ? 'hover:bg-white/20' : 'hover:bg-[#1f1f1f] dark:hover:bg-[#f6f6f6]'}`}>
+        <div className={`group shrink-0 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center transition-colors ${darkHeader ? 'hover:bg-white/20' : 'hover:bg-btn-nav-bg-hover'}`}>
           <img
             src={imgChevronUp}
             alt=""
@@ -1802,7 +1799,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
           <div className={contentInnerBgClass ?? contentBgClass}>
             <div className="max-w-5xl mx-auto px-6 py-8 sm:py-10 lg:py-12">
               {children ?? (
-                <p className="text-[#5c5c5c] dark:text-[#adadad] text-[16px] sm:text-[17px] lg:text-[18px]">Content coming soon.</p>
+                <p className="text-fg-muted text-copy-m">Content coming soon.</p>
               )}
             </div>
           </div>
@@ -1906,7 +1903,7 @@ function SalesPlatform({ lang, isDark }) {
 
   return (
     <>
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#1f1f1f] focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-tooltip-bg focus:text-white focus:rounded-radius-2 focus:text-sm focus:font-semibold">
         {lang === 'fr' ? 'Aller au contenu principal' : 'Skip to main content'}
       </a>
 
@@ -1917,21 +1914,21 @@ function SalesPlatform({ lang, isDark }) {
           <Section
             key={id} id={id} title={title} lang={lang}
             headerBgClass={
-              id === 'context'   ? 'bg-[#f6f6f6] dark:bg-[#1f1f1f]' :
-              id === 'emphasise' ? 'bg-[#f6f6f6] dark:bg-[#1f1f1f]' :
+              id === 'context'   ? 'bg-bg-surface' :
+              id === 'emphasise' ? 'bg-bg-surface' :
               id === 'define'    ? 'bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]' : ''
             }
             openHeaderBgClass={id === 'impact' ? 'bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]' : undefined}
             contentBgClass={
-              id === 'define' || id === 'design' ? 'bg-white dark:bg-[#141414]' :
+              id === 'define' || id === 'design' ? 'bg-bg-page' :
               id === 'impact' ? 'bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]' :
-              'bg-[#f6f6f6] dark:bg-[#1f1f1f]'
+              'bg-bg-surface'
             }
             contentInnerBgClass={id === 'impact' ? '' : undefined}
           >
             {id === 'context'   && <ContextContent lang={lang} isDark={isDark} />}
             {id === 'emphasise' && <EmphasiseContent lang={lang} />}
-            {id === 'define'    && <DefineContent lang={lang} />}
+            {id === 'define'    && <DefineContent lang={lang} isDark={isDark} />}
             {id === 'design'    && <DesignContent lang={lang} isDark={isDark} />}
             {id === 'impact'    && <ImpactContent lang={lang} />}
           </Section>
@@ -1948,7 +1945,7 @@ function SalesPlatform({ lang, isDark }) {
             <Link
               data-spring
               to="/#case-studies"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0152EC] hover:bg-[#0142cc] text-white font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0152EC] focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-label-s leading-[1.2] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
             >
               <img src={imgArrowRight} alt="" width={16} height={16} className="brightness-0 invert" style={{ transform: 'rotate(180deg)' }} />
               {lang === 'fr' ? 'Retour aux études de cas' : 'Back to case studies'}
@@ -1979,7 +1976,7 @@ function SalesPlatform({ lang, isDark }) {
       {/* ── Chat button backdrop circle ── */}
       <div
         aria-hidden="true"
-        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-[0px_0px_17.1px_0px_rgba(0,0,0,0.08)] dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
+        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-xs dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
         style={{ width: 52, height: 52, left: 8, bottom: 8 }}
       />
 
