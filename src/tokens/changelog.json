@@ -1,5 +1,23 @@
 [
   {
+    "timestamp": "2026-04-12T13:32:57.182Z",
+    "changeCount": 1,
+    "summary": {
+      "added": 1,
+      "modified": 0,
+      "removed": 0
+    },
+    "changes": [
+      {
+        "path": "radius.radius-half",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "2px"
+      }
+    ]
+  },
+  {
     "timestamp": "2026-04-12T09:55:48.142Z",
     "changeCount": 462,
     "summary": {

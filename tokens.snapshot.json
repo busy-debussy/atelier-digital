@@ -602,6 +602,10 @@
     }
   },
   "radius": {
+    "radius-half": {
+      "$value": "2px",
+      "$type": "dimension"
+    },
     "radius-1": {
       "$value": "4px",
       "$type": "dimension"
