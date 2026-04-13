@@ -536,7 +536,7 @@ function SummarySection({ t, lang }) {
                 tabIndex={0}
                 aria-label={lang === 'fr' ? 'Télécharger PDF via Google Drive' : 'Download PDF via Google Drive'}
                 data-spring
-                className="w-full flex items-center justify-center py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-btn-m leading-[1.2] rounded-radius-4 border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus"
+                className="w-full flex items-center justify-center py-3 bg-cta-600 hover:bg-cta-700 text-fg-on-accent-opacity-95 font-medium text-btn-m leading-[1.2] rounded-radius-4 border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus"
               >
                 {t.downloadPdf}
               </a>
@@ -545,7 +545,7 @@ function SummarySection({ t, lang }) {
         </div>
 
         <div className="flex flex-col gap-8 w-full px-4 sm:px-16 lg:px-0">
-          <h1 className="hidden lg:block text-[44px] lg:text-[48px] font-bold leading-tight text-fg-primary">
+          <h1 className="hidden lg:block text-h1 font-bold leading-tight text-fg-primary">
             David V.
           </h1>
 
@@ -827,7 +827,7 @@ function ToolIcon({ name, icon, noBg, darkInvert }) {
   return (
     <div className="relative flex flex-col items-center">
       <div className={`absolute bottom-[calc(100%+8px)] left-1/2 -translate-x-1/2 pointer-events-none z-10 transition-opacity duration-150 ${visible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">
           {name}
         </div>
       </div>
@@ -843,7 +843,7 @@ function ToolIcon({ name, icon, noBg, darkInvert }) {
       >
         {icon
           ? <img src={icon} alt={name} loading="lazy" className={`w-full h-full ${noBg ? 'object-contain' : 'object-cover'} ${darkInvert ? 'dark:brightness-0 dark:invert' : ''}`} />
-          : <span className="text-[7px] font-bold text-fg-muted text-center leading-tight px-[2px]">{name}</span>
+          : null
         }
       </button>
     </div>
@@ -1273,7 +1273,7 @@ function CertificationCard({ card }) {
           <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-radius-4 sm:rounded-radius-5 lg:rounded-radius-6 bg-bg-page dark:bg-bg-surface flex items-center justify-center mb-2 sm:mb-[10px] lg:mb-3 overflow-hidden shrink-0">
             {card.icon
               ? <img src={card.icon} alt="" loading="lazy" className={`w-full h-full object-contain${isSvg ? ' dark:brightness-0 dark:invert' : ''}`} />
-              : <span className="text-[8px] text-fg-muted">icon</span>
+              : null
             }
           </div>
           <p className="text-card-m font-bold text-fg-primary text-center leading-snug">{nameEl}</p>

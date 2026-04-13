@@ -128,7 +128,7 @@ function CsCard({ card, t }) {
           </div>
           {card.secondaryChips.map((chip, i) => (
             <div key={i} className="flex items-center px-2 py-1 rounded-radius-3 bg-chip-bg-secondary">
-              <span className="text-chip-xs font-medium text-white/60 leading-none whitespace-nowrap">
+              <span className="text-chip-xs font-medium text-fg-on-dark-opacity-64 leading-none whitespace-nowrap">
                 {chip.label}
               </span>
             </div>
@@ -172,7 +172,7 @@ function CsCard({ card, t }) {
             href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(card.mailSubject)}`}
             onClick={(e) => e.stopPropagation()}
             data-spring
-            className="mt-2 px-5 py-2 sm:px-6 sm:py-2 bg-cta-600 border border-accent-border rounded-full text-white/95 font-medium text-label-s leading-[1.2] hover:bg-cta-700 transition-colors"
+            className="mt-2 px-5 py-2 sm:px-6 sm:py-2 bg-cta-600 border border-accent-border rounded-full text-fg-on-accent-opacity-95 font-medium text-label-s leading-[1.2] hover:bg-cta-700 transition-colors"
           >
             {t.restrictedCta}
           </a>

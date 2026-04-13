@@ -113,7 +113,7 @@ function Tooltip({ label, isDark, offset = 8, shortcut }) {
   const txt = isDark ? '#1f1f1f' : '#f6f6f6';
   return (
     <div style={{ top: `calc(100% + ${offset}px)` }} className="absolute left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center">
-<div style={{ background: bg, color: txt }} className={`relative z-0 text-tooltip font-light leading-[1.2] pl-2 ${shortcut ? 'pr-[4px]' : 'pr-2'} py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-2`}>
+<div style={{ background: bg, color: txt }} className={`relative z-0 text-tooltip font-light leading-[1.2] pl-2 ${shortcut ? 'pr-[4px]' : 'pr-2'} py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring flex items-center gap-2`}>
         {label}
         {shortcut && <kbd className="text-tooltip-kbd font-medium w-[18px] h-[18px] flex items-center justify-center rounded-[6px] bg-tooltip-keyboard-shortcut-bg text-tooltip-keyboard-shortcut-fg not-italic">{shortcut}</kbd>}
       </div>
@@ -446,7 +446,7 @@ function ContactModal({ lang, onClose }) {
       <div
         aria-hidden="true"
         onClick={onClose}
-        className="fixed inset-0 z-[600] bg-black/40 backdrop-blur-[4px]"
+        className="fixed inset-0 z-[600] bg-modal-scrim backdrop-blur-[4px]"
         style={{ animation: 'fade-in 0.2s ease both' }}
       />
       {/* Centering wrapper — flex centering is more reliable than top/left/transform */}

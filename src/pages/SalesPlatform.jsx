@@ -404,7 +404,7 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false, contain = fa
         role="tooltip"
         className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${active ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
+        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">{name}</div>
       </div>
       <button
         aria-label={name}
@@ -984,7 +984,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
         onClick={onClose}
         aria-label={closeLbl}
         data-spring
-        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/[0.64]"
+        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-lightbox-btn-bg hover:bg-lightbox-btn-bg-hover transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lightbox-fg-muted"
       >
         <img src={imgClose} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
@@ -995,7 +995,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
         onClick={() => scrollToSlide(Math.max(0, index - 1))}
         disabled={index === 0}
         aria-label={prevLbl}
-        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/[0.64]"
+        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-lightbox-btn-bg hover:bg-lightbox-btn-bg-hover transition-colors cursor-pointer disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lightbox-fg-muted"
       >
         <img src={imgChevronLeft} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
@@ -1006,7 +1006,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
         onClick={() => scrollToSlide(Math.min(slides.length - 1, index + 1))}
         disabled={index === slides.length - 1}
         aria-label={nextLbl}
-        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/[0.64]"
+        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-lightbox-btn-bg hover:bg-lightbox-btn-bg-hover transition-colors cursor-pointer disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lightbox-fg-muted"
       >
         <img src={imgChevronRight} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
@@ -1778,7 +1778,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
         <h2 id={headingId} className={`text-h2 font-bold leading-tight ${darkHeader ? 'text-white' : 'text-fg-primary'}`}>
           {title}
         </h2>
-        <div className={`group shrink-0 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center transition-colors ${darkHeader ? 'hover:bg-white/20' : 'hover:bg-btn-nav-bg-hover'}`}>
+        <div className={`group shrink-0 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center transition-colors ${darkHeader ? 'hover:bg-lightbox-btn-bg-hover' : 'hover:bg-btn-nav-bg-hover'}`}>
           <img
             src={imgChevronUp}
             alt=""
@@ -1945,7 +1945,7 @@ function SalesPlatform({ lang, isDark }) {
             <Link
               data-spring
               to="/#case-studies"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-label-s leading-[1.2] rounded-full border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-cta-600 hover:bg-cta-700 text-fg-on-accent-opacity-95 font-medium text-label-s leading-[1.2] rounded-full border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
             >
               <img src={imgArrowRight} alt="" width={16} height={16} className="brightness-0 invert" style={{ transform: 'rotate(180deg)' }} />
               {lang === 'fr' ? 'Retour aux études de cas' : 'Back to case studies'}

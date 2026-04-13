@@ -1,5 +1,44 @@
 [
   {
+    "timestamp": "2026-04-13T16:53:05.461Z",
+    "changeCount": 4,
+    "summary": {
+      "added": 4,
+      "modified": 0,
+      "removed": 0
+    },
+    "changes": [
+      {
+        "path": "semantic.dark.btn.on-dark.bg.hover",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TW.600}"
+      },
+      {
+        "path": "semantic.dark.btn.on-dark.bg.rest",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TW.300}"
+      },
+      {
+        "path": "semantic.light.btn.on-dark.bg.hover",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TW.600}"
+      },
+      {
+        "path": "semantic.light.btn.on-dark.bg.rest",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TW.300}"
+      }
+    ]
+  },
+  {
     "timestamp": "2026-04-13T16:13:01.409Z",
     "changeCount": 2,
     "summary": {

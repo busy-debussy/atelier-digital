@@ -66,7 +66,7 @@ function CookieBanner({ lang, hideFloating = false }) {
         {/* Left: label + message */}
         <div className="flex flex-col gap-5 md:gap-2 md:flex-1 min-w-0 md:min-w-[320px]">
           <p className="text-h6 font-semibold leading-tight text-fg-primary-inverse flex items-center gap-2">
-            <span className="text-[16px] leading-none">🍪</span>
+            <span className="text-copy-m leading-none">🍪</span>
             {t.label}
           </p>
           <p className="hidden md:block text-copy-s leading-relaxed text-fg-muted-inverse md:mt-2">{t.message}</p>
