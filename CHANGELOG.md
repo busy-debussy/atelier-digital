@@ -1,5 +1,17 @@
 # Changelog 
 
+## [2.1.1] — 2026-04-13
+
+### Hero animation speed, file cleanup
+
+#### Hero intro animation
+- Cut total sequence from ~6s to ~3s — reduced `CARET_DELAY` (1000→400ms), `COMMA_PAUSE` (500→280ms), `CHAR_SPEED` (35→25ms), `AFTER_SUBTITLE` (500→80ms), `AFTER_H3_VISIBLE` (500→120ms), `AFTER_PILLS_DONE` (500→150ms)
+- Pills now start appearing while the experience card is still fading in (overlapping stages feel more natural)
+
+#### File cleanup
+- Deleted root `CNAME` — duplicate of `public/CNAME` (Vite copies public/ to dist/ on build; root file was a GitHub Pages leftover)
+- Removed Storybook scaffold stubs: `Button`, `Header`, `Page` (jsx + stories.js + css) — default templates never used by the app
+
 ## [2.1.0] — 2026-04-13
 
 ### Footer, carousels, hero, map tokens, legal chat, nav dimming

@@ -21,16 +21,16 @@ function isAfterWorkHoursLocal() {
 }
 
 // Timing
-const CARET_DELAY        = 1000;
+const CARET_DELAY        = 400;
 const TYPE_SPEED         = 50;
-const COMMA_PAUSE        = 500;
-const CHAR_SPEED         = 35;
-const AFTER_SUBTITLE     = COMMA_PAUSE;
+const COMMA_PAUSE        = 280;
+const CHAR_SPEED         = 25;
+const AFTER_SUBTITLE     = 80;
 const AFTER_H3_MOUNT     = 50;   // rAF-style delay before fading in H3
-const AFTER_H3_VISIBLE   = 500;  // wait for H3 fade to finish
+const AFTER_H3_VISIBLE   = 120;  // pills start while card is still fading in
 const AFTER_PILLS_MOUNT  = 50;
 const PILL_STAGGER       = 60;
-const AFTER_PILLS_DONE   = COMMA_PAUSE;
+const AFTER_PILLS_DONE   = 150;
 const AFTER_BUTTONS_MOUNT = 50;
 
 // Fade-in wrapper (mounts then fades in via double-tick)
