@@ -59,7 +59,7 @@ function CookieBanner({ lang, hideFloating = false }) {
         ref={dialogRef}
         tabIndex={-1}
         inert={!visible || (hideFloating && !explicit)}
-        className={`fixed bottom-[60px] sm:bottom-4 left-1/2 -translate-x-1/2 z-[300] w-[340px] md:w-auto md:max-w-[760px] bg-tooltip-bg/95 backdrop-blur-[4px] rounded-radius-6 shadow-s p-5 flex flex-col md:flex-row md:items-center gap-5 md:gap-6 transition-all duration-300 ease-out ${
+        className={`fixed bottom-[60px] sm:bottom-4 left-1/2 -translate-x-1/2 z-[300] w-[340px] md:w-auto md:max-w-[760px] bg-tooltip-bg/95 backdrop-blur-1 rounded-radius-6 shadow-s p-5 flex flex-col md:flex-row md:items-center gap-5 md:gap-6 transition-all duration-300 ease-out ${
           visible && (!hideFloating || explicit) ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
         }`}
       >

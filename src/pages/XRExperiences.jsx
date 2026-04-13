@@ -929,7 +929,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   }, [activeId]);
 
   return (
-    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring p-[10px]">
+    <nav aria-label="Page sections" className="w-full backdrop-blur-1 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring p-[10px]">
       <div className="overflow-hidden rounded-radius-4">
         <ul ref={trackRef} className="w-full flex items-center gap-1 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
           {sections.map((s) => {
@@ -1331,7 +1331,7 @@ function XRExperiences({ lang, isDark }) {
       {/* ── Chat button circular wrapper — centred behind the trigger when sec nav is visible ── */}
       <div
         aria-hidden="true"
-        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-nav-bg shadow-xs ring-1 ring-nav-ring ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
+        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-1 bg-nav-bg shadow-xs ring-1 ring-nav-ring ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
         style={{ width: 52, height: 52, left: 8, bottom: 8 }}
       />
 

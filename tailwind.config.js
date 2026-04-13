@@ -270,19 +270,19 @@ export default {
 },
 
       spacing: {
-      "space-1": 'var(--spacing-space-1)',
-      "space-2": 'var(--spacing-space-2)',
-      "space-3": 'var(--spacing-space-3)',
-      "space-4": 'var(--spacing-space-4)',
-      "space-5": 'var(--spacing-space-5)',
-      "space-6": 'var(--spacing-space-6)',
-      "space-7": 'var(--spacing-space-7)',
-      "space-8": 'var(--spacing-space-8)',
-      "space-10": 'var(--spacing-space-10)',
-      "space-12": 'var(--spacing-space-12)',
-      "space-16": 'var(--spacing-space-16)',
-      "space-20": 'var(--spacing-space-20)',
-      "space-24": 'var(--spacing-space-24)'
+      "p-1": 'var(--spacing-p-1)',
+      "p-2": 'var(--spacing-p-2)',
+      "p-3": 'var(--spacing-p-3)',
+      "p-4": 'var(--spacing-p-4)',
+      "p-5": 'var(--spacing-p-5)',
+      "p-6": 'var(--spacing-p-6)',
+      "p-7": 'var(--spacing-p-7)',
+      "p-8": 'var(--spacing-p-8)',
+      "p-10": 'var(--spacing-p-10)',
+      "p-12": 'var(--spacing-p-12)',
+      "p-16": 'var(--spacing-p-16)',
+      "p-20": 'var(--spacing-p-20)',
+      "p-24": 'var(--spacing-p-24)'
 },
 
       borderRadius: {
@@ -367,14 +367,6 @@ export default {
       "chip-xs": 'var(--font-size-ui-chip-xs)',
       "tooltip-kbd": 'var(--font-size-ui-tooltip-kbd)',
       "brand-logo": 'var(--font-size-brand-logo)'
-},
-
-      boxShadow: {
-      "xs": 'var(--shadow-xs)',
-      "s": 'var(--shadow-s)',
-      "s-dark": 'var(--shadow-s-dark)',
-      "m": 'var(--shadow-m)',
-      "l": 'var(--shadow-l)'
 },
     },
   },

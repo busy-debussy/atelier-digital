@@ -1,9 +1,15 @@
-/* Hand-maintained — shadow effect styles cannot be exported as Figma variables */
-/* @theme generates both CSS custom properties and Tailwind shadow-* utilities */
+/* Hand-maintained — effect tokens not exportable as Figma variables */
+/* @theme generates both CSS custom properties and Tailwind utilities */
 @theme {
   --shadow-xs: 0px 0px 17.1px 0px rgba(0,0,0,0.08);
   --shadow-s: 0px 4px 20px rgba(0,0,0,0.12);
   --shadow-s-dark: 0px 4px 20px rgba(255,255,255,0.04);
   --shadow-m: 0px 18px 20px 0px rgba(0,0,0,0.06);
   --shadow-l: 0px 24px 64px rgba(0,0,0,0.32);
+
+  --blur-1: 4px;
+  --blur-2: 8px;
+  --blur-3: 12px;
+  --blur-4: 16px;
+  --blur-8: 32px;
 }

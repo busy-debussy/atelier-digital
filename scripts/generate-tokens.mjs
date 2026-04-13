@@ -204,13 +204,13 @@ function parseFigmaVariables(meta) {
           if (typeof val !== 'number') continue;
 
           // Strip collection-group prefixes used in the "layout" collection
-          // e.g. "spacing/space-1" → "space-1", "radius/radius-1" → "radius-1"
+          // e.g. "spacing/p-1" → "p-1", "radius/radius-1" → "radius-1"
           let shortName = canonName;
           if      (shortName.startsWith('spacing/')) shortName = shortName.slice('spacing/'.length);
           else if (shortName.startsWith('radius/'))  shortName = shortName.slice('radius/'.length);
           else if (shortName.startsWith('blur/'))    shortName = shortName.slice('blur/'.length);
 
-          if (shortName.startsWith('space-')) {
+          if (shortName.startsWith('p-')) {
             result.spacing[shortName] = val;
           } else if (shortName.startsWith('radius-') || shortName === 'radius-half' || shortName === 'radius-full') {
             result.radius[shortName] = val;
@@ -596,9 +596,9 @@ const typographyRaw = {
 };
 
 const spacingValues = {
-  'space-1': 4, 'space-2': 8, 'space-3': 12, 'space-4': 16,
-  'space-5': 20, 'space-6': 24, 'space-7': 28, 'space-8': 32,
-  'space-10': 40, 'space-12': 48, 'space-16': 64, 'space-20': 80, 'space-24': 96,
+  'p-1': 4, 'p-2': 8, 'p-3': 12, 'p-4': 16,
+  'p-5': 20, 'p-6': 24, 'p-7': 28, 'p-8': 32,
+  'p-10': 40, 'p-12': 48, 'p-16': 64, 'p-20': 80, 'p-24': 96,
 };
 
 const radiusValues = {

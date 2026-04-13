@@ -1391,18 +1391,6 @@
         "icon-bg": {
           "$value": "{color.Z.100}",
           "$type": "color"
-        },
-        "on-dark": {
-          "bg": {
-            "rest": {
-              "$value": "{color.TW.300}",
-              "$type": "color"
-            },
-            "hover": {
-              "$value": "{color.TW.600}",
-              "$type": "color"
-            }
-          }
         }
       },
       "palette": {
@@ -1907,18 +1895,6 @@
         "icon-bg": {
           "$value": "{color.Z.700}",
           "$type": "color"
-        },
-        "on-dark": {
-          "bg": {
-            "rest": {
-              "$value": "{color.TW.300}",
-              "$type": "color"
-            },
-            "hover": {
-              "$value": "{color.TW.600}",
-              "$type": "color"
-            }
-          }
         }
       },
       "palette": {

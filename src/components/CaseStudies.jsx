@@ -114,7 +114,7 @@ function CsCard({ card, t }) {
       <img src={card.bg} alt="" className="absolute inset-0 w-full h-full object-cover" />
 
       <div
-        className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 lg:p-4 flex flex-col gap-2 sm:gap-3 lg:gap-3 backdrop-blur-[32px]"
+        className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 lg:p-4 flex flex-col gap-2 sm:gap-3 lg:gap-3 backdrop-blur-8"
         style={{ background: panelBg }}
       >
         <div className="flex flex-wrap gap-1 sm:gap-2">
@@ -160,7 +160,7 @@ function CsCard({ card, t }) {
       {/* Restricted access overlay, hover (desktop) + state (touch) */}
       {card.cta === 'locked' && (
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center gap-4 sm:gap-5 bg-bg-glass-heavy backdrop-blur-[8px] opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto p-6"
+          className="absolute inset-0 flex flex-col items-center justify-center gap-4 sm:gap-5 bg-bg-glass-heavy backdrop-blur-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto p-6"
           style={{ opacity: showRestricted ? 1 : undefined, pointerEvents: showRestricted ? 'auto' : undefined }}
         >
           <img src={imgLockLg} alt="" width={80} height={80} className="brightness-0 invert" />

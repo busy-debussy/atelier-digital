@@ -254,7 +254,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
       aria-label={lang === 'fr' ? 'Études de cas' : 'Case studies'}
       ref={dropdownRef}
       style={portalStyle}
-      className="w-[198px] backdrop-blur-[12px] bg-nav-bg border border-glass-default rounded-radius-4 overflow-hidden shadow-s"
+      className="w-[198px] backdrop-blur-3 bg-nav-bg border border-glass-default rounded-radius-4 overflow-hidden shadow-s"
     >
       <ul role="none" className="p-2 flex flex-col">
         {items.map(({ key, to, locked }) => (
@@ -312,7 +312,7 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
       aria-label={lang === 'en' ? 'Language selection' : 'Sélection de la langue'}
       ref={dropdownRef}
       style={portalStyle}
-      className="backdrop-blur-[12px] bg-nav-bg border border-glass-default rounded-radius-4 overflow-hidden shadow-s"
+      className="backdrop-blur-3 bg-nav-bg border border-glass-default rounded-radius-4 overflow-hidden shadow-s"
     >
       <ul role="none" className="p-2">
         <li role="none">
@@ -446,7 +446,7 @@ function ContactModal({ lang, onClose }) {
       <div
         aria-hidden="true"
         onClick={onClose}
-        className="fixed inset-0 z-[600] bg-modal-scrim backdrop-blur-[4px]"
+        className="fixed inset-0 z-[600] bg-modal-scrim backdrop-blur-1"
         style={{ animation: 'fade-in 0.2s ease both' }}
       />
       {/* Centering wrapper — flex centering is more reliable than top/left/transform */}
@@ -634,7 +634,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onCo
   return (
     <nav
       ref={navRef}
-      className="flex items-center pr-2 backdrop-blur-[4px] bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring"
+      className="flex items-center pr-2 backdrop-blur-1 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring"
       style={{ gap: isTablet ? '32px' : '192px' }}
     >
       <div className="relative">
@@ -709,7 +709,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
 
   return (
     <div className="w-full flex flex-col items-center gap-4">
-      <div className="w-full flex items-center backdrop-blur-[4px] bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring">
+      <div className="w-full flex items-center backdrop-blur-1 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring">
         <a data-spring href="/" tabIndex={0} onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-1 rounded-radius-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus">
           <div className="flex items-center gap-1 pl-1 pr-4 py-1 rounded-radius-5">
             <img src={imgLogo} alt="" width={36} height={36} className="shrink-0" />
@@ -737,7 +737,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
       )}
 
       {menuOpen && (
-        <div className="w-full backdrop-blur-[8px] bg-nav-mobile border border-glass-default rounded-radius-8 overflow-hidden">
+        <div className="w-full backdrop-blur-2 bg-nav-mobile border border-glass-default rounded-radius-8 overflow-hidden">
           <ol className="flex flex-col gap-2 p-4">
             {mobilePages.map(({ key, to, modal }) => (
               <li key={key}>

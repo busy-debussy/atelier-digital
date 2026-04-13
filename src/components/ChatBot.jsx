@@ -148,7 +148,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
         }`}
         style={{ left: '16px', right: '16px', maxWidth: '380px' }}
       >
-        <div className="bg-tooltip-bg/95 backdrop-blur-[16px] rounded-radius-7 shadow-m flex flex-col overflow-hidden" style={{ maxHeight: '520px' }}>
+        <div className="bg-tooltip-bg/95 backdrop-blur-4 rounded-radius-7 shadow-m flex flex-col overflow-hidden" style={{ maxHeight: '520px' }}>
 
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 shrink-0">

@@ -61,7 +61,7 @@ walkSemantic(tokens.semantic.light);  // light is the canonical value; dark over
 
 const spacing = {};
 for (const name of Object.keys(tokens.spacing)) {
-  // e.g. 'space-4' → var(--spacing-space-4)
+  // e.g. 'p-4' → var(--spacing-p-4)
   spacing[name] = v(`spacing-${name}`);
 }
 
