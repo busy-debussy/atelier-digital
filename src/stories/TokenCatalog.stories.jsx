@@ -2,11 +2,6 @@ import tokens from '../../tokens.json';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-// Convert token path "bg/page" → CSS var name "--bg-page"
-function pathToVar(path) {
-  return '--' + path.replace(/\//g, '-');
-}
-
 // Resolve a CSS variable to its computed value in the current document
 function resolveVar(name) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -17,21 +12,19 @@ function resolveVar(name) {
 function PrimitiveGroup({ name, shades }) {
   return (
     <div style={{ marginBottom: 24 }}>
-      <div style={{ fontSize: 11, fontWeight: 600, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 8 }}>
+      <div className="text-fg-muted font-semibold" style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 8 }}>
         {name}
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
         {Object.entries(shades).map(([shade]) => {
           const varName = `--color-${name.toLowerCase()}-${shade}`;
-          const value = resolveVar(varName);
           return (
             <div key={shade} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-              <div style={{
+              <div className="border border-border-subtle" style={{
                 width: 40, height: 40, borderRadius: 6,
                 background: `var(${varName})`,
-                border: '1px solid rgba(128,128,128,0.15)',
               }} />
-              <span style={{ fontSize: 10, color: '#9ca3af', textAlign: 'center' }}>{shade}</span>
+              <span className="text-fg-muted" style={{ fontSize: 10, textAlign: 'center' }}>{shade}</span>
             </div>
           );
         })}
@@ -59,7 +52,7 @@ function flattenSemantic(obj, prefix = '') {
 function SemanticSection({ group, paths }) {
   return (
     <div style={{ marginBottom: 24 }}>
-      <div style={{ fontSize: 11, fontWeight: 600, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 8 }}>
+      <div className="text-fg-muted font-semibold" style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 8 }}>
         {group}
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -68,12 +61,11 @@ function SemanticSection({ group, paths }) {
           const value = resolveVar(varName);
           return (
             <div key={path} title={`${varName}\n${value}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, width: 72 }}>
-              <div style={{
+              <div className="border border-border-subtle" style={{
                 width: 48, height: 48, borderRadius: 8,
                 background: `var(${varName})`,
-                border: '1px solid rgba(128,128,128,0.15)',
               }} />
-              <span style={{ fontSize: 9, color: '#9ca3af', textAlign: 'center', wordBreak: 'break-all', lineHeight: 1.3 }}>
+              <span className="text-fg-muted" style={{ fontSize: 9, textAlign: 'center', wordBreak: 'break-all', lineHeight: 1.3 }}>
                 {path.replace(/^[^-]+-/, '')}
               </span>
             </div>
@@ -120,7 +112,6 @@ const TYPE_ALIASES = [
 ];
 
 function TypographyRow({ alias, label }) {
-  const varName = `--font-size-${alias.includes('-') && !alias.startsWith('font') ? alias : alias}`;
   // short aliases map to canonical vars — resolve the computed size
   const size = resolveVar(`--font-size-${
     alias === 'display-1' ? 'headings-display-h1' :
@@ -145,13 +136,13 @@ function TypographyRow({ alias, label }) {
     alias
   }`);
   return (
-    <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, padding: '8px 0', borderBottom: '1px solid rgba(128,128,128,0.1)' }}>
-      <span style={{ width: 100, fontSize: 11, color: '#6b7280', flexShrink: 0 }}>{label}</span>
-      <span style={{ fontSize: `var(--font-size-headings-h1)`, lineHeight: 1, fontFamily: 'inherit' }}
+    <div className="border-b border-border-subtle" style={{ display: 'flex', alignItems: 'baseline', gap: 16, padding: '8px 0' }}>
+      <span className="text-fg-secondary" style={{ width: 100, fontSize: 11, flexShrink: 0 }}>{label}</span>
+      <span style={{ fontSize: `var(--font-size-headings-h1)`, lineHeight: 1 }}
             className={`text-${alias} text-fg-primary`}>
         Aa
       </span>
-      <span style={{ fontSize: 10, color: '#9ca3af', marginLeft: 'auto' }}>{size || '?'}</span>
+      <span className="text-fg-muted font-mono" style={{ fontSize: 10, marginLeft: 'auto' }}>{size || '?'}</span>
     </div>
   );
 }
@@ -161,10 +152,10 @@ function TypographyRow({ alias, label }) {
 function SpacingRow({ name }) {
   const value = resolveVar(`--spacing-${name}`);
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '6px 0', borderBottom: '1px solid rgba(128,128,128,0.1)' }}>
-      <span style={{ width: 80, fontSize: 11, color: '#6b7280', fontFamily: 'monospace' }}>{name}</span>
+    <div className="border-b border-border-subtle" style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '6px 0' }}>
+      <span className="text-fg-secondary font-mono" style={{ width: 80, fontSize: 11 }}>{name}</span>
       <div style={{ height: 8, background: 'var(--accent-bg)', borderRadius: 2, width: `var(--spacing-${name})` }} />
-      <span style={{ fontSize: 10, color: '#9ca3af', marginLeft: 'auto' }}>{value}</span>
+      <span className="text-fg-muted" style={{ fontSize: 10, marginLeft: 'auto' }}>{value}</span>
     </div>
   );
 }
@@ -174,14 +165,14 @@ function SpacingRow({ name }) {
 function RadiusRow({ name }) {
   const value = resolveVar(`--radius-${name}`);
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '6px 0', borderBottom: '1px solid rgba(128,128,128,0.1)' }}>
-      <span style={{ width: 100, fontSize: 11, color: '#6b7280', fontFamily: 'monospace' }}>{name}</span>
+    <div className="border-b border-border-subtle" style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '6px 0' }}>
+      <span className="text-fg-secondary font-mono" style={{ width: 100, fontSize: 11 }}>{name}</span>
       <div style={{
         width: 48, height: 48,
         background: 'var(--accent-bg)',
         borderRadius: `var(--radius-${name})`,
       }} />
-      <span style={{ fontSize: 10, color: '#9ca3af', marginLeft: 'auto' }}>{value}</span>
+      <span className="text-fg-muted" style={{ fontSize: 10, marginLeft: 'auto' }}>{value}</span>
     </div>
   );
 }
@@ -193,14 +184,13 @@ const SHADOWS = ['xs', 's', 's-dark', 'm', 'l'];
 function ShadowRow({ name }) {
   const value = resolveVar(`--shadow-${name}`);
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '10px 0', borderBottom: '1px solid rgba(128,128,128,0.1)' }}>
-      <span style={{ width: 100, fontSize: 11, color: '#6b7280', fontFamily: 'monospace' }}>shadow-{name}</span>
-      <div style={{
+    <div className="border-b border-border-subtle" style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '10px 0' }}>
+      <span className="text-fg-secondary font-mono" style={{ width: 100, fontSize: 11 }}>shadow-{name}</span>
+      <div className="bg-bg-surface" style={{
         width: 48, height: 48, borderRadius: 8,
-        background: 'var(--bg-surface)',
         boxShadow: `var(--shadow-${name})`,
       }} />
-      <span style={{ fontSize: 10, color: '#9ca3af', marginLeft: 'auto', maxWidth: 300, textAlign: 'right', lineHeight: 1.4 }}>{value}</span>
+      <span className="text-fg-muted" style={{ fontSize: 10, marginLeft: 'auto', maxWidth: 300, textAlign: 'right', lineHeight: 1.4 }}>{value}</span>
     </div>
   );
 }
@@ -210,7 +200,7 @@ function ShadowRow({ name }) {
 function Section({ title, children }) {
   return (
     <div style={{ marginBottom: 48 }}>
-      <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--fg-primary)', margin: '0 0 20px' }}>{title}</h2>
+      <h2 className="text-fg-primary font-bold" style={{ fontSize: 18, margin: '0 0 20px' }}>{title}</h2>
       {children}
     </div>
   );
@@ -228,7 +218,7 @@ function ColorsPage() {
   }
 
   return (
-    <div style={{ padding: '32px 40px', fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', background: 'var(--bg-page)', minHeight: '100vh' }}>
+    <div className="bg-bg-page font-sans min-h-screen" style={{ padding: '32px 40px' }}>
       <Section title="Primitive Palettes">
         {Object.entries(tokens.color).map(([name, shades]) => (
           <PrimitiveGroup key={name} name={name} shades={shades} />
@@ -245,7 +235,7 @@ function ColorsPage() {
 
 function TypographyPage() {
   return (
-    <div style={{ padding: '32px 40px', fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', background: 'var(--bg-page)', minHeight: '100vh' }}>
+    <div className="bg-bg-page font-sans min-h-screen" style={{ padding: '32px 40px' }}>
       <Section title="Type Scale">
         {TYPE_ALIASES.map(([alias, label]) => (
           <TypographyRow key={alias} alias={alias} label={label} />
@@ -257,7 +247,7 @@ function TypographyPage() {
 
 function SpacingPage() {
   return (
-    <div style={{ padding: '32px 40px', fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', background: 'var(--bg-page)', minHeight: '100vh' }}>
+    <div className="bg-bg-page font-sans min-h-screen" style={{ padding: '32px 40px' }}>
       <Section title="Spacing">
         {Object.keys(tokens.spacing).map(name => (
           <SpacingRow key={name} name={name} />

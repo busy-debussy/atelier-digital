@@ -18,11 +18,18 @@ const preview = {
     (Story, context) => {
       const scheme = context.globals.colorScheme ?? 'light';
       document.documentElement.classList.toggle('dark', scheme === 'dark');
-      document.documentElement.style.background = scheme === 'dark' ? '#141414' : '#ffffff';
-      return <Story />;
+      // Let the design system token drive the background colour
+      document.documentElement.style.background = '';
+      return (
+        <div className="bg-bg-page text-fg-primary min-h-screen p-8 font-sans">
+          <Story />
+        </div>
+      );
     },
   ],
   parameters: {
+    // Remove Storybook's built-in background switcher — our toolbar toggle handles it
+    backgrounds: { disable: true },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -30,7 +37,7 @@ const preview = {
       },
     },
     a11y: {
-      test: "todo",
+      test: 'todo',
     },
   },
 };

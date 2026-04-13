@@ -91,7 +91,7 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
         <Route path="/" element={<Home lang={lang} isDark={isDark} enableDark={() => setIsDark(true)} />} />
         <Route path="/case-study/sales-platform" element={<SalesPlatform lang={lang} isDark={isDark} />} />
         <Route path="/case-study/xr" element={<XRExperiences lang={lang} isDark={isDark} />} />
-        <Route path="/resume" element={<Resume lang={lang} />} />
+<Route path="/resume" element={<Resume lang={lang} />} />
         <Route path="/cookies" element={<Cookies lang={lang} />} />
         <Route path="/privacy" element={<Privacy lang={lang} />} />
         <Route path="/terms" element={<Terms lang={lang} />} />

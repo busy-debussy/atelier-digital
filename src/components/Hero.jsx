@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { color } from '../design-system';
 
@@ -20,52 +20,9 @@ function isAfterWorkHoursLocal() {
   return h >= 18 || h < 5;
 }
 
-// Timing
-const CARET_DELAY        = 400;
-const TYPE_SPEED         = 50;
-const COMMA_PAUSE        = 280;
-const CHAR_SPEED         = 25;
-const AFTER_SUBTITLE     = 80;
-const AFTER_H3_MOUNT     = 50;   // rAF-style delay before fading in H3
-const AFTER_H3_VISIBLE   = 120;  // pills start while card is still fading in
-const AFTER_PILLS_MOUNT  = 50;
-const PILL_STAGGER       = 60;
-const AFTER_PILLS_DONE   = 150;
-const AFTER_BUTTONS_MOUNT = 50;
-
-// Fade-in wrapper (mounts then fades in via double-tick)
-function FadeIn({ children, className = '', duration = 500, instant = false }) {
-  const reduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const [visible, setVisible] = useState(instant);
-  useEffect(() => {
-    if (instant) return;
-    const raf = requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
-    return () => cancelAnimationFrame(raf);
-  }, [instant]);
-  return (
-    <div
-      className={className}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: reduced ? undefined : (visible ? 'translateY(0px)' : 'translateY(16px)'),
-        transition: instant ? undefined : `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1), transform ${duration}ms cubic-bezier(0.22,1,0.36,1)`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-// Helpers
-const hexToRgba = (hex, alpha) => {
-  const [r, g, b] = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
-  return `rgba(${r},${g},${b},${alpha})`;
-};
-
-// Session flag, animation only plays once per page load
+// Session flag — animation only plays once per page load
 let sessionAnimDone = false;
 
-// Heading helper
 const france = isFranceTz();
 
 function getHeading(lang, dark) {
@@ -73,264 +30,128 @@ function getHeading(lang, dark) {
   return isAfterWorkHoursLocal() ? "Hey, I'm David!\u00a0😀" : "Hi, I'm David!\u00a0😀";
 }
 
-// Component
+const hexToRgba = (hex, alpha) => {
+  const [r, g, b] = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
+  return `rgba(${r},${g},${b},${alpha})`;
+};
+
+const EASE = 'cubic-bezier(0.22,1,0.36,1)';
+
 export default function Hero({ lang, isDark, enableDark, onDone }) {
   const evening = france && isEveningInParis();
   const prefersReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const skipAnim = sessionAnimDone || prefersReduced;
+  const skip = sessionAnimDone || prefersReduced;
 
-  // heading used to drive the typing animation, only changes on lang switch
-  const heading = getHeading(lang, evening || (lang === 'fr' && isDark));
-  const subtitle  = lang === 'fr' ? 'Designer produit senior'  : 'Senior product designer';
-  const expLabel  = lang === 'fr' ? 'expert en'                : 'experienced in';
-  const btnCV     = lang === 'fr' ? 'CV intéractif'            : 'Interactive CV';
-  const btnCases  = lang === 'fr' ? 'Études de cas'            : 'Case studies';
+  const heading  = getHeading(lang, evening || (lang === 'fr' && isDark));
+  const subtitle = lang === 'fr' ? 'Designer produit senior'  : 'Senior product designer';
+  const expLabel = lang === 'fr' ? 'expert en'                : 'experienced in';
+  const btnCV    = lang === 'fr' ? 'CV intéractif'            : 'Interactive CV';
+  const btnCases = lang === 'fr' ? 'Études de cas'            : 'Case studies';
 
-  const pills = (lang === 'fr'
+  const pills = lang === 'fr'
     ? ['Digital twins', 'Design 3D', 'Accessibilité', 'Design systems', 'Vibe-coding', 'Stratégie UX']
-    : ['Digital twins', '3D design', 'Accessibility', 'Design systems', 'Vibe-coding', 'UX strategy']
-  );
-  const subtitleChars = [...subtitle];
+    : ['Digital twins', '3D design', 'Accessibility', 'Design systems', 'Vibe-coding', 'UX strategy'];
 
-  // Render gates, skip straight to final state if animation already played
-  const [displayed,      setDisplayed]      = useState(skipAnim ? heading : '');
-  const [typingDone,     setTypingDone]     = useState(skipAnim);
-  const [showSubtitle,   setShowSubtitle]   = useState(skipAnim);
-  const [visibleChars,   setVisibleChars]   = useState(skipAnim ? subtitleChars.length : 0);
-  const [showH3,        setShowH3]         = useState(skipAnim);
-  const [visiblePills,  setVisiblePills]   = useState(skipAnim ? pills.length : 0);
-  const [showButtons,   setShowButtons]    = useState(skipAnim);
-
-  const timers = useRef([]);
-  const t = (fn, ms) => { const id = setTimeout(fn, ms); timers.current.push(id); };
-  const isFirstHeading = useRef(true);
+  const [ready, setReady] = useState(skip);
 
   // Auto dark for French evening visitors
   useEffect(() => {
     if (evening && lang === 'fr' && enableDark) enableDark();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Reset + run full animation on heading change (lang change)
+  // Trigger animation on next paint; mark done after last element fades in
   useEffect(() => {
-    timers.current.forEach(clearTimeout);
-    timers.current = [];
+    if (skip) { onDone?.(); return; }
+    const raf = requestAnimationFrame(() => requestAnimationFrame(() => setReady(true)));
+    const id  = setTimeout(() => { sessionAnimDone = true; onDone?.(); }, 900);
+    return () => { cancelAnimationFrame(raf); clearTimeout(id); };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const isLangSwitch = !isFirstHeading.current;
-    isFirstHeading.current = false;
-
-    if (skipAnim || isLangSwitch) {
-      setDisplayed(heading);
-      setTypingDone(true);
-      setShowSubtitle(true);
-      setVisibleChars(subtitleChars.length);
-      setShowH3(true);
-      setVisiblePills(pills.length);
-      setShowButtons(true);
-      sessionAnimDone = true;
-      onDone?.();
-      return;
-    }
-
-    setDisplayed('');
-    setTypingDone(false);
-    setShowSubtitle(false);
-    setVisibleChars(0);
-    setShowH3(false);
-    setVisiblePills(0);
-    setShowButtons(false);
-
-    const chars = [...heading]; // Split by Unicode code points so emoji aren't sliced mid-surrogate
-    let i = 0;
-    let paused = false;
-
-    const startTyping = () => {
-      const iv = setInterval(() => {
-        if (paused) return;
-        i++;
-        setDisplayed(chars.slice(0, i).join(''));
-        if (chars[i - 1] === ',') {
-          paused = true;
-          t(() => { paused = false; }, COMMA_PAUSE);
-        }
-        if (i >= chars.length) {
-          clearInterval(iv);
-          setTypingDone(true);
-        }
-      }, TYPE_SPEED);
-      timers.current.push(iv);
-    };
-
-    t(startTyping, CARET_DELAY);
-    return () => { timers.current.forEach(clearTimeout); timers.current = []; };
-  }, [heading]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Instant greeting swap on dark mode toggle (no re-animation)
-  useEffect(() => {
-    if (typingDone && lang === 'fr') {
-      setDisplayed(getHeading(lang, isDark));
-    }
-  }, [isDark]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Mount subtitle after a pause matching the comma pause
-  useEffect(() => {
-    if (!typingDone) return;
-    const id = setTimeout(() => setShowSubtitle(true), COMMA_PAUSE);
-    return () => clearTimeout(id);
-  }, [typingDone]);
-
-  useEffect(() => {
-    if (!showSubtitle) return;
-    if (skipAnim) return;
-    let c = 0;
-    const iv = setInterval(() => {
-      c++;
-      setVisibleChars(c);
-      if (c >= subtitleChars.length) clearInterval(iv);
-    }, CHAR_SPEED);
-    return () => clearInterval(iv);
-  }, [showSubtitle]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // After subtitle done: mount H3+pills container → stagger pills → buttons
-  useEffect(() => {
-    if (visibleChars < subtitleChars.length) return;
-    if (skipAnim) return;
-    t(() => {
-      setShowH3(true); // mounts H3 + pills container (pills all opacity-0)
-      t(() => {
-        // Start pill stagger after H3 has faded in
-        let p = 0;
-        const iv = setInterval(() => {
-          p++;
-          setVisiblePills(p);
-          if (p >= pills.length) {
-            clearInterval(iv);
-            t(() => { setShowButtons(true); sessionAnimDone = true; onDone?.(); }, AFTER_PILLS_DONE);
-          }
-        }, PILL_STAGGER);
-        timers.current.push(iv);
-      }, AFTER_H3_MOUNT + AFTER_H3_VISIBLE);
-    }, AFTER_SUBTITLE);
-  }, [visibleChars]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const caretBlinking = displayed.length === 0;
+  // Inline style helper — all animation is CSS, JS only flips one boolean
+  const fadeUp = (delay, dur = 560) => skip ? undefined : ({
+    opacity:    ready ? 1 : 0,
+    transform:  prefersReduced ? undefined : (ready ? 'none' : 'translateY(18px)'),
+    transition: `opacity ${dur}ms ${delay}ms ${EASE}, transform ${dur}ms ${delay}ms ${EASE}`,
+  });
 
   return (
     <section aria-label={lang === 'fr' ? 'Présentation' : 'Introduction'} className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 pb-24">
       <div aria-hidden="true" className="hero-accent-glow pointer-events-none absolute inset-0 dark:hidden" />
 
+      <div className="flex flex-col items-center gap-0">
 
-      <div className="flex flex-col items-center gap-0 -mt-0 sm:mt-0">
-
-        {/* H1, typed heading */}
-        <div>
-          <h1
-            aria-label={heading}
-            className="text-display-1 font-bold tracking-tight leading-tight text-fg-primary"
-          >
-            {displayed}
-            {!typingDone && (
-              <span aria-hidden="true" className={`inline-block w-[3px] h-[0.85em] ml-1 align-middle bg-tooltip-bg rounded-radius-half ${caretBlinking ? 'motion-safe:animate-[blink_1s_step-end_infinite]' : ''}`} />
-            )}
+        {/* H1 */}
+        <div style={fadeUp(0)}>
+          <h1 className="text-display-1 font-bold tracking-tight leading-tight text-fg-primary">
+            {heading}
           </h1>
         </div>
 
-        {/* H2, subtitle word by word */}
-        {showSubtitle && (
-          <div className="mt-6 sm:mt-8">
-            <h2
-              aria-label={subtitle}
-              className="text-display-2 font-semibold leading-tight text-fg-muted"
-            >
-              {subtitleChars.map((char, i) =>
-                char === ' ' ? ' ' : (
-                  <span
-                    key={i}
-                    style={{
-                      opacity: i < visibleChars ? 1 : 0,
-                      transition: 'opacity 300ms cubic-bezier(0.22,1,0.36,1)',
-                    }}
-                  >
-                    {char}
-                  </span>
-                )
-              )}
-            </h2>
-          </div>
-        )}
-
-        {/* H3 + Pills + Buttons — grid height animates from 0→1fr so H1+H2 move up smoothly */}
-        <div style={{
-          display: 'grid',
-          gridTemplateRows: showH3 ? '1fr' : '0fr',
-          transition: skipAnim ? undefined : 'grid-template-rows 700ms cubic-bezier(0.22,1,0.36,1)',
-        }}>
-        <div style={{ overflow: 'hidden', minHeight: 0, padding: '20px', margin: '-20px' }}>
-          <div className="mt-10 sm:mt-20 flex flex-col items-center gap-5 sm:gap-6">
-            <FadeIn instant={skipAnim}>
-              <Link
-                data-spring
-                to="/resume?from=home#experience"
-                className="group block border border-glass-subtle hover:border-border-subtle rounded-radius-8 px-6 py-5 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-s dark:hover:shadow-s-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 cursor-pointer"
-              >
-                <h3 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted">
-                  {expLabel}
-                </h3>
-                <ul
-                  aria-label={expLabel}
-                  className="list-none grid grid-cols-3 gap-2 p-0 m-0"
-                >
-                  {pills.map((pill, i) => (
-                    <li
-                      key={pill}
-                      className="px-2 py-1 sm:px-4 sm:py-2 rounded-full text-tag-s font-medium leading-normal flex items-center justify-center"
-                      style={{
-                        opacity: i < visiblePills ? 1 : 0,
-                        transform: prefersReduced ? undefined : (i < visiblePills ? 'translateY(0px)' : 'translateY(8px)'),
-                        transition: 'opacity 400ms cubic-bezier(0.22,1,0.36,1), transform 400ms cubic-bezier(0.22,1,0.36,1)',
-                        backgroundColor: isDark
-                          ? color.uiConceptAccent[i % color.uiConceptAccent.length].bgDark
-                          : hexToRgba(color.uiConceptAccent[i % color.uiConceptAccent.length].bg, 0.45),
-                        color: isDark
-                          ? color.uiConceptAccent[i % color.uiConceptAccent.length].fgDark
-                          : color.uiConceptAccent[i % color.uiConceptAccent.length].fg,
-                      }}
-                    >
-                      {pill}
-                    </li>
-                  ))}
-                </ul>
-              </Link>
-            </FadeIn>
-            <div
-              className="mt-8 sm:mt-10 flex gap-3"
-              style={{
-                opacity: showButtons ? 1 : 0,
-                transition: 'opacity 500ms cubic-bezier(0.22,1,0.36,1)',
-              }}
-            >
-              <a
-                href="#case-studies"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                  const mobile = window.matchMedia('(max-width: 639px)').matches;
-                  document.getElementById('case-studies')?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: mobile ? 'center' : 'start' });
-                }}
-                data-spring
-                className="px-6 py-3 bg-cta-600 hover:bg-cta-700 text-fg-on-accent-opacity-95 font-medium text-btn-m rounded-full border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
-              >
-                {btnCases}
-              </a>
-              <Link
-                to="/resume"
-                data-spring
-                className="px-6 py-3 text-cta-600 hover:text-cta-700 dark:text-fg-primary dark:hover:opacity-80 font-medium text-btn-m rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary focus-visible:ring-offset-2"
-              >
-                {btnCV}
-              </Link>
-            </div>
-          </div>
+        {/* H2 */}
+        <div className="mt-6 sm:mt-8" style={fadeUp(100)}>
+          <h2 className="text-display-2 font-semibold leading-tight text-fg-muted">
+            {subtitle}
+          </h2>
         </div>
+
+        {/* Card + pills */}
+        <div className="mt-10 sm:mt-20" style={fadeUp(200, 480)}>
+          <Link
+            data-spring
+            to="/resume?from=home#experience"
+            className="group block border border-glass-subtle hover:border-border-subtle rounded-radius-8 px-6 py-5 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-s dark:hover:shadow-s-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 cursor-pointer"
+          >
+            <h3 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted">
+              {expLabel}
+            </h3>
+            <ul aria-label={expLabel} className="list-none grid grid-cols-3 gap-2 p-0 m-0">
+              {pills.map((pill, i) => (
+                <li
+                  key={pill}
+                  className="px-2 py-1 sm:px-4 sm:py-2 rounded-full text-tag-s font-medium leading-normal flex items-center justify-center"
+                  style={{
+                    ...(skip ? {} : {
+                      opacity:    ready ? 1 : 0,
+                      transform:  prefersReduced ? undefined : (ready ? 'none' : 'translateY(10px)'),
+                      transition: `opacity 480ms ${320 + i * 55}ms ${EASE}, transform 480ms ${320 + i * 55}ms ${EASE}`,
+                    }),
+                    backgroundColor: isDark
+                      ? color.uiConceptAccent[i % color.uiConceptAccent.length].bgDark
+                      : hexToRgba(color.uiConceptAccent[i % color.uiConceptAccent.length].bg, 0.45),
+                    color: isDark
+                      ? color.uiConceptAccent[i % color.uiConceptAccent.length].fgDark
+                      : color.uiConceptAccent[i % color.uiConceptAccent.length].fg,
+                  }}
+                >
+                  {pill}
+                </li>
+              ))}
+            </ul>
+          </Link>
+        </div>
+
+        {/* Buttons */}
+        <div className="mt-8 sm:mt-10 flex gap-3" style={fadeUp(500)}>
+          <a
+            href="#case-studies"
+            onClick={(e) => {
+              e.preventDefault();
+              const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              const mobile  = window.matchMedia('(max-width: 639px)').matches;
+              document.getElementById('case-studies')?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: mobile ? 'center' : 'start' });
+            }}
+            data-spring
+            className="px-6 py-3 bg-cta-600 hover:bg-cta-700 text-fg-on-accent-opacity-95 font-medium text-btn-m rounded-full border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
+          >
+            {btnCases}
+          </a>
+          <Link
+            to="/resume"
+            data-spring
+            className="px-6 py-3 text-cta-600 hover:text-cta-700 dark:text-fg-primary dark:hover:opacity-80 font-medium text-btn-m rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary focus-visible:ring-offset-2"
+          >
+            {btnCV}
+          </Link>
         </div>
 
       </div>
