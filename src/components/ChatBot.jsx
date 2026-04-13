@@ -158,7 +158,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
               data-spring
               onClick={() => setOpen(false)}
               aria-label="Close"
-              className="group flex items-center justify-center p-2.5 rounded-full hover:bg-white dark:hover:bg-[#1f1f1f] transition-[background-color] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 -mt-2 -mr-3"
+              className="group flex items-center justify-center p-2.5 rounded-full hover:bg-white dark:hover:bg-bg-surface transition-[background-color] duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 -mt-2 -mr-3"
             >
               <img
                 src={imgClose}
@@ -170,7 +170,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
           </div>
 
           {/* Cookie notice */}
-          <p className="px-5 pb-3 text-[12px] leading-normal text-[#fafafa]/40 dark:text-fg-primary-inverse/40 shrink-0">
+          <p className="px-5 pb-3 text-[12px] leading-normal text-fg-primary-inverse/40 shrink-0">
             {l.cookieNotice}{' '}
             <a href="/cookies" className="underline text-fg-primary-inverse hover:opacity-70 transition-opacity">{l.cookieLink}</a>.
           </p>
@@ -246,7 +246,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
                 disabled={!input.trim() || loading}
                 data-spring
                 aria-label={l.send}
-                className="shrink-0 rounded-radius-3 bg-cta-600 border border-[#5289f2] text-white/95 flex items-center justify-center p-2 transition-opacity disabled:opacity-30 enabled:cursor-pointer enabled:hover:bg-cta-700"
+                className="shrink-0 rounded-radius-3 bg-cta-600 border border-accent-border text-white/95 flex items-center justify-center p-2 transition-opacity disabled:opacity-30 enabled:cursor-pointer enabled:hover:bg-cta-700"
               >
                 <img src={imgSend} alt="" width={24} height={24} className="brightness-0 invert" />
               </button>

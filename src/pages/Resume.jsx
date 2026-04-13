@@ -536,7 +536,7 @@ function SummarySection({ t, lang }) {
                 tabIndex={0}
                 aria-label={lang === 'fr' ? 'Télécharger PDF via Google Drive' : 'Download PDF via Google Drive'}
                 data-spring
-                className="w-full flex items-center justify-center py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-btn-m leading-[1.2] rounded-radius-4 border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus"
+                className="w-full flex items-center justify-center py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-btn-m leading-[1.2] rounded-radius-4 border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus"
               >
                 {t.downloadPdf}
               </a>
@@ -778,7 +778,7 @@ function ExperienceSection({ t }) {
             const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
             return (
               <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-fg-dot-edge' : 'w-2 h-2 bg-fg-dot-rest group-hover:bg-fg-dot-hover'}`} />
               </button>
             );
           })}
@@ -980,7 +980,7 @@ function ExpertiseSection({ t }) {
             const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
             return (
               <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-fg-dot-edge' : 'w-2 h-2 bg-fg-dot-rest group-hover:bg-fg-dot-hover'}`} />
               </button>
             );
           })}
@@ -1215,7 +1215,7 @@ function EducationSection({ t }) {
             const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
             return (
               <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-fg-dot-edge' : 'w-2 h-2 bg-fg-dot-rest group-hover:bg-fg-dot-hover'}`} />
               </button>
             );
           })}
@@ -1502,7 +1502,7 @@ function Resume({ lang }) {
           to="/"
           data-spring
           onClick={() => setShowBack(false)}
-          className="flex items-center gap-2 h-9 bg-[#1f1f1f]/90 dark:bg-[#fafafa]/90 backdrop-blur-[12px] text-fg-primary-inverse text-[13px] font-medium px-4 rounded-full shadow-m hover:bg-bg-surface hover:text-fg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+          className="flex items-center gap-2 h-9 bg-tooltip-bg/90 backdrop-blur-[12px] text-fg-primary-inverse text-[13px] font-medium px-4 rounded-full shadow-m hover:bg-bg-surface hover:text-fg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           aria-label={lang === 'fr' ? "Retour à l'accueil" : 'Back to homepage'}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -1515,7 +1515,7 @@ function Resume({ lang }) {
           onClick={() => setShowBack(false)}
           data-spring
           aria-label={lang === 'fr' ? 'Fermer' : 'Dismiss'}
-          className="ml-2 flex items-center justify-center w-8 h-8 rounded-full bg-[#1f1f1f]/90 dark:bg-[#fafafa]/90 backdrop-blur-[12px] text-fg-primary-inverse hover:bg-bg-surface hover:text-fg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus cursor-pointer"
+          className="ml-2 flex items-center justify-center w-8 h-8 rounded-full bg-tooltip-bg/90 backdrop-blur-[12px] text-fg-primary-inverse hover:bg-bg-surface hover:text-fg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus cursor-pointer"
         >
           <svg width="14" height="14" viewBox="0 0 10 10" fill="none" aria-hidden="true">
             <path d="M2 2l6 6M8 2L2 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>

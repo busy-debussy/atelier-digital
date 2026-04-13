@@ -11,9 +11,9 @@ import imgLinkedInDark  from '../assets/contact/qr-linkedin-dark.webp';
 import imgPortrait      from '../assets/photos/portrait.webp';
 
 // ── Styles ────────────────────────────────────────────────────────────────────
-const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-white dark:bg-[#2a2a2a] enabled:hover:bg-[#1f1f1f] dark:enabled:hover:bg-[#f6f6f6] transition-[opacity,background-color] duration-150 disabled:opacity-30 disabled:cursor-default enabled:cursor-pointer';
-const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]';
-const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]';
+const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-btn-nav-bg-rest-subtle enabled:hover:bg-btn-nav-bg-hover dark:enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:bg-btn-nav-bg-inactive disabled:cursor-default enabled:cursor-pointer';
+const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 group-disabled:opacity-20 transition-[filter,opacity]';
+const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 group-disabled:opacity-20 transition-[filter,opacity]';
 
 // ── Translations ──────────────────────────────────────────────────────────────
 const T = {
@@ -24,7 +24,7 @@ const T = {
     emailCard: {
       icon: imgSendLight, iconDark: imgSendDark,
       title: 'Hit my inbox',
-      description: 'Let’s discuss how we can achieve great things together.',
+      description: 'Let’s build something great together.',
       buttonLabel: 'Message',
       action: { type: 'email', href: `mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent('Getting in touch')}` },
     },
@@ -86,7 +86,7 @@ const T = {
 };
 
 // ── Card button ───────────────────────────────────────────────────────────────
-const btnClass = 'block w-full py-3 sm:py-[14px] lg:py-4 rounded-radius-4 sm:rounded-radius-5 lg:rounded-radius-6 bg-cta-600 hover:bg-cta-700 text-white font-medium text-btn-m leading-[1.2] text-center transition-colors border border-[#5289f2] after:absolute after:inset-0 after:content-[\'\'] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-cta-600';
+const btnClass = 'block w-full py-3 sm:py-[14px] lg:py-4 rounded-radius-4 sm:rounded-radius-5 lg:rounded-radius-6 bg-cta-600 hover:bg-cta-700 text-white font-medium text-btn-m leading-[1.2] text-center transition-colors border border-accent-border after:absolute after:inset-0 after:content-[\'\'] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-cta-600';
 
 const liHref = () => ['https://www.link','edin.com','/in/','dav','idvi','all','ard'].join('');
 
@@ -128,7 +128,7 @@ function ContactCard({ card, glass }) {
 
         {/* Description — fixed height so all cards are the same height */}
         <div className="h-[84px] sm:h-[96px] lg:h-[120px]">
-          <p className="text-copy-m font-normal leading-loose text-[#5c5c5c] dark:text-[#adadad]">
+          <p className="text-copy-m font-normal leading-loose text-fg-secondary">
             {card.description}
           </p>
         </div>
@@ -273,7 +273,7 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
               aria-current={i === activeIndex ? 'true' : undefined}
               className="group cursor-pointer p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200"
             >
-              <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-[#1f1f1f] dark:bg-[#f6f6f6]' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#f6f6f6]/40 group-hover:bg-[#1f1f1f]/60 dark:group-hover:bg-[#f6f6f6]/60'}`} />
+              <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : 'w-2 h-2 bg-fg-dot-rest group-hover:bg-fg-dot-hover'}`} />
             </button>
           ))}
         </div>

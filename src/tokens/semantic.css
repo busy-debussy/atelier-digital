@@ -21,7 +21,7 @@
   --fg-dot-active: #1f1f1f;
   --fg-dot-rest: rgba(0, 0, 0, 0.4);
   --fg-dot-edge: rgba(0, 0, 0, 0.2);
-  --fg-dot-hover: rgba(0, 0, 0, 0.64);
+  --fg-dot-hover: rgba(0, 0, 0, 0.9);
   --border-subtle: #d4d4d4;
   --border-subtle-inverted: #404040;
   --border-focus: #0152ec;
@@ -130,7 +130,7 @@
   --fg-dot-active: #fafafa;
   --fg-dot-rest: rgba(255, 255, 255, 0.4);
   --fg-dot-edge: rgba(255, 255, 255, 0.2);
-  --fg-dot-hover: rgba(255, 255, 255, 0.64);
+  --fg-dot-hover: rgba(255, 255, 255, 0.9);
   --border-subtle: #404040;
   --border-subtle-inverted: #d4d4d4;
   --border-focus: #0152ec;

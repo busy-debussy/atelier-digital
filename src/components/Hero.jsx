@@ -317,7 +317,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                   document.getElementById('case-studies')?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: mobile ? 'center' : 'start' });
                 }}
                 data-spring
-                className="px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-[15px] sm:text-[16px] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
+                className="px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-[15px] sm:text-[16px] rounded-full border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
               >
                 {btnCases}
               </a>

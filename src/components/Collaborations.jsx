@@ -349,7 +349,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                 onClick={(e) => openModal(i, e.currentTarget)}
                 aria-label={collab.name}
                 aria-haspopup="dialog"
-                className="w-[152px] h-[152px] sm:w-[176px] sm:h-[176px] lg:w-[200px] lg:h-[200px] flex items-center justify-center cursor-pointer motion-safe:transition-[transform,background-color] duration-200 sm:hover:scale-[1.06] sm:hover:bg-white sm:dark:hover:bg-[#1f1f1f] rounded-radius-7 sm:rounded-radius-7 border border-border-subtle sm:border-0 sm:hover:border sm:hover:border-border-subtle bg-bg-page dark:bg-bg-surface sm:bg-transparent sm:dark:bg-transparent p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary focus-visible:ring-offset-2"
+                className="w-[152px] h-[152px] sm:w-[176px] sm:h-[176px] lg:w-[200px] lg:h-[200px] flex items-center justify-center cursor-pointer motion-safe:transition-[transform,background-color] duration-200 sm:hover:scale-[1.06] sm:hover:bg-white sm:dark:hover:bg-bg-surface rounded-radius-7 sm:rounded-radius-7 border border-border-subtle sm:border-0 sm:hover:border sm:hover:border-border-subtle bg-bg-page dark:bg-bg-surface sm:bg-transparent sm:dark:bg-transparent p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary focus-visible:ring-offset-2"
               >
                 <>
                   <img src={collab.logo} alt="" className={`w-full h-full object-contain ${collab.logoDark ? 'dark:hidden' : ''}`} />
@@ -368,7 +368,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
               const win = Math.min(5, collaborators.length); const start = Math.min(Math.max(0, activeIndex - 2), collaborators.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < collaborators.length));
               return (
                 <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToIndex(i)} aria-label={`Go to collaborator ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                  <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
+                  <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-fg-dot-edge' : 'w-2 h-2 bg-fg-dot-rest group-hover:bg-fg-dot-hover'}`} />
                 </button>
               );
             })}

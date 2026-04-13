@@ -140,7 +140,7 @@ function CsCard({ card, t }) {
             <h3 className="text-h4 font-bold text-white leading-tight">
               {card.title}
             </h3>
-            <p className="text-subheading font-medium text-[#d6d6d6] leading-snug">
+            <p className="text-subheading font-medium text-fg-on-dark-secondary leading-snug">
               {card.subtitle}
             </p>
           </div>
@@ -166,13 +166,13 @@ function CsCard({ card, t }) {
           <img src={imgLockLg} alt="" width={80} height={80} className="brightness-0 invert" />
           <div className="flex flex-col items-center gap-2 text-center">
             <p className="text-h3 font-semibold text-white leading-snug">{t.restricted}</p>
-            <p className="text-copy-m font-normal text-[#d6d6d6] leading-relaxed whitespace-pre-line">{t.restrictedBody}</p>
+            <p className="text-copy-m font-normal text-fg-on-dark-secondary leading-relaxed whitespace-pre-line">{t.restrictedBody}</p>
           </div>
           <a
             href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(card.mailSubject)}`}
             onClick={(e) => e.stopPropagation()}
             data-spring
-            className="mt-2 px-5 py-2 sm:px-6 sm:py-2 bg-cta-600 border border-[#5289f2] rounded-full text-white/95 font-medium text-label-s leading-[1.2] hover:bg-cta-700 transition-colors"
+            className="mt-2 px-5 py-2 sm:px-6 sm:py-2 bg-cta-600 border border-accent-border rounded-full text-white/95 font-medium text-label-s leading-[1.2] hover:bg-cta-700 transition-colors"
           >
             {t.restrictedCta}
           </a>
@@ -327,7 +327,7 @@ function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
             const win = Math.min(5, cards.length); const start = Math.min(Math.max(0, activeIndex - 2), cards.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < cards.length));
             return (
               <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToCard(i)} aria-label={`Go to card ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-fg-dot-edge' : 'w-2 h-2 bg-fg-dot-rest group-hover:bg-fg-dot-hover'}`} />
               </button>
             );
           })}

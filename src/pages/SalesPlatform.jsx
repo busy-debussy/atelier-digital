@@ -1105,7 +1105,7 @@ function ConceptsCarousel({ lang, isDark }) {
           <div className="flex items-center">
             {slides.map((_, i) => { const win = Math.min(5, slides.length); const start = Math.min(Math.max(0, activeIndex - 2), slides.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < slides.length)); return (
               <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToSlide(i)} aria-label={lang === 'fr' ? `Aller à la diapositive ${i + 1}` : `Go to slide ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-fg-dot-edge' : 'w-2 h-2 bg-fg-dot-rest group-hover:bg-fg-dot-hover'}`} />
               </button>
             ); })}
           </div>
@@ -1308,7 +1308,7 @@ function WireframesCarousel({ lang, isDark }) {
           <div className="flex items-center">
             {slides.map((_, i) => { const win = Math.min(5, slides.length); const start = Math.min(Math.max(0, activeIndex - 2), slides.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < slides.length)); return (
               <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToSlide(i)} aria-label={lang === 'fr' ? `Aller à la diapositive ${i + 1}` : `Go to slide ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-fg-dot-edge' : 'w-2 h-2 bg-fg-dot-rest group-hover:bg-fg-dot-hover'}`} />
               </button>
             ); })}
           </div>
@@ -1471,7 +1471,7 @@ function HifiCarousel({ lang, isDark }) {
           <div className="flex items-center">
             {slides.map((_, i) => { const win = Math.min(5, slides.length); const start = Math.min(Math.max(0, activeIndex - 2), slides.length - win); const inWindow = i >= start && i < start + win; const isEdge = inWindow && ((i === start && start > 0) || (i === start + win - 1 && start + win < slides.length)); return (
               <button key={i} tabIndex={inWindow ? 0 : -1} onClick={() => scrollToSlide(i)} aria-label={lang === 'fr' ? `Aller à la diapositive ${i + 1}` : `Go to slide ${i + 1}`} aria-current={i === activeIndex ? 'true' : undefined} className={`group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 ${inWindow ? 'p-2' : 'w-0 overflow-hidden p-0'}`}>
-                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-[#1f1f1f]/20 dark:bg-[#fafafa]/20' : 'w-2 h-2 bg-[#1f1f1f]/40 dark:bg-[#fafafa]/40 group-hover:bg-[#1f1f1f]/90 dark:group-hover:bg-[#fafafa]/90'}`} />
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : isEdge ? 'w-1.5 h-1.5 bg-fg-dot-edge' : 'w-2 h-2 bg-fg-dot-rest group-hover:bg-fg-dot-hover'}`} />
               </button>
             ); })}
           </div>
@@ -1945,7 +1945,7 @@ function SalesPlatform({ lang, isDark }) {
             <Link
               data-spring
               to="/#case-studies"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-label-s leading-[1.2] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-label-s leading-[1.2] rounded-full border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
             >
               <img src={imgArrowRight} alt="" width={16} height={16} className="brightness-0 invert" style={{ transform: 'rotate(180deg)' }} />
               {lang === 'fr' ? 'Retour aux études de cas' : 'Back to case studies'}

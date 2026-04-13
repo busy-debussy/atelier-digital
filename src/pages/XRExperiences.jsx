@@ -1087,7 +1087,7 @@ function XRExperiences({ lang, isDark }) {
         {/* ── Hero ── */}
         <section
           aria-labelledby="xr-hero-heading"
-          className="relative min-h-screen flex flex-col bg-[#141414] overflow-hidden"
+          className="relative min-h-screen flex flex-col bg-bg-page overflow-hidden"
         >
           <img src={mipimPhoto} alt="" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} />
           <div className="absolute inset-0 pointer-events-none transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0, background: 'linear-gradient(to bottom, rgba(20,20,20,0.2) 0%, rgba(20,20,20,1) 100%)' }} />
@@ -1195,7 +1195,7 @@ function XRExperiences({ lang, isDark }) {
                           {/* Xbox keybinding — after list in Solve */}
                           {section.id === 'solve' && i === 1 && (
                             <figure className="flex flex-col gap-2">
-                              <div className="bg-[#141414] rounded-radius-4 sm:rounded-radius-5 p-6"
+                              <div className="dark bg-bg-page rounded-radius-4 sm:rounded-radius-5 p-6"
                                    dangerouslySetInnerHTML={{ __html: xboxSvg }} />
                               <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.xbox}</figcaption>
                             </figure>
@@ -1232,14 +1232,14 @@ function XRExperiences({ lang, isDark }) {
                           {p?.type === 'callout'
                             ? p.variant === 'goal'
                               ? (
-                                <div className="mt-6 -mb-4 rounded-radius-4 bg-[#16a34a]/[0.06] dark:bg-[#16a34a]/[0.12] border border-[#16a34a]/20 px-5 py-4 flex flex-col gap-3">
-                                  <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-[#15803d] dark:text-[#4ade80]">{p.label}</span>
+                                <div className="mt-6 -mb-4 rounded-radius-4 bg-feedback-success-bg border border-feedback-success-border px-5 py-4 flex flex-col gap-3">
+                                  <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-feedback-success-fg">{p.label}</span>
                                   <p className={bodyText}>{p.body}</p>
                                 </div>
                               )
                               : (
-                              <div className="mt-6 -mb-4 rounded-radius-4 bg-[#C9A84C]/[0.08] dark:bg-[#C9A84C]/[0.10] border border-[#C9A84C]/25 px-5 py-4 flex flex-col gap-3">
-                                <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-[#7A5C00] dark:text-[#C9A84C]">{p.label}</span>
+                              <div className="mt-6 -mb-4 rounded-radius-4 bg-feedback-warning-bg border border-feedback-warning-border px-5 py-4 flex flex-col gap-3">
+                                <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-feedback-warning-fg">{p.label}</span>
                                 <p className={bodyText}>{p.body}</p>
                               </div>
                             )
@@ -1284,8 +1284,8 @@ function XRExperiences({ lang, isDark }) {
                   )}
 
                   {section.footerCallout && (
-                    <div className="mt-6 -mb-4 rounded-radius-4 bg-[#C9A84C]/[0.08] dark:bg-[#C9A84C]/[0.10] border border-[#C9A84C]/25 px-5 py-4 flex flex-col gap-3 max-w-3xl">
-                      <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-[#7A5C00] dark:text-[#C9A84C]">{section.footerCallout.label}</span>
+                    <div className="mt-6 -mb-4 rounded-radius-4 bg-feedback-warning-bg border border-feedback-warning-border px-5 py-4 flex flex-col gap-3 max-w-3xl">
+                      <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-feedback-warning-fg">{section.footerCallout.label}</span>
                       <div className={bodyText}>{section.footerCallout.body}</div>
                     </div>
                   )}
@@ -1308,7 +1308,7 @@ function XRExperiences({ lang, isDark }) {
             <Link
               data-spring
               to="/#case-studies"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-tag-m leading-[1.2] rounded-full border border-[#5289f2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-tag-m leading-[1.2] rounded-full border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
             >
               <img src={imgArrowRight} alt="" width={16} height={16} className="brightness-0 invert" style={{ transform: 'rotate(180deg)' }} />
               {t.backLabel}

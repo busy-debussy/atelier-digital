@@ -224,7 +224,7 @@ const semanticRaw = [
   {"name":"fg/dot/active",                 "light":"fg/primary",     "dark":"fg/primary"},
   {"name":"fg/dot/rest",                   "light":"TB/700",         "dark":"TW/700"},
   {"name":"fg/dot/edge",                   "light":"TB/600",         "dark":"TW/600"},
-  {"name":"fg/dot/hover",                  "light":"TB/800",         "dark":"TW/800"},
+  {"name":"fg/dot/hover",                  "light":"TB/900",         "dark":"TW/900"},
   {"name":"border/subtle",                 "light":"Z/200",          "dark":"Z/600"},
   {"name":"border/subtle-inverted",        "light":"Z/600",          "dark":"Z/200"},
   {"name":"border/focus",                  "light":"cta/600",        "dark":"cta/600"},
