@@ -118,7 +118,7 @@ function CsCard({ card, t }) {
         style={{ background: panelBg }}
       >
         <div className="flex flex-wrap gap-1 sm:gap-2">
-          <div className="flex items-center gap-1 px-2 py-1 rounded-radius-3 bg-white/[0.16] overflow-hidden">
+          <div className="flex items-center gap-1 px-2 py-1 rounded-radius-3 bg-chip-bg-primary overflow-hidden">
             {card.primaryChip.icon && (
               <img src={card.primaryChip.icon} alt="" className="w-3 h-3 shrink-0 brightness-0 invert" />
             )}
@@ -127,7 +127,7 @@ function CsCard({ card, t }) {
             </span>
           </div>
           {card.secondaryChips.map((chip, i) => (
-            <div key={i} className="flex items-center px-2 py-1 rounded-radius-3 bg-black/[0.32]">
+            <div key={i} className="flex items-center px-2 py-1 rounded-radius-3 bg-chip-bg-secondary">
               <span className="text-chip-xs font-medium text-white/60 leading-none whitespace-nowrap">
                 {chip.label}
               </span>
@@ -150,7 +150,7 @@ function CsCard({ card, t }) {
               <img src={imgArrowRight} alt="" className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
             </div>
           ) : (
-            <div className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 rounded-radius-4 sm:rounded-radius-4 lg:rounded-radius-5 bg-white/[0.24] flex items-center justify-center">
+            <div className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 rounded-radius-4 sm:rounded-radius-4 lg:rounded-radius-5 bg-chip-bg-primary flex items-center justify-center">
               <img src={imgLock} alt="" className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 brightness-0 invert opacity-60" />
             </div>
           )}
@@ -160,7 +160,7 @@ function CsCard({ card, t }) {
       {/* Restricted access overlay, hover (desktop) + state (touch) */}
       {card.cta === 'locked' && (
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center gap-4 sm:gap-5 bg-black/[0.82] backdrop-blur-[8px] opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto p-6"
+          className="absolute inset-0 flex flex-col items-center justify-center gap-4 sm:gap-5 bg-bg-glass-heavy backdrop-blur-[8px] opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto p-6"
           style={{ opacity: showRestricted ? 1 : undefined, pointerEvents: showRestricted ? 'auto' : undefined }}
         >
           <img src={imgLockLg} alt="" width={80} height={80} className="brightness-0 invert" />

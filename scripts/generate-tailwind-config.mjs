@@ -29,6 +29,15 @@ for (const [group, shades] of Object.entries(tokens.color)) {
   }
 }
 
+// Tokens excluded from Tailwind colors — defined as @layer utilities in index.css
+// to bypass Tailwind's opacity composition (rgb(var()) wrapping breaks rgba values).
+const TAILWIND_EXCLUDED = new Set([
+  'border-glass-default',
+  'border-glass-medium',
+  'border-glass-subtle',
+  'border-inverted-subtle',
+]);
+
 // Semantic tokens — CSS vars handle light/dark automatically.
 // Nested groups like bg/glass/* become flat: 'bg-glass-default', etc.
 function walkSemantic(obj, prefix = '') {
@@ -38,7 +47,9 @@ function walkSemantic(obj, prefix = '') {
     const path = prefix ? `${prefix}-${segment}` : segment;
 
     if (val && typeof val === 'object' && '$value' in val) {
-      colors[path] = v(path);         // CSS var name matches SD output
+      if (!TAILWIND_EXCLUDED.has(path)) {
+        colors[path] = v(path);       // CSS var name matches SD output
+      }
     } else if (val && typeof val === 'object') {
       walkSemantic(val, path);
     }

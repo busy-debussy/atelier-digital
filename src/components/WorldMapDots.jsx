@@ -458,7 +458,7 @@ export default function WorldMapDots({
                         tabIndex={flatIdx === focusedIdx ? 0 : -1}
                         aria-pressed={isSelected}
                         aria-label={`${lt.labels[dot.label] ?? dot.label}${dotCountries.length === 1 ? `, ${dotCountries[0]}` : ''}${isSelected ? ', selected' : ''}`}
-                        className={`flex items-center gap-2 px-3 py-1 rounded-full border border-black/[0.08] dark:border-white/[0.08] transition-colors self-start ${isSelected ? 'bg-bg-surface-inverted text-fg-primary-inverse' : 'hover:bg-nav-hover-bg'}`}
+                        className={`flex items-center gap-2 px-3 py-1 rounded-full border border-glass-subtle transition-colors self-start ${isSelected ? 'bg-bg-surface-inverted text-fg-primary-inverse' : 'hover:bg-nav-hover-bg'}`}
                         style={{ opacity: isActiveTz ? 0.2 : 1, transition: 'opacity 200ms ease' }}
                         onFocus={() => setFocusedIdx(flatIdx)}
                         onPointerEnter={(e) => { if (e.pointerType !== 'touch') setHovered({ tz: primaryTz, country: dotCountries[0] ?? null }); }}
@@ -496,7 +496,7 @@ export default function WorldMapDots({
                     tabIndex={flatIdx === focusedIdx ? 0 : -1}
                     aria-pressed={isSelected}
                     aria-label={`${lt.labels[dot.label] ?? dot.label}${dotCountries.length === 1 ? `, ${dotCountries[0]}` : ''}${isSelected ? ', selected' : ''}`}
-                    className={`flex items-center gap-2 px-3 py-1 rounded-full border border-black/[0.08] dark:border-white/[0.08] transition-colors self-start ${
+                    className={`flex items-center gap-2 px-3 py-1 rounded-full border border-glass-subtle transition-colors self-start ${
                       isSelected
                         ? 'bg-bg-surface-inverted text-fg-primary-inverse'
                         : 'hover:bg-nav-hover-bg'

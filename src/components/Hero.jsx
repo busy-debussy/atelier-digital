@@ -270,7 +270,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
               <Link
                 data-spring
                 to="/resume?from=home#experience"
-                className="group block border border-black/[0.06] dark:border-white/[0.06] hover:border-black/[0.16] dark:hover:border-white/[0.16] rounded-radius-8 px-6 py-5 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-s dark:hover:shadow-s-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 cursor-pointer"
+                className="group block border border-glass-subtle hover:border-border-subtle rounded-radius-8 px-6 py-5 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-s dark:hover:shadow-s-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 cursor-pointer"
               >
                 <h3 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted">
                   {expLabel}

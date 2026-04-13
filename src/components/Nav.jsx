@@ -254,7 +254,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
       aria-label={lang === 'fr' ? 'Études de cas' : 'Case studies'}
       ref={dropdownRef}
       style={portalStyle}
-      className="w-[198px] backdrop-blur-[12px] bg-nav-bg border border-black/[0.16] dark:border-white/[0.16] rounded-radius-4 overflow-hidden shadow-s"
+      className="w-[198px] backdrop-blur-[12px] bg-nav-bg border border-glass-default rounded-radius-4 overflow-hidden shadow-s"
     >
       <ul role="none" className="p-2 flex flex-col">
         {items.map(({ key, to, locked }) => (
@@ -312,7 +312,7 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
       aria-label={lang === 'en' ? 'Language selection' : 'Sélection de la langue'}
       ref={dropdownRef}
       style={portalStyle}
-      className="backdrop-blur-[12px] bg-nav-bg border border-black/[0.16] dark:border-white/[0.16] rounded-radius-4 overflow-hidden shadow-s"
+      className="backdrop-blur-[12px] bg-nav-bg border border-glass-default rounded-radius-4 overflow-hidden shadow-s"
     >
       <ul role="none" className="p-2">
         <li role="none">
@@ -439,7 +439,7 @@ function ContactModal({ lang, onClose }) {
   // Inverted: dark card in light mode, light card in dark mode
   const lbl = 'text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted-inverse mb-1';
   const val = 'text-copy-s font-normal leading-relaxed text-fg-primary-inverse';
-  const row = 'block py-4 px-6 -mx-6 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus hover:bg-white/[0.04] dark:hover:bg-black/[0.04]';
+  const row = 'block py-4 px-6 -mx-6 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus hover:bg-inverted-subtle';
 
   return createPortal(
     <>
@@ -503,7 +503,7 @@ function ContactModal({ lang, onClose }) {
                 data-spring
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigator.clipboard.writeText(`${u}@${d}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
                 aria-label={lang === 'fr' ? "Copier l'adresse e-mail" : 'Copy email address'}
-                className="flex items-center gap-2 px-3 h-7 rounded-full text-chip-xs font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus bg-white/[0.06] dark:bg-black/[0.06] hover:bg-white/[0.12] dark:hover:bg-black/[0.1] shrink-0 text-fg-primary-inverse"
+                className="flex items-center gap-2 px-3 h-7 rounded-full border border-inverted-subtle hover:border-transparent text-chip-xs font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus bg-inverted-subtle hover:bg-fg-primary-inverse shrink-0 text-fg-primary-inverse hover:text-fg-primary"
               >
                 {copied ? (
                   <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -523,7 +523,7 @@ function ContactModal({ lang, onClose }) {
             <button
               data-spring
               onClick={() => { trackEvent('contact_linkedin_click'); window.open(liHref(), '_blank', 'noopener,noreferrer'); }}
-              className="py-4 px-6 -ml-6 w-[calc(100%+3rem)] text-left cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus hover:bg-white/[0.04] dark:hover:bg-black/[0.04]"
+              className="py-4 px-6 -ml-6 w-[calc(100%+3rem)] text-left cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus hover:bg-inverted-subtle"
             >
               <h2 className={lbl}>LinkedIn</h2>
               <p className={`${val} flex items-center gap-2`}>
@@ -554,7 +554,7 @@ function ContactModal({ lang, onClose }) {
             href="/david-v.vcf"
             download="david-v.vcf"
             onClick={() => trackEvent('vcard_download')}
-            className="flex items-center justify-center gap-2 w-full py-3 rounded-radius-4 border border-border-subtle-inverted text-fg-primary-inverse font-medium text-label-s leading-[1.2] hover:bg-white/[0.06] dark:hover:bg-black/[0.04] active:opacity-[0.33] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+            className="flex items-center justify-center gap-2 w-full py-3 rounded-radius-4 border border-border-subtle-inverted text-fg-primary-inverse font-medium text-label-s leading-[1.2] hover:bg-inverted-subtle active:opacity-[0.33] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -737,7 +737,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
       )}
 
       {menuOpen && (
-        <div className="w-full backdrop-blur-[8px] bg-nav-mobile border border-black/[0.16] dark:border-white/[0.16] rounded-radius-8 overflow-hidden">
+        <div className="w-full backdrop-blur-[8px] bg-nav-mobile border border-glass-default rounded-radius-8 overflow-hidden">
           <ol className="flex flex-col gap-2 p-4">
             {mobilePages.map(({ key, to, modal }) => (
               <li key={key}>

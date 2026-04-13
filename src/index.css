@@ -74,6 +74,14 @@ body {
 }
 
 
+/* Glass border utilities — defined directly to bypass Tailwind's opacity composition */
+@layer utilities {
+  .border-glass-subtle    { border-color: var(--border-glass-subtle); }
+  .border-glass-medium    { border-color: var(--border-glass-medium); }
+  .border-glass-default   { border-color: var(--border-glass-default); }
+  .border-inverted-subtle { border-color: var(--border-inverted-subtle); }
+}
+
 /* Email obfuscation — address is assembled by CSS only, never present as a DOM text node */
 .obf-email::before {
   content: attr(data-u) "\40" attr(data-d);

@@ -1,5 +1,30 @@
 [
   {
+    "timestamp": "2026-04-13T16:13:01.409Z",
+    "changeCount": 2,
+    "summary": {
+      "added": 0,
+      "modified": 2,
+      "removed": 0
+    },
+    "changes": [
+      {
+        "path": "semantic.dark.fg.on-dark.opacity-64",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.TW.900}",
+        "after": "{color.TW.800}"
+      },
+      {
+        "path": "semantic.light.fg.on-dark.opacity-64",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.TW.900}",
+        "after": "{color.TW.800}"
+      }
+    ]
+  },
+  {
     "timestamp": "2026-04-13T15:30:18.778Z",
     "changeCount": 9,
     "summary": {

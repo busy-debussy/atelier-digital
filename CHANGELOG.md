@@ -1,5 +1,31 @@
 # Changelog 
 
+## [2.0.7] — 2026-04-13
+
+### Token migration — glass borders, chip surfaces, contact modal polish
+
+#### Border-glass Tailwind v4 fix
+- **Root cause** — Tailwind v4 wraps CSS vars in `rgb(var(--x) / opacity)` which corrupts rgba values stored in CSS custom properties, rendering borders as solid black
+- **Fix** — `@layer utilities` in `index.css` defines `border-glass-subtle/medium/default` and `border-inverted-subtle` directly (bypassing Tailwind's color system); matching `TAILWIND_EXCLUDED` set in `generate-tailwind-config.mjs` prevents double-registration
+
+#### Glass borders applied (now correct)
+- **Nav dropdowns** (Projects + Language) — `border-black/[0.16] dark:border-white/[0.16]` → `border-glass-default`
+- **Mobile menu panel** — same
+- **Contact glass cards** — same
+- **Hero experience card** — `border-black/[0.06] dark:border-white/[0.06]` → `border-glass-subtle`; hover `border-black/[0.16] dark:border-white/[0.16]` → `hover:border-border-subtle`
+- **WorldMapDots filter pills** (both render blocks) — `border-black/[0.08] dark:border-white/[0.08]` → `border-glass-subtle`
+
+#### CaseStudies chip and overlay tokens
+- **Primary chip bg** — `bg-white/[0.16]` → `bg-chip-bg-primary`
+- **Secondary chips bg** — `bg-black/[0.32]` → `bg-chip-bg-secondary`
+- **Lock icon container** — `bg-white/[0.24]` → `bg-chip-bg-primary`
+- **Restricted overlay** — `bg-black/[0.82]` → `bg-bg-glass-heavy`
+
+#### Contact modal polish
+- **Drawer row hover** — `hover:bg-white/[0.04] dark:hover:bg-black/[0.04]` → `hover:bg-inverted-subtle`
+- **Email copy chip** — redesigned: `bg-inverted-subtle border border-inverted-subtle`; hover inverts to `bg-fg-primary-inverse text-fg-primary border-transparent`
+- **vCard download hover** — `hover:bg-white/[0.06] dark:hover:bg-black/[0.04]` → `hover:bg-inverted-subtle`
+
 ## [2.0.6] — 2026-04-13
 
 ### Token migration — inverted surfaces, opacity text, map pills, cleanup
