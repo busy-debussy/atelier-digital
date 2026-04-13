@@ -428,7 +428,7 @@ export default function WorldMapDots({
             );
           })}
         </div>
-        <p className="text-[12px] leading-normal text-fg-muted mt-2 text-center" aria-hidden="true">{lt.mapCaption}</p>
+        <p className="text-fine-print leading-normal text-fg-muted mt-2 text-center" aria-hidden="true">{lt.mapCaption}</p>
         <p className="sr-only">
           World map showing the geographic distribution of the team across four countries and their time zones.
           Use the buttons below to highlight each team member&apos;s location on the map.
@@ -509,7 +509,7 @@ export default function WorldMapDots({
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: dot.color, flexShrink: 0 }} aria-hidden="true" />
-                    <span className="text-[13px] text-fg-muted whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
+                    <span className="text-tooltip text-fg-muted whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
                   </button>
                 );
               })}

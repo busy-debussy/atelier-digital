@@ -1,5 +1,62 @@
 [
   {
+    "timestamp": "2026-04-13T09:32:56.977Z",
+    "changeCount": 3,
+    "summary": {
+      "added": 0,
+      "modified": 3,
+      "removed": 0
+    },
+    "changes": [
+      {
+        "path": "typography.desktop.font-size.ui.button M",
+        "type": "dimension",
+        "change": "modified",
+        "before": "20px",
+        "after": "18px"
+      },
+      {
+        "path": "typography.mobile.font-size.ui.button M",
+        "type": "dimension",
+        "change": "modified",
+        "before": "18px",
+        "after": "16px"
+      },
+      {
+        "path": "typography.tablet.font-size.ui.button M",
+        "type": "dimension",
+        "change": "modified",
+        "before": "19px",
+        "after": "17px"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-04-13T09:32:48.072Z",
+    "changeCount": 2,
+    "summary": {
+      "added": 0,
+      "modified": 2,
+      "removed": 0
+    },
+    "changes": [
+      {
+        "path": "semantic.dark.fg.dot.hover",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.TW.800}",
+        "after": "{color.TW.900}"
+      },
+      {
+        "path": "semantic.light.fg.dot.hover",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.TB.800}",
+        "after": "{color.TB.900}"
+      }
+    ]
+  },
+  {
     "timestamp": "2026-04-12T13:32:57.182Z",
     "changeCount": 1,
     "summary": {

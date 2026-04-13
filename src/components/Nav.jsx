@@ -113,7 +113,7 @@ function Tooltip({ label, isDark, offset = 8, shortcut }) {
   const txt = isDark ? '#1f1f1f' : '#f6f6f6';
   return (
     <div style={{ top: `calc(100% + ${offset}px)` }} className="absolute left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center">
-<div style={{ background: bg, color: txt }} className={`relative z-0 text-[13px] font-light leading-[1.2] pl-2 ${shortcut ? 'pr-[4px]' : 'pr-2'} py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-2`}>
+<div style={{ background: bg, color: txt }} className={`relative z-0 text-tooltip font-light leading-[1.2] pl-2 ${shortcut ? 'pr-[4px]' : 'pr-2'} py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-2`}>
         {label}
         {shortcut && <kbd className="text-[11px] font-medium w-[18px] h-[18px] flex items-center justify-center rounded-[6px] bg-tooltip-keyboard-shortcut-bg text-tooltip-keyboard-shortcut-fg not-italic">{shortcut}</kbd>}
       </div>
@@ -438,7 +438,7 @@ function ContactModal({ lang, onClose }) {
 
   // Inverted: dark card in light mode, light card in dark mode
   const lbl = 'text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted-inverse mb-1';
-  const val = 'text-[14px] font-normal leading-relaxed text-fg-primary-inverse';
+  const val = 'text-copy-s font-normal leading-relaxed text-fg-primary-inverse';
   const row = 'block py-4 px-6 -mx-6 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus hover:bg-white/[0.04] dark:hover:bg-black/[0.04]';
 
   return createPortal(
@@ -503,7 +503,7 @@ function ContactModal({ lang, onClose }) {
                 data-spring
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigator.clipboard.writeText(`${u}@${d}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
                 aria-label={lang === 'fr' ? "Copier l'adresse e-mail" : 'Copy email address'}
-                className="flex items-center gap-2 px-3 h-7 rounded-full text-[12px] font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus bg-white/[0.06] dark:bg-black/[0.06] hover:bg-white/[0.12] dark:hover:bg-black/[0.1] shrink-0 text-fg-primary-inverse"
+                className="flex items-center gap-2 px-3 h-7 rounded-full text-chip-xs font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus bg-white/[0.06] dark:bg-black/[0.06] hover:bg-white/[0.12] dark:hover:bg-black/[0.1] shrink-0 text-fg-primary-inverse"
               >
                 {copied ? (
                   <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">

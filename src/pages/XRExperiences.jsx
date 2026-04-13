@@ -706,7 +706,7 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
       />
 
       {/* Counter */}
-      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-[13px] font-medium text-white/[0.64] tabular-nums pointer-events-none">
+      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-tooltip font-medium text-white/[0.64] tabular-nums pointer-events-none">
         {index + 1} / {slides.length}
       </span>
 
@@ -801,7 +801,7 @@ function FlowSection({ isDark, lang, labels }) {
               >
                 <div className="bg-bg-page rounded-radius-4 sm:rounded-radius-5 p-4 w-full overflow-hidden" dangerouslySetInnerHTML={{ __html: slide.svg }} />
               </button>
-              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{slide.label}</figcaption>
+              <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{slide.label}</figcaption>
             </figure>
           ))}
         </div>
@@ -848,7 +848,7 @@ function XRToolIcon({ name, icon, darkInvert = false, circle = false, contain = 
         role="tooltip"
         className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${active ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="bg-tooltip-bg text-fg-primary-inverse text-[13px] font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
+        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
       </div>
       <button
         aria-label={name}
@@ -901,7 +901,7 @@ function SecondaryNav({ sections, activeId, onNavigate }) {
               <button
                 onClick={() => onNavigate(s.id)}
                 aria-current={isActive ? 'location' : undefined}
-                className={`relative text-[13px] leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                className={`relative text-tooltip leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
                     ? 'text-fg-primary font-semibold bg-black/[0.04] dark:bg-white/[0.06]'
                     : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
@@ -941,7 +941,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
                   onClick={() => onNavigate(s.id)}
                   aria-label={s.eyebrow || s.heading}
                   aria-current={isActive ? 'location' : undefined}
-                  className={`h-8 px-3 rounded-radius-4 text-[13px] font-medium leading-[1.4] whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                  className={`h-8 px-3 rounded-radius-4 text-tooltip font-medium leading-[1.4] whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                     isActive
                       ? 'bg-black/[0.04] dark:bg-white/[0.04] text-fg-primary font-semibold'
                       : 'text-fg-muted hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'
@@ -983,7 +983,7 @@ function TeamTable({ members }) {
       {members.map((m, i) => (
         <div key={i} className="flex items-baseline justify-between gap-4 py-3">
           <span className="text-[15px] sm:text-[16px] font-medium text-fg-primary">{m.role}</span>
-          <span className="text-[14px] sm:text-[15px] text-fg-muted text-right shrink-0">{m.detail}</span>
+          <span className="text-copy-s sm:text-[15px] text-fg-muted text-right shrink-0">{m.detail}</span>
         </div>
       ))}
     </div>
@@ -1178,7 +1178,7 @@ function XRExperiences({ lang, isDark }) {
                                 alt="Satellite view of the development site"
                                 className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover"
                               />
-                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.satellite}</figcaption>
+                              <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.satellite}</figcaption>
                             </figure>
                           )}
                           {/* AR session photo — before Reflection text in Measure */}
@@ -1189,7 +1189,7 @@ function XRExperiences({ lang, isDark }) {
                                 alt="Leading a presenter-led AR session at MIPIM"
                                 className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover"
                               />
-                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.arSession}</figcaption>
+                              <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.arSession}</figcaption>
                             </figure>
                           )}
                           {/* Xbox keybinding — after list in Solve */}
@@ -1197,7 +1197,7 @@ function XRExperiences({ lang, isDark }) {
                             <figure className="flex flex-col gap-2">
                               <div className="dark bg-bg-page rounded-radius-4 sm:rounded-radius-5 p-6"
                                    dangerouslySetInnerHTML={{ __html: xboxSvg }} />
-                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.xbox}</figcaption>
+                              <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.xbox}</figcaption>
                             </figure>
                           )}
                           {/* Flowcharts — after Approaches heading in Solve */}
@@ -1210,7 +1210,7 @@ function XRExperiences({ lang, isDark }) {
                                 <img src={magicLeapPhoto} alt="Magic Leap 2 AR glasses" className="w-full rounded-radius-3 sm:rounded-radius-4 object-cover" />
                                 <img src={magicLeapControllerPhoto} alt="Magic Leap 2 controller" className="w-full rounded-radius-3 sm:rounded-radius-4 object-cover" />
                               </div>
-                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.magicLeap}</figcaption>
+                              <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.magicLeap}</figcaption>
                             </figure>
                           )}
                           {section.id === 'when-where' && i === 0 && (
@@ -1220,13 +1220,13 @@ function XRExperiences({ lang, isDark }) {
                                 alt="Two-storey building constructed by our client at MIPIM"
                                 className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover"
                               />
-                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.building}</figcaption>
+                              <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.building}</figcaption>
                             </figure>
                           )}
                           {section.id === 'prioritise' && i === 1 && (
                             <figure className="flex flex-col gap-2 max-w-sm mx-auto">
                               <img src={tableTopLogo} alt="Client logo design on the AR table top" className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover dark:[filter:invert(0.92)_hue-rotate(180deg)]" />
-                              <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.tracker}</figcaption>
+                              <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.tracker}</figcaption>
                             </figure>
                           )}
                           {p?.type === 'callout'
@@ -1270,7 +1270,7 @@ function XRExperiences({ lang, isDark }) {
                         alt="Floor plan sketch of the event space showing the six experience locations"
                         className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover dark:[filter:invert(0.92)]"
                       />
-                      <figcaption className="text-[12px] font-normal leading-normal text-fg-muted text-center">{t.captions.floorPlan}</figcaption>
+                      <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.floorPlan}</figcaption>
                     </figure>
                   )}
 

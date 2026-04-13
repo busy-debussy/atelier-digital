@@ -152,7 +152,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
 
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 shrink-0">
-            <span id="chatbot-title" className="text-[15px] font-semibold leading-tight text-fg-primary-inverse">{l.title}</span>
+            <span id="chatbot-title" className="text-h6 font-semibold leading-tight text-fg-primary-inverse">{l.title}</span>
             <button
               ref={closeRef}
               data-spring
@@ -170,7 +170,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
           </div>
 
           {/* Cookie notice */}
-          <p className="px-5 pb-3 text-[12px] leading-normal text-fg-primary-inverse/40 shrink-0">
+          <p className="px-5 pb-3 text-fine-print leading-normal text-fg-primary-inverse/40 shrink-0">
             {l.cookieNotice}{' '}
             <a href="/cookies" className="underline text-fg-primary-inverse hover:opacity-70 transition-opacity">{l.cookieLink}</a>.
           </p>
@@ -179,7 +179,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
           <div className={`overflow-y-auto px-4 space-y-3 min-h-0 ${messages.length || loading ? 'flex-1 py-4' : ''}`} style={{ scrollbarWidth: 'none' }}>
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] px-4 py-3 rounded-radius-4 text-[14px] leading-relaxed break-words ${
+                <div className={`max-w-[85%] px-4 py-3 rounded-radius-4 text-copy-s leading-relaxed break-words ${
                   m.role === 'user'
                     ? 'bg-cta-600 text-white/95 rounded-br-[2px]'
                     : 'bg-white/[0.06] dark:bg-black/[0.04] text-fg-primary-inverse rounded-bl-[2px]'
@@ -207,14 +207,14 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
               const left = MAX_TURNS - userTurns;
               const urgent = left === 1;
               return (
-                <p className={`text-[12px] leading-normal text-center ${urgent ? 'text-feedback-warning-msg-fg font-medium' : 'text-fg-muted-inverse'}`}>
+                <p className={`text-fine-print leading-normal text-center ${urgent ? 'text-feedback-warning-msg-fg font-medium' : 'text-fg-muted-inverse'}`}>
                   {l.remaining(left)}
                 </p>
               );
             })()}
 
             {atLimit && !loading && (
-              <p className="text-[13px] text-fg-muted-inverse text-center pt-2 leading-relaxed">
+              <p className="text-tooltip text-fg-muted-inverse text-center pt-2 leading-relaxed">
                 {l.limit}
               </p>
             )}
@@ -238,7 +238,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
                 autoComplete="off"
                 rows={1}
                 disabled={loading}
-                className="flex-1 resize-none bg-white/[0.06] dark:bg-black/[0.04] rounded-radius-3 px-3 py-[10px] text-[14px] leading-[22px] text-fg-primary-inverse placeholder:text-fg-muted-inverse placeholder:[text-indent:2px] outline-none focus:ring-1 focus:ring-border-focus transition-all"
+                className="flex-1 resize-none bg-white/[0.06] dark:bg-black/[0.04] rounded-radius-3 px-3 py-[10px] text-copy-s leading-[22px] text-fg-primary-inverse placeholder:text-fg-muted-inverse placeholder:[text-indent:2px] outline-none focus:ring-1 focus:ring-border-focus transition-all"
                 style={{ scrollbarWidth: 'none', minHeight: '42px', maxHeight: '100px' }}
               />
               <button
@@ -266,12 +266,12 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
           className={`group flex items-center justify-center rounded-full bg-tooltip-bg shadow-xs ring-1 ring-white/[0.08] dark:ring-black/[0.08] hover:bg-bg-surface transition-[width,padding,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${pillExpanded ? 'h-9 px-4 gap-2' : 'w-9 h-9'}`}
         >
           <span className="text-[16px] leading-none text-fg-primary-inverse group-hover:text-fg-primary shrink-0">💬</span>
-          <span className={`text-[13px] font-semibold text-fg-primary-inverse group-hover:text-fg-primary whitespace-nowrap overflow-hidden transition-[max-width,opacity,color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${pillExpanded ? 'max-w-[160px] opacity-100' : 'max-w-0 opacity-0'}`}>
+          <span className={`text-tooltip font-semibold text-fg-primary-inverse group-hover:text-fg-primary whitespace-nowrap overflow-hidden transition-[max-width,opacity,color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${pillExpanded ? 'max-w-[160px] opacity-100' : 'max-w-0 opacity-0'}`}>
             {l.pill}
           </span>
         </button>
         <div className="pointer-events-none absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
-          <div className="bg-tooltip-bg text-fg-primary-inverse text-[13px] font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-2">
+          <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-2">
             {lang === 'fr' ? 'Tchat avec Claude' : 'Chat with Claude'}
             <kbd className="text-[11px] font-medium w-[15px] h-[18px] flex items-center justify-center rounded bg-tooltip-keyboard-shortcut-bg text-tooltip-keyboard-shortcut-fg not-italic">C</kbd>
           </div>

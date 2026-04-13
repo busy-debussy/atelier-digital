@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-04-12');
+const LAST_UPDATED = new Date('2026-04-13');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -142,7 +142,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
                   data-section={s.id}
                   onClick={() => onNavigate(s.id)}
                   aria-current={isActive ? 'location' : undefined}
-                  className={`h-8 px-3 rounded-radius-4 text-[13px] font-medium leading-snug whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                  className={`h-8 px-3 rounded-radius-4 text-tooltip font-medium leading-snug whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                     isActive
                       ? 'bg-nav-active-bg-solid text-fg-inverse'
                       : 'text-fg-muted'
@@ -171,7 +171,7 @@ function SecondaryNav({ sections, activeId, onNavigate }) {
                 onClick={() => onNavigate(s.id)}
                 aria-label={s.navLabel ?? s.heading}
                 aria-current={isActive ? 'location' : undefined}
-                className={`relative text-[13px] leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                className={`relative text-tooltip leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
                     ? 'text-fg-primary font-semibold bg-black/[0.04] dark:bg-white/[0.06]'
                     : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'

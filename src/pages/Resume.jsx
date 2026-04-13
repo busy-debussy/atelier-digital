@@ -827,7 +827,7 @@ function ToolIcon({ name, icon, noBg, darkInvert }) {
   return (
     <div className="relative flex flex-col items-center">
       <div className={`absolute bottom-[calc(100%+8px)] left-1/2 -translate-x-1/2 pointer-events-none z-10 transition-opacity duration-150 ${visible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="bg-tooltip-bg text-fg-primary-inverse text-[13px] font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
           {name}
         </div>
       </div>
@@ -1502,7 +1502,7 @@ function Resume({ lang }) {
           to="/"
           data-spring
           onClick={() => setShowBack(false)}
-          className="flex items-center gap-2 h-9 bg-tooltip-bg/90 backdrop-blur-[12px] text-fg-primary-inverse text-[13px] font-medium px-4 rounded-full shadow-m hover:bg-bg-surface hover:text-fg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+          className="flex items-center gap-2 h-9 bg-tooltip-bg/90 backdrop-blur-[12px] text-fg-primary-inverse text-tooltip font-medium px-4 rounded-full shadow-m hover:bg-bg-surface hover:text-fg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           aria-label={lang === 'fr' ? "Retour à l'accueil" : 'Back to homepage'}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">

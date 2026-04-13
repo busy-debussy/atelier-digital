@@ -404,7 +404,7 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false, contain = fa
         role="tooltip"
         className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${active ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="bg-tooltip-bg text-fg-primary-inverse text-[13px] font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
+        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">{name}</div>
       </div>
       <button
         aria-label={name}
@@ -458,8 +458,8 @@ const CONTEXT_BODIES = {
   // index matches eyebrows array (0 = client, body handled inline, 1 = industry, handled inline)
   mission:      { en: <>Design a <strong>luxury-first</strong>, <strong>user-centric web platform</strong> that lets buyers explore unbuilt properties interactively while supporting sales agents during high-pressure launch events.</>, fr: <>Concevoir une plateforme web <strong>haut de gamme</strong> et <strong>centrée sur l'utilisateur</strong> permettant aux acheteurs d'explorer des biens non construits de manière interactive, tout en accompagnant les agents commerciaux lors des lancements sous haute pression.</> },
   stakeholders: {
-    en: <><ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong> and marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-[14px] font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Design Team:</strong> Coordinated <strong>cross-functional communications</strong> and served as the <strong>source of truth</strong> for product and design decisions.</span></div></>,
-    fr: <><ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong> et marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-[14px] font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Équipe Design :</strong> Coordination des <strong>communications transverses</strong> et référent de <strong>source de vérité</strong> pour les décisions produit et design.</span></div></>,
+    en: <><ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong> and marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Design Team:</strong> Coordinated <strong>cross-functional communications</strong> and served as the <strong>source of truth</strong> for product and design decisions.</span></div></>,
+    fr: <><ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong> et marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Équipe Design :</strong> Coordination des <strong>communications transverses</strong> et référent de <strong>source de vérité</strong> pour les décisions produit et design.</span></div></>,
   },
   myRole: {
     en: {
@@ -613,7 +613,7 @@ function ContextContent({ lang, isDark }) {
         </p>
         <p className="text-h3 font-semibold leading-snug text-fg-primary">{eyebrows[1]}</p>
         <TileBody>{CONTEXT_INDUSTRY.body[l]}</TileBody>
-        <p className="text-[12px] leading-normal text-fg-muted">
+        <p className="text-fine-print leading-normal text-fg-muted">
           {CONTEXT_INDUSTRY.footnote[lang] ?? CONTEXT_INDUSTRY.footnote.en}
         </p>
       </Tile>
@@ -1529,7 +1529,7 @@ function UiConceptCard({ card, isDark }) {
         <h5 className="font-semibold text-tag-m leading-snug" style={{ color: titleFg }}>
           {card.title}
         </h5>
-        <ul className="flex flex-col gap-1 text-[12px] sm:text-[13px] lg:text-[14px] font-normal leading-snug list-disc list-inside" style={{ color: titleFg }}>
+        <ul className="flex flex-col gap-1 text-fine-print sm:text-[13px] lg:text-[14px] font-normal leading-snug list-disc list-inside" style={{ color: titleFg }}>
           {card.bullets.filter(Boolean).map((b, k) => <li key={k}>{b}</li>)}
         </ul>
       </div>
@@ -1556,7 +1556,7 @@ function DesignContent({ lang, isDark }) {
             <img src={uf.mobile} alt={d.userFlow.eyebrow} className="w-full h-auto rounded-radius-2" />
           </picture>
         </div>
-        <div className="mt-6 sm:mt-8 rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] px-4 py-3 flex gap-2 text-[14px] font-normal leading-relaxed text-fg-muted">
+        <div className="mt-6 sm:mt-8 rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted">
           <span aria-hidden="true" className="shrink-0">{d.userFlow.footer.emoji}</span>
           <span>{d.userFlow.footer.content}</span>
         </div>
@@ -1665,7 +1665,7 @@ function SecondaryNav({ sections, activeId, onNavigate }) {
               <button
                 onClick={() => onNavigate(s.id)}
                 aria-current={isActive ? 'location' : undefined}
-                className={`relative text-[13px] leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                className={`relative text-tooltip leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
                     ? 'text-fg-primary font-semibold bg-black/[0.04] dark:bg-white/[0.04]'
                     : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
@@ -1705,7 +1705,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
                   onClick={() => onNavigate(s.id)}
                   aria-label={s.title}
                   aria-current={isActive ? 'location' : undefined}
-                  className={`h-8 px-3 rounded-radius-4 text-[13px] font-medium leading-snug whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                  className={`h-8 px-3 rounded-radius-4 text-tooltip font-medium leading-snug whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                     isActive
                       ? 'bg-nav-active-bg-solid text-fg-inverse'
                       : 'text-fg-muted'

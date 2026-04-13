@@ -65,12 +65,12 @@ function CookieBanner({ lang, hideFloating = false }) {
       >
         {/* Left: label + message */}
         <div className="flex flex-col gap-5 md:gap-2 md:flex-1 min-w-0 md:min-w-[320px]">
-          <p className="text-[15px] font-semibold leading-tight text-fg-primary-inverse flex items-center gap-2">
+          <p className="text-h6 font-semibold leading-tight text-fg-primary-inverse flex items-center gap-2">
             <span className="text-[16px] leading-none">🍪</span>
             {t.label}
           </p>
-          <p className="hidden md:block text-[14px] leading-relaxed text-fg-muted-inverse md:mt-2">{t.message}</p>
-          <p className="text-[12px] leading-normal text-fg-muted-inverse md:mt-2">
+          <p className="hidden md:block text-copy-s leading-relaxed text-fg-muted-inverse md:mt-2">{t.message}</p>
+          <p className="text-fine-print leading-normal text-fg-muted-inverse md:mt-2">
             <Link
               to="/cookies"
               onClick={onCookiesPage ? () => { setVisible(false); setExplicit(false); } : undefined}
@@ -80,7 +80,7 @@ function CookieBanner({ lang, hideFloating = false }) {
             </Link>
           </p>
           {/* Mobile-only full message */}
-          <p className="md:hidden text-[14px] leading-relaxed text-fg-muted-inverse line-clamp-3">
+          <p className="md:hidden text-copy-s leading-relaxed text-fg-muted-inverse line-clamp-3">
             {t.message}
           </p>
         </div>

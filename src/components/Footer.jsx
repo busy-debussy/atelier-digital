@@ -7,7 +7,7 @@ function CopyrightTag({ year, tooltip }) {
     <span className="relative inline-block group cursor-default">
       © {year} Atelier Digital
       <div className="pointer-events-none absolute bottom-[calc(100%+8px)] left-0 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
-        <div className="bg-tooltip-bg text-fg-primary-inverse text-[13px] font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
+        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10">
           {tooltip}
         </div>
       </div>
