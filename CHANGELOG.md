@@ -1,5 +1,34 @@
 # Changelog 
 
+## [2.0.3] — 2026-04-13
+
+### Token migration — eliminate all hardcoded hex colors
+- **`border-accent-border`** — `border-[#5289f2]` replaced across 8 files (CTA button borders)
+- **Carousel dot tokens** — `bg-fg-dot-edge`, `bg-fg-dot-rest`, `bg-fg-dot-hover`, `bg-fg-dot-active` applied across 5 components; `fg/dot/hover` corrected from TB.800 (0.64) to TB.900 (0.9)
+- **Contact nav buttons** — rest → `bg-btn-nav-bg-rest-subtle`; hover → `bg-btn-nav-bg-hover`; inactive bg → `bg-btn-nav-bg-inactive`; inactive chevron → `group-disabled:opacity-20`
+- **Inverted frosted surfaces** — Resume back-to-home pill and CookieBanner panel → `bg-tooltip-bg/90` and `bg-tooltip-bg/95`
+- **CookieBanner** — muted text → `text-fg-muted-inverse`; light hover → `hover:bg-btn-bg-over`; dark hover → `dark:hover:bg-btn-nav-bg-rest-subtle`; focus ring → `ring-border-focus`
+- **ChatBot** — close button dark hover → `dark:hover:bg-bg-surface`; disclaimer → `text-fg-primary-inverse/40`
+- **WorldMapDots tooltip** — `bg-tooltip-bg text-fg-primary-inverse` (matches all other tooltips)
+- **CaseStudies** — on-dark restricted copy → `text-fg-on-dark-secondary`
+- **XR Experiences** — goal callouts → `feedback/success` tokens; insight callouts → `feedback/warning` tokens; Xbox figure → `dark bg-bg-page`
+- **Collaborations** — logo hover dark → `sm:dark:hover:bg-bg-surface`
+- **Contact** — muted body copy → `text-fg-secondary`
+
+## [2.0.2] — 2026-04-13
+
+### Storybook — token catalog
+- **CSS import** — `index.css` imported in `preview.jsx` so all tokens and Tailwind classes resolve in Storybook
+- **Light/dark toggle** — toolbar switch adds/removes `.dark` class on `html`; all semantic tokens switch correctly
+- **Token catalog stories** — three stories under Design Tokens/Catalog: Colors (primitive palettes + all semantic swatches), Typography (all size aliases with resolved px values), Spacing/Radius/Shadows
+
+## [2.0.1] — 2026-04-12
+
+### Hotfix — short font-size aliases lost on token regeneration
+- **Root cause** — `generate-tailwind-config.mjs` overwrites `tailwind.config.js` on every `npm run tokens`; short aliases added manually to the output file were wiped before the v2.0.0 deploy
+- **Fix** — short aliases moved into `generate-tailwind-config.mjs` so they survive every regeneration
+- **Aliases** — `text-h1` through `text-h6`, `text-display-1/2`, `text-copy-*`, `text-btn-*`, `text-nav-*`, `text-tag-*`, `text-chip-*`, `text-tooltip`, `text-caption`, `text-brand-logo` (30 aliases total)
+
 ## [2.0.0] — 2026-04-12
 
 ### Design token system — full site migration
