@@ -109,7 +109,7 @@ function Footer({ lang }) {
       data-spring
       aria-label={t.manageCookies}
       onClick={() => window.dispatchEvent(new Event('show-cookie-banner'))}
-      className={`px-2 py-1 rounded-radius-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer whitespace-nowrap`}
+      className={`px-2 py-1 rounded-radius-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus hover:text-fg-primary hover:bg-nav-hover-bg cursor-pointer whitespace-nowrap`}
     >{t.manageCookies}</button>
   );
 
@@ -124,7 +124,7 @@ function Footer({ lang }) {
         className={`px-2 py-1 rounded-radius-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
           isActive
             ? 'bg-nav-active-bg-solid text-fg-inverse font-semibold'
-            : 'hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.08]'
+            : 'hover:text-fg-primary hover:bg-nav-hover-bg'
         }`}
       >{label}</Link>
     );

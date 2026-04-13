@@ -463,7 +463,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                         <img src={collab.logoSmall} alt="" className={`w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0 ${collab.logoSmallDark ? 'dark:hidden' : ''}`} />
                         {collab.logoSmallDark && <img src={collab.logoSmallDark} alt="" className="hidden dark:block w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0" />}
                       </>
-                      <span className="text-[12px] sm:text-[14px] lg:text-[15px] font-semibold text-fg-primary">
+                      <span className="text-fine-print sm:text-copy-s lg:text-label-s font-semibold text-fg-primary">
                         {collab.name}
                       </span>
                     </div>

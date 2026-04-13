@@ -1529,7 +1529,7 @@ function UiConceptCard({ card, isDark }) {
         <h5 className="font-semibold text-tag-m leading-snug" style={{ color: titleFg }}>
           {card.title}
         </h5>
-        <ul className="flex flex-col gap-1 text-fine-print sm:text-[13px] lg:text-[14px] font-normal leading-snug list-disc list-inside" style={{ color: titleFg }}>
+        <ul className="flex flex-col gap-1 text-fine-print sm:text-chip-s lg:text-copy-s font-normal leading-snug list-disc list-inside" style={{ color: titleFg }}>
           {card.bullets.filter(Boolean).map((b, k) => <li key={k}>{b}</li>)}
         </ul>
       </div>

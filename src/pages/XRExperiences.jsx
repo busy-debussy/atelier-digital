@@ -983,7 +983,7 @@ function TeamTable({ members }) {
       {members.map((m, i) => (
         <div key={i} className="flex items-baseline justify-between gap-4 py-3">
           <span className="text-[15px] sm:text-[16px] font-medium text-fg-primary">{m.role}</span>
-          <span className="text-copy-s sm:text-[15px] text-fg-muted text-right shrink-0">{m.detail}</span>
+          <span className="text-copy-s sm:text-label-s text-fg-muted text-right shrink-0">{m.detail}</span>
         </div>
       ))}
     </div>

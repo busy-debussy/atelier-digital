@@ -269,7 +269,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
                   if (e.key === 'Escape') { e.preventDefault(); onClose(); anchorRef?.current?.querySelector('button')?.focus(); }
                   else if (e.key === 'Tab') { onClose(); }
                 }}
-                className="flex items-center gap-2 px-3 py-2 rounded-radius-3 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
+                className="flex items-center gap-2 px-3 py-2 rounded-radius-3 hover:bg-nav-hover-bg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
               >
                 <div className="size-6 shrink-0 flex items-center justify-center">
                   <img src={imgArrowRight} alt="" width={16} height={16} style={{ transform:'none' }} />
@@ -324,7 +324,7 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
               if (e.key === 'Escape') { e.preventDefault(); onClose(); anchorRef?.current?.querySelector('button')?.focus(); }
               else if (e.key === 'Tab') { onClose(); }
             }}
-            className="flex items-center gap-2 px-3 py-2 rounded-radius-3 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
+            className="flex items-center gap-2 px-3 py-2 rounded-radius-3 hover:bg-nav-hover-bg cursor-pointer transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
           >
             <Flag code={other === 'en' ? 'gb' : 'fr'} />
             <span className="font-semibold text-base leading-6 text-fg-primary">{other === 'en' ? 'GB' : 'FR'}</span>
@@ -351,7 +351,7 @@ function LanguageButton({ lang, toggleLang, isDark }) {
         onMouseLeave={hideTip}
         data-spring
         aria-label={`${label}, change language`}
-        className="flex items-center gap-2 h-8 px-3 rounded-radius-3 cursor-pointer active:opacity-[0.33] transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"
+        className="flex items-center gap-2 h-8 px-3 rounded-radius-3 cursor-pointer active:opacity-[0.33] transition-colors hover:bg-nav-hover-bg"
       >
         <Flag code={flagCode} />
         <span className="font-medium text-base leading-6 whitespace-nowrap text-fg-primary">
@@ -581,7 +581,7 @@ function LetsTalkButton({ lang, isDark, onOpen }) {
         onClick={() => { hideTip(); onOpen(); }}
         onMouseEnter={showTip}
         onMouseLeave={hideTip}
-        className="flex items-center justify-center h-8 px-4 rounded-radius-3 transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus cursor-pointer"
+        className="flex items-center justify-center h-8 px-4 rounded-radius-3 transition-colors active:opacity-[0.33] hover:bg-nav-hover-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus cursor-pointer"
       >
         <span className="font-medium text-base leading-6 whitespace-nowrap text-fg-primary">
           {T[lang]["let's talk"]}
@@ -648,7 +648,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onCo
           onMouseLeave={hideLogoTip}
           className="flex items-center p-2 rounded-radius-6 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
         >
-          <div className="flex items-center gap-1 py-1 pl-1 pr-3 rounded-radius-5 group-hover:bg-black/[0.04] dark:group-hover:bg-white/[0.08] transition-colors">
+          <div className="flex items-center gap-1 py-1 pl-1 pr-3 rounded-radius-5 group-hover:bg-nav-hover-bg transition-colors">
             <img src={imgLogo} alt="" width={24} height={24} className="shrink-0" />
             <span className="font-bold text-base leading-4 text-fg-primary whitespace-nowrap" style={{ letterSpacing:'-0.8px' }}>
               ATELIER DIGITAL
@@ -670,7 +670,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onCo
         <LetsTalkButton lang={lang} isDark={isDark} onOpen={onContactOpen} />
 
         <li className="relative flex items-center gap-2">
-          <div aria-hidden="true" className="w-px h-4 bg-black/[0.12] dark:bg-white/[0.12] shrink-0" />
+          <div aria-hidden="true" className="w-px h-4 bg-nav-divider shrink-0" />
           <LanguageButton lang={lang} toggleLang={toggleLang} isDark={isDark} />
         </li>
 
@@ -744,7 +744,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
                 {modal ? (
                   <button
                     onClick={() => { setMenuOpen(false); onContactOpen(); }}
-                    className="flex items-center h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08] w-full text-left cursor-pointer"
+                    className="flex items-center h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] hover:bg-nav-hover-bg w-full text-left cursor-pointer"
                   >
                     <span data-spring className="font-medium text-2xl leading-8 text-fg-primary">
                       {T[lang][key]}
@@ -768,7 +768,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
                       setMenuOpen(false);
                       if (currentPage === p && !h) { window.scrollTo({ top: 0, behavior: 'smooth' }); }
                     }}
-                    className="flex items-center h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"
+                    className="flex items-center h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] hover:bg-nav-hover-bg"
                   >
                     <span data-spring className="font-medium text-2xl leading-8 text-fg-primary">
                       {T[lang][key]}
@@ -778,7 +778,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
                   <>
                     <button
                       onClick={() => setProjectsOpen(!projectsOpen)}
-                      className="flex items-center justify-start gap-2 w-full h-12 px-4 rounded-radius-4 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors active:opacity-[0.33]"
+                      className="flex items-center justify-start gap-2 w-full h-12 px-4 rounded-radius-4 hover:bg-nav-hover-bg transition-colors active:opacity-[0.33]"
                     >
                       <span data-spring className="flex items-center gap-2">
                         <span className="font-medium text-2xl leading-8 text-fg-primary">{T[lang][key]}</span>
@@ -805,7 +805,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
                               key={sk}
                               to={st}
                               onClick={() => { setMenuOpen(false); setProjectsOpen(false); }}
-                              className="flex items-center gap-3 h-12 px-4 rounded-radius-4 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors"
+                              className="flex items-center gap-3 h-12 px-4 rounded-radius-4 hover:bg-nav-hover-bg transition-colors"
                             >
                               <span data-spring className="flex items-center gap-3">
                                 <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" style={{ transform:'none' }} />
@@ -822,13 +822,13 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
             ))}
           </ol>
 
-          <div className="mx-4 h-px bg-black/[0.12] dark:bg-white/[0.12]" />
+          <div className="mx-4 h-px bg-nav-divider" />
 
           <div className="flex items-center justify-around px-6 py-4">
             <button
               data-spring
               onClick={() => { if (lang !== 'en') toggleLang(); }}
-              className={`flex items-center gap-2 h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] ${lang !== 'en' ? 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer' : 'bg-nav-active-bg-solid cursor-default'}`}
+              className={`flex items-center gap-2 h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] ${lang !== 'en' ? 'hover:bg-nav-hover-bg cursor-pointer' : 'bg-nav-active-bg-solid cursor-default'}`}
             >
               <Flag code="gb" />
               <span className={`font-medium text-2xl ${lang === 'en' ? 'text-fg-primary-inverse' : 'text-fg-muted'}`}>GB</span>
@@ -836,7 +836,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
             <button
               data-spring
               onClick={() => { if (lang !== 'fr') toggleLang(); }}
-              className={`flex items-center gap-2 h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] ${lang !== 'fr' ? 'hover:bg-black/[0.04] dark:hover:bg-white/[0.08] cursor-pointer' : 'bg-nav-active-bg-solid cursor-default'}`}
+              className={`flex items-center gap-2 h-12 px-4 rounded-radius-4 transition-colors active:opacity-[0.33] ${lang !== 'fr' ? 'hover:bg-nav-hover-bg cursor-pointer' : 'bg-nav-active-bg-solid cursor-default'}`}
             >
               <Flag code="fr" />
               <span className={`font-medium text-2xl ${lang === 'fr' ? 'text-fg-primary-inverse' : 'text-fg-muted'}`}>FR</span>

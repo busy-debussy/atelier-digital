@@ -496,7 +496,7 @@ const bodyMuted = 'text-copy-m font-normal leading-loose text-fg-secondary';
 // ── Summary ────────────────────────────────────────────────────────────────────
 
 function SummarySection({ t, lang }) {
-  const btnBase = 'flex items-center justify-center gap-2 px-3 py-2 rounded-radius-4 transition-colors bg-bg-surface sm:bg-transparent sm:dark:bg-transparent hover:bg-black/[0.04] dark:hover:bg-white/[0.08]';
+  const btnBase = 'flex items-center justify-center gap-2 px-3 py-2 rounded-radius-4 transition-colors bg-bg-surface sm:bg-transparent sm:dark:bg-transparent hover:bg-nav-hover-bg';
   const btnLabel = 'font-medium text-btn-m leading-[1.2] text-fg-primary whitespace-nowrap';
 
   return (
