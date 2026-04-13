@@ -1,6 +1,34 @@
-// Converts raw Figma variable data → tokens.json + tokens-light.json + tokens-dark.json (W3C DTCG format)
+// Converts Figma variable data → tokens.json (W3C DTCG format)
+//
+// When FIGMA_TOKEN + FIGMA_FILE_KEY are set in .env.local, values are fetched
+// live from the Figma Variables REST API and merged over the hardcoded fallback.
+// Falls back to the hardcoded snapshot below if the fetch fails or creds are absent.
+//
+// Required Figma PAT scope: file_variables:read
+// Create at: figma.com → Account Settings → Security → Personal access tokens
 
-import { writeFileSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync } from 'fs';
+import { join } from 'path';
+import { fileURLToPath } from 'url';
+
+const ROOT = join(fileURLToPath(import.meta.url), '../../');
+
+// ─── Load .env.local ──────────────────────────────────────────────────────────
+
+function loadEnvLocal() {
+  const envPath = join(ROOT, '.env.local');
+  if (!existsSync(envPath)) return;
+  for (const line of readFileSync(envPath, 'utf-8').split('\n')) {
+    const t = line.trim();
+    if (!t || t.startsWith('#')) continue;
+    const eq = t.indexOf('=');
+    if (eq < 0) continue;
+    const key = t.slice(0, eq).trim();
+    const val = t.slice(eq + 1).trim();
+    if (!process.env[key]) process.env[key] = val;
+  }
+}
+loadEnvLocal();
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -38,7 +66,199 @@ function setDeep(obj, path, val) {
   cur[parts[parts.length - 1]] = val;
 }
 
-// ─── Primitives ───────────────────────────────────────────────────────────────
+// ─── Known Figma → canonical name renames ────────────────────────────────────
+// When you rename a variable in Figma, add an entry here so the CSS variable
+// names (and Tailwind short aliases) stay stable.
+// Format:  'figma-variable-name': 'canonical-token-name-in-this-file'
+
+const FIGMA_RENAMES = {
+  // Typography — renamed in Figma April 2026 (spaces → hyphens)
+  'font-size/ui/btn-M':    'font-size/ui/button M',
+  'font-size/ui/btn-S':    'font-size/ui/button S',
+  'font-size/ui/btn-m':    'font-size/ui/button M',
+  'font-size/ui/btn-s':    'font-size/ui/button S',
+  'font-size/ui/card-M':   'font-size/ui/card M',
+  'font-size/ui/tag-M':    'font-size/ui/tag M',
+  'font-size/ui/tag-S':    'font-size/ui/tag S',
+  'font-size/ui/nav-L':    'font-size/ui/nav L',
+  'font-size/ui/nav-M':    'font-size/ui/nav M',
+  'font-size/ui/nav-S':    'font-size/ui/nav S',
+  'font-size/ui/chip-S':   'font-size/ui/chip S',
+  'font-size/ui/chip-XS':  'font-size/ui/chip XS',
+};
+
+// ─── Figma Variables REST API ────────────────────────────────────────────────
+
+const PRIMITIVE_GROUPS = new Set([
+  'Z','TB','TW','red','yellow','orange','pink','purple',
+  'sky','indigo','pistachio','green','cta',
+]);
+
+async function fetchFigmaVariables(token, fileKey) {
+  const url = `https://api.figma.com/v1/files/${fileKey}/variables/local`;
+  const res = await fetch(url, { headers: { 'X-Figma-Token': token } });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(`Figma API ${res.status}: ${data.message ?? JSON.stringify(data)}`);
+  }
+  return data.meta;
+}
+
+function parseFigmaVariables(meta) {
+  const { variableCollections, variables } = meta;
+
+  // Build id → variable lookup
+  const varById = {};
+  for (const v of Object.values(variables)) varById[v.id] = v;
+
+  // Resolve a variable alias value → the referenced variable's name (or null)
+  const resolveAlias = (val) =>
+    val?.type === 'VARIABLE_ALIAS' ? (varById[val.id]?.name ?? null) : null;
+
+  const result = {
+    primitives: {},
+    semanticRaw: [],
+    typography: { desktop: {}, tablet: {}, mobile: {} },
+    spacing: {},
+    radius: {},
+    blur: {},
+  };
+
+  for (const coll of Object.values(variableCollections)) {
+    if (coll.remote) continue;
+
+    // Build modeId lookups by normalized name
+    const modeByNorm = {};  // normalised-name → modeId
+    for (const m of coll.modes) modeByNorm[m.name.toLowerCase()] = m.modeId;
+
+    const lightId   = modeByNorm['light'];
+    const darkId    = modeByNorm['dark'];
+    const desktopId = modeByNorm['desktop'];
+    const tabletId  = findModeId(modeByNorm, ['tablet', 'sm']);
+    const mobileId  = findModeId(modeByNorm, ['mobile', 'xs']);
+    const defaultId = coll.modes[0]?.modeId;
+
+    const isSemanticColl  = !!(lightId && darkId);
+    const isTypographyColl = !!desktopId;
+
+    for (const varId of coll.variableIds) {
+      const v = varById[varId];
+      if (!v || v.remote) continue;
+
+      const figmaName    = v.name;
+      const canonName    = FIGMA_RENAMES[figmaName] ?? figmaName;
+      const topGroup     = figmaName.split('/')[0];
+
+      if (v.resolvedType === 'COLOR') {
+        if (PRIMITIVE_GROUPS.has(topGroup)) {
+          // Primitive colour — direct RGBA value
+          const slashIdx = figmaName.indexOf('/');
+          const group = figmaName.slice(0, slashIdx);
+          const shade = figmaName.slice(slashIdx + 1);
+          if (!result.primitives[group]) result.primitives[group] = {};
+          const val = v.valuesByMode[defaultId];
+          if (val && !val.type) result.primitives[group][shade] = val;
+
+        } else if (isSemanticColl) {
+          // Semantic alias colour
+          const lightVal = v.valuesByMode[lightId];
+          const darkVal  = v.valuesByMode[darkId];
+          const lightRef = resolveAlias(lightVal);
+          const darkRef  = resolveAlias(darkVal);
+          if (lightRef && darkRef) {
+            result.semanticRaw.push({ name: canonName, light: lightRef, dark: darkRef });
+          }
+        }
+
+      } else if (v.resolvedType === 'FLOAT') {
+        if (isTypographyColl) {
+          const dVal = v.valuesByMode[desktopId];
+          const tVal = tabletId  ? v.valuesByMode[tabletId]  : undefined;
+          const mVal = mobileId  ? v.valuesByMode[mobileId]  : undefined;
+          if (typeof dVal === 'number') result.typography.desktop[canonName] = dVal;
+          if (typeof tVal === 'number') result.typography.tablet[canonName]  = tVal;
+          if (typeof mVal === 'number') result.typography.mobile[canonName]  = mVal;
+
+        } else {
+          const val = v.valuesByMode[defaultId];
+          if (typeof val !== 'number') continue;
+
+          // Strip collection-group prefixes used in the "layout" collection
+          // e.g. "spacing/space-1" → "space-1", "radius/radius-1" → "radius-1"
+          let shortName = canonName;
+          if      (shortName.startsWith('spacing/')) shortName = shortName.slice('spacing/'.length);
+          else if (shortName.startsWith('radius/'))  shortName = shortName.slice('radius/'.length);
+          else if (shortName.startsWith('blur/'))    shortName = shortName.slice('blur/'.length);
+
+          if (shortName.startsWith('space-')) {
+            result.spacing[shortName] = val;
+          } else if (shortName.startsWith('radius-') || shortName === 'radius-half' || shortName === 'radius-full') {
+            result.radius[shortName] = val;
+          } else if (shortName.startsWith('blur-')) {
+            result.blur[shortName] = val;
+          }
+          // letter-spacing and other FLOAT vars not matched above are silently ignored
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+// Find the first matching modeId from a list of candidate name fragments
+function findModeId(modeByNorm, fragments) {
+  for (const frag of fragments) {
+    const key = Object.keys(modeByNorm).find(k => k.includes(frag));
+    if (key) return modeByNorm[key];
+  }
+  return null;
+}
+
+// Merge Figma data over hardcoded defaults (Figma wins for matching keys)
+function mergeWithDefaults(figma, defaults) {
+  // --- Primitives ---
+  const primitives = structuredClone(defaults.primitives);
+  for (const [group, shades] of Object.entries(figma.primitives)) {
+    if (!primitives[group]) primitives[group] = {};
+    for (const [shade, rgba] of Object.entries(shades)) {
+      primitives[group][shade] = rgba;
+    }
+  }
+
+  // --- Semantic ---
+  const semMap = new Map(defaults.semanticRaw.map(s => [s.name, { ...s }]));
+  for (const entry of figma.semanticRaw) {
+    semMap.set(entry.name, entry);
+  }
+  const semanticRaw = Array.from(semMap.values());
+
+  // --- Typography ---
+  const typography = { desktop: { ...defaults.typography.desktop }, tablet: { ...defaults.typography.tablet }, mobile: { ...defaults.typography.mobile } };
+  for (const bp of ['desktop', 'tablet', 'mobile']) {
+    for (const [name, val] of Object.entries(figma.typography[bp])) {
+      if (typeof val === 'number') typography[bp][name] = val;
+    }
+  }
+
+  // --- Spacing ---
+  const spacing = { ...defaults.spacing };
+  for (const [name, val] of Object.entries(figma.spacing)) {
+    if (typeof val === 'number') spacing[name] = val;
+  }
+
+  // --- Radius ---
+  const radius = { ...defaults.radius };
+  for (const [name, val] of Object.entries(figma.radius)) {
+    if (typeof val === 'number') radius[name] = val;
+  }
+
+  return { primitives, semanticRaw, typography, spacing, radius };
+}
+
+// ─── Hardcoded fallback data ──────────────────────────────────────────────────
+// These are used as defaults when Figma is unreachable, or for tokens that
+// aren't (yet) in the Figma file.  Figma values always take precedence.
 
 const primitives = {
   "Z": {
@@ -199,8 +419,6 @@ const primitives = {
   },
 };
 
-// ─── Semantic (from Figma, light/dark modes) ──────────────────────────────────
-
 const semanticRaw = [
   {"name":"bg/page",                       "light":"Z/0",            "dark":"Z/900"},
   {"name":"bg/surface",                    "light":"Z/100",          "dark":"Z/800"},
@@ -310,8 +528,6 @@ const semanticRaw = [
   {"name":"modal/copy-btn-hover-bg",      "light":"TW/400",          "dark":"TB/300"},
 ];
 
-// ─── Type primitives (desktop / tablet / mobile) ─────────────────────────────
-
 const typographyRaw = {
   desktop: {
     'font-size/headings/Display H1': 72, 'font-size/headings/Display H2': 48,
@@ -320,7 +536,7 @@ const typographyRaw = {
     'font-size/labels/subheading': 18, 'font-size/labels/label S': 15, 'font-size/labels/legal': 15,
     'font-size/labels/fine-print': 12, 'font-size/labels/overline M': 15, 'font-size/labels/overline S': 13,
     'font-size/copy/copy M': 18, 'font-size/copy/copy S': 14, 'font-size/copy/copy XS': 14,
-    'font-size/ui/button M': 20, 'font-size/ui/button S': 15, 'font-size/ui/card M': 18,
+    'font-size/ui/button M': 18, 'font-size/ui/button S': 15, 'font-size/ui/card M': 18,
     'font-size/ui/tag M': 16, 'font-size/ui/tag S': 15, 'font-size/ui/caption': 15,
     'font-size/ui/nav L': 24, 'font-size/ui/nav M': 16, 'font-size/ui/nav S': 13,
     'font-size/ui/tooltip': 13, 'font-size/ui/chip S': 13, 'font-size/ui/chip XS': 12,
@@ -334,7 +550,7 @@ const typographyRaw = {
     'font-size/labels/subheading': 16, 'font-size/labels/label S': 14, 'font-size/labels/legal': 14,
     'font-size/labels/fine-print': 12, 'font-size/labels/overline M': 14, 'font-size/labels/overline S': 12,
     'font-size/copy/copy M': 17, 'font-size/copy/copy S': 14, 'font-size/copy/copy XS': 13,
-    'font-size/ui/button M': 19, 'font-size/ui/button S': 14, 'font-size/ui/card M': 16,
+    'font-size/ui/button M': 17, 'font-size/ui/button S': 14, 'font-size/ui/card M': 16,
     'font-size/ui/tag M': 15, 'font-size/ui/tag S': 14, 'font-size/ui/caption': 14,
     'font-size/ui/nav L': 24, 'font-size/ui/nav M': 16, 'font-size/ui/nav S': 13,
     'font-size/ui/tooltip': 13, 'font-size/ui/chip S': 13, 'font-size/ui/chip XS': 11,
@@ -348,7 +564,7 @@ const typographyRaw = {
     'font-size/labels/subheading': 14, 'font-size/labels/label S': 13, 'font-size/labels/legal': 13,
     'font-size/labels/fine-print': 12, 'font-size/labels/overline M': 13, 'font-size/labels/overline S': 11,
     'font-size/copy/copy M': 16, 'font-size/copy/copy S': 14, 'font-size/copy/copy XS': 12,
-    'font-size/ui/button M': 18, 'font-size/ui/button S': 13, 'font-size/ui/card M': 15,
+    'font-size/ui/button M': 16, 'font-size/ui/button S': 13, 'font-size/ui/card M': 15,
     'font-size/ui/tag M': 14, 'font-size/ui/tag S': 10, 'font-size/ui/caption': 13,
     'font-size/ui/nav L': 24, 'font-size/ui/nav M': 16, 'font-size/ui/nav S': 13,
     'font-size/ui/tooltip': 13, 'font-size/ui/chip S': 13, 'font-size/ui/chip XS': 9,
@@ -357,29 +573,12 @@ const typographyRaw = {
   },
 };
 
-// ─── Build tokens object ──────────────────────────────────────────────────────
-
-const tokens = { color: {}, spacing: {}, radius: {}, typography: { desktop: {}, tablet: {}, mobile: {} }, semantic: { light: {}, dark: {} } };
-
-// Color primitives
-for (const [group, shades] of Object.entries(primitives)) {
-  tokens.color[group] = {};
-  for (const [shade, rgba] of Object.entries(shades)) {
-    tokens.color[group][shade] = { $value: colorValue(rgba), $type: 'color' };
-  }
-}
-
-// Spacing
 const spacingValues = {
   'space-1': 4, 'space-2': 8, 'space-3': 12, 'space-4': 16,
   'space-5': 20, 'space-6': 24, 'space-7': 28, 'space-8': 32,
   'space-10': 40, 'space-12': 48, 'space-16': 64, 'space-20': 80, 'space-24': 96,
 };
-for (const [name, val] of Object.entries(spacingValues)) {
-  tokens.spacing[name] = { $value: `${val}px`, $type: 'dimension' };
-}
 
-// Radius
 const radiusValues = {
   'radius-half': 2,
   'radius-1': 4,  'radius-2': 8,   'radius-3': 12,  'radius-4': 16,
@@ -387,33 +586,99 @@ const radiusValues = {
   'radius-10': 40,'radius-12': 48, 'radius-14': 56, 'radius-16': 64,
   'radius-18': 72,'radius-full': 9999,
 };
-for (const [name, val] of Object.entries(radiusValues)) {
+
+// ─── Fetch from Figma (if credentials are available) ─────────────────────────
+
+const figmaToken   = process.env.FIGMA_TOKEN;
+const figmaFileKey = process.env.FIGMA_FILE_KEY;
+
+let merged = {
+  primitives,
+  semanticRaw,
+  typography: typographyRaw,
+  spacing: spacingValues,
+  radius: radiusValues,
+};
+
+if (figmaToken && figmaFileKey) {
+  try {
+    process.stdout.write('Fetching Figma variables… ');
+    const meta = await fetchFigmaVariables(figmaToken, figmaFileKey);
+    const figmaData = parseFigmaVariables(meta);
+
+    const primCount = Object.values(figmaData.primitives).reduce((n, g) => n + Object.keys(g).length, 0);
+    const typoCount = Object.keys(figmaData.typography.desktop).length;
+    console.log(`OK (${primCount} primitives, ${figmaData.semanticRaw.length} semantic, ${typoCount} typography, ${Object.keys(figmaData.spacing).length} spacing, ${Object.keys(figmaData.radius).length} radius)`);
+
+    merged = mergeWithDefaults(figmaData, {
+      primitives,
+      semanticRaw,
+      typography: typographyRaw,
+      spacing: spacingValues,
+      radius: radiusValues,
+    });
+  } catch (err) {
+    console.warn(`\nFigma fetch failed — using hardcoded fallback.\n  ${err.message}`);
+    if (err.message.includes('file_variables:read')) {
+      console.warn('  → Your PAT needs the "file_variables:read" scope.');
+      console.warn('  → Figma → Account Settings → Security → Personal access tokens → create a new token with that scope.');
+      console.warn('  → Update FIGMA_TOKEN in .env.local.');
+    }
+  }
+} else {
+  console.log('No FIGMA_TOKEN in .env.local — using hardcoded values.');
+}
+
+// ─── Build tokens object ──────────────────────────────────────────────────────
+
+const tokens = {
+  color: {},
+  spacing: {},
+  radius: {},
+  typography: { desktop: {}, tablet: {}, mobile: {} },
+  semantic: { light: {}, dark: {} },
+};
+
+// Color primitives
+for (const [group, shades] of Object.entries(merged.primitives)) {
+  tokens.color[group] = {};
+  for (const [shade, rgba] of Object.entries(shades)) {
+    tokens.color[group][shade] = { $value: colorValue(rgba), $type: 'color' };
+  }
+}
+
+// Spacing
+for (const [name, val] of Object.entries(merged.spacing)) {
+  tokens.spacing[name] = { $value: `${val}px`, $type: 'dimension' };
+}
+
+// Radius
+for (const [name, val] of Object.entries(merged.radius)) {
   tokens.radius[name] = { $value: `${val}px`, $type: 'dimension' };
 }
 
 // Typography
-for (const [breakpoint, vars] of Object.entries(typographyRaw)) {
+for (const [breakpoint, vars] of Object.entries(merged.typography)) {
   for (const [name, val] of Object.entries(vars)) {
-    const type = name.startsWith('letter-spacing') ? 'dimension' : 'dimension';
-    setDeep(tokens.typography[breakpoint], name, { $value: `${val}px`, $type: type });
+    setDeep(tokens.typography[breakpoint], name, { $value: `${val}px`, $type: 'dimension' });
   }
 }
 
 // Semantic tokens
-for (const { name, light, dark } of semanticRaw) {
+for (const { name, light, dark } of merged.semanticRaw) {
   setDeep(tokens.semantic.light, name, { $value: aliasToRef(light, 'light'), $type: 'color' });
   setDeep(tokens.semantic.dark,  name, { $value: aliasToRef(dark,  'dark'),  $type: 'color' });
 }
 
-writeFileSync('tokens.json', JSON.stringify(tokens, null, 2));
+writeFileSync(join(ROOT, 'tokens.json'), JSON.stringify(tokens, null, 2));
 
-const colorCount    = Object.values(primitives).reduce((n, g) => n + Object.keys(g).length, 0);
-const semanticCount = semanticRaw.length;
-const typoCount     = Object.keys(typographyRaw.desktop).length;
+const colorCount    = Object.values(merged.primitives).reduce((n, g) => n + Object.keys(g).length, 0);
+const semanticCount = merged.semanticRaw.length;
+const typoCount     = Object.keys(merged.typography.desktop).length;
 console.log('tokens.json written');
-console.log(`  color primitives : ${colorCount} (${Object.keys(primitives).join(', ')})`);
-console.log(`  spacing          : ${Object.keys(spacingValues).length}`);
-console.log(`  radius           : ${Object.keys(radiusValues).length}`);
+console.log(`  color primitives : ${colorCount} (${Object.keys(merged.primitives).join(', ')})`);
+console.log(`  spacing          : ${Object.keys(merged.spacing).length}`);
+console.log(`  radius           : ${Object.keys(merged.radius).length}`);
 console.log(`  typography       : ${typoCount} vars × 3 breakpoints (desktop / tablet / mobile)`);
 console.log(`  semantic (light) : ${semanticCount}`);
 console.log(`  semantic (dark)  : ${semanticCount}`);

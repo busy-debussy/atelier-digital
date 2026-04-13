@@ -1,5 +1,16 @@
 # Changelog 
 
+## [2.0.4] — 2026-04-13
+
+### Figma Variables sync infrastructure — `generate-tokens.mjs`
+- **MCP-based sync** — variables fetched from Figma via Plugin API (MCP); hardcoded snapshot verified and confirmed accurate against current Figma state
+- **REST API path built** — `GET /v1/files/:key/variables/local` wired up with graceful fallback; blocked on `file_variables:read` scope (Figma Pro PAT limitation, not available in UI)
+- **Merge strategy** — Figma values override matching hardcoded keys; snapshot is the fallback when fetch fails or creds are absent
+- **Env wiring** — `FIGMA_TOKEN` and `FIGMA_FILE_KEY` loaded automatically from `.env.local`
+- **FIGMA_RENAMES table** — maps Figma's renamed variables back to canonical token names; populated with all April 2026 renames: `btn-M/S`, `card-M`, `tag-M/S`, `nav-L/M/S`, `chip-S/XS` (spaces → hyphens)
+- **Layout collection parser** — strips `spacing/`, `radius/`, `blur/` group prefixes from the `layout` collection; `blur/blur-N` variables parsed and available
+- **Sync workflow** — say "sync from Figma" to pull latest values via MCP; changes committed as a diff for full auditability
+
 ## [2.0.3] — 2026-04-13
 
 ### Token migration — eliminate all hardcoded hex colors
