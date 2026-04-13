@@ -250,7 +250,7 @@ function CookieSection({ s, num, browserLabel, newTabLabel, manageBtn, delay }) 
       {s.manageCookies && (
         <button
           onClick={() => window.dispatchEvent(new Event('show-cookie-banner'))}
-          className={`mt-2 px-5 py-3 text-copy-s sm:text-[15px] font-medium rounded-radius-3 bg-tooltip-bg text-white dark:text-fg-primary-inverse hover:opacity-80 transition-opacity cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus`}
+          className={`mt-2 px-5 py-3 text-tag-m font-medium rounded-radius-3 bg-tooltip-bg text-white dark:text-fg-primary-inverse hover:opacity-80 transition-opacity cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus`}
         >
           {manageBtn}
         </button>
@@ -292,7 +292,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   }, [activeId]);
 
   return (
-    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-radius-6 shadow-xs dark:ring-1 dark:ring-white/[0.16] p-[10px]">
+    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring p-[10px]">
       <div className="overflow-hidden rounded-radius-4">
         <ul ref={trackRef} className="w-full flex items-center gap-1 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
           {sections.map((s) => {
@@ -334,8 +334,8 @@ function SecondaryNav({ sections, activeId, onNavigate }) {
                 aria-current={isActive ? 'true' : undefined}
                 className={`relative text-tooltip leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
-                    ? 'text-fg-primary font-semibold bg-black/[0.04] dark:bg-white/[0.06]'
-                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
+                    ? 'text-fg-primary font-semibold bg-nav-active-bg'
+                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
                 }`}
               >
                 {/* Invisible bold copy locks the button height to its semibold size — prevents 1→2 line reflow on hover */}
@@ -468,7 +468,7 @@ function Cookies({ lang }) {
             <MobileSecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
           </div>
         </div>
-        <div aria-hidden="true" className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-xs dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`} style={{ width: 52, height: 52, left: 8, bottom: 8 }} />
+        <div aria-hidden="true" className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-nav-bg shadow-xs ring-1 ring-nav-ring ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`} style={{ width: 52, height: 52, left: 8, bottom: 8 }} />
       </main>
       <Footer lang={lang} />
     </>

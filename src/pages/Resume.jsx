@@ -856,10 +856,7 @@ function ExpertiseCard({ card }) {
 
       <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
         <div className="w-16 h-16 sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 rounded-radius-6 sm:rounded-radius-7 lg:rounded-radius-8 bg-bg-page flex items-center justify-center shrink-0 overflow-hidden">
-          {card.icon
-            ? <img src={card.icon} alt="" width={64} height={64} loading="lazy" className="sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 object-contain dark:brightness-0 dark:invert dark:opacity-[0.965]" />
-            : <span className="text-[10px] text-fg-muted font-medium text-center px-1">icon</span>
-          }
+          {card.icon && <img src={card.icon} alt="" width={64} height={64} loading="lazy" className="sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 object-contain dark:brightness-0 dark:invert dark:opacity-[0.965]" />}
         </div>
 
         <h3 className="text-h3 font-semibold leading-snug text-fg-primary">

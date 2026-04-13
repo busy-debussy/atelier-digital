@@ -273,7 +273,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
         <div className="pointer-events-none absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
           <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-2">
             {lang === 'fr' ? 'Tchat avec Claude' : 'Chat with Claude'}
-            <kbd className="text-[11px] font-medium w-[15px] h-[18px] flex items-center justify-center rounded bg-tooltip-keyboard-shortcut-bg text-tooltip-keyboard-shortcut-fg not-italic">C</kbd>
+            <kbd className="text-tooltip-kbd font-medium w-[15px] h-[18px] flex items-center justify-center rounded bg-tooltip-keyboard-shortcut-bg text-tooltip-keyboard-shortcut-fg not-italic">C</kbd>
           </div>
         </div>
       </div>

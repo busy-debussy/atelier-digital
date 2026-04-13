@@ -419,7 +419,7 @@ export default function WorldMapDots({
               style={{ left: `calc(${pos.x}% + ${off?.x ?? 0}px)`, top: `calc(${pos.y}% + ${off?.y ?? 0}px)`, transform: 'translate(-50%, -100%)' }}
             >
               <div
-                className="mb-2 whitespace-nowrap rounded-radius-2 px-2 py-1 text-[11px] font-medium bg-tooltip-bg text-fg-primary-inverse transition-opacity duration-150"
+                className="mb-2 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-tooltip-bg text-fg-primary-inverse transition-opacity duration-150"
                 style={{ opacity: (selected?.key ? selected : (hovered ?? selected))?.countries?.includes(country) || (!selected?.key && (hovered ?? selected)?.country === country) ? 1 : 0 }}
               >
                 {country}

@@ -425,7 +425,7 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false, contain = fa
 function ToolsGrid({ lang }) {
   const label = (CONTEXT_EYEBROWS[lang] ?? CONTEXT_EYEBROWS.en)[5];
   return (
-    <div className="rounded-radius-6 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] px-5 py-4 flex flex-col gap-4 sm:w-fit">
+    <div className="rounded-radius-6 bg-feedback-neutral-bg border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
       <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</p>
       <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
         {CONTEXT_TOOLS.map(cat => (
@@ -458,8 +458,8 @@ const CONTEXT_BODIES = {
   // index matches eyebrows array (0 = client, body handled inline, 1 = industry, handled inline)
   mission:      { en: <>Design a <strong>luxury-first</strong>, <strong>user-centric web platform</strong> that lets buyers explore unbuilt properties interactively while supporting sales agents during high-pressure launch events.</>, fr: <>Concevoir une plateforme web <strong>haut de gamme</strong> et <strong>centrée sur l'utilisateur</strong> permettant aux acheteurs d'explorer des biens non construits de manière interactive, tout en accompagnant les agents commerciaux lors des lancements sous haute pression.</> },
   stakeholders: {
-    en: <><ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong> and marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Design Team:</strong> Coordinated <strong>cross-functional communications</strong> and served as the <strong>source of truth</strong> for product and design decisions.</span></div></>,
-    fr: <><ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong> et marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Équipe Design :</strong> Coordination des <strong>communications transverses</strong> et référent de <strong>source de vérité</strong> pour les décisions produit et design.</span></div></>,
+    en: <><ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong> and marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-feedback-neutral-bg border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Design Team:</strong> Coordinated <strong>cross-functional communications</strong> and served as the <strong>source of truth</strong> for product and design decisions.</span></div></>,
+    fr: <><ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong> et marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-feedback-neutral-bg border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Équipe Design :</strong> Coordination des <strong>communications transverses</strong> et référent de <strong>source de vérité</strong> pour les décisions produit et design.</span></div></>,
   },
   myRole: {
     en: {
@@ -1556,7 +1556,7 @@ function DesignContent({ lang, isDark }) {
             <img src={uf.mobile} alt={d.userFlow.eyebrow} className="w-full h-auto rounded-radius-2" />
           </picture>
         </div>
-        <div className="mt-6 sm:mt-8 rounded-radius-3 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted">
+        <div className="mt-6 sm:mt-8 rounded-radius-3 bg-feedback-neutral-bg border border-feedback-neutral-border px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted">
           <span aria-hidden="true" className="shrink-0">{d.userFlow.footer.emoji}</span>
           <span>{d.userFlow.footer.content}</span>
         </div>
@@ -1667,8 +1667,8 @@ function SecondaryNav({ sections, activeId, onNavigate }) {
                 aria-current={isActive ? 'location' : undefined}
                 className={`relative text-tooltip leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
-                    ? 'text-fg-primary font-semibold bg-black/[0.04] dark:bg-white/[0.04]'
-                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
+                    ? 'text-fg-primary font-semibold bg-nav-active-bg'
+                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
                 }`}
               >
                 <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.title}</span>
@@ -1693,7 +1693,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   }, [activeId]);
 
   return (
-    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-radius-6 shadow-xs dark:ring-1 dark:ring-white/[0.16] p-[10px]">
+    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring p-[10px]">
       <div className="overflow-hidden rounded-radius-4">
         <ul ref={trackRef} className="w-full flex items-center gap-1 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
           {sections.map((s) => {
@@ -1976,7 +1976,7 @@ function SalesPlatform({ lang, isDark }) {
       {/* ── Chat button backdrop circle ── */}
       <div
         aria-hidden="true"
-        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-xs dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
+        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-nav-bg shadow-xs ring-1 ring-nav-ring ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
         style={{ width: 52, height: 52, left: 8, bottom: 8 }}
       />
 

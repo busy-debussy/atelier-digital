@@ -333,6 +333,7 @@ export default {
       "font-size-ui-nav-m": 'var(--font-size-ui-nav-m)',
       "font-size-ui-nav-s": 'var(--font-size-ui-nav-s)',
       "font-size-ui-tooltip": 'var(--font-size-ui-tooltip)',
+      "font-size-ui-tooltip-kbd": 'var(--font-size-ui-tooltip-kbd)',
       "font-size-ui-chip-s": 'var(--font-size-ui-chip-s)',
       "font-size-ui-chip-xs": 'var(--font-size-ui-chip-xs)',
       "font-size-brand-logo": 'var(--font-size-brand-logo)',
@@ -366,6 +367,7 @@ export default {
       "tooltip": 'var(--font-size-ui-tooltip)',
       "chip-s": 'var(--font-size-ui-chip-s)',
       "chip-xs": 'var(--font-size-ui-chip-xs)',
+      "tooltip-kbd": 'var(--font-size-ui-tooltip-kbd)',
       "brand-logo": 'var(--font-size-brand-logo)'
 },
     },

@@ -112,6 +112,7 @@ const shortAliases = {
   'tooltip':    'font-size-ui-tooltip',
   'chip-s':     'font-size-ui-chip-s',
   'chip-xs':    'font-size-ui-chip-xs',
+  'tooltip-kbd':'font-size-ui-tooltip-kbd',
   'brand-logo': 'font-size-brand-logo',
 };
 for (const [alias, canonical] of Object.entries(shortAliases)) {

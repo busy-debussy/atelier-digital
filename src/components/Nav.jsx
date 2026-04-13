@@ -115,7 +115,7 @@ function Tooltip({ label, isDark, offset = 8, shortcut }) {
     <div style={{ top: `calc(100% + ${offset}px)` }} className="absolute left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center">
 <div style={{ background: bg, color: txt }} className={`relative z-0 text-tooltip font-light leading-[1.2] pl-2 ${shortcut ? 'pr-[4px]' : 'pr-2'} py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-white/20 dark:ring-black/10 flex items-center gap-2`}>
         {label}
-        {shortcut && <kbd className="text-[11px] font-medium w-[18px] h-[18px] flex items-center justify-center rounded-[6px] bg-tooltip-keyboard-shortcut-bg text-tooltip-keyboard-shortcut-fg not-italic">{shortcut}</kbd>}
+        {shortcut && <kbd className="text-tooltip-kbd font-medium w-[18px] h-[18px] flex items-center justify-center rounded-[6px] bg-tooltip-keyboard-shortcut-bg text-tooltip-keyboard-shortcut-fg not-italic">{shortcut}</kbd>}
       </div>
     </div>
   );
@@ -218,7 +218,7 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
         aria-controls={isOpen ? 'projects-menu' : undefined}
         aria-label={isOpen ? `Close ${T[lang].projects} menu` : `Open ${T[lang].projects} menu`}
         className={`flex items-center justify-center gap-2 h-8 px-4 rounded-radius-3 cursor-pointer active:opacity-[0.33] transition-colors ${
-          isOpen ? 'bg-nav-active-bg-solid' : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'
+          isOpen ? 'bg-nav-active-bg-solid' : 'hover:bg-nav-hover-bg'
         }`}
       >
         <span className={`font-medium text-base leading-6 whitespace-nowrap ${isOpen ? 'text-fg-primary-inverse' : 'text-fg-primary'}`}>
@@ -254,7 +254,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
       aria-label={lang === 'fr' ? 'Études de cas' : 'Case studies'}
       ref={dropdownRef}
       style={portalStyle}
-      className="w-[198px] backdrop-blur-[12px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] rounded-radius-4 overflow-hidden shadow-s"
+      className="w-[198px] backdrop-blur-[12px] bg-nav-bg border border-glass-default rounded-radius-4 overflow-hidden shadow-s"
     >
       <ul role="none" className="p-2 flex flex-col">
         {items.map(({ key, to, locked }) => (
@@ -312,7 +312,7 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
       aria-label={lang === 'en' ? 'Language selection' : 'Sélection de la langue'}
       ref={dropdownRef}
       style={portalStyle}
-      className="backdrop-blur-[12px] bg-white/[0.64] dark:bg-black/[0.64] border border-black/[0.16] dark:border-white/[0.16] rounded-radius-4 overflow-hidden shadow-s"
+      className="backdrop-blur-[12px] bg-nav-bg border border-glass-default rounded-radius-4 overflow-hidden shadow-s"
     >
       <ul role="none" className="p-2">
         <li role="none">
@@ -401,7 +401,7 @@ function NavLink({ to, label, currentPage, tooltip, shortcut, isDark }) {
         className={`flex items-center justify-center h-8 px-4 rounded-radius-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
           isActive
             ? 'bg-nav-active-bg-solid'
-            : 'active:opacity-[0.33] hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'
+            : 'active:opacity-[0.33] hover:bg-nav-hover-bg'
         }`}
       >
         <span className={`font-medium text-base leading-6 whitespace-nowrap ${isActive ? 'text-fg-primary-inverse' : 'text-fg-primary'}`}>
@@ -634,7 +634,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onCo
   return (
     <nav
       ref={navRef}
-      className="flex items-center pr-2 backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-radius-6 shadow-xs dark:ring-1 dark:ring-white/[0.16]"
+      className="flex items-center pr-2 backdrop-blur-[4px] bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring"
       style={{ gap: isTablet ? '32px' : '192px' }}
     >
       <div className="relative">
@@ -709,7 +709,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
 
   return (
     <div className="w-full flex flex-col items-center gap-4">
-      <div className="w-full flex items-center backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-radius-6 shadow-xs dark:ring-1 dark:ring-white/[0.16]">
+      <div className="w-full flex items-center backdrop-blur-[4px] bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring">
         <a data-spring href="/" tabIndex={0} onClick={handleLogoClick} aria-label="Atelier Digital, back to top" className="flex items-center p-1 rounded-radius-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus">
           <div className="flex items-center gap-1 pl-1 pr-4 py-1 rounded-radius-5">
             <img src={imgLogo} alt="" width={36} height={36} className="shrink-0" />
@@ -737,7 +737,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
       )}
 
       {menuOpen && (
-        <div className="w-full backdrop-blur-[8px] bg-white/90 dark:bg-black/90 border border-black/[0.16] dark:border-white/[0.16] rounded-radius-8 overflow-hidden">
+        <div className="w-full backdrop-blur-[8px] bg-nav-mobile border border-black/[0.16] dark:border-white/[0.16] rounded-radius-8 overflow-hidden">
           <ol className="flex flex-col gap-2 p-4">
             {mobilePages.map(({ key, to, modal }) => (
               <li key={key}>

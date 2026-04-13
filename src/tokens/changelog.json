@@ -1,5 +1,55 @@
 [
   {
+    "timestamp": "2026-04-13T13:09:42.685Z",
+    "changeCount": 3,
+    "summary": {
+      "added": 3,
+      "modified": 0,
+      "removed": 0
+    },
+    "changes": [
+      {
+        "path": "typography.desktop.font-size.ui.tooltip-kbd",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "11px"
+      },
+      {
+        "path": "typography.mobile.font-size.ui.tooltip-kbd",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "11px"
+      },
+      {
+        "path": "typography.tablet.font-size.ui.tooltip-kbd",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "11px"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-04-13T13:03:48.215Z",
+    "changeCount": 1,
+    "summary": {
+      "added": 0,
+      "modified": 1,
+      "removed": 0
+    },
+    "changes": [
+      {
+        "path": "semantic.dark.nav.active-bg",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.TW.50}",
+        "after": "{color.TW.100}"
+      }
+    ]
+  },
+  {
     "timestamp": "2026-04-13T09:32:56.977Z",
     "changeCount": 3,
     "summary": {

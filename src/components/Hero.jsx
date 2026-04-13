@@ -282,7 +282,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                   {pills.map((pill, i) => (
                     <li
                       key={pill}
-                      className="px-2 py-1 sm:px-4 sm:py-2 rounded-full text-[10px] sm:text-[14px] lg:text-[15px] font-medium leading-normal flex items-center justify-center"
+                      className="px-2 py-1 sm:px-4 sm:py-2 rounded-full text-tag-s font-medium leading-normal flex items-center justify-center"
                       style={{
                         opacity: i < visiblePills ? 1 : 0,
                         transform: prefersReduced ? undefined : (i < visiblePills ? 'translateY(0px)' : 'translateY(8px)'),
@@ -317,14 +317,14 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
                   document.getElementById('case-studies')?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: mobile ? 'center' : 'start' });
                 }}
                 data-spring
-                className="px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-btn-s rounded-full border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
+                className="px-6 py-3 bg-cta-600 hover:bg-cta-700 text-white/95 font-medium text-btn-m rounded-full border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2"
               >
                 {btnCases}
               </a>
               <Link
                 to="/resume"
                 data-spring
-                className="px-6 py-3 text-cta-600 hover:text-cta-700 dark:text-fg-primary dark:hover:opacity-80 font-medium text-btn-s rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary focus-visible:ring-offset-2"
+                className="px-6 py-3 text-cta-600 hover:text-cta-700 dark:text-fg-primary dark:hover:opacity-80 font-medium text-btn-m rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary focus-visible:ring-offset-2"
               >
                 {btnCV}
               </Link>

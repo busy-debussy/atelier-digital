@@ -25,9 +25,9 @@
   --border-subtle: #d4d4d4;
   --border-subtle-inverted: #404040;
   --border-focus: #0152ec;
-  --border-glass-default: rgba(255, 255, 255, 0.16);
-  --border-glass-medium: rgba(255, 255, 255, 0.12);
-  --border-glass-subtle: rgba(255, 255, 255, 0.06);
+  --border-glass-default: rgba(0, 0, 0, 0.16);
+  --border-glass-medium: rgba(0, 0, 0, 0.12);
+  --border-glass-subtle: rgba(0, 0, 0, 0.06);
   --feedback-success-bg: #f3fcf1;
   --feedback-success-border: #daf5d3;
   --feedback-success-fg: #172812;
@@ -135,8 +135,8 @@
   --border-subtle-inverted: #d4d4d4;
   --border-focus: #0152ec;
   --border-glass-default: rgba(255, 255, 255, 0.16);
-  --border-glass-medium: rgba(0, 0, 0, 0.12);
-  --border-glass-subtle: rgba(0, 0, 0, 0.06);
+  --border-glass-medium: rgba(255, 255, 255, 0.12);
+  --border-glass-subtle: rgba(255, 255, 255, 0.06);
   --feedback-success-bg: #101c0d;
   --feedback-success-border: #172812;
   --feedback-success-fg: #70ca6b;
@@ -207,7 +207,7 @@
   --nav-bg: rgba(0, 0, 0, 0.64);
   --nav-ring: rgba(255, 255, 255, 0.16);
   --nav-divider: rgba(255, 255, 255, 0.12);
-  --nav-active-bg: rgba(255, 255, 255, 0.04);
+  --nav-active-bg: rgba(255, 255, 255, 0.06);
   --nav-hover-bg: rgba(255, 255, 255, 0.08);
   --nav-active-bg-solid: #fafafa;
   --nav-mobile: rgba(0, 0, 0, 0.9);

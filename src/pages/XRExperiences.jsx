@@ -871,7 +871,7 @@ function XRToolIcon({ name, icon, darkInvert = false, circle = false, contain = 
 
 function XRToolsSection({ label, categories }) {
   return (
-    <div className="rounded-radius-6 bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] px-5 py-4 flex flex-col gap-4 sm:w-fit">
+    <div className="rounded-radius-6 bg-feedback-neutral-bg border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
       <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</p>
       <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
         {categories.map(cat => (
@@ -903,8 +903,8 @@ function SecondaryNav({ sections, activeId, onNavigate }) {
                 aria-current={isActive ? 'location' : undefined}
                 className={`relative text-tooltip leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
-                    ? 'text-fg-primary font-semibold bg-black/[0.04] dark:bg-white/[0.06]'
-                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
+                    ? 'text-fg-primary font-semibold bg-nav-active-bg'
+                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
                 }`}
               >
                 <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.eyebrow}</span>
@@ -929,7 +929,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   }, [activeId]);
 
   return (
-    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] rounded-radius-6 shadow-xs dark:ring-1 dark:ring-white/[0.16] p-[10px]">
+    <nav aria-label="Page sections" className="w-full backdrop-blur-[4px] bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring p-[10px]">
       <div className="overflow-hidden rounded-radius-4">
         <ul ref={trackRef} className="w-full flex items-center gap-1 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
           {sections.map((s) => {
@@ -943,8 +943,8 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
                   aria-current={isActive ? 'location' : undefined}
                   className={`h-8 px-3 rounded-radius-4 text-tooltip font-medium leading-[1.4] whitespace-nowrap transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                     isActive
-                      ? 'bg-black/[0.04] dark:bg-white/[0.04] text-fg-primary font-semibold'
-                      : 'text-fg-muted hover:text-fg-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'
+                      ? 'bg-nav-active-bg text-fg-primary font-semibold'
+                      : 'text-fg-muted hover:text-fg-primary hover:bg-nav-active-bg'
                   }`}
                 >
                   {s.eyebrow}
@@ -982,7 +982,7 @@ function TeamTable({ members }) {
     <div className="flex flex-col divide-y divide-black/[0.06] dark:divide-white/[0.06]">
       {members.map((m, i) => (
         <div key={i} className="flex items-baseline justify-between gap-4 py-3">
-          <span className="text-[15px] sm:text-[16px] font-medium text-fg-primary">{m.role}</span>
+          <span className="text-tag-m font-medium text-fg-primary">{m.role}</span>
           <span className="text-copy-s sm:text-label-s text-fg-muted text-right shrink-0">{m.detail}</span>
         </div>
       ))}
@@ -1143,7 +1143,7 @@ function XRExperiences({ lang, isDark }) {
                     </p>
                     <h2
                       id={`${section.id}-heading`}
-                      className="text-[28px] sm:text-[34px] lg:text-[40px] font-bold leading-tight text-fg-primary"
+                      className="text-h2 font-bold leading-tight text-fg-primary"
                     >
                       {section.heading}
                     </h2>
@@ -1331,7 +1331,7 @@ function XRExperiences({ lang, isDark }) {
       {/* ── Chat button circular wrapper — centred behind the trigger when sec nav is visible ── */}
       <div
         aria-hidden="true"
-        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-white/[0.64] dark:bg-black/[0.64] shadow-xs dark:ring-1 dark:ring-white/[0.16] ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
+        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-[4px] bg-nav-bg shadow-xs ring-1 ring-nav-ring ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
         style={{ width: 52, height: 52, left: 8, bottom: 8 }}
       />
 

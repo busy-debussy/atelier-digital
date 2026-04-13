@@ -1,5 +1,31 @@
 # Changelog 
 
+## [2.0.5] — 2026-04-13
+
+### Token migration — font sizes, glass surfaces, nav hover
+
+#### Font sizes
+- **`text-tag-s`** — Hero.jsx pill labels `text-[10px] sm:text-[14px] lg:text-[15px]` → `text-tag-s` (exact match)
+- **`text-tag-m`** — XR TeamTable role label `text-[15px] sm:text-[16px]` → `text-tag-m`; XR section h2 `text-[28px] sm:text-[34px] lg:text-[40px]` → `text-h2`; Cookies CTA `text-copy-s sm:text-[15px]` → `text-tag-m`
+- **`text-tooltip`** — WorldMapDots map tooltip `text-[11px]` → `text-tooltip`
+- **`text-tooltip-kbd`** — new token `font-size/ui/tooltip-kbd` (11px fixed, all breakpoints); applied to kbd shortcut badges in Nav and ChatBot
+- **Resume icon fallback** — removed dev placeholder `<span>icon</span>` entirely; `card.icon && <img>` pattern used instead
+
+#### `tooltip-kbd` token infrastructure
+- `tokens.json` — new entry `font-size/ui/tooltip-kbd` (11/11/11px) added to type-primitives snapshot
+- `generate-tokens.mjs` — added to hardcoded fallback snapshot (all 3 breakpoints); FIGMA_RENAMES table fully rebuilt for April 2026 restructure: `font-size/` → `size/`, spaces removed, sub-groups added (`size/ui/btn/M`, `size/ui/tooltip/txt`, `size/ui/tooltip/kbd`, etc.)
+- `generate-tailwind-config.mjs` — `tooltip-kbd` shorthand alias added
+
+#### Glass surface tokens
+- **`bg-nav-bg`** — replaces `bg-white/[0.64] dark:bg-black/[0.64]` across Nav (bar, dropdowns), Contact (glass card), Cookies, Privacy, Terms, SalesPlatform, XRExperiences (sidebar navs + scroll pills)
+- **`bg-nav-mobile`** — replaces `bg-white/90 dark:bg-black/90` on mobile menu panel
+- **`ring-nav-ring`** — replaces `dark:ring-1 dark:ring-white/[0.16]` across all nav bars and sidebar navs; ring is transparent in light, white/16 in dark
+- **`border-glass-default`** — nav dropdowns and Contact glass card; `border-black/[0.16] dark:border-white/[0.16]` → `border-glass-default`
+- **`semantic.css` fixes** — `border-glass-default/medium/subtle` light mode corrected (was white opacity, now black opacity); dark mode `medium/subtle` corrected (was black, now white)
+
+#### Nav hover fix
+- `Nav.jsx` lines 221 and 404 — Case Studies trigger and nav link hover `dark:hover:bg-white/[0.04]` (4%) → `hover:bg-nav-hover-bg` (8%), matching Let's Talk button
+
 ## [2.0.4] — 2026-04-13
 
 ### Figma Variables sync infrastructure — `generate-tokens.mjs`

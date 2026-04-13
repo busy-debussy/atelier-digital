@@ -185,6 +185,7 @@ export const fontSizeUiNavL = "24px";
 export const fontSizeUiNavM = "16px";
 export const fontSizeUiNavS = "13px";
 export const fontSizeUiTooltip = "13px";
+export const fontSizeUiTooltipKbd = "11px";
 export const fontSizeUiChipS = "13px";
 export const fontSizeUiChipXs = "12px";
 export const fontSizeBrandLogo = "16px";

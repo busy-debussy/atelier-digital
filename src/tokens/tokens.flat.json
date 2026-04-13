@@ -184,6 +184,7 @@
   "font-size-ui-nav-m": "16px",
   "font-size-ui-nav-s": "13px",
   "font-size-ui-tooltip": "13px",
+  "font-size-ui-tooltip-kbd": "11px",
   "font-size-ui-chip-s": "13px",
   "font-size-ui-chip-xs": "12px",
   "font-size-brand-logo": "16px",
