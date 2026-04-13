@@ -105,7 +105,7 @@ function CardButton({ action, label }) {
 // ── Single card ───────────────────────────────────────────────────────────────
 function ContactCard({ card, glass }) {
   const cardBg = glass
-    ? 'backdrop-blur-[16px] bg-nav-bg border border-glass-default shadow-xs'
+    ? 'backdrop-blur-[16px] bg-nav-bg border border-black/[0.16] dark:border-white/[0.16] shadow-xs'
     : 'bg-bg-page';
   return (
     <li data-spring-desktop className={`relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] flex flex-col snap-center rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 ${cardBg} p-8 sm:p-9 lg:p-10 gap-8 sm:gap-9 lg:gap-10 motion-safe:transition-transform duration-200 motion-safe:hover:scale-[1.03] cursor-pointer`}>

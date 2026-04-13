@@ -254,7 +254,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
       aria-label={lang === 'fr' ? 'Études de cas' : 'Case studies'}
       ref={dropdownRef}
       style={portalStyle}
-      className="w-[198px] backdrop-blur-[12px] bg-nav-bg border border-glass-default rounded-radius-4 overflow-hidden shadow-s"
+      className="w-[198px] backdrop-blur-[12px] bg-nav-bg border border-black/[0.16] dark:border-white/[0.16] rounded-radius-4 overflow-hidden shadow-s"
     >
       <ul role="none" className="p-2 flex flex-col">
         {items.map(({ key, to, locked }) => (
@@ -312,7 +312,7 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
       aria-label={lang === 'en' ? 'Language selection' : 'Sélection de la langue'}
       ref={dropdownRef}
       style={portalStyle}
-      className="backdrop-blur-[12px] bg-nav-bg border border-glass-default rounded-radius-4 overflow-hidden shadow-s"
+      className="backdrop-blur-[12px] bg-nav-bg border border-black/[0.16] dark:border-white/[0.16] rounded-radius-4 overflow-hidden shadow-s"
     >
       <ul role="none" className="p-2">
         <li role="none">
