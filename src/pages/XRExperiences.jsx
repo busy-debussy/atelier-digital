@@ -706,7 +706,7 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
       />
 
       {/* Counter */}
-      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-tooltip font-medium text-white/[0.64] tabular-nums pointer-events-none">
+      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-tooltip font-medium text-fg-on-dark-opacity-64 tabular-nums pointer-events-none">
         {index + 1} / {slides.length}
       </span>
 
@@ -1112,7 +1112,7 @@ function XRExperiences({ lang, isDark }) {
                     <span className="text-display-2 font-semibold leading-tight tabular-nums whitespace-nowrap" style={{ color: GOLD }}>
                       <AnimatedStat prefix={s.prefix} countTo={s.countTo} suffix={s.suffix} ready={heroReady} />
                     </span>
-                    <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-white/[0.64]">{s.label}</span>
+                    <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-on-dark-opacity-64">{s.label}</span>
                   </li>
                 ))}
               </ul>

@@ -7,12 +7,13 @@
   --bg-glass-default: rgba(0, 0, 0, 0.64);
   --bg-glass-heavy: rgba(0, 0, 0, 0.9);
   --bg-glass-subtle: rgba(0, 0, 0, 0.04);
+  --bg-inverted-subtle: rgba(255, 255, 255, 0.06);
   --fg-primary: #1f1f1f;
   --fg-on-accent-opacity-95: rgba(255, 255, 255, 0.95);
   --fg-on-dark-primary: #ffffff;
   --fg-on-dark-secondary: #d4d4d4;
   --fg-on-dark-opacity-90: rgba(255, 255, 255, 0.9);
-  --fg-on-dark-opacity-64: rgba(255, 255, 255, 0.9);
+  --fg-on-dark-opacity-64: rgba(255, 255, 255, 0.64);
   --fg-primary-inverse: #fafafa;
   --fg-secondary: #404040;
   --fg-muted: #707070;
@@ -28,6 +29,7 @@
   --border-glass-default: rgba(0, 0, 0, 0.16);
   --border-glass-medium: rgba(0, 0, 0, 0.12);
   --border-glass-subtle: rgba(0, 0, 0, 0.06);
+  --border-inverted-subtle: rgba(255, 255, 255, 0.06);
   --feedback-success-bg: #f3fcf1;
   --feedback-success-border: #daf5d3;
   --feedback-success-fg: #172812;
@@ -116,12 +118,13 @@
   --bg-glass-default: rgba(0, 0, 0, 0.64);
   --bg-glass-heavy: rgba(0, 0, 0, 0.9);
   --bg-glass-subtle: rgba(0, 0, 0, 0.06);
+  --bg-inverted-subtle: rgba(0, 0, 0, 0.04);
   --fg-primary: #fafafa;
   --fg-on-accent-opacity-95: rgba(255, 255, 255, 0.95);
   --fg-on-dark-primary: #ffffff;
   --fg-on-dark-secondary: #d4d4d4;
   --fg-on-dark-opacity-90: rgba(255, 255, 255, 0.9);
-  --fg-on-dark-opacity-64: rgba(255, 255, 255, 0.9);
+  --fg-on-dark-opacity-64: rgba(255, 255, 255, 0.64);
   --fg-primary-inverse: #1f1f1f;
   --fg-secondary: #adadad;
   --fg-muted: #a2a2a2;
@@ -137,6 +140,7 @@
   --border-glass-default: rgba(255, 255, 255, 0.16);
   --border-glass-medium: rgba(255, 255, 255, 0.12);
   --border-glass-subtle: rgba(255, 255, 255, 0.06);
+  --border-inverted-subtle: rgba(0, 0, 0, 0.06);
   --feedback-success-bg: #101c0d;
   --feedback-success-border: #172812;
   --feedback-success-fg: #70ca6b;

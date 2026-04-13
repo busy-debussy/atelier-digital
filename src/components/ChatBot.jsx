@@ -182,7 +182,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
                 <div className={`max-w-[85%] px-4 py-3 rounded-radius-4 text-copy-s leading-relaxed break-words ${
                   m.role === 'user'
                     ? 'bg-cta-600 text-white/95 rounded-br-[2px]'
-                    : 'bg-white/[0.06] dark:bg-black/[0.04] text-fg-primary-inverse rounded-bl-[2px]'
+                    : 'bg-inverted-subtle text-fg-primary-inverse rounded-bl-[2px]'
                 }`}>
                   {m.role === 'assistant' ? renderContent(m.content) : m.content}
                 </div>
@@ -191,7 +191,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
 
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-white/[0.06] dark:bg-black/[0.04] px-4 py-3 rounded-radius-4 rounded-bl-[2px] flex gap-2 items-center">
+                <div className="bg-inverted-subtle px-4 py-3 rounded-radius-4 rounded-bl-[2px] flex gap-2 items-center">
                   {[0, 1, 2].map(i => (
                     <span
                       key={i}
@@ -224,7 +224,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
 
           {/* Input */}
           {!atLimit && (
-            <div className={`px-4 py-4 shrink-0 flex items-end gap-2 ${messages.length || loading ? 'border-t border-white/[0.06] dark:border-black/[0.06]' : ''}`}>
+            <div className={`px-4 py-4 shrink-0 flex items-end gap-2 ${messages.length || loading ? 'border-t border-inverted-subtle' : ''}`}>
               <textarea
                 ref={el => { textareaRef.current = el; inputRef.current = el; }}
                 value={input}
@@ -238,7 +238,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
                 autoComplete="off"
                 rows={1}
                 disabled={loading}
-                className="flex-1 resize-none bg-white/[0.06] dark:bg-black/[0.04] rounded-radius-3 px-3 py-[10px] text-copy-s leading-[22px] text-fg-primary-inverse placeholder:text-fg-muted-inverse placeholder:[text-indent:2px] outline-none focus:ring-1 focus:ring-border-focus transition-all"
+                className="flex-1 resize-none bg-inverted-subtle rounded-radius-3 px-3 py-[10px] text-copy-s leading-[22px] text-fg-primary-inverse placeholder:text-fg-muted-inverse placeholder:[text-indent:2px] outline-none focus:ring-1 focus:ring-border-focus transition-all"
                 style={{ scrollbarWidth: 'none', minHeight: '42px', maxHeight: '100px' }}
               />
               <button

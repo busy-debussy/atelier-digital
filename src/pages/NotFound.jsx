@@ -36,7 +36,7 @@ export default function NotFound({ lang }) {
         <span className="sr-only">{t.code}</span>
         <span
           aria-hidden="true"
-          className="block text-[160px] sm:text-[220px] lg:text-[280px] font-bold leading-none tracking-tighter text-black/[0.04] dark:text-white/[0.04] pointer-events-none"
+          className="block text-[160px] sm:text-[220px] lg:text-[280px] font-bold leading-none tracking-tighter text-nav-active-bg pointer-events-none"
           style={{ userSelect: 'none' }}
         >
           {t.code}

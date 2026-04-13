@@ -59,7 +59,7 @@ function CookieBanner({ lang, hideFloating = false }) {
         ref={dialogRef}
         tabIndex={-1}
         inert={!visible || (hideFloating && !explicit)}
-        className={`fixed bottom-[60px] sm:bottom-4 left-1/2 -translate-x-1/2 z-[300] w-[340px] md:w-auto md:max-w-[760px] bg-tooltip-bg/95 backdrop-blur-[4px] border border-white/[0.08] dark:border-black/[0.08] rounded-radius-6 shadow-s p-5 flex flex-col md:flex-row md:items-center gap-5 md:gap-6 transition-all duration-300 ease-out ${
+        className={`fixed bottom-[60px] sm:bottom-4 left-1/2 -translate-x-1/2 z-[300] w-[340px] md:w-auto md:max-w-[760px] bg-tooltip-bg/95 backdrop-blur-[4px] rounded-radius-6 shadow-s p-5 flex flex-col md:flex-row md:items-center gap-5 md:gap-6 transition-all duration-300 ease-out ${
           visible && (!hideFloating || explicit) ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
         }`}
       >
@@ -91,7 +91,7 @@ function CookieBanner({ lang, hideFloating = false }) {
             data-spring
             aria-label={t.reject}
             onClick={() => respond('rejected')}
-            className="flex-1 md:flex-none md:w-[100px] py-3 text-label-s font-medium leading-[1.2] rounded-radius-3 border border-white/[0.15] dark:border-black/[0.12] bg-bg-surface text-fg-primary hover:bg-btn-bg-over dark:hover:bg-btn-nav-bg-rest-subtle transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+            className="flex-1 md:flex-none md:w-[100px] py-3 text-label-s font-medium leading-[1.2] rounded-radius-3 bg-bg-surface text-fg-primary hover:bg-btn-bg-over dark:hover:bg-btn-nav-bg-rest-subtle transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           >
             {t.reject}
           </button>
@@ -99,7 +99,7 @@ function CookieBanner({ lang, hideFloating = false }) {
             data-spring
             aria-label={t.accept}
             onClick={() => respond('accepted')}
-            className="flex-1 md:flex-none md:w-[100px] py-3 text-label-s font-medium leading-[1.2] rounded-radius-3 border border-white/[0.15] dark:border-black/[0.12] bg-bg-surface text-fg-primary hover:bg-btn-bg-over dark:hover:bg-btn-nav-bg-rest-subtle transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+            className="flex-1 md:flex-none md:w-[100px] py-3 text-label-s font-medium leading-[1.2] rounded-radius-3 bg-bg-surface text-fg-primary hover:bg-btn-bg-over dark:hover:bg-btn-nav-bg-rest-subtle transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           >
             {t.accept}
           </button>

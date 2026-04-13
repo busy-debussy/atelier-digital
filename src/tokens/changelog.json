@@ -1,5 +1,157 @@
 [
   {
+    "timestamp": "2026-04-13T15:30:18.778Z",
+    "changeCount": 9,
+    "summary": {
+      "added": 4,
+      "modified": 5,
+      "removed": 0
+    },
+    "changes": [
+      {
+        "path": "semantic.dark.bg.inverted-subtle",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TB.50}"
+      },
+      {
+        "path": "semantic.dark.border.glass.medium",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.TB.400}",
+        "after": "{color.TW.400}"
+      },
+      {
+        "path": "semantic.dark.border.glass.subtle",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.TB.100}",
+        "after": "{color.TW.100}"
+      },
+      {
+        "path": "semantic.dark.border.inverted-subtle",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TB.100}"
+      },
+      {
+        "path": "semantic.light.bg.inverted-subtle",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TW.100}"
+      },
+      {
+        "path": "semantic.light.border.glass.default",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.TW.500}",
+        "after": "{color.TB.500}"
+      },
+      {
+        "path": "semantic.light.border.glass.medium",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.TW.400}",
+        "after": "{color.TB.400}"
+      },
+      {
+        "path": "semantic.light.border.glass.subtle",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.TW.100}",
+        "after": "{color.TB.100}"
+      },
+      {
+        "path": "semantic.light.border.inverted-subtle",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TW.100}"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-04-13T15:26:38.593Z",
+    "changeCount": 4,
+    "summary": {
+      "added": 0,
+      "modified": 0,
+      "removed": 4
+    },
+    "changes": [
+      {
+        "path": "semantic.dark.bg.inverted-subtle",
+        "type": "color",
+        "change": "removed",
+        "before": "{color.TB.50}",
+        "after": null
+      },
+      {
+        "path": "semantic.dark.border.inverted-subtle",
+        "type": "color",
+        "change": "removed",
+        "before": "{color.TB.100}",
+        "after": null
+      },
+      {
+        "path": "semantic.light.bg.inverted-subtle",
+        "type": "color",
+        "change": "removed",
+        "before": "{color.TW.100}",
+        "after": null
+      },
+      {
+        "path": "semantic.light.border.inverted-subtle",
+        "type": "color",
+        "change": "removed",
+        "before": "{color.TW.100}",
+        "after": null
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-04-13T15:23:29.599Z",
+    "changeCount": 4,
+    "summary": {
+      "added": 4,
+      "modified": 0,
+      "removed": 0
+    },
+    "changes": [
+      {
+        "path": "semantic.dark.bg.inverted-subtle",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TB.50}"
+      },
+      {
+        "path": "semantic.dark.border.inverted-subtle",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TB.100}"
+      },
+      {
+        "path": "semantic.light.bg.inverted-subtle",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TW.100}"
+      },
+      {
+        "path": "semantic.light.border.inverted-subtle",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.TW.100}"
+      }
+    ]
+  },
+  {
     "timestamp": "2026-04-13T13:09:42.685Z",
     "changeCount": 3,
     "summary": {

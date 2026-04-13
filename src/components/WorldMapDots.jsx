@@ -458,7 +458,7 @@ export default function WorldMapDots({
                         tabIndex={flatIdx === focusedIdx ? 0 : -1}
                         aria-pressed={isSelected}
                         aria-label={`${lt.labels[dot.label] ?? dot.label}${dotCountries.length === 1 ? `, ${dotCountries[0]}` : ''}${isSelected ? ', selected' : ''}`}
-                        className={`flex items-center gap-2 px-3 py-1 rounded-full transition-colors self-start ${isSelected ? 'bg-black/[0.12] dark:bg-white/[0.16]' : 'bg-black/[0.05] dark:bg-white/[0.07] hover:bg-black/[0.1] dark:hover:bg-white/[0.13]'}`}
+                        className={`flex items-center gap-2 px-3 py-1 rounded-full border border-black/[0.08] dark:border-white/[0.08] transition-colors self-start ${isSelected ? 'bg-bg-surface-inverted text-fg-primary-inverse' : 'hover:bg-nav-hover-bg'}`}
                         style={{ opacity: isActiveTz ? 0.2 : 1, transition: 'opacity 200ms ease' }}
                         onFocus={() => setFocusedIdx(flatIdx)}
                         onPointerEnter={(e) => { if (e.pointerType !== 'touch') setHovered({ tz: primaryTz, country: dotCountries[0] ?? null }); }}
@@ -467,7 +467,7 @@ export default function WorldMapDots({
                         onClick={(e) => e.stopPropagation()}
                       >
                         <div style={{ width: 8, height: 8, borderRadius: '50%', background: dot.color, flexShrink: 0 }} aria-hidden="true" />
-                        <span className="text-label-s font-medium leading-[1.2] text-fg-muted whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
+                        <span className={`text-label-s font-medium leading-[1.2] whitespace-nowrap ${isSelected ? 'text-fg-primary-inverse' : 'text-fg-muted'}`}>{lt.labels[dot.label] ?? dot.label}</span>
                       </button>
                     );
                   })}
@@ -496,10 +496,10 @@ export default function WorldMapDots({
                     tabIndex={flatIdx === focusedIdx ? 0 : -1}
                     aria-pressed={isSelected}
                     aria-label={`${lt.labels[dot.label] ?? dot.label}${dotCountries.length === 1 ? `, ${dotCountries[0]}` : ''}${isSelected ? ', selected' : ''}`}
-                    className={`flex items-center gap-2 px-3 py-1 rounded-full transition-colors self-start ${
+                    className={`flex items-center gap-2 px-3 py-1 rounded-full border border-black/[0.08] dark:border-white/[0.08] transition-colors self-start ${
                       isSelected
-                        ? 'bg-black/[0.12] dark:bg-white/[0.16]'
-                        : 'bg-black/[0.05] dark:bg-white/[0.07] hover:bg-black/[0.1] dark:hover:bg-white/[0.13]'
+                        ? 'bg-bg-surface-inverted text-fg-primary-inverse'
+                        : 'hover:bg-nav-hover-bg'
                     }`}
                     style={{ opacity: isActiveTz ? 0.2 : 1, transition: 'opacity 200ms ease' }}
                     onFocus={() => setFocusedIdx(flatIdx)}
@@ -509,7 +509,7 @@ export default function WorldMapDots({
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: dot.color, flexShrink: 0 }} aria-hidden="true" />
-                    <span className="text-tooltip text-fg-muted whitespace-nowrap">{lt.labels[dot.label] ?? dot.label}</span>
+                    <span className={`text-tooltip whitespace-nowrap ${isSelected ? 'text-fg-primary-inverse' : 'text-fg-muted'}`}>{lt.labels[dot.label] ?? dot.label}</span>
                   </button>
                 );
               })}

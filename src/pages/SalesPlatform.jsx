@@ -329,7 +329,7 @@ function Hero({ lang }) {
       {/* Main content, bottom */}
       <div className="relative z-10 mt-auto max-w-5xl mx-auto w-full px-6 sm:px-8 lg:px-10 pb-24 sm:pb-28 lg:pb-32 flex flex-col gap-6 sm:gap-8 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
 
-        <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-white/[0.64]">
+        <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-on-dark-opacity-64">
           {h.category}
         </p>
 
@@ -346,7 +346,7 @@ function Hero({ lang }) {
                   <span className="sr-only">{s.prefix}{finalValue}{s.suffix}</span>
                   <span><AnimatedStat prefix={s.prefix} countTo={s.countTo} decimals={s.decimals} suffix={s.suffix} ready={heroReady} /></span>
                 </span>
-                <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-white/[0.64] max-w-[100px] sm:max-w-none">{s.label}</span>
+                <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-on-dark-opacity-64 max-w-[100px] sm:max-w-none">{s.label}</span>
               </li>
             );
           })}
@@ -458,8 +458,8 @@ const CONTEXT_BODIES = {
   // index matches eyebrows array (0 = client, body handled inline, 1 = industry, handled inline)
   mission:      { en: <>Design a <strong>luxury-first</strong>, <strong>user-centric web platform</strong> that lets buyers explore unbuilt properties interactively while supporting sales agents during high-pressure launch events.</>, fr: <>Concevoir une plateforme web <strong>haut de gamme</strong> et <strong>centrée sur l'utilisateur</strong> permettant aux acheteurs d'explorer des biens non construits de manière interactive, tout en accompagnant les agents commerciaux lors des lancements sous haute pression.</> },
   stakeholders: {
-    en: <><ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong> and marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-feedback-neutral-bg border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Design Team:</strong> Coordinated <strong>cross-functional communications</strong> and served as the <strong>source of truth</strong> for product and design decisions.</span></div></>,
-    fr: <><ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong> et marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-feedback-neutral-bg border border-black/[0.06] dark:border-white/[0.08] px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Équipe Design :</strong> Coordination des <strong>communications transverses</strong> et référent de <strong>source de vérité</strong> pour les décisions produit et design.</span></div></>,
+    en: <><ul className="list-disc list-inside"><li>Client: <strong>digital team</strong> and <strong>architects</strong>.</li><li>Internal: <strong>product</strong>, project management, <strong>development</strong>, design, <strong>studio</strong> and marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-feedback-neutral-bg border border-feedback-neutral-border px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Design Team:</strong> Coordinated <strong>cross-functional communications</strong> and served as the <strong>source of truth</strong> for product and design decisions.</span></div></>,
+    fr: <><ul className="list-disc list-inside"><li>Client : <strong>équipe digitale</strong> et <strong>architectes</strong>.</li><li>Interne : <strong>équipe produit</strong>, gestion de projet, <strong>développement</strong>, design, <strong>studio</strong> et marketing.</li></ul><div className="mt-4 sm:w-fit rounded-radius-3 bg-feedback-neutral-bg border border-feedback-neutral-border px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted"><span aria-hidden="true" className="shrink-0">🎨</span><span><strong className="text-fg-primary">Équipe Design :</strong> Coordination des <strong>communications transverses</strong> et référent de <strong>source de vérité</strong> pour les décisions produit et design.</span></div></>,
   },
   myRole: {
     en: {
@@ -974,7 +974,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
       </div>
 
       {/* Counter */}
-      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-label-s font-medium leading-[1.2] text-white/[0.64] tabular-nums pointer-events-none">
+      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-label-s font-medium leading-[1.2] text-fg-on-dark-opacity-64 tabular-nums pointer-events-none">
         {index + 1} / {slides.length}
       </span>
 

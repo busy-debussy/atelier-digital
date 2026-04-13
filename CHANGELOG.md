@@ -1,5 +1,25 @@
 # Changelog 
 
+## [2.0.6] — 2026-04-13
+
+### Token migration — inverted surfaces, opacity text, map pills, cleanup
+
+#### New tokens
+- **`bg-inverted-subtle`** / **`border-inverted-subtle`** — created in Figma and wired through `generate-tokens.mjs`; `bg`: white/6% light, black/4% dark; `border`: white/6% light, black/6% dark; applied to ChatBot bubble bg, input bg, and separator border
+- **`border-glass-*` fix** — `default/medium/subtle` light mode values were white opacity (wrong); corrected to black opacity in `generate-tokens.mjs`; dark mode values also corrected
+- **`fg-on-dark-opacity-64` fix** — token value was `TW/900` (90%); corrected to `TW/800` (64%); applied to map axis labels and carousel counters across SalesPlatform and XRExperiences
+
+#### WorldMapDots filter pills
+- Rest state — removed background, added `border-black/[0.08] dark:border-white/[0.08]`
+- Hover — `bg-nav-hover-bg`
+- Selected — `bg-bg-surface-inverted` with `text-fg-primary-inverse` on label span
+- Label text — conditional `text-fg-muted` at rest / `text-fg-primary-inverse` when selected
+
+#### Other cleanup
+- **SalesPlatform stakeholders callout** — `border-black/[0.06] dark:border-white/[0.08]` → `border-feedback-neutral-border`
+- **CookieBanner** — removed panel border and button borders (shadow + contrast sufficient)
+- **NotFound watermark** — `text-black/[0.04] dark:text-white/[0.04]` → `text-nav-active-bg`
+
 ## [2.0.5] — 2026-04-13
 
 ### Token migration — font sizes, glass surfaces, nav hover

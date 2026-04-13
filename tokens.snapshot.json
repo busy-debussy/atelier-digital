@@ -1133,6 +1133,10 @@
             "$value": "{color.TB.50}",
             "$type": "color"
           }
+        },
+        "inverted-subtle": {
+          "$value": "{color.TW.100}",
+          "$type": "color"
         }
       },
       "fg": {
@@ -1218,17 +1222,21 @@
         },
         "glass": {
           "default": {
-            "$value": "{color.TW.500}",
+            "$value": "{color.TB.500}",
             "$type": "color"
           },
           "medium": {
-            "$value": "{color.TW.400}",
+            "$value": "{color.TB.400}",
             "$type": "color"
           },
           "subtle": {
-            "$value": "{color.TW.100}",
+            "$value": "{color.TB.100}",
             "$type": "color"
           }
+        },
+        "inverted-subtle": {
+          "$value": "{color.TW.100}",
+          "$type": "color"
         }
       },
       "feedback": {
@@ -1629,6 +1637,10 @@
             "$value": "{color.TB.100}",
             "$type": "color"
           }
+        },
+        "inverted-subtle": {
+          "$value": "{color.TB.50}",
+          "$type": "color"
         }
       },
       "fg": {
@@ -1718,13 +1730,17 @@
             "$type": "color"
           },
           "medium": {
-            "$value": "{color.TB.400}",
+            "$value": "{color.TW.400}",
             "$type": "color"
           },
           "subtle": {
-            "$value": "{color.TB.100}",
+            "$value": "{color.TW.100}",
             "$type": "color"
           }
+        },
+        "inverted-subtle": {
+          "$value": "{color.TB.100}",
+          "$type": "color"
         }
       },
       "feedback": {
