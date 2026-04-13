@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import confetti from 'canvas-confetti';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { initSpringPress } from './utils/springPress';
+import { initSquircle } from './utils/squircle';
 import { GA_ID, loadGoogleAnalytics, loadClarity, trackPageView, trackEvent } from './analytics';
 import Nav from './components/Nav';
 import ScrollForMore from './components/ScrollForMore';
@@ -30,10 +31,19 @@ function PageViewTracker() {
   return null;
 }
 
-function AnimatedRoutes({ children }) {
+function AnimatedRoutes({ children, enterDirRef }) {
   const { pathname } = useLocation();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const cls = useMemo(() => {
+    const dir = enterDirRef?.current;
+    return dir === -1 ? 'page-slide-from-right' : dir === 1 ? 'page-slide-from-left' : 'page-enter';
+  }, [pathname]);
   return (
-    <div key={pathname} className="page-enter">
+    <div
+      key={pathname}
+      className={cls}
+      onAnimationEnd={e => { if (e.target === e.currentTarget) e.currentTarget.className = ''; }}
+    >
       {children}
     </div>
   );
@@ -44,12 +54,15 @@ const PROJECTS = ['/case-study/sales-platform', '/case-study/xr'];
 function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const enterDirRef = useRef(null);
 
   useEffect(() => {
-    const handler = () => {
+    const handler = (e) => {
+      enterDirRef.current = e.detail?.dir ?? null;
       const idx = PROJECTS.indexOf(pathname);
       const next = PROJECTS[(idx + 1) % PROJECTS.length];
       navigate(next);
+      setTimeout(() => { enterDirRef.current = null; }, 450);
     };
     window.addEventListener('cycle-project', handler);
     return () => window.removeEventListener('cycle-project', handler);
@@ -74,7 +87,7 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
       </a>
       <Nav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} />
       {(pathname === '/resume' || pathname === '/case-study/sales-platform' || pathname === '/case-study/xr') && <ScrollForMore lang={lang} scrollTarget={pathname === '/resume' ? 'summary-bio' : undefined} />}
-      <AnimatedRoutes><Routes>
+      <AnimatedRoutes enterDirRef={enterDirRef}><Routes>
         <Route path="/" element={<Home lang={lang} isDark={isDark} enableDark={() => setIsDark(true)} />} />
         <Route path="/case-study/sales-platform" element={<SalesPlatform lang={lang} isDark={isDark} />} />
         <Route path="/case-study/xr" element={<XRExperiences lang={lang} isDark={isDark} />} />
@@ -93,6 +106,7 @@ function App() {
   const [lang, setLang] = useState('en');
 
   useEffect(() => initSpringPress(), []);
+  useEffect(() => initSquircle(), []);
 
   useEffect(() => {
     if (isDark) {
@@ -188,6 +202,7 @@ function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -196,7 +211,7 @@ function App() {
         <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
         <CookieBanner lang={lang} hideFloating={secondaryNavVisible} />
       </div>
-      <ChatBot lang={lang} onOpenChange={setChatOpen} hideFloating={secondaryNavVisible} fadeFloating={scrolledDown} />
+      <ChatBot lang={lang} onOpenChange={setChatOpen} fadeFloating={scrolledDown} />
     </BrowserRouter>
   );
 }

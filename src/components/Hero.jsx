@@ -69,8 +69,8 @@ let sessionAnimDone = false;
 const france = isFranceTz();
 
 function getHeading(lang, dark) {
-  if (lang === 'fr') return dark ? "Bonsoir, c'est David\u00a0! 😀" : "Bonjour, c'est David\u00a0! 😀";
-  return isAfterWorkHoursLocal() ? "Hey, I'm David! 😀" : "Hi, I'm David! 😀";
+  if (lang === 'fr') return dark ? "Bonsoir, c'est David\u00a0!\u00a0😀" : "Bonjour, c'est David\u00a0!\u00a0😀";
+  return isAfterWorkHoursLocal() ? "Hey, I'm David!\u00a0😀" : "Hi, I'm David!\u00a0😀";
 }
 
 // Component

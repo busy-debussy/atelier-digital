@@ -1,5 +1,66 @@
 # Changelog 
 
+## [2.1.0] — 2026-04-13
+
+### Footer, carousels, hero, map tokens, legal chat, nav dimming
+
+#### Footer nav redesign
+- Hover rect now hugs text width — `block leading-[3rem]` → `inline-block leading-normal py-2`
+- Hover state: added `hover:bg-nav-hover-bg px-3 -mx-3 rounded-radius-2` (background pill on hover)
+- All list columns: `flex flex-col` → `flex flex-col gap-2`
+- Arrow link items and Locked items: `flex` → `inline-flex` (preserves inline sizing alongside text)
+- Contact column `<ul>`: `flex flex-col gap-2`
+- `data-squircle` on manage-cookies button and internal nav links
+
+#### Carousel blink fix (Contact + CaseStudies)
+- Added `isProgrammaticScroll` ref — suppresses `handleScroll` for 600ms during smooth-scroll to prevent button state oscillation on press
+
+#### Hero mobile emoji orphan fix
+- Added `\u00a0` (non-breaking space) before emoji in all heading variants (EN + FR, morning/evening) — prevents emoji orphaning onto its own line at narrow widths
+
+#### WorldMapDots — full color token migration
+- `DEFAULT_COUNTRY_COLOR_MAP` and `DEFAULT_TEAM_DOTS`: all hardcoded hex → `var(--map-country-*)`
+- `dotRestFill`: `isDark ? '#404040' : '#d4d4d4'` → `var(--map-dot-rest)` (live CSS var, no JS dark check)
+- `labelColor`: `isDark ? '#fafafa' : '#1f1f1f'` → `var(--fg-primary)`
+- Timezone label fills: `isDark` ternaries → `var(--tooltip-fg)` / `var(--tooltip-bg)`
+- Mobile/tablet legend breakpoint: `md:hidden` → `lg:hidden`
+- Desktop legend: grid+flex hybrid → pure `flex` with `desktopCol` property for column stacking
+- Legend filter buttons: added `cursor-pointer`
+
+#### Design tokens — map country colors (`semantic.css`)
+- `--map-dot-rest`: `#d4d4d4` → `#e8e8e8` light, `#404040` → `#2a2a2a` dark (less contrast vs land)
+- Added `--map-country-scotland/england/uae/vietnam/purple/pink/indigo/pistachio/red`:
+  - Light mode: midpoint values (visible on white without being heavy)
+  - Dark mode: palette-fg-dark bright values (visible on dark backgrounds)
+
+#### SalesPlatform — map tokens + layout
+- `SP_COUNTRY_COLOR_MAP` and `SP_TEAM_DOTS`: all colors → `var(--map-country-*)` tokens
+- `SP_LEGEND_GROUPS`: added `desktopCol` to stack Dev+QA and Marketing+Management into shared columns
+- Map section: wrapped in `max-w-2xl mx-auto` to match XR page proportions
+- `data-squircle` on Tile, ToolsGrid, tool tooltip divs
+- Hero section: swipe gesture (60px threshold) dispatches `cycle-project` for mobile project switching
+- Minor stat label text tweaks (shorter copy)
+
+#### XR Experiences
+- Hero section: same swipe-to-cycle gesture as SalesPlatform
+- `data-squircle` on XRToolsSection and tool tooltip divs
+
+#### Legal pages — chat button parity (Privacy, Cookies, Terms)
+- Replaced no-op `secondary-nav-change` effect with `chat-force-visible` dispatch — chat button now appears on mobile whenever the secondary nav is visible, matching case study page behavior
+
+#### Nav — mobile menu dimming
+- Mobile menu overlay: added `bg-bg-glass-default` (`rgba(0,0,0,0.64)`) + `animate-[fade-in_200ms_ease-out_both]` — page content dims when menu opens
+
+#### ChatBot — idle nudge system
+- Floating button now only appears after 3s idle + 200px scroll (one-time nudge per session)
+- Auto-dismisses after 6s; overridden by `chat-force-visible` events from case study / legal pages
+- `data-squircle` on message bubbles, loading indicator, textarea, send button
+
+#### Contact modal (Nav)
+- Row hover: restructured with inner rounded wrapper + squircle for tighter hover highlight
+- vCard download button: hover now inverts (white bg, dark text, white border)
+- `data-squircle` on vCard button
+
 ## [2.0.7] — 2026-04-13
 
 ### Token migration — glass borders, chip surfaces, contact modal polish

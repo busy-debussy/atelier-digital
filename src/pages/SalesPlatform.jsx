@@ -262,7 +262,7 @@ const HERO = {
     stats: [
       { prefix: '£', countTo: 6.8, decimals: 1, suffix: 'B',  label: 'in sales generated'      },
       { prefix: '+', countTo: 20,  decimals: 0, suffix: '%',   label: 'YoY sales increase'       },
-      { prefix: '',  countTo: 48,  decimals: 0, suffix: 'h',   label: 'to sell out first launch' },
+      { prefix: '',  countTo: 48,  decimals: 0, suffix: 'h',   label: 'to sell out launch 1' },
     ],
   },
   fr: {
@@ -270,7 +270,7 @@ const HERO = {
     title: 'Une plateforme de vente sur plan',
     stats: [
       { prefix: '',  countTo: 8,  decimals: 0, suffix: ' Mds €', label: 'de ventes générées'           },
-      { prefix: '+', countTo: 20, decimals: 0, suffix: ' %',      label: 'd’augmentation en un an' },
+      { prefix: '+', countTo: 20, decimals: 0, suffix: ' %',      label: 'en un an' },
       { prefix: '',  countTo: 48, decimals: 0, suffix: 'h',       label: 'pour tout vendre'  },
     ],
   },
@@ -309,8 +309,19 @@ function Hero({ lang }) {
   const h = HERO[lang] ?? HERO.en;
   const [heroReady, setHeroReady] = useState(false);
   useEffect(() => { const t = setTimeout(() => setHeroReady(true), 600); return () => clearTimeout(t); }, []);
+  const swipeStart = useRef(null);
+  const onTouchStart = (e) => { swipeStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; };
+  const onTouchEnd = (e) => {
+    if (!swipeStart.current) return;
+    const dx = e.changedTouches[0].clientX - swipeStart.current.x;
+    const dy = e.changedTouches[0].clientY - swipeStart.current.y;
+    swipeStart.current = null;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+      window.dispatchEvent(new CustomEvent('cycle-project', { detail: { dir: dx < 0 ? -1 : 1 } }));
+    }
+  };
   return (
-    <section aria-labelledby="hero-heading" lang={lang} className="relative min-h-screen flex flex-col overflow-hidden">
+    <section aria-labelledby="hero-heading" lang={lang} className="relative min-h-screen flex flex-col overflow-hidden" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
 
       {/* Background image */}
       <picture className="absolute inset-0 w-full h-full">
@@ -360,7 +371,7 @@ function Hero({ lang }) {
 // ── Tile primitives ───────────────────────────────────────────────────────────
 function Tile({ children, fullWidth = false, bgClass = 'bg-bg-page' }) {
   return (
-    <div className={`${bgClass} rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 p-6 sm:p-12 lg:p-[60px] flex flex-col gap-4 sm:gap-5 lg:gap-6${fullWidth ? ' lg:col-span-2' : ''}`}>
+    <div data-squircle className={`${bgClass} rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 p-6 sm:p-12 lg:p-[60px] flex flex-col gap-4 sm:gap-5 lg:gap-6${fullWidth ? ' lg:col-span-2' : ''}`}>
       {children}
     </div>
   );
@@ -404,7 +415,7 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false, contain = fa
         role="tooltip"
         className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${active ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">{name}</div>
+        <div data-squircle className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">{name}</div>
       </div>
       <button
         aria-label={name}
@@ -425,7 +436,7 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false, contain = fa
 function ToolsGrid({ lang }) {
   const label = (CONTEXT_EYEBROWS[lang] ?? CONTEXT_EYEBROWS.en)[5];
   return (
-    <div className="rounded-radius-6 bg-feedback-neutral-bg border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
+    <div data-squircle className="rounded-radius-6 bg-feedback-neutral-bg border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
       <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</p>
       <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
         {CONTEXT_TOOLS.map(cat => (
@@ -471,31 +482,31 @@ const CONTEXT_BODIES = {
     },
     fr: {
       stats: [
-        { value: "15 semaines", label: "jusqu’au 1er lancement" },
+        { value: "15 semaines", label: "jusqu'au 1er lancement" },
         { value: "10 projets",   label: "la premi\u00e8re ann\u00e9e" },
       ],
-      body: <>En tant que <strong>Senior <abbr title="User Experience / User Interface" className="no-underline">UX/UI</abbr> Designer</strong> et <strong>responsable de l&apos;équipe design</strong>, j’ai dirigé une équipe de quatre designers couvrant l’<strong>UX, l’UI, l’interaction et le design visuel</strong>, du concept au lancement, incluant la <strong>stratégie MVP</strong> et le <strong>déploiement incrémental des fonctionnalités</strong>. 🚀</>,
+      body: <>En tant que <strong>Senior <abbr title="User Experience / User Interface" className="no-underline">UX/UI</abbr> Designer</strong> et <strong>responsable de l&apos;équipe design</strong>, j'ai dirigé une équipe de quatre designers couvrant l'<strong>UX, l'UI, l'interaction et le design visuel</strong>, du concept au lancement, incluant la <strong>stratégie MVP</strong> et le <strong>déploiement incrémental des fonctionnalités</strong>. 🚀</>,
     },
   },
   team: {
     en: <>Fully remote, with the flexibility to work from anywhere, distributed globally 🌏. The <strong>design team</strong> collaborated closely with <strong>developers</strong> and the <strong>studio team</strong>, ensuring <strong>consistent communication</strong> and alignment across all launches.</>,
-    fr: <>100% télétravail, avec la flexibilité de travailler de n’importe où, dans le monde 🌏. L’<strong>équipe design</strong> a collaboré étroitement avec les <strong>développeurs</strong> et l’<strong>équipe studio</strong>, garantissant une <strong>communication cohérente</strong> et un alignement tout au long des lancements.</>,
+    fr: <>100% télétravail, avec la flexibilité de travailler de n'importe où, dans le monde 🌏. L'<strong>équipe design</strong> a collaboré étroitement avec les <strong>développeurs</strong> et l'<strong>équipe studio</strong>, garantissant une <strong>communication cohérente</strong> et un alignement tout au long des lancements.</>,
   },
 };
 
 const SP_COUNTRY_COLOR_MAP = {
-  Scotland:  '#C9A84C',
-  England:   '#6B9CE8',
-  UAE:       '#E8836B',
-  Cyprus:    '#E8836B',
-  Portugal:  '#B07FE8',
-  Brazil:    '#B07FE8',
-  Nigeria:   '#B07FE8',
-  India:     '#E86B9C',
-  Australia: '#6BB8E8',
-  Malaysia:  '#A8E86B',
-  Indonesia: '#E8A86B',
-  Thailand:  '#E8A86B',
+  Scotland:  'var(--map-country-scotland)',
+  England:   'var(--map-country-england)',
+  UAE:       'var(--map-country-uae)',
+  Cyprus:    'var(--map-country-uae)',
+  Portugal:  'var(--map-country-purple)',
+  Brazil:    'var(--map-country-purple)',
+  Nigeria:   'var(--map-country-purple)',
+  India:     'var(--map-country-pink)',
+  Australia: 'var(--map-country-indigo)',
+  Malaysia:  'var(--map-country-pistachio)',
+  Indonesia: 'var(--map-country-red)',
+  Thailand:  'var(--map-country-red)',
 };
 
 const SP_TOOLTIP_OFFSETS = (selected) => {
@@ -525,25 +536,25 @@ const SP_DOT_ID_MAP = {
 };
 
 const SP_TEAM_DOTS = [
-  { label: 'UX/UI',          group: 'design',     countries: ['Scotland', 'India', 'Australia'], color: '#C9A84C' },
-  { label: 'Interaction',    group: 'design',     country: 'Malaysia',  color: '#A8E86B' },
-  { label: 'Visual',         group: 'design',     country: 'Scotland',  color: '#C9A84C' },
-  { label: 'Creative Team',  group: 'studio',     country: 'Scotland', color: '#C9A84C' },
-  { label: '3D Artists',     group: 'studio',     countries: ['Portugal', 'Brazil', 'Nigeria'], color: '#B07FE8' },
-  { label: 'Project Manager',group: 'management', countries: ['England', 'Cyprus'], color: '#6B9CE8' },
-  { label: 'Product Manager',group: 'management', country: 'UAE',                  color: '#E8836B' },
-  { label: 'Developer',      group: 'dev',        countries: ['Scotland', 'England'], color: '#C9A84C' },
-  { label: 'QA Testers',     group: 'qa',         countries: ['Indonesia', 'Thailand'], color: '#E8A86B' },
-  { label: 'Marketing',      group: 'marketing',  countries: ['England', 'Scotland'],   color: '#6B9CE8' },
+  { label: 'UX/UI',          group: 'design',     countries: ['Scotland', 'India', 'Australia'], color: 'var(--map-country-scotland)'  },
+  { label: 'Interaction',    group: 'design',     country: 'Malaysia',  color: 'var(--map-country-pistachio)' },
+  { label: 'Visual',         group: 'design',     country: 'Scotland',  color: 'var(--map-country-scotland)'  },
+  { label: 'Creative Team',  group: 'studio',     country: 'Scotland',  color: 'var(--map-country-scotland)'  },
+  { label: '3D Artists',     group: 'studio',     countries: ['Portugal', 'Brazil', 'Nigeria'], color: 'var(--map-country-purple)'   },
+  { label: 'Project Manager',group: 'management', countries: ['England', 'Cyprus'], color: 'var(--map-country-england)'  },
+  { label: 'Product Manager',group: 'management', country: 'UAE',                  color: 'var(--map-country-uae)'      },
+  { label: 'Developer',      group: 'dev',        countries: ['Scotland', 'England'], color: 'var(--map-country-scotland)' },
+  { label: 'QA Testers',     group: 'qa',         countries: ['Indonesia', 'Thailand'], color: 'var(--map-country-red)'    },
+  { label: 'Marketing',      group: 'marketing',  countries: ['England', 'Scotland'],   color: 'var(--map-country-england)' },
 ];
 
 const SP_LEGEND_GROUPS = [
-  { heading: 'Design',            group: 'design' },
-  { heading: 'Studio',            group: 'studio' },
-  { heading: 'Development',       group: 'dev' },
-  { heading: 'QA', group: 'qa' },
-  { heading: 'Marketing',         group: 'marketing' },
-  { heading: 'Management',        group: 'management' },
+  { heading: 'Design',      group: 'design' },
+  { heading: 'Studio',      group: 'studio' },
+  { heading: 'Development', group: 'dev',        desktopCol: 'dev-qa' },
+  { heading: 'QA',          group: 'qa',         desktopCol: 'dev-qa' },
+  { heading: 'Marketing',   group: 'marketing',  desktopCol: 'mkt-mgmt' },
+  { heading: 'Management',  group: 'management', desktopCol: 'mkt-mgmt' },
 ];
 
 const SP_LEGEND_T = {
@@ -638,7 +649,7 @@ function ContextContent({ lang, isDark }) {
       <Tile>
         <TileEyebrow>{eyebrows[6]}</TileEyebrow>
         <TileBody>{CONTEXT_BODIES.team[l]}</TileBody>
-        <div className="mt-6">
+        <div className="mt-6 max-w-2xl mx-auto w-full">
           <WorldMapDots
             isDark={isDark}
             lang={lang}
@@ -1092,13 +1103,13 @@ function ConceptsCarousel({ lang, isDark }) {
 
       <div className="flex flex-col gap-2">
         <div className="sm:hidden">
-          <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: CONCEPTS_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+          <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: CONCEPTS_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
             {titles[activeIndex]}
           </span>
         </div>
         <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[1fr_auto_1fr] items-center">
           <div className="hidden sm:block">
-            <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: CONCEPTS_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+            <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: CONCEPTS_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
               {titles[activeIndex]}
             </span>
           </div>
@@ -1295,13 +1306,13 @@ function WireframesCarousel({ lang, isDark }) {
 
       <div className="flex flex-col gap-2">
         <div className="sm:hidden">
-          <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+          <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
             {titles[activeIndex]}
           </span>
         </div>
         <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[1fr_auto_1fr] items-center">
           <div className="hidden sm:block">
-            <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+            <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
               {titles[activeIndex]}
             </span>
           </div>
@@ -1458,13 +1469,13 @@ function HifiCarousel({ lang, isDark }) {
 
       <div className="flex flex-col gap-2">
         <div className="sm:hidden">
-          <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+          <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
             {titles[activeIndex]}
           </span>
         </div>
         <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[1fr_auto_1fr] items-center">
           <div className="hidden sm:block">
-            <span className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+            <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
               {titles[activeIndex]}
             </span>
           </div>
@@ -1504,7 +1515,7 @@ const DESIGN = {
     },
   },
   fr: {
-    userFlow: { eyebrow: "Flux utilisateur", body: <>La plateforme a été conçue pour permettre aux utilisateurs d’<strong>explorer les projets clients à travers le monde</strong>, en progressant de manière fluide des <strong>vues macro aux vues micro</strong>. Cette structure hiérarchique favorise l’<strong>évolutivité</strong> et une <strong>expérience de navigation intuitive</strong>.</>, footer: { emoji: "💡", content: <><strong>Principe de design :</strong> Un <strong>flux progressif</strong> en couches permet aux utilisateurs d’explorer à leur propre rythme tout en soutenant une future <strong>expansion mondiale</strong>.</> } },
+    userFlow: { eyebrow: "Flux utilisateur", body: <>La plateforme a été conçue pour permettre aux utilisateurs d'<strong>explorer les projets clients à travers le monde</strong>, en progressant de manière fluide des <strong>vues macro aux vues micro</strong>. Cette structure hiérarchique favorise l'<strong>évolutivité</strong> et une <strong>expérience de navigation intuitive</strong>.</>, footer: { emoji: "💡", content: <><strong>Principe de design :</strong> Un <strong>flux progressif</strong> en couches permet aux utilisateurs d'explorer à leur propre rythme tout en soutenant une future <strong>expansion mondiale</strong>.</> } },
     concepts: {
       eyebrow: "Conceptualisation",
       subsections: [
@@ -1521,7 +1532,7 @@ function UiConceptCard({ card, isDark }) {
   const titleBg = isDark ? card.titleBgDark : card.titleBg;
   const titleFg = isDark ? card.titleFgDark : card.titleFg;
   return (
-    <div className="rounded-radius-3 sm:rounded-radius-4 overflow-hidden">
+    <div data-squircle className="rounded-radius-3 sm:rounded-radius-4 overflow-hidden">
       <div className="aspect-[8/5] overflow-hidden">
         <img src={card.img} alt={card.title} draggable="false" loading="lazy" className="w-full h-full object-cover" />
       </div>
@@ -1556,7 +1567,7 @@ function DesignContent({ lang, isDark }) {
             <img src={uf.mobile} alt={d.userFlow.eyebrow} className="w-full h-auto rounded-radius-2" />
           </picture>
         </div>
-        <div className="mt-6 sm:mt-8 rounded-radius-3 bg-feedback-neutral-bg border border-feedback-neutral-border px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted">
+        <div data-squircle className="mt-6 sm:mt-8 rounded-radius-3 bg-feedback-neutral-bg border border-feedback-neutral-border px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted">
           <span aria-hidden="true" className="shrink-0">{d.userFlow.footer.emoji}</span>
           <span>{d.userFlow.footer.content}</span>
         </div>
@@ -1607,17 +1618,17 @@ const EMPHASISE = {
   fr: {
     audience: {
       eyebrow: "L'audience",
-      title:   'À qui s’adresse la plateforme ?',
-      body:    <><p>La plateforme s’adressait à <strong>deux audiences principales</strong> :</p><ul className="list-disc list-inside space-y-1"><li><strong>Agents commerciaux :</strong> Nécessitaient une <strong>expérience connectée</strong> avec les disponibilités lors des lancements.</li><li><strong>Acheteurs :</strong> Avaient besoin d’une façon <strong>intuitive et engageante</strong> d’explorer les biens et de <strong>demander à être rappelés</strong> rapidement.</li></ul></>,
+      title:   "À qui s'adresse la plateforme ?",
+      body:    <><p>La plateforme s'adressait à <strong>deux audiences principales</strong> :</p><ul className="list-disc list-inside space-y-1"><li><strong>Agents commerciaux :</strong> Nécessitaient une <strong>expérience connectée</strong> avec les disponibilités lors des lancements.</li><li><strong>Acheteurs :</strong> Avaient besoin d'une façon <strong>intuitive et engageante</strong> d'explorer les biens et de <strong>demander à être rappelés</strong> rapidement.</li></ul></>,
     },
     goal: {
       eyebrow: "L'objectif",
       title:   'Quelle valeur pour les utilisateurs ?',
-      body: <><p>Créer une plateforme apportant de la valeur aux deux groupes d’utilisateurs en :</p><ul className="list-disc list-inside space-y-1"><li>Accompagnant les agents commerciaux lors des <strong>lancements sous haute pression</strong>.</li><li>Permettant aux acheteurs d’<strong>explorer des projets dans le monde entier</strong>, en progressant de la <strong>vue globale aux vues intérieures</strong>.</li><li>Offrant une <strong>expérience luxueuse et intuitive</strong> alignée avec la marque du client.</li></ul></>,
+      body: <><p>Créer une plateforme apportant de la valeur aux deux groupes d'utilisateurs en :</p><ul className="list-disc list-inside space-y-1"><li>Accompagnant les agents commerciaux lors des <strong>lancements sous haute pression</strong>.</li><li>Permettant aux acheteurs d'<strong>explorer des projets dans le monde entier</strong>, en progressant de la <strong>vue globale aux vues intérieures</strong>.</li><li>Offrant une <strong>expérience luxueuse et intuitive</strong> alignée avec la marque du client.</li></ul></>,
     },
     market: {
       eyebrow: 'Le marché',
-      body:    <><p>L’analyse concurrentielle a révélé que les plateformes existantes étaient <strong>visuellement attrayantes</strong> mais manquaient d’<strong>expériences interactives et immersives</strong> pour les biens non construits.</p><p><strong>Vision :</strong> Créer une <strong>expérience 3D-first</strong> et <strong>centrée utilisateur</strong>, avec une navigation fluide des <strong>vues globales</strong> jusqu’aux <strong>intérieurs détaillés</strong>.</p><p><strong>Prérequis de design clés :</strong></p><ul className="list-disc list-inside space-y-1"><li><strong>Évolutivité :</strong> Navigation possible d’une <strong>vue macro et globale</strong> jusqu’aux <strong>détails micro et intérieurs</strong>.</li><li><strong>Visuels 3D immersifs :</strong> L’imagerie de synthèse a renforcé à la fois la <strong>clarté de navigation</strong> et l’<strong>engagement émotionnel</strong> envers les biens.</li></ul></>,
+      body:    <><p>L'analyse concurrentielle a révélé que les plateformes existantes étaient <strong>visuellement attrayantes</strong> mais manquaient d'<strong>expériences interactives et immersives</strong> pour les biens non construits.</p><p><strong>Vision :</strong> Créer une <strong>expérience 3D-first</strong> et <strong>centrée utilisateur</strong>, avec une navigation fluide des <strong>vues globales</strong> jusqu'aux <strong>intérieurs détaillés</strong>.</p><p><strong>Prérequis de design clés :</strong></p><ul className="list-disc list-inside space-y-1"><li><strong>Évolutivité :</strong> Navigation possible d'une <strong>vue macro et globale</strong> jusqu'aux <strong>détails micro et intérieurs</strong>.</li><li><strong>Visuels 3D immersifs :</strong> L'imagerie de synthèse a renforcé à la fois la <strong>clarté de navigation</strong> et l'<strong>engagement émotionnel</strong> envers les biens.</li></ul></>,
     },
   },
 };
@@ -1900,6 +1911,14 @@ function SalesPlatform({ lang, isDark }) {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Mobile only: show chat pill when secondary nav is visible
+  useEffect(() => {
+    if (!window.matchMedia('(max-width: 767px)').matches) return;
+    const visible = scrolledDown && !atBottom && !scrollingDown;
+    window.dispatchEvent(new CustomEvent('chat-force-visible', { detail: visible }));
+    return () => window.dispatchEvent(new CustomEvent('chat-force-visible', { detail: false }));
+  }, [scrolledDown, atBottom, scrollingDown]);
 
   return (
     <>

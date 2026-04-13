@@ -88,11 +88,20 @@
   --tooltip-ring: rgba(255, 255, 255, 0.2);
   --tooltip-keyboard-shortcut-bg: #f6f6f6;
   --tooltip-keyboard-shortcut-fg: #1f1f1f;
-  --map-dot-rest: #d4d4d4;
+  --map-dot-rest: #e8e8e8;
   --map-dot-inactive: #f6f6f6;
   --map-tz-label-bg: rgba(0, 0, 0, 0.06);
   --map-tz-label-fg: #ffffff;
   --map-dot-sea: #ffffff;
+  --map-country-scotland:  #c9a84c;  /* midpoint yellow — = accent-gold */
+  --map-country-england:   #6b9ce8;  /* midpoint sky */
+  --map-country-uae:       #e8836b;  /* midpoint orange */
+  --map-country-vietnam:   #6bc4a0;  /* midpoint green */
+  --map-country-purple:    #a360d5;  /* midpoint purple */
+  --map-country-pink:      #c770b2;  /* midpoint pink */
+  --map-country-indigo:    #547bbc;  /* midpoint indigo */
+  --map-country-pistachio: #8bab2f;  /* midpoint pistachio */
+  --map-country-red:       #c85b5c;  /* midpoint red */
   --lightbox-bg: rgba(0, 0, 0, 0.95);
   --lightbox-btn-bg: rgba(255, 255, 255, 0.1);
   --lightbox-btn-bg-hover: rgba(255, 255, 255, 0.2);
@@ -199,11 +208,20 @@
   --tooltip-ring: rgba(0, 0, 0, 0.1);
   --tooltip-keyboard-shortcut-bg: #404040;
   --tooltip-keyboard-shortcut-fg: #adadad;
-  --map-dot-rest: #404040;
+  --map-dot-rest: #2a2a2a;
   --map-dot-inactive: #262626;
   --map-tz-label-bg: rgba(255, 255, 255, 0.06);
   --map-tz-label-fg: #1f1f1f;
   --map-dot-sea: #141414;
+  --map-country-scotland:  #ffd97d;  /* palette-yellow-fg dark */
+  --map-country-england:   #88ccff;  /* palette-sky-fg dark */
+  --map-country-uae:       #ffb870;  /* palette-orange-fg dark */
+  --map-country-vietnam:   #88ee80;  /* palette-green-fg dark */
+  --map-country-purple:    #cc88ff;  /* palette-purple-fg dark */
+  --map-country-pink:      #ffaaee;  /* palette-pink-fg dark */
+  --map-country-indigo:    #88aaee;  /* palette-indigo-fg dark */
+  --map-country-pistachio: #b8e050;  /* palette-pistachio-fg dark */
+  --map-country-red:       #ff9090;  /* palette-red-fg dark */
   --lightbox-bg: rgba(0, 0, 0, 0.95);
   --lightbox-btn-bg: rgba(255, 255, 255, 0.1);
   --lightbox-btn-bg-hover: rgba(255, 255, 255, 0.2);

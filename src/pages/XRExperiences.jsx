@@ -848,7 +848,7 @@ function XRToolIcon({ name, icon, darkInvert = false, circle = false, contain = 
         role="tooltip"
         className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10 motion-safe:transition-opacity motion-safe:duration-150 ${active ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">{name}</div>
+        <div data-squircle className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">{name}</div>
       </div>
       <button
         aria-label={name}
@@ -871,7 +871,7 @@ function XRToolIcon({ name, icon, darkInvert = false, circle = false, contain = 
 
 function XRToolsSection({ label, categories }) {
   return (
-    <div className="rounded-radius-6 bg-feedback-neutral-bg border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
+    <div data-squircle className="rounded-radius-6 bg-feedback-neutral-bg border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
       <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</p>
       <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
         {categories.map(cat => (
@@ -1000,6 +1000,17 @@ function XRExperiences({ lang, isDark }) {
   const [atBottom, setAtBottom]       = useState(false);
   const [scrollingDown, setScrollingDown] = useState(false);
   const scrollTarget  = useRef(null);
+  const swipeStart    = useRef(null);
+  const onHeroTouchStart = (e) => { swipeStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; };
+  const onHeroTouchEnd   = (e) => {
+    if (!swipeStart.current) return;
+    const dx = e.changedTouches[0].clientX - swipeStart.current.x;
+    const dy = e.changedTouches[0].clientY - swipeStart.current.y;
+    swipeStart.current = null;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+      window.dispatchEvent(new CustomEvent('cycle-project', { detail: { dir: dx < 0 ? -1 : 1 } }));
+    }
+  };
   const navScrollRef  = useRef(false);
 
   const xboxSvg = useMemo(() =>
@@ -1071,6 +1082,14 @@ function XRExperiences({ lang, isDark }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Mobile only: show chat pill when secondary nav is visible
+  useEffect(() => {
+    if (!window.matchMedia('(max-width: 767px)').matches) return;
+    const visible = scrolledDown && !atBottom && !scrollingDown;
+    window.dispatchEvent(new CustomEvent('chat-force-visible', { detail: visible }));
+    return () => window.dispatchEvent(new CustomEvent('chat-force-visible', { detail: false }));
+  }, [scrolledDown, atBottom, scrollingDown]);
+
   return (
     <>
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-radius-2 focus:ring-2 focus:ring-border-focus focus:bg-white focus:text-fg-primary focus:outline-none font-medium">
@@ -1088,6 +1107,8 @@ function XRExperiences({ lang, isDark }) {
         <section
           aria-labelledby="xr-hero-heading"
           className="relative min-h-screen flex flex-col bg-bg-page overflow-hidden"
+          onTouchStart={onHeroTouchStart}
+          onTouchEnd={onHeroTouchEnd}
         >
           <img src={mipimPhoto} alt="" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} />
           <div className="absolute inset-0 pointer-events-none transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0, background: 'linear-gradient(to bottom, rgba(20,20,20,0.2) 0%, rgba(20,20,20,1) 100%)' }} />
@@ -1176,6 +1197,7 @@ function XRExperiences({ lang, isDark }) {
                               <img
                                 src={satelliteSitePhoto}
                                 alt="Satellite view of the development site"
+                                data-squircle
                                 className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover"
                               />
                               <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.satellite}</figcaption>
@@ -1187,6 +1209,7 @@ function XRExperiences({ lang, isDark }) {
                               <img
                                 src={eventPresentationPhoto}
                                 alt="Leading a presenter-led AR session at MIPIM"
+                                data-squircle
                                 className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover"
                               />
                               <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.arSession}</figcaption>
@@ -1195,7 +1218,7 @@ function XRExperiences({ lang, isDark }) {
                           {/* Xbox keybinding — after list in Solve */}
                           {section.id === 'solve' && i === 1 && (
                             <figure className="flex flex-col gap-2">
-                              <div className="dark bg-bg-page rounded-radius-4 sm:rounded-radius-5 p-6"
+                              <div data-squircle className="dark bg-bg-page rounded-radius-4 sm:rounded-radius-5 p-6"
                                    dangerouslySetInnerHTML={{ __html: xboxSvg }} />
                               <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.xbox}</figcaption>
                             </figure>
@@ -1207,8 +1230,8 @@ function XRExperiences({ lang, isDark }) {
                           {section.id === 'prioritise' && i === 0 && (
                             <figure className="flex flex-col gap-2 max-w-sm mx-auto">
                               <div className="grid" style={{ gridTemplateColumns: '4fr 1fr' }}>
-                                <img src={magicLeapPhoto} alt="Magic Leap 2 AR glasses" className="w-full rounded-radius-3 sm:rounded-radius-4 object-cover" />
-                                <img src={magicLeapControllerPhoto} alt="Magic Leap 2 controller" className="w-full rounded-radius-3 sm:rounded-radius-4 object-cover" />
+                                <img data-squircle src={magicLeapPhoto} alt="Magic Leap 2 AR glasses" className="w-full rounded-radius-3 sm:rounded-radius-4 object-cover" />
+                                <img data-squircle src={magicLeapControllerPhoto} alt="Magic Leap 2 controller" className="w-full rounded-radius-3 sm:rounded-radius-4 object-cover" />
                               </div>
                               <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.magicLeap}</figcaption>
                             </figure>
@@ -1225,20 +1248,20 @@ function XRExperiences({ lang, isDark }) {
                           )}
                           {section.id === 'prioritise' && i === 1 && (
                             <figure className="flex flex-col gap-2 max-w-sm mx-auto">
-                              <img src={tableTopLogo} alt="Client logo design on the AR table top" className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover dark:[filter:invert(0.92)_hue-rotate(180deg)]" />
+                              <img data-squircle src={tableTopLogo} alt="Client logo design on the AR table top" className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover dark:[filter:invert(0.92)_hue-rotate(180deg)]" />
                               <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.tracker}</figcaption>
                             </figure>
                           )}
                           {p?.type === 'callout'
                             ? p.variant === 'goal'
                               ? (
-                                <div className="mt-6 -mb-4 rounded-radius-4 bg-feedback-success-bg border border-feedback-success-border px-5 py-4 flex flex-col gap-3">
+                                <div data-squircle className="mt-6 -mb-4 rounded-radius-4 bg-feedback-success-bg border border-feedback-success-border px-5 py-4 flex flex-col gap-3">
                                   <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-feedback-success-fg">{p.label}</span>
                                   <p className={bodyText}>{p.body}</p>
                                 </div>
                               )
                               : (
-                              <div className="mt-6 -mb-4 rounded-radius-4 bg-feedback-warning-bg border border-feedback-warning-border px-5 py-4 flex flex-col gap-3">
+                              <div data-squircle className="mt-6 -mb-4 rounded-radius-4 bg-feedback-warning-bg border border-feedback-warning-border px-5 py-4 flex flex-col gap-3">
                                 <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-feedback-warning-fg">{p.label}</span>
                                 <p className={bodyText}>{p.body}</p>
                               </div>
@@ -1268,6 +1291,7 @@ function XRExperiences({ lang, isDark }) {
                       <img
                         src={eventSpacePhoto}
                         alt="Floor plan sketch of the event space showing the six experience locations"
+                        data-squircle
                         className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover dark:[filter:invert(0.92)]"
                       />
                       <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.floorPlan}</figcaption>
@@ -1284,7 +1308,7 @@ function XRExperiences({ lang, isDark }) {
                   )}
 
                   {section.footerCallout && (
-                    <div className="mt-6 -mb-4 rounded-radius-4 bg-feedback-warning-bg border border-feedback-warning-border px-5 py-4 flex flex-col gap-3 max-w-3xl">
+                    <div data-squircle className="mt-6 -mb-4 rounded-radius-4 bg-feedback-warning-bg border border-feedback-warning-border px-5 py-4 flex flex-col gap-3 max-w-3xl">
                       <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-feedback-warning-fg">{section.footerCallout.label}</span>
                       <div className={bodyText}>{section.footerCallout.body}</div>
                     </div>

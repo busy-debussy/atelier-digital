@@ -72,6 +72,20 @@ body {
 .page-enter {
   animation: fade-in 0.4s ease both;
 }
+.page-slide-from-right {
+  animation: slide-from-right 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.page-slide-from-left {
+  animation: slide-from-left 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes slide-from-right {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slide-from-left {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
 
 
 /* Glass border utilities — defined directly to bypass Tailwind's opacity composition */

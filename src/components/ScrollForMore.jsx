@@ -33,7 +33,7 @@ export default function ScrollForMore({ lang, scrollTarget }) {
       onMouseLeave={hideTip}
     >
       <div className={`absolute bottom-[calc(100%+20px)] left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none transition-opacity duration-150 ${tipVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">
+        <div data-squircle className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">
           {label}
         </div>
       </div>

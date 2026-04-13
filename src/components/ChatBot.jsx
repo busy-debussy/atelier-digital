@@ -69,11 +69,48 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
   const userTurns = messages.filter(m => m.role === 'user').length;
   const atLimit   = userTurns >= MAX_TURNS;
 
-  const [pillExpanded, setPillExpanded] = useState(true);
+  const [pillExpanded, setPillExpanded] = useState(false);
+
+  // One-time nudge: appear after 3s idle past 200px scroll, auto-dismiss after 6s
+  const [ready, setReady] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  const [forcedVisible, setForcedVisible] = useState(false);
+  const forcedVisibleRef = useRef(false);
+  const wasEverForced    = useRef(false);
   useEffect(() => {
-    const id = setTimeout(() => setPillExpanded(false), 3000);
-    return () => clearTimeout(id);
+    const handler = (e) => {
+      forcedVisibleRef.current = e.detail;
+      if (e.detail) wasEverForced.current = true;
+      setForcedVisible(e.detail);
+    };
+    window.addEventListener('chat-force-visible', handler);
+    return () => window.removeEventListener('chat-force-visible', handler);
   }, []);
+  const idleTimer = useRef(null);
+  const dismissTimer = useRef(null);
+  useEffect(() => {
+    if (ready) return;
+    const IDLE_MS = 3000;
+    const onActivity = () => {
+      if (forcedVisibleRef.current) return;
+      clearTimeout(idleTimer.current);
+      if (window.scrollY >= 200) {
+        idleTimer.current = setTimeout(() => {
+          setReady(true);
+          setPillExpanded(true);
+          setTimeout(() => setPillExpanded(false), 4000);
+          dismissTimer.current = setTimeout(() => setDismissed(true), 6000);
+        }, IDLE_MS);
+      }
+    };
+    onActivity();
+    const events = ['scroll', 'keydown', 'touchstart'];
+    events.forEach(e => window.addEventListener(e, onActivity, { passive: true }));
+    return () => {
+      clearTimeout(idleTimer.current);
+      events.forEach(e => window.removeEventListener(e, onActivity));
+    };
+  }, [ready]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -179,7 +216,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
           <div className={`overflow-y-auto px-4 space-y-3 min-h-0 ${messages.length || loading ? 'flex-1 py-4' : ''}`} style={{ scrollbarWidth: 'none' }}>
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] px-4 py-3 rounded-radius-4 text-copy-s leading-relaxed break-words ${
+                <div data-squircle className={`max-w-[85%] px-4 py-3 rounded-radius-4 text-copy-s leading-relaxed break-words ${
                   m.role === 'user'
                     ? 'bg-cta-600 text-fg-on-accent-opacity-95 rounded-br-[2px]'
                     : 'bg-inverted-subtle text-fg-primary-inverse rounded-bl-[2px]'
@@ -191,7 +228,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
 
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-inverted-subtle px-4 py-3 rounded-radius-4 rounded-bl-[2px] flex gap-2 items-center">
+                <div data-squircle className="bg-inverted-subtle px-4 py-3 rounded-radius-4 rounded-bl-[2px] flex gap-2 items-center">
                   {[0, 1, 2].map(i => (
                     <span
                       key={i}
@@ -238,6 +275,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
                 autoComplete="off"
                 rows={1}
                 disabled={loading}
+                data-squircle
                 className="flex-1 resize-none bg-inverted-subtle rounded-radius-3 px-3 py-[10px] text-copy-s leading-[22px] text-fg-primary-inverse placeholder:text-fg-muted-inverse placeholder:[text-indent:2px] outline-none focus:ring-1 focus:ring-border-focus transition-all"
                 style={{ scrollbarWidth: 'none', minHeight: '42px', maxHeight: '100px' }}
               />
@@ -246,6 +284,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
                 disabled={!input.trim() || loading}
                 data-spring
                 aria-label={l.send}
+                data-squircle
                 className="shrink-0 rounded-radius-3 bg-cta-600 border border-accent-border text-fg-on-accent-opacity-95 flex items-center justify-center p-2 transition-opacity disabled:opacity-30 enabled:cursor-pointer enabled:hover:bg-cta-700"
               >
                 <img src={imgSend} alt="" width={24} height={24} className="brightness-0 invert" />
@@ -256,10 +295,10 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
       </div>
 
       {/* Floating trigger button */}
-      <div inert={hideFloating || fadeFloating || open || undefined} className={`fixed bottom-4 left-4 z-40 group transition-[opacity,transform] duration-300 ease-out ${hideFloating ? 'opacity-0 pointer-events-none translate-y-3' : fadeFloating ? 'opacity-0 pointer-events-none' : open ? 'opacity-0 pointer-events-none translate-y-0' : 'opacity-100 pointer-events-auto translate-y-0'}`}>
+      <div inert={(!ready && !forcedVisible) || (dismissed && !forcedVisible) || hideFloating || open || undefined} className={`fixed bottom-4 left-4 z-40 group transition-[opacity,transform] duration-300 ease-out ${(!ready && !forcedVisible) || (dismissed && !forcedVisible) || hideFloating ? `opacity-0 pointer-events-none ${wasEverForced.current || ready ? 'translate-y-0' : 'translate-y-3'}` : open ? 'opacity-0 pointer-events-none translate-y-0' : 'opacity-100 pointer-events-auto translate-y-0'}`}>
         <button
           data-spring
-          onClick={() => setOpen(o => !o)}
+          onClick={() => { clearTimeout(dismissTimer.current); setPillExpanded(false); setOpen(o => !o); }}
           aria-label={open ? 'Close chat' : l.button}
           aria-expanded={open}
           tabIndex={0}

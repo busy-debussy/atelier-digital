@@ -10,19 +10,19 @@ function extractTz(id) {
 
 // ── Default team data (XR / Sales Platform shared team) ───────────────────────
 export const DEFAULT_COUNTRY_COLOR_MAP = {
-  Scotland: '#C9A84C',
-  England:  '#6B9CE8',
-  UAE:      '#E8836B',
-  Vietnam:  '#6BC4A0',
+  Scotland: 'var(--map-country-scotland)',
+  England:  'var(--map-country-england)',
+  UAE:      'var(--map-country-uae)',
+  Vietnam:  'var(--map-country-vietnam)',
 };
 
 export const DEFAULT_TEAM_DOTS = [
-  { label: 'Designer',       group: 'design',     country: 'Scotland', color: '#C9A84C' },
-  { label: 'Unity',          group: 'dev',        country: 'Scotland', color: '#C9A84C' },
-  { label: 'Creative Team',  group: 'studio',     country: 'Scotland', color: '#C9A84C' },
-  { label: 'Project Manager',group: 'management', country: 'England',  color: '#6B9CE8' },
-  { label: 'Product Manager',group: 'management', country: 'UAE',      color: '#E8836B' },
-  { label: 'Unreal Engine',  group: 'dev',        country: 'Vietnam',  color: '#6BC4A0' },
+  { label: 'Designer',       group: 'design',     country: 'Scotland', color: 'var(--map-country-scotland)' },
+  { label: 'Unity',          group: 'dev',        country: 'Scotland', color: 'var(--map-country-scotland)' },
+  { label: 'Creative Team',  group: 'studio',     country: 'Scotland', color: 'var(--map-country-scotland)' },
+  { label: 'Project Manager',group: 'management', country: 'England',  color: 'var(--map-country-england)'  },
+  { label: 'Product Manager',group: 'management', country: 'UAE',      color: 'var(--map-country-uae)'      },
+  { label: 'Unreal Engine',  group: 'dev',        country: 'Vietnam',  color: 'var(--map-country-vietnam)'  },
 ];
 
 export const DEFAULT_LEGEND_GROUPS = [
@@ -154,8 +154,8 @@ export default function WorldMapDots({
     const rect = svg.querySelector('rect');
     if (rect) rect.setAttribute('fill', 'transparent');
 
-    const dotRestFill = isDark ? '#404040' : '#d4d4d4';
-    const labelColor  = isDark ? '#fafafa' : '#1f1f1f';
+    const dotRestFill = 'var(--map-dot-rest)';
+    const labelColor  = 'var(--fg-primary)';
 
     const style = doc.createElementNS('http://www.w3.org/2000/svg', 'style');
     style.textContent = `
@@ -352,7 +352,6 @@ export default function WorldMapDots({
 
     svgEl.setAttribute('data-active', '1');
     const lit = [];
-
     if (selected?.key) {
       // Opacity is handled by the <style countriesCSS> element above — no inline style needed here.
     } else {
@@ -362,7 +361,7 @@ export default function WorldMapDots({
         if (c.classList.contains('xr-label')) {
           c.style.opacity  = '1';
           c.style.fontSize = '22px';
-          c.style.fill     = isDark ? '#1f1f1f' : '#fafafa';
+          c.style.fill     = 'var(--tooltip-fg)';
         }
         if (c.classList.contains('xr-label-bg')) {
           const midx = parseFloat(c.getAttribute('data-midx'));
@@ -371,7 +370,7 @@ export default function WorldMapDots({
           const aw   = len * 14 + 28;
           const ah   = 38;
           c.style.opacity = '1';
-          c.style.fill    = isDark ? '#fafafa' : '#1f1f1f';
+          c.style.fill    = 'var(--tooltip-bg)';
           c.setAttribute('x',      String(midx - aw / 2));
           c.setAttribute('y',      String(midy - ah / 2));
           c.setAttribute('width',  String(aw));
@@ -437,7 +436,7 @@ export default function WorldMapDots({
 
       <div ref={legendRef} role="group" aria-label={lt.groupAriaLabel} onKeyDown={handleLegendKeyDown}>
         {/* Mobile: two independent flex columns (odd groups → col 1, even → col 2) */}
-        <div className="md:hidden flex gap-x-10">
+        <div className="lg:hidden flex gap-x-10">
           {[legendGroups.filter((_, i) => i % 2 === 0), legendGroups.filter((_, i) => i % 2 === 1)].map((colGroups, ci) => (
             <div key={ci} className="flex-1 flex flex-col gap-6">
               {colGroups.map((col) => (
@@ -458,7 +457,7 @@ export default function WorldMapDots({
                         tabIndex={flatIdx === focusedIdx ? 0 : -1}
                         aria-pressed={isSelected}
                         aria-label={`${lt.labels[dot.label] ?? dot.label}${dotCountries.length === 1 ? `, ${dotCountries[0]}` : ''}${isSelected ? ', selected' : ''}`}
-                        className={`flex items-center gap-2 px-3 py-1 rounded-full border border-glass-subtle transition-colors self-start ${isSelected ? 'bg-bg-surface-inverted text-fg-primary-inverse' : 'hover:bg-nav-hover-bg'}`}
+                        className={`flex items-center gap-2 px-3 py-1 rounded-full border border-glass-subtle transition-colors self-start cursor-pointer ${isSelected ? 'bg-bg-surface-inverted text-fg-primary-inverse' : 'hover:bg-nav-hover-bg'}`}
                         style={{ opacity: isActiveTz ? 0.2 : 1, transition: 'opacity 200ms ease' }}
                         onFocus={() => setFocusedIdx(flatIdx)}
                         onPointerEnter={(e) => { if (e.pointerType !== 'touch') setHovered({ tz: primaryTz, country: dotCountries[0] ?? null }); }}
@@ -477,8 +476,16 @@ export default function WorldMapDots({
           ))}
         </div>
         {/* md+: grid / desktop flex */}
-        <div className="hidden md:grid grid-cols-2 gap-x-10 gap-y-6 lg:flex lg:gap-y-0">
-          {legendGroups.map((col) => (
+        <div className="hidden lg:flex gap-x-10">
+          {Object.entries(
+            legendGroups.reduce((acc, col) => {
+              const key = col.desktopCol ?? col.group;
+              (acc[key] = acc[key] ?? []).push(col);
+              return acc;
+            }, {})
+          ).map(([colKey, cols]) => (
+            <div key={colKey} className="flex flex-col gap-6">
+              {cols.map((col) => (
             <div key={col.group} className="flex flex-col gap-2">
               <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted mb-1" aria-hidden="true">{lt.headings[col.group]}</p>
               {teamDots.filter(d => d.group === col.group).map((dot) => {
@@ -496,7 +503,7 @@ export default function WorldMapDots({
                     tabIndex={flatIdx === focusedIdx ? 0 : -1}
                     aria-pressed={isSelected}
                     aria-label={`${lt.labels[dot.label] ?? dot.label}${dotCountries.length === 1 ? `, ${dotCountries[0]}` : ''}${isSelected ? ', selected' : ''}`}
-                    className={`flex items-center gap-2 px-3 py-1 rounded-full border border-glass-subtle transition-colors self-start ${
+                    className={`flex items-center gap-2 px-3 py-1 rounded-full border border-glass-subtle transition-colors self-start cursor-pointer ${
                       isSelected
                         ? 'bg-bg-surface-inverted text-fg-primary-inverse'
                         : 'hover:bg-nav-hover-bg'
@@ -513,6 +520,8 @@ export default function WorldMapDots({
                   </button>
                 );
               })}
+            </div>
+              ))}
             </div>
           ))}
         </div>

@@ -86,20 +86,21 @@ const T = {
 };
 
 // ── Card button ───────────────────────────────────────────────────────────────
-const btnClass = 'block w-full py-3 sm:py-[14px] lg:py-4 rounded-radius-4 sm:rounded-radius-5 lg:rounded-radius-6 bg-cta-600 hover:bg-cta-700 text-white font-medium text-btn-m leading-[1.2] text-center transition-colors border border-accent-border after:absolute after:inset-0 after:content-[\'\'] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-cta-600';
+const btnClass = 'block w-full py-3 sm:py-[14px] lg:py-4 rounded-radius-4 sm:rounded-radius-5 lg:rounded-radius-6 bg-cta-600 hover:bg-cta-700 text-white font-medium text-btn-m leading-[1.2] text-center transition-colors border border-accent-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-cta-600';
+const btnProps = { 'data-squircle': '' };
 
 const liHref = () => ['https://www.link','edin.com','/in/','dav','idvi','all','ard'].join('');
 
 function CardButton({ action, label }) {
   if (action.type === 'email')
-    return <a tabIndex={0} href={action.href} className={btnClass}>{label}</a>;
+    return <a tabIndex={0} href={action.href} {...btnProps} className={btnClass}>{label}</a>;
   if (action.type === 'download')
-    return <a tabIndex={0} href={action.href} download aria-label={`${label} (direct)`} className={btnClass}>{label}</a>;
+    return <a tabIndex={0} href={action.href} download aria-label={`${label} (direct)`} {...btnProps} className={btnClass}>{label}</a>;
   if (action.type === 'link')
-    return <Link tabIndex={0} to={action.href} className={btnClass}>{label}</Link>;
+    return <Link tabIndex={0} to={action.href} {...btnProps} className={btnClass}>{label}</Link>;
   if (action.type === 'linkedin')
-    return <button onClick={() => { const u = liHref(); setTimeout(() => window.open(u, '_blank', 'noopener,noreferrer'), 80); }} className={`${btnClass} cursor-pointer`}>{label}<span className="sr-only">{' (opens in new tab)'}</span></button>;
-  return <a tabIndex={0} href={action.href} target="_blank" rel="noopener noreferrer" className={btnClass}>{label}</a>;
+    return <button onClick={() => { const u = liHref(); setTimeout(() => window.open(u, '_blank', 'noopener,noreferrer'), 80); }} {...btnProps} className={`${btnClass} cursor-pointer`}>{label}<span className="sr-only">{' (opens in new tab)'}</span></button>;
+  return <a tabIndex={0} href={action.href} target="_blank" rel="noopener noreferrer" {...btnProps} className={btnClass}>{label}</a>;
 }
 
 // ── Single card ───────────────────────────────────────────────────────────────
@@ -107,8 +108,13 @@ function ContactCard({ card, glass }) {
   const cardBg = glass
     ? 'backdrop-blur-4 bg-nav-bg border border-glass-default shadow-xs'
     : 'bg-bg-page';
+  const handleCardClick = (e) => {
+    if (!e.target.closest('a, button')) {
+      e.currentTarget.querySelector('a, button')?.click();
+    }
+  };
   return (
-    <li data-spring-desktop className={`relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] flex flex-col snap-center rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 ${cardBg} p-8 sm:p-9 lg:p-10 gap-8 sm:gap-9 lg:gap-10 motion-safe:transition-transform duration-200 motion-safe:hover:scale-[1.03] cursor-pointer`}>
+    <li data-spring-desktop onClick={handleCardClick} className={`relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] flex flex-col snap-center rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 ${cardBg} p-8 sm:p-9 lg:p-10 gap-8 sm:gap-9 lg:gap-10 motion-safe:transition-transform duration-200 motion-safe:hover:scale-[1.03] cursor-pointer`}>
 
       <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
 
@@ -149,8 +155,9 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
     variant === 'resume' ? t.pdfCard : t.resumeCard,
   ];
 
-  const trackRef       = useRef(null);
-  const activeIndexRef = useRef(0);
+  const trackRef              = useRef(null);
+  const activeIndexRef        = useRef(0);
+  const isProgrammaticScroll  = useRef(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
   // lg: 384px card, 32px gap (gap-8); sm: 360px card; mobile: 300px card
@@ -212,13 +219,16 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
     const card = track.children[index];
     if (card) {
       const scrollLeft = Math.max(0, card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2);
+      isProgrammaticScroll.current = true;
       track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      setTimeout(() => { isProgrammaticScroll.current = false; }, 600);
     }
     activeIndexRef.current = index;
     setActiveIndex(index);
   };
 
   const handleScroll = () => {
+    if (isProgrammaticScroll.current) return;
     const track = trackRef.current;
     if (!track) return;
     const center = track.scrollLeft + track.clientWidth / 2;

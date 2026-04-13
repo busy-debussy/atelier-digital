@@ -497,6 +497,7 @@ const bodyMuted = 'text-copy-m font-normal leading-loose text-fg-secondary';
 
 function SummarySection({ t, lang }) {
   const btnBase = 'flex items-center justify-center gap-2 px-3 py-2 rounded-radius-4 transition-colors bg-bg-surface sm:bg-transparent sm:dark:bg-transparent hover:bg-nav-hover-bg';
+  const btnSquircle = { 'data-squircle': '' };
   const btnLabel = 'font-medium text-btn-m leading-[1.2] text-fg-primary whitespace-nowrap';
 
   return (
@@ -508,6 +509,7 @@ function SummarySection({ t, lang }) {
           <img
             src={imgPortrait}
             alt="Portrait of David V."
+            data-squircle
             className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-radius-14 sm:rounded-radius-16 lg:rounded-radius-18 object-cover"
           />
 
@@ -517,13 +519,13 @@ function SummarySection({ t, lang }) {
 
           <ul className="flex flex-col gap-4 sm:gap-3 w-56" aria-label="Contact and download">
             <li>
-              <a data-spring tabIndex={0} href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(lang === 'fr' ? 'Prise de contact' : 'Getting in touch')}`} className={`${btnBase} w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus`}>
+              <a data-spring {...btnSquircle} tabIndex={0} href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(lang === 'fr' ? 'Prise de contact' : 'Getting in touch')}`} className={`${btnBase} w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus`}>
                 <img src={imgSend} alt="" width={24} height={24} className="shrink-0 dark:invert" />
                 <span className={btnLabel}>{t.sendEmail}</span>
               </a>
             </li>
             <li>
-              <button data-spring onClick={() => window.open(['https://www.link','edin.com','/in/','dav','idvi','all','ard'].join(''), '_blank', 'noopener,noreferrer')} aria-label={`${t.connect} — LinkedIn`} className={`${btnBase} w-full cursor-pointer`}>
+              <button data-spring {...btnSquircle} onClick={() => window.open(['https://www.link','edin.com','/in/','dav','idvi','all','ard'].join(''), '_blank', 'noopener,noreferrer')} aria-label={`${t.connect} — LinkedIn`} className={`${btnBase} w-full cursor-pointer`}>
                 <img src={imgLinkedIn} alt="" width={24} height={24} className="shrink-0 dark:invert" />
                 <span className={btnLabel}>{t.connect}</span>
               </button>
@@ -536,6 +538,7 @@ function SummarySection({ t, lang }) {
                 tabIndex={0}
                 aria-label={lang === 'fr' ? 'Télécharger PDF via Google Drive' : 'Download PDF via Google Drive'}
                 data-spring
+                data-squircle
                 className="w-full flex items-center justify-center py-3 bg-cta-600 hover:bg-cta-700 text-fg-on-accent-opacity-95 font-medium text-btn-m leading-[1.2] rounded-radius-4 border border-accent-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus"
               >
                 {t.downloadPdf}
@@ -565,7 +568,7 @@ function SummarySection({ t, lang }) {
 function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
   const anyOpen = openDrawers.some(Boolean);
   return (
-    <li className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-radius-6 sm:rounded-radius-7 lg:rounded-radius-8 bg-bg-page border border-border-subtle overflow-hidden">
+    <li data-squircle className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-radius-6 sm:rounded-radius-7 lg:rounded-radius-8 bg-bg-page border border-border-subtle overflow-hidden">
 
       <div className="px-4 sm:px-5 lg:px-6 pt-2 sm:pt-3 lg:pt-4 pb-0">
         <p className="text-subheading font-medium leading-snug text-fg-secondary">{card.company}</p>
@@ -827,7 +830,7 @@ function ToolIcon({ name, icon, noBg, darkInvert }) {
   return (
     <div className="relative flex flex-col items-center">
       <div className={`absolute bottom-[calc(100%+8px)] left-1/2 -translate-x-1/2 pointer-events-none z-10 transition-opacity duration-150 ${visible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">
+        <div data-squircle className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">
           {name}
         </div>
       </div>
@@ -852,10 +855,10 @@ function ToolIcon({ name, icon, noBg, darkInvert }) {
 
 function ExpertiseCard({ card }) {
   return (
-    <li className="shrink-0 w-[calc(100vw-8rem)] sm:w-[536px] lg:w-[720px] h-[472px] sm:h-[444px] lg:h-[536px] flex flex-col justify-between snap-center rounded-radius-8 sm:rounded-radius-16 lg:rounded-radius-18 bg-bg-page p-6 sm:p-10 lg:p-16">
+    <li data-squircle className="shrink-0 w-[calc(100vw-8rem)] sm:w-[536px] lg:w-[720px] h-[472px] sm:h-[444px] lg:h-[536px] flex flex-col justify-between snap-center rounded-radius-8 sm:rounded-radius-16 lg:rounded-radius-18 bg-bg-page p-6 sm:p-10 lg:p-16">
 
       <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-        <div className="w-16 h-16 sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 rounded-radius-6 sm:rounded-radius-7 lg:rounded-radius-8 bg-bg-page flex items-center justify-center shrink-0 overflow-hidden">
+        <div data-squircle className="w-16 h-16 sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 rounded-radius-6 sm:rounded-radius-7 lg:rounded-radius-8 bg-bg-page flex items-center justify-center shrink-0 overflow-hidden">
           {card.icon && <img src={card.icon} alt="" width={64} height={64} loading="lazy" className="sm:w-[72px] sm:h-[72px] lg:w-20 lg:h-20 object-contain dark:brightness-0 dark:invert dark:opacity-[0.965]" />}
         </div>
 
@@ -1013,7 +1016,7 @@ function ExpertiseSection({ t }) {
 function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
   const anyOpen = openDrawers.some(Boolean);
   return (
-    <li className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-radius-6 sm:rounded-radius-7 lg:rounded-radius-8 bg-bg-page border border-border-subtle overflow-hidden">
+    <li data-squircle className="relative shrink-0 w-[calc(100vw-3rem)] sm:w-[488px] lg:w-[536px] h-[500px] sm:h-[540px] lg:h-[580px] flex flex-col snap-center rounded-radius-6 sm:rounded-radius-7 lg:rounded-radius-8 bg-bg-page border border-border-subtle overflow-hidden">
 
       <div className="px-4 sm:px-5 lg:px-6 pt-2 sm:pt-3 lg:pt-4 pb-0">
         <p className="text-subheading font-medium leading-snug text-fg-primary">{card.institution}</p>
@@ -1269,8 +1272,8 @@ function CertificationCard({ card }) {
         className="relative [transform-style:preserve-3d] motion-safe:transition-transform motion-safe:duration-500"
         style={{ transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
       >
-        <div inert={flipped} className="flex flex-col items-center pt-3 sm:pt-[14px] lg:pt-4 pb-5 sm:pb-5 lg:pb-6 px-3 sm:px-[14px] lg:px-4 bg-bg-page dark:bg-bg-surface rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 border border-border-subtle [backface-visibility:hidden]">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-radius-4 sm:rounded-radius-5 lg:rounded-radius-6 bg-bg-page dark:bg-bg-surface flex items-center justify-center mb-2 sm:mb-[10px] lg:mb-3 overflow-hidden shrink-0">
+        <div inert={flipped} data-squircle className="flex flex-col items-center pt-3 sm:pt-[14px] lg:pt-4 pb-5 sm:pb-5 lg:pb-6 px-3 sm:px-[14px] lg:px-4 bg-bg-page dark:bg-bg-surface rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 border border-border-subtle [backface-visibility:hidden]">
+          <div data-squircle className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-radius-4 sm:rounded-radius-5 lg:rounded-radius-6 bg-bg-page dark:bg-bg-surface flex items-center justify-center mb-2 sm:mb-[10px] lg:mb-3 overflow-hidden shrink-0">
             {card.icon
               ? <img src={card.icon} alt="" loading="lazy" className={`w-full h-full object-contain${isSvg ? ' dark:brightness-0 dark:invert' : ''}`} />
               : null
@@ -1279,7 +1282,7 @@ function CertificationCard({ card }) {
           <p className="text-card-m font-bold text-fg-primary text-center leading-snug">{nameEl}</p>
         </div>
 
-        <div inert={!flipped} className="absolute inset-0 flex flex-col items-center justify-center bg-bg-page rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 border border-border-subtle [backface-visibility:hidden] [transform:rotateY(180deg)]">
+        <div inert={!flipped} data-squircle className="absolute inset-0 flex flex-col items-center justify-center bg-bg-page rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 border border-border-subtle [backface-visibility:hidden] [transform:rotateY(180deg)]">
           <p className="text-card-m font-bold text-fg-primary text-center leading-snug px-4">{card.issuer}</p>
         </div>
       </div>

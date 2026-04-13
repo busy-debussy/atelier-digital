@@ -439,7 +439,9 @@ function ContactModal({ lang, onClose }) {
   // Inverted: dark card in light mode, light card in dark mode
   const lbl = 'text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted-inverse mb-1';
   const val = 'text-copy-s font-normal leading-relaxed text-fg-primary-inverse';
-  const row = 'block py-4 px-6 -mx-6 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus hover:bg-inverted-subtle';
+  const row = 'group block -mx-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus';
+  const rowInner = 'mx-2 my-1 px-5 py-3 rounded-radius-3 transition-colors group-hover:bg-modal-copy-btn-hover-bg';
+  const rowInnerProps = { 'data-squircle': '' };
 
   return createPortal(
     <>
@@ -493,43 +495,47 @@ function ContactModal({ lang, onClose }) {
 
         <ul>
           <li className="border-b border-border-subtle-inverted">
-            <a data-spring href={`mailto:${u}@${d}?subject=${encodeURIComponent(subject)}`} onClick={() => trackEvent('contact_email_click')} className={`${row} flex items-center justify-between gap-3`}>
-              <div className="min-w-0">
-                <h2 className={lbl}>{lang === 'fr' ? 'E-mail' : 'Email'}</h2>
-                <span className={`${val} obf-email block`} data-u={u} data-d={d} aria-hidden="true" />
-                <span className="sr-only">d@AtelierDigital.co.uk</span>
+            <a data-spring href={`mailto:${u}@${d}?subject=${encodeURIComponent(subject)}`} onClick={() => trackEvent('contact_email_click')} className={row}>
+              <div {...rowInnerProps} className={`${rowInner} flex items-center justify-between gap-3`}>
+                <div className="min-w-0">
+                  <h2 className={lbl}>{lang === 'fr' ? 'E-mail' : 'Email'}</h2>
+                  <span className={`${val} obf-email block`} data-u={u} data-d={d} aria-hidden="true" />
+                  <span className="sr-only">d@AtelierDigital.co.uk</span>
+                </div>
+                <button
+                  data-spring
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigator.clipboard.writeText(`${u}@${d}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
+                  aria-label={lang === 'fr' ? "Copier l'adresse e-mail" : 'Copy email address'}
+                  className="flex items-center gap-2 px-3 h-7 rounded-full border border-inverted-subtle hover:border-transparent text-chip-xs font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus bg-inverted-subtle hover:bg-fg-primary-inverse shrink-0 text-fg-primary-inverse hover:text-fg-primary"
+                >
+                  {copied ? (
+                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path d="M2.5 7l3.5 3.5 5.5-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  ) : (
+                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <rect x="4.5" y="0.5" width="9" height="10" rx="1.5" stroke="currentColor"/>
+                      <rect x="0.5" y="3.5" width="9" height="10" rx="1.5" fill="currentColor" fillOpacity="0.12" stroke="currentColor"/>
+                    </svg>
+                  )}
+                  {copied ? (lang === 'fr' ? 'Copié !' : 'Copied!') : (lang === 'fr' ? 'Copier' : 'Copy')}
+                </button>
               </div>
-              <button
-                data-spring
-                onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigator.clipboard.writeText(`${u}@${d}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
-                aria-label={lang === 'fr' ? "Copier l'adresse e-mail" : 'Copy email address'}
-                className="flex items-center gap-2 px-3 h-7 rounded-full border border-inverted-subtle hover:border-transparent text-chip-xs font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus bg-inverted-subtle hover:bg-fg-primary-inverse shrink-0 text-fg-primary-inverse hover:text-fg-primary"
-              >
-                {copied ? (
-                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M2.5 7l3.5 3.5 5.5-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                ) : (
-                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <rect x="4.5" y="0.5" width="9" height="10" rx="1.5" stroke="currentColor"/>
-                    <rect x="0.5" y="3.5" width="9" height="10" rx="1.5" fill="currentColor" fillOpacity="0.12" stroke="currentColor"/>
-                  </svg>
-                )}
-                {copied ? (lang === 'fr' ? 'Copié !' : 'Copied!') : (lang === 'fr' ? 'Copier' : 'Copy')}
-              </button>
             </a>
           </li>
           <li className="border-b border-border-subtle-inverted">
             <button
               data-spring
               onClick={() => { trackEvent('contact_linkedin_click'); window.open(liHref(), '_blank', 'noopener,noreferrer'); }}
-              className="py-4 px-6 -ml-6 w-[calc(100%+3rem)] text-left cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus hover:bg-inverted-subtle"
+              className="group -ml-6 w-[calc(100%+3rem)] text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
             >
-              <h2 className={lbl}>LinkedIn</h2>
-              <p className={`${val} flex items-center gap-2`}>
-                <img src={imgLinkedIn} alt="" width={16} height={16} className="invert dark:invert-0 shrink-0" />
-                David V.
-              </p>
+              <div {...rowInnerProps} className={rowInner}>
+                <h2 className={lbl}>LinkedIn</h2>
+                <p className={`${val} flex items-center gap-2`}>
+                  <img src={imgLinkedIn} alt="" width={16} height={16} className="invert dark:invert-0 shrink-0" />
+                  David V.
+                </p>
+              </div>
             </button>
           </li>
           <li>
@@ -540,10 +546,12 @@ function ContactModal({ lang, onClose }) {
               rel="noopener noreferrer"
               className={row}
             >
-              <h2 className={lbl}>{lang === 'fr' ? 'Localisation' : 'Location'}</h2>
-              <p className={val}>
-                🏴󠁧󠁢󠁳󠁣󠁴󠁿 {lang === 'fr' ? 'Édimbourg, Royaume-Uni' : 'Edinburgh, United Kingdom'}
-              </p>
+              <div {...rowInnerProps} className={rowInner}>
+                <h2 className={lbl}>{lang === 'fr' ? 'Localisation' : 'Location'}</h2>
+                <p className={val}>
+                  🏴󠁧󠁢󠁳󠁣󠁴󠁿 {lang === 'fr' ? 'Édimbourg, Royaume-Uni' : 'Edinburgh, United Kingdom'}
+                </p>
+              </div>
             </a>
           </li>
         </ul>
@@ -551,10 +559,11 @@ function ContactModal({ lang, onClose }) {
         <div className="pt-4">
           <a
             data-spring
+            data-squircle
             href="/david-v.vcf"
             download="david-v.vcf"
             onClick={() => trackEvent('vcard_download')}
-            className="flex items-center justify-center gap-2 w-full py-3 rounded-radius-4 border border-border-subtle-inverted text-fg-primary-inverse font-medium text-label-s leading-[1.2] hover:bg-inverted-subtle active:opacity-[0.33] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+            className="flex items-center justify-center gap-2 w-full py-3 rounded-radius-4 border border-border-subtle-inverted text-fg-primary-inverse font-medium text-label-s leading-[1.2] hover:bg-fg-primary-inverse hover:text-tooltip-bg hover:border-fg-primary-inverse active:opacity-[0.33] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -732,7 +741,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
       </div>
 
       {menuOpen && createPortal(
-        <div aria-hidden="true" className="fixed inset-0 z-[499]" onClick={() => setMenuOpen(false)} />,
+        <div aria-hidden="true" className="fixed inset-0 z-[499] bg-bg-glass-default animate-[fade-in_200ms_ease-out_both]" onClick={() => setMenuOpen(false)} />,
         document.body
       )}
 

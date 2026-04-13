@@ -118,7 +118,7 @@ function CsCard({ card, t }) {
         style={{ background: panelBg }}
       >
         <div className="flex flex-wrap gap-1 sm:gap-2">
-          <div className="flex items-center gap-1 px-2 py-1 rounded-radius-3 bg-chip-bg-primary overflow-hidden">
+          <div data-squircle className="flex items-center gap-1 px-2 py-1 rounded-radius-3 bg-chip-bg-primary overflow-hidden">
             {card.primaryChip.icon && (
               <img src={card.primaryChip.icon} alt="" className="w-3 h-3 shrink-0 brightness-0 invert" />
             )}
@@ -127,7 +127,7 @@ function CsCard({ card, t }) {
             </span>
           </div>
           {card.secondaryChips.map((chip, i) => (
-            <div key={i} className="flex items-center px-2 py-1 rounded-radius-3 bg-chip-bg-secondary">
+            <div key={i} data-squircle className="flex items-center px-2 py-1 rounded-radius-3 bg-chip-bg-secondary">
               <span className="text-chip-xs font-medium text-fg-on-dark-opacity-64 leading-none whitespace-nowrap">
                 {chip.label}
               </span>
@@ -146,11 +146,11 @@ function CsCard({ card, t }) {
           </div>
 
           {card.cta === 'go' ? (
-            <div className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 rounded-radius-4 sm:rounded-radius-4 lg:rounded-radius-5 bg-white flex items-center justify-center">
+            <div data-squircle className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 rounded-radius-4 sm:rounded-radius-4 lg:rounded-radius-5 bg-white flex items-center justify-center">
               <img src={imgArrowRight} alt="" className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
             </div>
           ) : (
-            <div className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 rounded-radius-4 sm:rounded-radius-4 lg:rounded-radius-5 bg-chip-bg-primary flex items-center justify-center">
+            <div data-squircle className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 lg:w-12 lg:h-12 rounded-radius-4 sm:rounded-radius-4 lg:rounded-radius-5 bg-chip-bg-primary flex items-center justify-center">
               <img src={imgLock} alt="" className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 brightness-0 invert opacity-60" />
             </div>
           )}
@@ -182,12 +182,13 @@ function CsCard({ card, t }) {
   );
 
   const liClass = 'relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] rounded-radius-7 sm:rounded-radius-8 overflow-hidden group snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer bg-bg-page';
+  const liSquircle = { 'data-squircle': '' };
 
   if (card.cta === 'go') {
     return (
       <li data-spring-desktop className="group/card relative shrink-0 w-[300px] sm:w-[360px] lg:w-[384px] h-[420px] sm:h-[404px] lg:h-[480px] snap-center motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 cursor-pointer">
         {/* Inner wrapper carries overflow-hidden so the spring scale on the li isn't clipped */}
-        <div className="absolute inset-0 rounded-radius-7 sm:rounded-radius-8 overflow-hidden group bg-bg-page">
+        <div data-squircle className="absolute inset-0 rounded-radius-7 sm:rounded-radius-8 overflow-hidden group bg-bg-page">
           {inner}
         </div>
         <Link to={card.href} className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white rounded-radius-7 sm:rounded-radius-8" aria-label={card.title} />
@@ -206,6 +207,7 @@ function CsCard({ card, t }) {
   return (
     <li
       data-spring-desktop
+      {...liSquircle}
       className={liClass}
       onClick={handleCardClick}
     >
@@ -219,8 +221,9 @@ function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
   const t = T[lang] ?? T.en;
   const cards = t.cards;
 
-  const trackRef       = useRef(null);
-  const activeIndexRef = useRef(0);
+  const trackRef             = useRef(null);
+  const activeIndexRef       = useRef(0);
+  const isProgrammaticScroll = useRef(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const LG_CARD = 384, LG_GAP = 32;
@@ -276,13 +279,16 @@ function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
     const card = track.children[index];
     if (card) {
       const scrollLeft = Math.max(0, card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2);
+      isProgrammaticScroll.current = true;
       track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      setTimeout(() => { isProgrammaticScroll.current = false; }, 600);
     }
     activeIndexRef.current = index;
     setActiveIndex(index);
   };
 
   const handleScroll = () => {
+    if (isProgrammaticScroll.current) return;
     const track = trackRef.current;
     if (!track) return;
     const center = track.scrollLeft + track.clientWidth / 2;

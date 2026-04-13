@@ -7,7 +7,7 @@ function CopyrightTag({ year, tooltip }) {
     <span className="relative inline-block group cursor-default">
       © {year} Atelier Digital
       <div className="pointer-events-none absolute bottom-[calc(100%+8px)] left-0 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
-        <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">
+        <div data-squircle className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring">
           {tooltip}
         </div>
       </div>
@@ -64,13 +64,13 @@ const T = {
 
 const strong    = 'font-bold text-fg-primary';
 const muted     = 'text-fg-secondary';
-const hover     = 'hover:text-fg-primary transition-colors';
-const row       = 'block text-copy-m leading-[3rem] whitespace-nowrap';
+const hover     = 'hover:text-fg-primary hover:bg-nav-hover-bg transition-colors px-3 -mx-3 rounded-radius-2';
+const row       = 'inline-block text-copy-m leading-normal py-2 whitespace-nowrap';
 const focusRing = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus rounded';
 
 function Locked({ label }) {
   return (
-    <div className={`flex items-center gap-1 opacity-40 ${muted} ${row}`}>
+    <div className={`inline-flex items-center gap-1 opacity-40 ${muted} ${row}`}>
       <img src={imgLockIcon} alt="" width={16} height={16} className="shrink-0 dark:invert" />
       <span>{label}</span>
     </div>
@@ -107,6 +107,7 @@ function Footer({ lang }) {
   const manageCookiesBtn = () => (
     <button
       data-spring
+      data-squircle
       aria-label={t.manageCookies}
       onClick={() => window.dispatchEvent(new Event('show-cookie-banner'))}
       className={`px-2 py-1 rounded-radius-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus hover:text-fg-primary hover:bg-nav-hover-bg cursor-pointer whitespace-nowrap`}
@@ -118,6 +119,7 @@ function Footer({ lang }) {
     return (
       <Link
         data-spring
+        data-squircle
         to={to}
         tabIndex={0}
         onClick={() => { if (isActive) window.scrollTo({ top: 0, behavior: 'smooth' }); }}
@@ -142,25 +144,25 @@ function Footer({ lang }) {
             </h2>
             <ul className="flex flex-col sm:flex-row gap-6 sm:gap-10 lg:gap-16">
 
-              <li className="flex flex-col">
-                <Link data-spring tabIndex={0} to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row} ${focusRing}`}>{t.home}</Link>
-                <ul>
+              <li className="flex flex-col gap-2">
+                <Link data-spring tabIndex={0} to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row} ${focusRing} hover:bg-nav-hover-bg transition-colors px-2 -mx-2 rounded-radius-2`}>{t.home}</Link>
+                <ul className="flex flex-col gap-2">
                   <li><Link data-spring tabIndex={0} to="/#case-studies" onClick={delayedNav('/#case-studies')} className={`${muted} ${hover} ${row} ${focusRing}`}>{t.caseStudies}</Link></li>
                   <li><Link data-spring tabIndex={0} to="/#collaborators" onClick={delayedNav('/#collaborators')} className={`${muted} ${hover} ${row} ${focusRing}`}>{t.collaborators}</Link></li>
                 </ul>
               </li>
 
-              <li className="flex flex-col">
+              <li className="flex flex-col gap-2">
                 <span className={`${strong} ${row}`}>{t.projects}</span>
-                <ul>
+                <ul className="flex flex-col gap-2">
                   <li>
-                    <Link data-spring tabIndex={0} to="/case-study/sales-platform" onClick={() => { if (pathname === '/case-study/sales-platform') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
+                    <Link data-spring tabIndex={0} to="/case-study/sales-platform" onClick={() => { if (pathname === '/case-study/sales-platform') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`inline-flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
                       <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
                       {t.salesPlatform}
                     </Link>
                   </li>
                   <li>
-                    <Link data-spring tabIndex={0} to="/case-study/xr" onClick={() => { if (pathname === '/case-study/xr') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
+                    <Link data-spring tabIndex={0} to="/case-study/xr" onClick={() => { if (pathname === '/case-study/xr') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`inline-flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
                       <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
                       {t.xr}
                     </Link>
@@ -169,9 +171,9 @@ function Footer({ lang }) {
                 </ul>
               </li>
 
-              <li className="flex flex-col">
-                <Link data-spring tabIndex={0} to="/resume" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row} ${focusRing}`}>{t.resume}</Link>
-                <ul>
+              <li className="flex flex-col gap-2">
+                <Link data-spring tabIndex={0} to="/resume" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row} ${focusRing} hover:bg-nav-hover-bg transition-colors px-2 -mx-2 rounded-radius-2`}>{t.resume}</Link>
+                <ul className="flex flex-col gap-2">
                   <li><Link data-spring tabIndex={0} to="/resume#experience" onClick={delayedNav('/resume#experience')} className={`${muted} ${hover} ${row} ${focusRing}`}>{t.experience}</Link></li>
                   <li><Link data-spring tabIndex={0} to="/resume#expertise"  onClick={delayedNav('/resume#expertise')}  className={`${muted} ${hover} ${row} ${focusRing}`}>{t.expertise}</Link></li>
                   <li><Link data-spring tabIndex={0} to="/resume#education"  onClick={delayedNav('/resume#education')}  className={`${muted} ${hover} ${row} ${focusRing}`}>{t.education}</Link></li>
@@ -185,7 +187,7 @@ function Footer({ lang }) {
             <h2 className={`text-h2 leading-tight font-bold mb-8 sm:mb-12 lg:mb-16 whitespace-nowrap ${strong}`}>
               {t.contact}
             </h2>
-            <ul className="flex flex-col">
+            <ul className="flex flex-col gap-2">
               <li className={`${strong} ${row}`}>David V.</li>
               <li><ObfuscatedEmail lang={lang} /></li>
               <li><a data-spring tabIndex={0} href="https://maps.google.com/?q=55.9527025,-3.2038472" target="_blank" rel="noopener noreferrer" className={`${muted} ${hover} ${row} ${focusRing}`}>{t.location}</a></li>

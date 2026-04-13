@@ -231,10 +231,12 @@ function Privacy({ lang }) {
     return () => window.removeEventListener('scroll', update);
   }, [t]);
 
-  const secondaryNavVisible = scrolledDown && !atBottom;
   useEffect(() => {
-    // secondary-nav-change intentionally not dispatched — chat button coexists with sec nav
-  }, [secondaryNavVisible]);
+    if (!window.matchMedia('(max-width: 767px)').matches) return;
+    const visible = scrolledDown && !atBottom && !scrollingDown;
+    window.dispatchEvent(new CustomEvent('chat-force-visible', { detail: visible }));
+    return () => window.dispatchEvent(new CustomEvent('chat-force-visible', { detail: false }));
+  }, [scrolledDown, atBottom, scrollingDown]);
 
   useEffect(() => {
     if (!window.matchMedia('(max-width: 767px)').matches) return;
