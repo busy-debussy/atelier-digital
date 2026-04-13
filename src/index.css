@@ -82,6 +82,11 @@ body {
   .border-inverted-subtle { border-color: var(--border-inverted-subtle); }
 }
 
+/* Hero accent glow — CTA blue at 5% opacity; inline rgba not possible with CSS vars */
+.hero-accent-glow {
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(1, 82, 236, 0.05) 0%, transparent 70%);
+}
+
 /* Email obfuscation — address is assembled by CSS only, never present as a DOM text node */
 .obf-email::before {
   content: attr(data-u) "\40" attr(data-d);

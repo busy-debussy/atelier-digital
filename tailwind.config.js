@@ -368,6 +368,14 @@ export default {
       "tooltip-kbd": 'var(--font-size-ui-tooltip-kbd)',
       "brand-logo": 'var(--font-size-brand-logo)'
 },
+
+      boxShadow: {
+      "xs": 'var(--shadow-xs)',
+      "s": 'var(--shadow-s)',
+      "s-dark": 'var(--shadow-s-dark)',
+      "m": 'var(--shadow-m)',
+      "l": 'var(--shadow-l)'
+},
     },
   },
 };

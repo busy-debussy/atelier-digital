@@ -1,5 +1,6 @@
 /* Hand-maintained — shadow effect styles cannot be exported as Figma variables */
-:root {
+/* @theme generates both CSS custom properties and Tailwind shadow-* utilities */
+@theme {
   --shadow-xs: 0px 0px 17.1px 0px rgba(0,0,0,0.08);
   --shadow-s: 0px 4px 20px rgba(0,0,0,0.12);
   --shadow-s-dark: 0px 4px 20px rgba(255,255,255,0.04);

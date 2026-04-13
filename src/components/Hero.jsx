@@ -216,7 +216,7 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
 
   return (
     <section aria-label={lang === 'fr' ? 'Présentation' : 'Introduction'} className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 pb-24">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 dark:hidden" style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(1,82,236,0.05) 0%, transparent 70%)' }} />
+      <div aria-hidden="true" className="hero-accent-glow pointer-events-none absolute inset-0 dark:hidden" />
 
 
       <div className="flex flex-col items-center gap-0 -mt-0 sm:mt-0">
