@@ -8,29 +8,23 @@ const MAX_TURNS = 6;
 
 const L = {
   en: {
-    button:      'Ask about my work',
-    pill:        'Ask Claude about me',
     title:       'A.I. knows about me',
     empty:       "Ask anything about David's experience or work.",
     placeholder: 'Ask Claude…',
     send:        'Send',
     limit:       "That's the end of our chat — reach out directly for more.",
     error:       'Something went wrong. Please try again.',
-    rateLimited: 'Too many requests. Please try again later.',
     remaining:   (n) => `${n} message${n === 1 ? '' : 's'} remaining`,
     cookieNotice: 'By using this chat you agree to the',
     cookieLink:   'cookies policy',
   },
   fr: {
-    button:      'Poser une question',
-    pill:        'Ask A.I. about David',
     title:       'L\'I.A. me connaît par 💙',
     empty:       "Posez une question sur l'expérience ou le travail de David.",
     placeholder: 'Demandez à Claude…',
     send:        'Envoyer',
     limit:       'Fin de la conversation — contactez David directement pour en savoir plus.',
     error:       'Une erreur s\'est produite. Veuillez réessayer.',
-    rateLimited: 'Trop de requêtes. Veuillez réessayer plus tard.',
     remaining:   (n) => `${n} message${n === 1 ? '' : 's'} restant${n === 1 ? '' : 's'}`,
     cookieNotice: 'En utilisant ce chat vous acceptez notre',
     cookieLink:   'politique de cookies',
@@ -53,14 +47,15 @@ function renderContent(text) {
   });
 }
 
-export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = false, fadeFloating = false }) {
+export default function ChatBot({ lang = 'en', onOpenChange }) {
   const l = L[lang] || L.en;
   const [open, setOpen] = useState(false);
 
   useEffect(() => { onOpenChange?.(open); if (open) trackEvent('chat_open'); }, [open, onOpenChange]);
+
   const [messages, setMessages] = useState([]);
-  const [input, setInput]     = useState('');
-  const [loading, setLoading] = useState(false);
+  const [input, setInput]       = useState('');
+  const [loading, setLoading]   = useState(false);
   const bottomRef   = useRef(null);
   const inputRef    = useRef(null);
   const textareaRef = useRef(null);
@@ -68,49 +63,6 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
 
   const userTurns = messages.filter(m => m.role === 'user').length;
   const atLimit   = userTurns >= MAX_TURNS;
-
-  const [pillExpanded, setPillExpanded] = useState(false);
-
-  // One-time nudge: appear after 3s idle past 200px scroll, auto-dismiss after 6s
-  const [ready, setReady] = useState(false);
-  const [dismissed, setDismissed] = useState(false);
-  const [forcedVisible, setForcedVisible] = useState(false);
-  const forcedVisibleRef = useRef(false);
-  const wasEverForced    = useRef(false);
-  useEffect(() => {
-    const handler = (e) => {
-      forcedVisibleRef.current = e.detail;
-      if (e.detail) wasEverForced.current = true;
-      setForcedVisible(e.detail);
-    };
-    window.addEventListener('chat-force-visible', handler);
-    return () => window.removeEventListener('chat-force-visible', handler);
-  }, []);
-  const idleTimer = useRef(null);
-  const dismissTimer = useRef(null);
-  useEffect(() => {
-    if (ready) return;
-    const IDLE_MS = 3000;
-    const onActivity = () => {
-      if (forcedVisibleRef.current) return;
-      clearTimeout(idleTimer.current);
-      if (window.scrollY >= 200) {
-        idleTimer.current = setTimeout(() => {
-          setReady(true);
-          setPillExpanded(true);
-          setTimeout(() => setPillExpanded(false), 4000);
-          dismissTimer.current = setTimeout(() => setDismissed(true), 6000);
-        }, IDLE_MS);
-      }
-    };
-    onActivity();
-    const events = ['scroll', 'keydown', 'touchstart'];
-    events.forEach(e => window.addEventListener(e, onActivity, { passive: true }));
-    return () => {
-      clearTimeout(idleTimer.current);
-      events.forEach(e => window.removeEventListener(e, onActivity));
-    };
-  }, [ready]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -176,6 +128,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
     <>
       {/* Dismiss overlay */}
       {open && <div className="fixed inset-0 z-[399]" onClick={() => setOpen(false)} aria-hidden="true" />}
+
       {/* Chat panel */}
       <div
         {...(open ? { role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'chatbot-title', 'aria-live': 'polite' } : {})}
@@ -218,7 +171,7 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div data-squircle className={`max-w-[85%] px-4 py-3 rounded-radius-4 text-copy-s leading-relaxed break-words ${
                   m.role === 'user'
-                    ? 'bg-cta-600 text-fg-on-accent-opacity-95 rounded-br-[2px]'
+                    ? 'bg-bg-subtle text-fg-primary-inverse rounded-br-[2px]'
                     : 'bg-inverted-subtle text-fg-primary-inverse rounded-bl-[2px]'
                 }`}>
                   {m.role === 'assistant' ? renderContent(m.content) : m.content}
@@ -291,29 +244,6 @@ export default function ChatBot({ lang = 'en', onOpenChange, hideFloating = fals
               </button>
             </div>
           )}
-        </div>
-      </div>
-
-      {/* Floating trigger button */}
-      <div inert={(!ready && !forcedVisible) || (dismissed && !forcedVisible) || hideFloating || open || undefined} className={`fixed bottom-4 left-4 z-40 group transition-[opacity,transform] duration-300 ease-out ${(!ready && !forcedVisible) || (dismissed && !forcedVisible) || hideFloating ? `opacity-0 pointer-events-none ${wasEverForced.current || ready ? 'translate-y-0' : 'translate-y-3'}` : open ? 'opacity-0 pointer-events-none translate-y-0' : 'opacity-100 pointer-events-auto translate-y-0'}`}>
-        <button
-          data-spring
-          onClick={() => { clearTimeout(dismissTimer.current); setPillExpanded(false); setOpen(o => !o); }}
-          aria-label={open ? 'Close chat' : l.button}
-          aria-expanded={open}
-          tabIndex={0}
-          className={`group flex items-center justify-center rounded-full bg-tooltip-bg shadow-xs ring-1 ring-tooltip-ring hover:bg-bg-surface transition-[width,padding,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${pillExpanded ? 'h-9 px-4 gap-2' : 'w-9 h-9'}`}
-        >
-          <span className="text-copy-m leading-none text-fg-primary-inverse group-hover:text-fg-primary shrink-0">💬</span>
-          <span className={`text-tooltip font-semibold text-fg-primary-inverse group-hover:text-fg-primary whitespace-nowrap overflow-hidden transition-[max-width,opacity,color] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${pillExpanded ? 'max-w-[160px] opacity-100' : 'max-w-0 opacity-0'}`}>
-            {l.pill}
-          </span>
-        </button>
-        <div className="pointer-events-none absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:delay-[600ms] transition-opacity duration-200">
-          <div className="bg-tooltip-bg text-fg-primary-inverse text-tooltip font-light leading-[1.2] px-2 py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring flex items-center gap-2">
-            {lang === 'fr' ? 'Tchat avec Claude' : 'Chat with Claude'}
-            <kbd className="text-tooltip-kbd font-medium w-[15px] h-[18px] flex items-center justify-center rounded bg-tooltip-keyboard-shortcut-bg text-tooltip-keyboard-shortcut-fg not-italic">C</kbd>
-          </div>
         </div>
       </div>
     </>

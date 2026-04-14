@@ -1,5 +1,42 @@
 # Changelog 
 
+## [2.1.4] — 2026-04-14
+
+### Hero inline chat, floating button removal, nav & mobile polish
+
+#### Hero — inline AI chat
+- Replaced floating ChatBot button with inline chat input directly in the hero section
+- Cycling placeholder phrases (EN/FR, 8 each) in shuffled order via Fisher-Yates; pure opacity crossfade animation (no Y movement)
+- On first message: H1, H2, and skills card fade out; messages appear in their place (slot div pattern — input position never shifts)
+- After first message: placeholder collapses to static "Ask Claude…"; cycling stops
+- Collapse button (inverted colours, `esc` shortcut) appears inside input bar when chat is active; tooltip with kbd badge
+- Input hover shadow/border only shown when idle and empty
+- "Open full chat →" text link fades in below input after first exchange, fires `toggle-chat` event to open ChatBot panel
+- Added `hero-surface-gradient` layer (`bg-surface` → `bg-page`) over hero background
+
+#### Hero — CTAs
+- Restored "Interactive CV" as secondary text link alongside "Case studies" primary button
+- `text-cta-600 dark:text-cta-400` for correct contrast in both modes
+- Gap between CTAs: `gap-8`
+- Removed emoji from H1 heading
+
+#### ChatBot
+- Removed floating trigger button entirely (pill, idle timer, nudge logic, `forcedVisible`, `hideFloating`, `fadeFloating`)
+- Panel remains accessible via keyboard shortcut and new hero "Open full chat →" link
+- Removed unused L keys: `button`, `pill`, `rateLimited`
+
+#### Nav
+- Resume tooltip: `'view my CV'` → `'interactive CV'` (EN); `'voir mon CV'` → `'CV interactif'` (FR)
+
+#### Mobile secondary nav (all pages)
+- Removed circle backdrop div from secondary nav on all case study and legal pages
+- Nav bar repositioned from `left-[68px]` → `left-4`, centred on screen
+
+#### Home / ScrollForMore
+- "Case studies" CTA on mobile now uses `scrollBy({ top: innerHeight * 1.0 })` — matches ScrollForMore behaviour
+- "Back to case studies" buttons on SalesPlatform and XRExperiences use same `scrollBy` on mobile
+- ScrollForMore tooltip delay removed (instant on hover)
+
 ## [2.1.3] — 2026-04-14
 
 ### Resume, Sales Platform, Collaborations, carousel & scroll fixes

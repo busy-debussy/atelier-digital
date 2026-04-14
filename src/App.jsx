@@ -211,7 +211,7 @@ function App() {
         <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
         <CookieBanner lang={lang} hideFloating={secondaryNavVisible} />
       </div>
-      <ChatBot lang={lang} onOpenChange={setChatOpen} fadeFloating={scrolledDown} />
+      <ChatBot lang={lang} />
     </BrowserRouter>
   );
 }

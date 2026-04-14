@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-04-13');
+const LAST_UPDATED = new Date('2026-04-14');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -289,12 +289,11 @@ function Terms({ lang }) {
             © {year} David V.{lang === 'fr' ? ' Tous droits réservés.' : ' All rights reserved.'}
           </p>
         </div>
-        <div inert={scrolledDown && !atBottom && !scrollingDown ? undefined : true} className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div inert={scrolledDown && !atBottom && !scrollingDown ? undefined : true} className={`md:hidden fixed bottom-2 left-4 right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <div className="pointer-events-auto w-full">
             <MobileSecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
           </div>
         </div>
-        <div aria-hidden="true" className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-1 bg-nav-bg shadow-xs ring-1 ring-nav-ring ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`} style={{ width: 52, height: 52, left: 8, bottom: 8 }} />
       </main>
       <Footer lang={lang} />
     </>

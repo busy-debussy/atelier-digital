@@ -1985,19 +1985,13 @@ function SalesPlatform({ lang, isDark }) {
       {/* ── Mobile floating nav ── */}
       <div
         inert={scrolledDown && !atBottom && !scrollingDown ? undefined : true}
-        className={`md:hidden fixed bottom-2 left-[68px] right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`md:hidden fixed bottom-2 left-4 right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <div className="pointer-events-auto w-full">
           <MobileSecondaryNav sections={sections} activeId={activeId} onNavigate={handleNavigate} />
         </div>
       </div>
 
-      {/* ── Chat button backdrop circle ── */}
-      <div
-        aria-hidden="true"
-        className={`md:hidden fixed z-[39] pointer-events-none transition-opacity duration-300 rounded-full backdrop-blur-1 bg-nav-bg shadow-xs ring-1 ring-nav-ring ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0'}`}
-        style={{ width: 52, height: 52, left: 8, bottom: 8 }}
-      />
 
       <Footer lang={lang} />
     </>

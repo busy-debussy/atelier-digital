@@ -36,7 +36,7 @@ body {
 }
 
 * {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--family-inter);
 }
 
 @keyframes blink {
@@ -60,6 +60,11 @@ body {
 }
 
 @keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ph-in {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
@@ -99,6 +104,11 @@ body {
 /* Hero accent glow — CTA blue at 5% opacity; inline rgba not possible with CSS vars */
 .hero-accent-glow {
   background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(1, 82, 236, 0.05) 0%, transparent 70%);
+}
+
+/* Hero surface gradient — subtle top-to-bottom depth */
+.hero-surface-gradient {
+  background: linear-gradient(to bottom, var(--bg-surface), var(--bg-page));
 }
 
 /* Email obfuscation — address is assembled by CSS only, never present as a DOM text node */

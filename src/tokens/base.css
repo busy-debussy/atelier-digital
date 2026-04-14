@@ -3,6 +3,12 @@
  */
 
 :root {
+  --family-inter: 'Inter', sans-serif;
+  --family-mono: 'Menlo', monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
   --color-z-0: #ffffff;
   --color-z-50: #fafafa;
   --color-z-100: #f6f6f6;

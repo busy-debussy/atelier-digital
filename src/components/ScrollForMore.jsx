@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import imgChevronDown from '../assets/icons/icon-chevron-down.svg';
 import { trackEvent } from '../analytics';
 
@@ -10,7 +10,6 @@ const T = {
 export default function ScrollForMore({ lang, scrollTarget }) {
   const [visible, setVisible]       = useState(true);
   const [tipVisible, setTipVisible] = useState(false);
-  const timerRef                    = useRef(null);
 
   useEffect(() => {
     setVisible(true); // reset when route mounts
@@ -19,9 +18,8 @@ export default function ScrollForMore({ lang, scrollTarget }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const showTip = () => { timerRef.current = setTimeout(() => setTipVisible(true), 600); };
-  const hideTip = () => { clearTimeout(timerRef.current); setTipVisible(false); };
-  useEffect(() => () => clearTimeout(timerRef.current), []);
+  const showTip = () => setTipVisible(true);
+  const hideTip = () => setTipVisible(false);
 
   const label = T[lang] ?? T.en;
 

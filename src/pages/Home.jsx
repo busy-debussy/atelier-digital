@@ -19,9 +19,14 @@ function Home({ lang, isDark, enableDark }) {
   useEffect(() => {
     if (!hash) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mobile  = window.matchMedia('(max-width: 639px)').matches;
     const id = setTimeout(() => {
-      const el = document.querySelector(hash);
-      if (el) el.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth' });
+      if (hash === '#case-studies' && mobile) {
+        window.scrollBy({ top: window.innerHeight * 1.0, behavior: reduced ? 'instant' : 'smooth' });
+      } else {
+        const el = document.querySelector(hash);
+        if (el) el.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth' });
+      }
     }, 50);
     return () => clearTimeout(id);
   }, [hash]);

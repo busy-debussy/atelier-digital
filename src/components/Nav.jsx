@@ -32,7 +32,7 @@ const T = {
     'back to top':     'back to top',
     'go home':         'go home',
     'tip projects':    'browse case studies',
-    'tip resume':      'view my CV',
+    'tip resume':      'interactive CV',
     'tip talk':        'contact details',
   },
   fr: {
@@ -48,7 +48,7 @@ const T = {
     'back to top':     'retour en haut',
     'go home':         "aller à l'accueil",
     'tip projects':    'parcourir les études de cas',
-    'tip resume':      'voir mon CV',
+    'tip resume':      'CV interactif',
     'tip talk':        'échangeons',
   },
 };
