@@ -178,7 +178,7 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
       <button
         onPointerDown={() => setPressed(true)}
         onPointerUp={() => { setPressed(false); handleClick(); }}
-        onPointerLeave={() => setPressed(false)}
+        onPointerLeave={() => { setPressed(false); hideTip(); }}
         onMouseEnter={() => { setHovered(true);  if (!noTooltip && !suppressRef.current) showTip(); }}
         onMouseLeave={() => { setHovered(false); hideTip(); }}
         onBlur={() => { setHovered(false); hideTip(); }}
@@ -198,7 +198,7 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
           </>
         )}
       </button>
-      {!noTooltip && <div className={`pointer-events-none transition-opacity duration-200 ${tooltipVisible ? 'opacity-100' : 'opacity-0'}`}><Tooltip label={T[lang]['dark mode'] ?? 'dark mode'} isDark={isDark} offset={10} shortcut="D" /></div>}
+      {!noTooltip && <div className={`pointer-events-none transition-opacity duration-200 ${tooltipVisible ? 'opacity-100' : 'opacity-0 invisible'}`}><Tooltip label={T[lang]['dark mode'] ?? 'dark mode'} isDark={isDark} offset={10} shortcut="D" /></div>}
     </div>
   );
 }

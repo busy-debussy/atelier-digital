@@ -1,5 +1,41 @@
 # Changelog 
 
+## [2.1.7] — 2026-04-14
+
+### SP layout alignment, secondary nav polish, XR map size
+
+#### SP — layout & alignment
+- Tiles narrowed to `md:max-w-2xl lg:max-w-[52rem]` on all non-design sections; design section remains full-width
+- Section title + chevron inner wrapper aligned to tile outer edge (`md:max-w-[39rem] lg:max-w-[49rem] md:mx-auto`)
+- `designTextOffset` const (`md:max-w-[33rem] lg:max-w-[41.5rem] md:ml-[calc((100vw-42rem)/2)] lg:ml-24`) applied to text elements in design section tiles (user flow, concepts eyebrow, subsection headings/bodies, footer callout)
+- Carousel controls (tag + dots + nav buttons) offset using `designTextOffset` across all three carousels
+- User flow image: `lg:max-w-[95%] lg:mx-auto` — slightly narrowed on desktop to clear secondary nav
+- Concepts carousel track, wireframes carousel track, UI concept cards grid: same `lg:max-w-[95%] lg:mx-auto` treatment
+- First section header gets extra top padding (`pt-20 sm:pt-28 lg:pt-36`) for breathing room below hero
+
+#### SP — secondary nav
+- Repositioned from `right: max(16px, calc(50% - 32rem - 10rem))` to `left: calc(50% + 25.5rem)` — consistent 16px gap from tile edge at all viewport widths
+- Breakpoint changed from `xl:block` to `lg:block` — now visible from 1024px upward
+- Background `bg-bg-page`, `rounded-radius-3`, `p-2` added to nav container
+- Scroll trigger changed to `window.scrollY > window.innerHeight + 40` — nav appears reliably after hero has fully cleared viewport
+
+#### SP — context section
+- Tiles 1 and 2 given `bg-bg-surface` for contrast against white gradient background
+- Context tile 1: merged tiles 1 and 2 into single tile; removed client logo, £5.65B stat, footnote, and redundant sentence; copy tightened to single sentence
+- Collapsed context header bg: `bg-bg-surface`; open header bg: `bg-bg-page`
+- Content bg: gradient `from-white to-[#f6f6f6]`
+
+#### SP — tokens & colours
+- `TIMELINE_PROJECTS` bars tokenised to Tailwind palette classes (`bg-pink-500 dark:bg-pink-700` etc.) replacing inline hex values
+- `CONCEPTS_COLORS` and `VIEW_SLIDE_COLORS` reverted to object arrays with `bg/fg/bgDark/fgDark` hex values; all 6 carousel tag render spots use inline `style={{}}` with `isDark` switching
+- `UI_CONCEPTS` cards switched from per-card hex values to Tailwind palette classes (`bg-palette-*-bg text-palette-*-fg`)
+
+#### Nav — dark mode tooltip
+- `invisible` added alongside `opacity-0` on hidden state — prevents tooltip contributing to layout/scroll width
+
+#### XR — world map
+- Map wrapper reduced from `max-w-2xl` to `max-w-[40rem]` to better match SP map visual size
+
 ## [2.1.6] — 2026-04-14
 
 ### Resume two-column layout, contact modal icon, footer & map polish

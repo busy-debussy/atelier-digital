@@ -1182,7 +1182,7 @@ function XRExperiences({ lang, isDark }) {
 
                   {/* World map — between para 1 and the rest */}
                   {section.map && (
-                    <div className="max-w-2xl mx-auto w-full my-6 sm:my-8">
+                    <div className="max-w-[40rem] mx-auto w-full my-6 sm:my-8">
                       <WorldMapDots isDark={isDark} lang={lang} />
                     </div>
                   )}

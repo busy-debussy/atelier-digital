@@ -462,7 +462,7 @@ const CONTEXT_EYEBROWS = {
 const CONTEXT_CLIENT_PILL = { en: 'Result oriented', fr: 'Axé résultats' };
 const CONTEXT_INDUSTRY = {
   stat:     { en: '£5.65 B*',                                       fr: '6.7 Md€*' },
-  body:     { en: <>The client needed a platform to <strong>support growth</strong> and <strong>scale globally</strong>. While their existing platform worked well, <strong>high maintenance fees</strong> prompted a more <strong>cost-effective</strong>, <strong>user-focused solution</strong>.</>, fr: <>Le client avait besoin d'une plateforme pour <strong>soutenir sa croissance</strong> et <strong>s'étendre à l'international</strong>. Bien que leur plateforme existante fonctionne bien, des <strong>frais de maintenance élevés</strong> ont motivé une solution plus <strong>économique</strong> et <strong>centrée utilisateur</strong>.</> },
+  body:     { en: <>The client needed a platform to <strong>support growth</strong> and <strong>scale globally</strong>.</>, fr: <>Le client avait besoin d'une plateforme pour <strong>soutenir sa croissance</strong> et <strong>s'étendre à l'international</strong>.</> },
   footnote: { en: '*client\'s revenues YoY, before the platform.',   fr: "*chiffre d'affaires annuel du client, avant la plateforme." },
 };
 const CONTEXT_BODIES = {
@@ -489,8 +489,8 @@ const CONTEXT_BODIES = {
     },
   },
   team: {
-    en: <>Fully remote, with the flexibility to work from anywhere, and distributed globally 🌏</>,
-    fr: <>100% télétravail, avec la flexibilité de travailler de n'importe où, dans le monde 🌏</>,
+    en: <>Fully remote, with the flexibility to work from anywhere, and distributed globally 🌏.</>,
+    fr: <>100% télétravail, avec la flexibilité de travailler de n'importe où, dans le monde 🌏.</>,
   },
 };
 
@@ -613,22 +613,11 @@ function ContextContent({ lang, isDark }) {
   const l = lang in CONTEXT_BODIES.mission ? lang : 'en';
   return (
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-      <Tile>
-        <img src={imgClientLogo} alt="Client logo" width={80} height={80} className="brightness-0 dark:invert" />
+      <Tile bgClass="bg-bg-surface">
         <TileEyebrow>{eyebrows[0]}</TileEyebrow>
-        <TileBody>{lang === 'fr' ? <>L'un des <strong>principaux promoteurs immobiliers</strong> des Émirats arabes unis (EAU), qui connaissait une croissance annuelle de son chiffre d'affaires et étendait ses activités à travers trois Émirats.</> : <>One of the <strong>leading real estate developers</strong> in the United Arab Emirates (UAE), was experiencing annual revenue growth and expanding operations across three Emirates.</>}</TileBody>
+        <TileBody>{lang === 'fr' ? <>L'un des <strong>principaux promoteurs immobiliers</strong> des Émirats arabes unis (EAU), en pleine croissance et en expansion à travers trois Émirats, avait besoin d'une plateforme pour <strong>soutenir cette croissance</strong> et <strong>s'étendre à l'international</strong>.</> : <>One of the <strong>leading real estate developers</strong> in the United Arab Emirates (UAE), experiencing annual revenue growth and expanding across three Emirates, needed a platform to <strong>support that growth</strong> and <strong>scale globally</strong>.</>}</TileBody>
       </Tile>
-      <Tile>
-        <p className="text-display-2 font-semibold leading-tight text-fg-primary">
-          {CONTEXT_INDUSTRY.stat[lang] ?? CONTEXT_INDUSTRY.stat.en}
-        </p>
-        <p className="text-h3 font-semibold leading-snug text-fg-primary">{eyebrows[1]}</p>
-        <TileBody>{CONTEXT_INDUSTRY.body[l]}</TileBody>
-        <p className="text-fine-print leading-normal text-fg-muted">
-          {CONTEXT_INDUSTRY.footnote[lang] ?? CONTEXT_INDUSTRY.footnote.en}
-        </p>
-      </Tile>
-      <Tile><TileEyebrow>{eyebrows[2]}</TileEyebrow><TileBody>{CONTEXT_BODIES.mission[l]}</TileBody></Tile>
+      <Tile bgClass="bg-bg-surface"><TileEyebrow>{eyebrows[2]}</TileEyebrow><TileBody>{CONTEXT_BODIES.mission[l]}</TileBody></Tile>
       <Tile><TileEyebrow>{eyebrows[3]}</TileEyebrow><TileBody>{CONTEXT_BODIES.stakeholders[l]}</TileBody></Tile>
 
       <Tile>
@@ -718,19 +707,19 @@ function TileH4({ children }) {
 }
 
 const TIMELINE_PROJECTS = [
-  { label: "Project A", weeks: 15, color: "#FF8BDE",               colorDark: "#B04692",               roundedL: true  },
-  { label: "Project B", weeks: 10, color: "#FFABE7",               colorDark: "#441638"                               },
-  { label: "C",         weeks: 4,  color: "#FFB13C",               colorDark: "#994F00"                               },
-  { label: "D",         weeks: 5,  color: "#FFC773",               colorDark: "#462C15"                               },
-  { label: "E",         weeks: 3,  color: "#CB8AFC",               colorDark: "#7A38AB"                               },
-  { label: "F",         weeks: 6,  color: "#DAABFD",               colorDark: "#3B1A53"                               },
-  { label: "G",         weeks: 2,  color: "#68B6FF",               colorDark: "#286DAD"                               },
-  { label: "H",         weeks: 2,  color: "#92CAFF",               colorDark: "#1E3248"                               },
-  { label: "I",         weeks: 2,  color: "#F9BC04",               colorDark: "#916404"                               },
-  { label: "J",         weeks: 3,  color: "#FBCF4A",               colorDark: "#483A05",               roundedR: true },
+  { label: "Project A", weeks: 15, tw: "bg-pink-500 dark:bg-pink-700",      roundedL: true  },
+  { label: "Project B", weeks: 10, tw: "bg-pink-400 dark:bg-pink-800"                       },
+  { label: "C",         weeks: 4,  tw: "bg-orange-500 dark:bg-orange-700"                   },
+  { label: "D",         weeks: 5,  tw: "bg-orange-400 dark:bg-orange-800"                   },
+  { label: "E",         weeks: 3,  tw: "bg-purple-500 dark:bg-purple-700"                   },
+  { label: "F",         weeks: 6,  tw: "bg-purple-400 dark:bg-purple-800"                   },
+  { label: "G",         weeks: 2,  tw: "bg-sky-500 dark:bg-sky-700"                         },
+  { label: "H",         weeks: 2,  tw: "bg-sky-400 dark:bg-sky-800"                         },
+  { label: "I",         weeks: 2,  tw: "bg-yellow-500 dark:bg-yellow-700"                   },
+  { label: "J",         weeks: 3,  tw: "bg-yellow-400 dark:bg-yellow-800",   roundedR: true  },
 ];
 
-function LaunchesTimeline({ isDark }) {
+function LaunchesTimeline() {
   return (
     <div className="overflow-hidden">
       <div className="flex w-full">
@@ -738,8 +727,7 @@ function LaunchesTimeline({ isDark }) {
           <div key={p.label} className="flex flex-col gap-2" style={{ flex: p.weeks }}>
             <p className="text-chip-xs font-medium leading-none text-fg-muted whitespace-nowrap">{p.label}</p>
             <div
-              className={`h-6 sm:h-8${p.roundedL ? " rounded-l-[10px] sm:rounded-l-[12px]" : ""}${p.roundedR ? " rounded-r-[10px] sm:rounded-r-[12px]" : ""}`}
-              style={{ backgroundColor: isDark ? p.colorDark : p.color }}
+              className={`h-6 sm:h-8 ${p.tw}${p.roundedL ? " rounded-l-[10px] sm:rounded-l-[12px]" : ""}${p.roundedR ? " rounded-r-[10px] sm:rounded-r-[12px]" : ""}`}
             />
             <p className="text-chip-xs font-medium leading-none text-fg-muted whitespace-nowrap">
               {p.weeks >= 10 ? `${p.weeks} weeks` : `${p.weeks}w`}
@@ -845,7 +833,7 @@ function DefineContent({ lang, isDark }) {
         {d.uxStrategy.subsections.map((s, i) => (
           <div key={i} className="flex flex-col gap-4 sm:gap-5 lg:gap-6 pt-2">
             <TileH4>{s.h4}</TileH4>
-            {s.body ? <TileBody>{s.body}</TileBody> : <><TileBody>{s.before}</TileBody><div className="my-8 sm:my-10"><LaunchesTimeline isDark={isDark} /></div><TileBody>{s.after}</TileBody></>}
+            {s.body ? <TileBody>{s.body}</TileBody> : <><TileBody>{s.before}</TileBody><div className="my-8 sm:my-10"><LaunchesTimeline /></div><TileBody>{s.after}</TileBody></>}
           </div>
         ))}
       </Tile>
@@ -863,7 +851,7 @@ const CONCEPTS_COLORS = [
   { bg: '#ffe2ca', fg: '#994f00', bgDark: '#2c1500', fgDark: '#ffb27a' }, // palette/orange
   { bg: '#ffd5d5', fg: '#962628', bgDark: '#2c0000', fgDark: '#ff9090' }, // palette/red
   { bg: '#f4e5ff', fg: '#7a38ab', bgDark: '#1c0035', fgDark: '#cc88ff' }, // palette/purple
-  { bg: '#d7e2f6', fg: '#254c96', bgDark: '#001030', fgDark: '#88aaee' }, // palette/blue
+  { bg: '#d7e2f6', fg: '#254c96', bgDark: '#001030', fgDark: '#88aaee' }, // palette/indigo
 ];
 
 const CONCEPTS_SLIDES = {
@@ -1086,7 +1074,7 @@ function ConceptsCarousel({ lang, isDark }) {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxIndex(activeIndex); }
         }}
-        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
+        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary lg:max-w-[95%] lg:mx-auto"
         style={{ scrollbarWidth: 'none' }}
       >
         {slides.map((slide, i) => (
@@ -1101,7 +1089,7 @@ function ConceptsCarousel({ lang, isDark }) {
       </div>
       {lightboxIndex !== null && <Lightbox slides={slides} initialIndex={lightboxIndex} lang={lang} onClose={() => setLightboxIndex(null)} />}
 
-      <div className="flex flex-col gap-2">
+      <div className={`${designTextOffset} flex flex-col gap-2`}>
         <div className="sm:hidden">
           <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: CONCEPTS_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
             {titles[activeIndex]}
@@ -1137,26 +1125,26 @@ function ConceptsCarousel({ lang, isDark }) {
 // ── UI concept cards data ─────────────────────────────────────────────────────
 const UI_CONCEPTS = {
   en: [
-    { title: "1. Globe view",     titleBg: "#ffeeb3", titleFg: "#916404", titleBgDark: "#2c2200", titleFgDark: "#ffd97d", bullets: ["Flight times", "Breadcrumbs"],        img: imgUiCard01 },
-    { title: "2. Country view",   titleBg: "#ffe2ca", titleFg: "#994f00", titleBgDark: "#2c1500", titleFgDark: "#ffb27a", bullets: ["City cards", "Compass, zoom"],        img: imgUiCard02 },
-    { title: "3. City view",      titleBg: "#ffd5d5", titleFg: "#962628", titleBgDark: "#2c0000", titleFgDark: "#ff9090", bullets: ["Points of interest", "Distances"],   img: imgUiCard03 },
-    { title: "4. Hero view",      titleBg: "#ffe9f9", titleFg: "#8F3575", titleBgDark: "#2c0022", titleFgDark: "#ffaaee", bullets: ["Project card", "Live weather"],       img: imgUiCard04 },
-    { title: "5. Project view",   titleBg: "#f4e5ff", titleFg: "#7a38ab", titleBgDark: "#1c0035", titleFgDark: "#cc88ff", bullets: ["Day/night", "Orbit controls"],        img: imgUiCard05 },
-    { title: "6. Tower view",     titleBg: "#d7e2f6", titleFg: "#20458B", titleBgDark: "#001030", titleFgDark: "#88aaee", bullets: ["Floor selector", "Filters"],          img: imgUiCard06 },
-    { title: "7. Floors view",    titleBg: "#e2ecff", titleFg: "#286dad", titleBgDark: "#00182c", titleFgDark: "#88ccff", bullets: ["Unit selector", "Distances"],         img: imgUiCard07 },
-    { title: "8. Unit view",      titleBg: "#daf5d3", titleFg: "#277a22", titleBgDark: "#001c00", titleFgDark: "#88ee80", bullets: ["Room selector", "Customisation"],     img: imgUiCard08 },
-    { title: "9. Interiors view", titleBg: "#e9f5d3", titleFg: "#5e760f", titleBgDark: "#101c00", titleFgDark: "#b8e050", bullets: ["Floor selector", "Request callback"], img: imgUiCard09 },
+    { title: "1. Globe view",     palette: "bg-palette-yellow-bg text-palette-yellow-fg",       bullets: ["Flight times", "Breadcrumbs"],        img: imgUiCard01 },
+    { title: "2. Country view",   palette: "bg-palette-orange-bg text-palette-orange-fg",       bullets: ["City cards", "Compass, zoom"],        img: imgUiCard02 },
+    { title: "3. City view",      palette: "bg-palette-red-bg text-palette-red-fg",             bullets: ["Points of interest", "Distances"],    img: imgUiCard03 },
+    { title: "4. Hero view",      palette: "bg-palette-pink-bg text-palette-pink-fg",           bullets: ["Project card", "Live weather"],       img: imgUiCard04 },
+    { title: "5. Project view",   palette: "bg-palette-purple-bg text-palette-purple-fg",       bullets: ["Day/night", "Orbit controls"],        img: imgUiCard05 },
+    { title: "6. Tower view",     palette: "bg-palette-indigo-bg text-palette-indigo-fg",       bullets: ["Floor selector", "Filters"],          img: imgUiCard06 },
+    { title: "7. Floors view",    palette: "bg-palette-sky-bg text-palette-sky-fg",             bullets: ["Unit selector", "Distances"],         img: imgUiCard07 },
+    { title: "8. Unit view",      palette: "bg-palette-green-bg text-palette-green-fg",         bullets: ["Room selector", "Customisation"],     img: imgUiCard08 },
+    { title: "9. Interiors view", palette: "bg-palette-pistachio-bg text-palette-pistachio-fg", bullets: ["Floor selector", "Request callback"], img: imgUiCard09 },
   ],
   fr: [
-    { title: "1. Vue Globe",      titleBg: "#ffeeb3", titleFg: "#916404", titleBgDark: "#2c2200", titleFgDark: "#ffd97d", bullets: ["Durées de vol", "Fil d'Ariane"],               img: imgUiCard01 },
-    { title: "2. Vue Pays",       titleBg: "#ffe2ca", titleFg: "#994f00", titleBgDark: "#2c1500", titleFgDark: "#ffb27a", bullets: ["Cartes de ville", "Boussole, zoom"],             img: imgUiCard02 },
-    { title: "3. Vue Ville",      titleBg: "#ffd5d5", titleFg: "#962628", titleBgDark: "#2c0000", titleFgDark: "#ff9090", bullets: ["Points d'intérêt", "Distances"],                 img: imgUiCard03 },
-    { title: "4. Vue Accueil",    titleBg: "#ffe9f9", titleFg: "#8F3575", titleBgDark: "#2c0022", titleFgDark: "#ffaaee", bullets: ["Fiche projet", "Météo en direct"],               img: imgUiCard04 },
-    { title: "5. Vue Projet",     titleBg: "#f4e5ff", titleFg: "#7a38ab", titleBgDark: "#1c0035", titleFgDark: "#cc88ff", bullets: ["Jour/nuit", "Contrôles orbitaux"],               img: imgUiCard05 },
-    { title: "6. Vue Tour",       titleBg: "#d7e2f6", titleFg: "#20458B", titleBgDark: "#001030", titleFgDark: "#88aaee", bullets: ["Sélecteur d'étage", "Filtres"],                  img: imgUiCard06 },
-    { title: "7. Vue Étages",     titleBg: "#e2ecff", titleFg: "#286dad", titleBgDark: "#00182c", titleFgDark: "#88ccff", bullets: ["Sélecteur d'unité", "Distances"],                img: imgUiCard07 },
-    { title: "8. Vue Unité",      titleBg: "#daf5d3", titleFg: "#277a22", titleBgDark: "#001c00", titleFgDark: "#88ee80", bullets: ["Sélecteur de pièce", "Personnalisation"],        img: imgUiCard08 },
-    { title: "9. Vue Intérieurs", titleBg: "#e9f5d3", titleFg: "#5e760f", titleBgDark: "#101c00", titleFgDark: "#b8e050", bullets: ["Sélecteur d'étage", "Demande de rappel"],        img: imgUiCard09 },
+    { title: "1. Vue Globe",      palette: "bg-palette-yellow-bg text-palette-yellow-fg",       bullets: ["Durées de vol", "Fil d'Ariane"],               img: imgUiCard01 },
+    { title: "2. Vue Pays",       palette: "bg-palette-orange-bg text-palette-orange-fg",       bullets: ["Cartes de ville", "Boussole, zoom"],             img: imgUiCard02 },
+    { title: "3. Vue Ville",      palette: "bg-palette-red-bg text-palette-red-fg",             bullets: ["Points d'intérêt", "Distances"],                 img: imgUiCard03 },
+    { title: "4. Vue Accueil",    palette: "bg-palette-pink-bg text-palette-pink-fg",           bullets: ["Fiche projet", "Météo en direct"],               img: imgUiCard04 },
+    { title: "5. Vue Projet",     palette: "bg-palette-purple-bg text-palette-purple-fg",       bullets: ["Jour/nuit", "Contrôles orbitaux"],               img: imgUiCard05 },
+    { title: "6. Vue Tour",       palette: "bg-palette-indigo-bg text-palette-indigo-fg",       bullets: ["Sélecteur d'étage", "Filtres"],                  img: imgUiCard06 },
+    { title: "7. Vue Étages",     palette: "bg-palette-sky-bg text-palette-sky-fg",             bullets: ["Sélecteur d'unité", "Distances"],                img: imgUiCard07 },
+    { title: "8. Vue Unité",      palette: "bg-palette-green-bg text-palette-green-fg",         bullets: ["Sélecteur de pièce", "Personnalisation"],        img: imgUiCard08 },
+    { title: "9. Vue Intérieurs", palette: "bg-palette-pistachio-bg text-palette-pistachio-fg", bullets: ["Sélecteur d'étage", "Demande de rappel"],        img: imgUiCard09 },
   ],
 };
 
@@ -1166,15 +1154,15 @@ const VIEW_SLIDE_TITLES = {
   fr: ['Intro', 'Mappemonde', 'Vue de la ville', 'Page héro', 'Vue du projet', "Vue d'une tour", 'Plan des étages', 'Plan du logement', 'Vue intérieure'],
 };
 const VIEW_SLIDE_COLORS = [
-  { bg: '#d4d4d4', fg: '#1f1f1f', bgDark: '#262626', fgDark: '#adadad' }, // Intro — Z200/Z700 bg, fg/primary light, fg/secondary dark
+  { bg: '#d4d4d4', fg: '#1f1f1f', bgDark: '#262626', fgDark: '#adadad' }, // Intro
   { bg: '#ffeeb3', fg: '#916404', bgDark: '#2c2200', fgDark: '#ffd97d' }, // Globe — palette/yellow
   { bg: '#ffd5d5', fg: '#962628', bgDark: '#2c0000', fgDark: '#ff9090' }, // City — palette/red
   { bg: '#ffe9f9', fg: '#8f3575', bgDark: '#2c0022', fgDark: '#ffaaee' }, // Hero — palette/pink
   { bg: '#f4e5ff', fg: '#7a38ab', bgDark: '#1c0035', fgDark: '#cc88ff' }, // Project — palette/purple
-  { bg: '#d7e2f6', fg: '#20458B', bgDark: '#001030', fgDark: '#88aaee' }, // Tower — palette/blue
+  { bg: '#d7e2f6', fg: '#20458B', bgDark: '#001030', fgDark: '#88aaee' }, // Tower — palette/indigo
   { bg: '#e2ecff', fg: '#286dad', bgDark: '#00182c', fgDark: '#88ccff' }, // Tower floor — palette/sky
   { bg: '#daf5d3', fg: '#277a22', bgDark: '#001c00', fgDark: '#88ee80' }, // Unit floor — palette/green
-  { bg: '#e9f5d3', fg: '#5e760f', bgDark: '#101c00', fgDark: '#b8e050' }, // Interior — palette/lime
+  { bg: '#e9f5d3', fg: '#5e760f', bgDark: '#101c00', fgDark: '#b8e050' }, // Interior — palette/pistachio
 ];
 
 // ── Wireframes carousel ───────────────────────────────────────────────────────
@@ -1290,7 +1278,7 @@ function WireframesCarousel({ lang, isDark }) {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxIndex(activeIndex); }
         }}
-        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
+        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary lg:max-w-[95%] lg:mx-auto"
         style={{ scrollbarWidth: 'none' }}
       >
         {slides.map((slide, i) => (
@@ -1304,7 +1292,7 @@ function WireframesCarousel({ lang, isDark }) {
       </div>
       {lightboxIndex !== null && <Lightbox slides={slides} initialIndex={lightboxIndex} lang={lang} onClose={() => setLightboxIndex(null)} />}
 
-      <div className="flex flex-col gap-2">
+      <div className={`${designTextOffset} flex flex-col gap-2`}>
         <div className="sm:hidden">
           <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
             {titles[activeIndex]}
@@ -1467,7 +1455,7 @@ function HifiCarousel({ lang, isDark }) {
       </div>
       {lightboxIndex !== null && <Lightbox slides={slides} initialIndex={lightboxIndex} lang={lang} onClose={() => setLightboxIndex(null)} />}
 
-      <div className="flex flex-col gap-2">
+      <div className={`${designTextOffset} flex flex-col gap-2`}>
         <div className="sm:hidden">
           <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
             {titles[activeIndex]}
@@ -1528,25 +1516,25 @@ const DESIGN = {
   },
 };
 
-function UiConceptCard({ card, isDark }) {
-  const titleBg = isDark ? card.titleBgDark : card.titleBg;
-  const titleFg = isDark ? card.titleFgDark : card.titleFg;
+function UiConceptCard({ card }) {
   return (
     <div data-squircle className="rounded-radius-3 sm:rounded-radius-4 overflow-hidden">
       <div className="aspect-[8/5] overflow-hidden">
         <img src={card.img} alt={card.title} draggable="false" loading="lazy" className="w-full h-full object-cover" />
       </div>
-      <div className="flex flex-col gap-2 px-3 py-3" style={{ backgroundColor: titleBg }}>
-        <h5 className="font-semibold text-tag-m leading-snug" style={{ color: titleFg }}>
+      <div className={`flex flex-col gap-2 px-3 py-3 ${card.palette}`}>
+        <h5 className="font-semibold text-tag-m leading-snug">
           {card.title}
         </h5>
-        <ul className="flex flex-col gap-1 text-fine-print sm:text-chip-s lg:text-copy-s font-normal leading-snug list-disc list-inside" style={{ color: titleFg }}>
+        <ul className="flex flex-col gap-1 text-fine-print sm:text-chip-s lg:text-copy-s font-normal leading-snug list-disc list-inside">
           {card.bullets.filter(Boolean).map((b, k) => <li key={k}>{b}</li>)}
         </ul>
       </div>
     </div>
   );
 }
+
+const designTextOffset = 'md:max-w-[33rem] lg:max-w-[41.5rem] md:ml-[calc((100vw-42rem)/2)] lg:ml-24';
 
 function DesignContent({ lang, isDark }) {
   const d = DESIGN[lang] ?? DESIGN.en;
@@ -1557,35 +1545,41 @@ function DesignContent({ lang, isDark }) {
                      : { desktop: imgUserflowDesktopLightEn, tablet: imgUserflowTabletLightEn, mobile: imgUserflowMobileLightEn });
   return (
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-      <Tile bgClass="bg-bg-surface">
-        <TileEyebrow>{d.userFlow.eyebrow}</TileEyebrow>
-        <p className={tileBodyText}>{d.userFlow.body}</p>
-        <div className="mt-6 sm:mt-8">
+      <Tile bgClass="bg-bg-surface md:bg-bg-page">
+        <div className={`${designTextOffset} flex flex-col gap-4 sm:gap-5 lg:gap-6`}>
+          <TileEyebrow>{d.userFlow.eyebrow}</TileEyebrow>
+          <p className={tileBodyText}>{d.userFlow.body}</p>
+        </div>
+        <div className="mt-6 sm:mt-8 lg:max-w-[95%] lg:mx-auto">
           <picture>
             <source media="(min-width: 1024px)" srcSet={uf.desktop} />
             <source media="(min-width: 640px)"  srcSet={uf.tablet} />
             <img src={uf.mobile} alt={d.userFlow.eyebrow} className="w-full h-auto rounded-radius-2" />
           </picture>
         </div>
-        <div data-squircle className="mt-6 sm:mt-8 rounded-radius-3 bg-feedback-neutral-bg border border-feedback-neutral-border px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted">
+        <div data-squircle className={`${designTextOffset} mt-6 sm:mt-8 rounded-radius-3 bg-feedback-neutral-bg border border-feedback-neutral-border px-4 py-3 flex gap-2 text-copy-s font-normal leading-relaxed text-fg-muted`}>
           <span aria-hidden="true" className="shrink-0">{d.userFlow.footer.emoji}</span>
           <span>{d.userFlow.footer.content}</span>
         </div>
       </Tile>
 
       <Tile>
-        <TileEyebrow>{d.concepts.eyebrow}</TileEyebrow>
+        <div className={`${designTextOffset} flex flex-col gap-4 sm:gap-5 lg:gap-6`}>
+          <TileEyebrow>{d.concepts.eyebrow}</TileEyebrow>
+        </div>
         {d.concepts.subsections.map((s, i) => (
           <div key={i} className={`flex flex-col gap-4 sm:gap-5 lg:gap-6 ${s.topSpacing ? 'pt-16 sm:pt-20 lg:pt-24' : 'pt-2'}`}>
-            {s.h3 ? <TileEyebrow>{s.h3}</TileEyebrow> : <TileH4>{s.h4}</TileH4>}
-            <TileBody>{s.body}</TileBody>
+            <div className={`${designTextOffset} flex flex-col gap-4 sm:gap-5 lg:gap-6`}>
+              {s.h3 ? <TileEyebrow>{s.h3}</TileEyebrow> : <TileH4>{s.h4}</TileH4>}
+              <TileBody>{s.body}</TileBody>
+            </div>
             {s.after === "conceptsCarousel" && <div className="mt-4 sm:mt-6 lg:mt-8"><ConceptsCarousel lang={lang} isDark={isDark} /></div>}
             {s.after === "wireframesCarousel" && <div className="mt-6 sm:mt-8 lg:mt-10"><WireframesCarousel lang={lang} isDark={isDark} /></div>}
             {s.after === "hifiCarousel" && <HifiCarousel lang={lang} isDark={isDark} />}
             {s.after === "grid9" && (
-              <div className="mt-4 sm:mt-6 lg:mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+              <div className="mt-4 sm:mt-6 lg:mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 lg:max-w-[95%] lg:mx-auto">
                 {(UI_CONCEPTS[lang] ?? UI_CONCEPTS.en).map((card, j) => (
-                  <UiConceptCard key={j} card={card} isDark={isDark} />
+                  <UiConceptCard key={j} card={card} />
                 ))}
               </div>
             )}
@@ -1667,7 +1661,7 @@ const scrollToSection = (id) => {
 // ── Desktop secondary nav ─────────────────────────────────────────────────────
 function SecondaryNav({ sections, activeId, onNavigate }) {
   return (
-    <nav aria-label="Page sections">
+    <nav aria-label="Page sections" className="bg-bg-page rounded-radius-3 p-2">
       <ol className="grid gap-2" style={{ gridTemplateColumns: 'max-content' }}>
         {sections.map((s) => {
           const isActive = activeId === s.id;
@@ -1734,7 +1728,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
 }
 
 // ── Accordion section ─────────────────────────────────────────────────────────
-function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgClass, openHeaderDark = false, contentBgClass = 'bg-bg-surface', contentInnerBgClass }) {
+function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgClass, openHeaderDark = false, contentBgClass = 'bg-bg-surface', contentInnerBgClass, contentClass = '', first = false }) {
   const [open, setOpen] = useState(true);
   const [hidden, setHidden] = useState(false);
   const darkHeader = open && openHeaderDark;
@@ -1784,8 +1778,9 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
         }
         aria-expanded={open}
         aria-controls={`${id}-content`}
-        className="w-full max-w-5xl mx-auto px-6 py-6 sm:py-7 lg:py-8 flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary"
+        className={`w-full max-w-5xl mx-auto px-6 py-6 sm:py-7 lg:py-8 flex items-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary${first ? ' pt-20 sm:pt-28 lg:pt-36' : ''}`}
       >
+        <div className="w-full md:max-w-[39rem] lg:max-w-[49rem] md:mx-auto flex items-center justify-between gap-4">
         <h2 id={headingId} className={`text-h2 font-bold leading-tight ${darkHeader ? 'text-white' : 'text-fg-primary'}`}>
           {title}
         </h2>
@@ -1795,6 +1790,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
             alt=""
             className={`w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 transition-[filter,transform] duration-300 forced-colors:brightness-[unset] forced-colors:invert-0 ${open ? '' : 'rotate-180'} ${darkHeader ? 'brightness-0 invert' : 'brightness-0 dark:invert group-hover:invert dark:group-hover:brightness-0 dark:group-hover:invert-0'}`}
           />
+        </div>
         </div>
       </button>
       </div>
@@ -1808,7 +1804,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
       >
         <div ref={contentRef} className="overflow-hidden min-h-0">
           <div className={contentInnerBgClass ?? contentBgClass}>
-            <div className="max-w-5xl mx-auto px-6 py-8 sm:py-10 lg:py-12">
+            <div className={`max-w-5xl mx-auto px-6 py-8 sm:py-10 lg:py-12 ${contentClass}`}>
               {children ?? (
                 <p className="text-fg-muted text-copy-m">Content coming soon.</p>
               )}
@@ -1887,11 +1883,10 @@ function SalesPlatform({ lang, isDark }) {
 
   // Show/hide navs based on scroll position
   useEffect(() => {
-    const firstEl = document.getElementById(sections[0].id);
-    const lastEl  = document.getElementById(sections[sections.length - 1].id);
-    if (!firstEl || !lastEl) return;
+    const lastEl = document.getElementById(sections[sections.length - 1].id);
+    if (!lastEl) return;
     const update = () => {
-      setScrolledDown(firstEl.getBoundingClientRect().top < 150);
+      setScrolledDown(window.scrollY > window.innerHeight + 40);
       setAtBottom(lastEl.getBoundingClientRect().bottom < 200);
     };
     update();
@@ -1929,21 +1924,26 @@ function SalesPlatform({ lang, isDark }) {
       <Hero lang={lang} />
 
       <main id="main-content" lang={lang} aria-label={lang === 'fr' ? 'Étude de cas, Plateforme web' : 'Sales Platform case study'} tabIndex={-1}>
-        {sections.map(({ id, title }) => (
+        {sections.map(({ id, title }, idx) => (
           <Section
-            key={id} id={id} title={title} lang={lang}
+            key={id} id={id} title={title} lang={lang} first={idx === 0}
             headerBgClass={
               id === 'context'   ? 'bg-bg-surface' :
               id === 'emphasise' ? 'bg-bg-surface' :
               id === 'define'    ? 'bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]' : ''
             }
-            openHeaderBgClass={id === 'impact' ? 'bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]' : undefined}
+            openHeaderBgClass={
+              id === 'context' ? 'bg-bg-page' :
+              id === 'impact'  ? 'bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]' : undefined
+            }
             contentBgClass={
+              id === 'context' ? 'bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]' :
               id === 'define' || id === 'design' ? 'bg-bg-page' :
               id === 'impact' ? 'bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]' :
               'bg-bg-surface'
             }
             contentInnerBgClass={id === 'impact' ? '' : undefined}
+            contentClass={id !== 'design' ? 'md:max-w-2xl lg:max-w-[52rem]' : ''}
           >
             {id === 'context'   && <ContextContent lang={lang} isDark={isDark} />}
             {id === 'emphasise' && <EmphasiseContent lang={lang} />}
@@ -1976,8 +1976,8 @@ function SalesPlatform({ lang, isDark }) {
       {/* ── Desktop secondary nav — fixed, visible once scrolled past hero ── */}
       <div
         inert={scrolledDown && !atBottom ? undefined : true}
-        className={`hidden xl:block fixed z-10 transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        style={{ top: '80px', right: 'max(16px, calc(50% - 32rem - 10rem))' }}
+        className={`hidden lg:block fixed z-10 transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        style={{ top: '80px', left: 'calc(50% + 25.5rem)' }}
       >
         <SecondaryNav sections={sections} activeId={activeId} onNavigate={handleNavigate} />
       </div>
