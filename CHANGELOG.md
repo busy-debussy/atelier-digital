@@ -1,5 +1,26 @@
 # Changelog 
 
+## [2.1.8] — 2026-04-14
+
+### SP carousel hints, colour tokens, image spacing
+
+#### SP — carousel hints
+- "Swipe to browse · Tap to expand" (mobile) and "Scroll to browse · Select to expand" (desktop/tablet) hint captions added below all three carousel tracks
+- French translations: "Balayer pour parcourir · Appuyer pour agrandir" / "Défiler pour parcourir · Cliquer pour agrandir"
+- Captions use `text-caption text-center text-fg-muted` and fade out (`opacity-0 pointer-events-none`) on first interaction
+- First interaction on any carousel (scroll, dot/nav tap, or lightbox open) dismisses hints on all three carousels simultaneously via shared `carouselHinted` state in `SalesPlatform → DesignContent`
+
+#### SP — carousel colour tokens
+- `CONCEPTS_COLORS` and `VIEW_SLIDE_COLORS` converted from hex object arrays (with `bg/fg/bgDark/fgDark`) to CSS custom property strings (`var(--palette-*-bg/fg)`)
+- `isDark` branching removed from all 6 carousel tag render spots — dark mode now handled automatically by `.dark` token overrides
+
+#### SP — carousel image spacing
+- Hifi carousel: outer gap changed to `gap-0 sm:gap-4`; mobile images get `-mb-[18%]`, tablet/desktop `sm:-mb-[8%]` to absorb baked-in image whitespace; `mt-2` added between hint caption and controls
+- Wireframes carousel: `sm:-mb-[6%]` on images to reduce tablet/desktop gap between image and caption
+
+#### SP — secondary nav
+- Background removed (`bg-bg-page`, `rounded-radius-3` dropped); nav container keeps `p-2` only
+
 ## [2.1.7] — 2026-04-14
 
 ### SP layout alignment, secondary nav polish, XR map size

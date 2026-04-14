@@ -846,12 +846,15 @@ const CONCEPTS_TITLES = {
   en: ['Globe view', 'Country view', 'City view', 'Project view', 'Building view'],
   fr: ['Vue Globe', 'Vue Pays', 'Vue Ville', 'Vue Projet', 'Vue Tour'],
 };
+
+const designTextOffset = 'md:max-w-[33rem] lg:max-w-[41.5rem] md:ml-[calc((100vw-42rem)/2)] lg:ml-24';
+
 const CONCEPTS_COLORS = [
-  { bg: '#ffeeb3', fg: '#916404', bgDark: '#2c2200', fgDark: '#ffd97d' }, // palette/yellow
-  { bg: '#ffe2ca', fg: '#994f00', bgDark: '#2c1500', fgDark: '#ffb27a' }, // palette/orange
-  { bg: '#ffd5d5', fg: '#962628', bgDark: '#2c0000', fgDark: '#ff9090' }, // palette/red
-  { bg: '#f4e5ff', fg: '#7a38ab', bgDark: '#1c0035', fgDark: '#cc88ff' }, // palette/purple
-  { bg: '#d7e2f6', fg: '#254c96', bgDark: '#001030', fgDark: '#88aaee' }, // palette/indigo
+  { bg: 'var(--palette-yellow-bg)',  fg: 'var(--palette-yellow-fg)'  },
+  { bg: 'var(--palette-orange-bg)',  fg: 'var(--palette-orange-fg)'  },
+  { bg: 'var(--palette-red-bg)',     fg: 'var(--palette-red-fg)'     },
+  { bg: 'var(--palette-purple-bg)',  fg: 'var(--palette-purple-fg)'  },
+  { bg: 'var(--palette-indigo-bg)',  fg: 'var(--palette-indigo-fg)'  },
 ];
 
 const CONCEPTS_SLIDES = {
@@ -1014,7 +1017,7 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
   );
 }
 
-function ConceptsCarousel({ lang, isDark }) {
+function ConceptsCarousel({ lang, isDark, showHint = true, onInteract }) {
   const slides = CONCEPTS_SLIDES[lang] ?? CONCEPTS_SLIDES.en;
   const titles = CONCEPTS_TITLES[lang] ?? CONCEPTS_TITLES.en;
   const trackRef = useRef(null);
@@ -1022,8 +1025,12 @@ function ConceptsCarousel({ lang, isDark }) {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const isProgrammaticRef = useRef(false);
   const scrollTimerRef = useRef(null);
+  const hasInteractedRef = useRef(false);
+
+  const triggerInteract = () => { if (!hasInteractedRef.current) { hasInteractedRef.current = true; onInteract?.(); } };
 
   const scrollToSlide = (index) => {
+    triggerInteract();
     const track = trackRef.current;
     if (!track) return;
     const slide = track.children[index];
@@ -1039,6 +1046,7 @@ function ConceptsCarousel({ lang, isDark }) {
 
   const handleScroll = () => {
     if (isProgrammaticRef.current) return;
+    triggerInteract();
     const track = trackRef.current;
     if (!track) return;
     const items = Array.from(track.children);
@@ -1072,32 +1080,37 @@ function ConceptsCarousel({ lang, isDark }) {
         onKeyDown={(e) => {
           if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollToSlide(Math.max(0, activeIndex - 1)); }
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxIndex(activeIndex); }
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerInteract(); setLightboxIndex(activeIndex); }
         }}
         className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary lg:max-w-[95%] lg:mx-auto"
         style={{ scrollbarWidth: 'none' }}
       >
         {slides.map((slide, i) => (
-          <button key={i} tabIndex={-1} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Concept CGI ${i + 1}` : `Expand: CGI concept ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
+          <button key={i} tabIndex={-1} onClick={() => { triggerInteract(); setLightboxIndex(i); }} aria-label={lang === 'fr' ? `Agrandir : Concept CGI ${i + 1}` : `Expand: CGI concept ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
             <picture>
               <source media="(min-width: 1024px)" srcSet={slide.desktop} />
               <source media="(min-width: 640px)"  srcSet={slide.tablet} />
-              <img src={slide.mobile} alt={lang === 'fr' ? `Concept CGI, diapositive ${i + 1} sur ${slides.length}` : `CGI concept, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto" />
+              <img src={slide.mobile} alt={lang === 'fr' ? `Concept CGI, diapositive ${i + 1} sur ${slides.length}` : `CGI concept, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto " />
             </picture>
           </button>
         ))}
       </div>
       {lightboxIndex !== null && <Lightbox slides={slides} initialIndex={lightboxIndex} lang={lang} onClose={() => setLightboxIndex(null)} />}
 
+      <p aria-hidden={!showHint} className={`${designTextOffset} text-center text-caption text-fg-muted transition-opacity duration-500 ${showHint ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <span className="sm:hidden">{lang === 'fr' ? 'Balayer pour parcourir · Appuyer pour agrandir' : 'Swipe to browse · Tap to expand'}</span>
+        <span className="hidden sm:inline">{lang === 'fr' ? 'Défiler pour parcourir · Cliquer pour agrandir' : 'Scroll to browse · Select to expand'}</span>
+      </p>
+
       <div className={`${designTextOffset} flex flex-col gap-2`}>
         <div className="sm:hidden">
-          <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: CONCEPTS_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+          <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex].bg, color: CONCEPTS_COLORS[activeIndex].fg }}>
             {titles[activeIndex]}
           </span>
         </div>
         <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[1fr_auto_1fr] items-center">
           <div className="hidden sm:block">
-            <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: CONCEPTS_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+            <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: CONCEPTS_COLORS[activeIndex].bg, color: CONCEPTS_COLORS[activeIndex].fg }}>
               {titles[activeIndex]}
             </span>
           </div>
@@ -1154,15 +1167,15 @@ const VIEW_SLIDE_TITLES = {
   fr: ['Intro', 'Mappemonde', 'Vue de la ville', 'Page héro', 'Vue du projet', "Vue d'une tour", 'Plan des étages', 'Plan du logement', 'Vue intérieure'],
 };
 const VIEW_SLIDE_COLORS = [
-  { bg: '#d4d4d4', fg: '#1f1f1f', bgDark: '#262626', fgDark: '#adadad' }, // Intro
-  { bg: '#ffeeb3', fg: '#916404', bgDark: '#2c2200', fgDark: '#ffd97d' }, // Globe — palette/yellow
-  { bg: '#ffd5d5', fg: '#962628', bgDark: '#2c0000', fgDark: '#ff9090' }, // City — palette/red
-  { bg: '#ffe9f9', fg: '#8f3575', bgDark: '#2c0022', fgDark: '#ffaaee' }, // Hero — palette/pink
-  { bg: '#f4e5ff', fg: '#7a38ab', bgDark: '#1c0035', fgDark: '#cc88ff' }, // Project — palette/purple
-  { bg: '#d7e2f6', fg: '#20458B', bgDark: '#001030', fgDark: '#88aaee' }, // Tower — palette/indigo
-  { bg: '#e2ecff', fg: '#286dad', bgDark: '#00182c', fgDark: '#88ccff' }, // Tower floor — palette/sky
-  { bg: '#daf5d3', fg: '#277a22', bgDark: '#001c00', fgDark: '#88ee80' }, // Unit floor — palette/green
-  { bg: '#e9f5d3', fg: '#5e760f', bgDark: '#101c00', fgDark: '#b8e050' }, // Interior — palette/pistachio
+  { bg: 'var(--palette-neutral-bg)',    fg: 'var(--palette-neutral-fg)'    }, // Intro
+  { bg: 'var(--palette-yellow-bg)',     fg: 'var(--palette-yellow-fg)'     }, // Globe
+  { bg: 'var(--palette-red-bg)',        fg: 'var(--palette-red-fg)'        }, // City
+  { bg: 'var(--palette-pink-bg)',       fg: 'var(--palette-pink-fg)'       }, // Hero
+  { bg: 'var(--palette-purple-bg)',     fg: 'var(--palette-purple-fg)'     }, // Project
+  { bg: 'var(--palette-indigo-bg)',     fg: 'var(--palette-indigo-fg)'     }, // Tower
+  { bg: 'var(--palette-sky-bg)',        fg: 'var(--palette-sky-fg)'        }, // Tower floor
+  { bg: 'var(--palette-green-bg)',      fg: 'var(--palette-green-fg)'      }, // Unit floor
+  { bg: 'var(--palette-pistachio-bg)',  fg: 'var(--palette-pistachio-fg)'  }, // Interior
 ];
 
 // ── Wireframes carousel ───────────────────────────────────────────────────────
@@ -1217,7 +1230,7 @@ const WIREFRAMES_SLIDES = {
   },
 };
 
-function WireframesCarousel({ lang, isDark }) {
+function WireframesCarousel({ lang, isDark, showHint = true, onInteract }) {
   const slides = (WIREFRAMES_SLIDES[lang] ?? WIREFRAMES_SLIDES.en)[isDark ? 'dark' : 'light'];
   const titles = VIEW_SLIDE_TITLES[lang] ?? VIEW_SLIDE_TITLES.en;
   const trackRef = useRef(null);
@@ -1226,8 +1239,12 @@ function WireframesCarousel({ lang, isDark }) {
 
   const isProgrammaticRef = useRef(false);
   const scrollTimerRef = useRef(null);
+  const hasInteractedRef = useRef(false);
+
+  const triggerInteract = () => { if (!hasInteractedRef.current) { hasInteractedRef.current = true; onInteract?.(); } };
 
   const scrollToSlide = (index) => {
+    triggerInteract();
     const track = trackRef.current;
     if (!track) return;
     const slide = track.children[index];
@@ -1243,6 +1260,7 @@ function WireframesCarousel({ lang, isDark }) {
 
   const handleScroll = () => {
     if (isProgrammaticRef.current) return;
+    triggerInteract();
     const track = trackRef.current;
     if (!track) return;
     const items = Array.from(track.children);
@@ -1276,31 +1294,36 @@ function WireframesCarousel({ lang, isDark }) {
         onKeyDown={(e) => {
           if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollToSlide(Math.max(0, activeIndex - 1)); }
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxIndex(activeIndex); }
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerInteract(); setLightboxIndex(activeIndex); }
         }}
         className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary lg:max-w-[95%] lg:mx-auto"
         style={{ scrollbarWidth: 'none' }}
       >
         {slides.map((slide, i) => (
-          <button key={i} tabIndex={-1} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Maquette filaire ${i + 1}` : `Expand: wireframe ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
+          <button key={i} tabIndex={-1} onClick={() => { triggerInteract(); setLightboxIndex(i); }} aria-label={lang === 'fr' ? `Agrandir : Maquette filaire ${i + 1}` : `Expand: wireframe ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
             <picture>
               <source media="(min-width: 640px)" srcSet={slide.desktop} />
-              <img src={slide.mobile} alt={lang === 'fr' ? `Maquette filaire, diapositive ${i + 1} sur ${slides.length}` : `Wireframe mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto" />
+              <img src={slide.mobile} alt={lang === 'fr' ? `Maquette filaire, diapositive ${i + 1} sur ${slides.length}` : `Wireframe mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto sm:-mb-[6%]" />
             </picture>
           </button>
         ))}
       </div>
       {lightboxIndex !== null && <Lightbox slides={slides} initialIndex={lightboxIndex} lang={lang} onClose={() => setLightboxIndex(null)} />}
 
+      <p aria-hidden={!showHint} className={`${designTextOffset} text-center text-caption text-fg-muted transition-opacity duration-500 ${showHint ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <span className="sm:hidden">{lang === 'fr' ? 'Balayer pour parcourir · Appuyer pour agrandir' : 'Swipe to browse · Tap to expand'}</span>
+        <span className="hidden sm:inline">{lang === 'fr' ? 'Défiler pour parcourir · Cliquer pour agrandir' : 'Scroll to browse · Select to expand'}</span>
+      </p>
+
       <div className={`${designTextOffset} flex flex-col gap-2`}>
         <div className="sm:hidden">
-          <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+          <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex].bg, color: VIEW_SLIDE_COLORS[activeIndex].fg }}>
             {titles[activeIndex]}
           </span>
         </div>
         <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[1fr_auto_1fr] items-center">
           <div className="hidden sm:block">
-            <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+            <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex].bg, color: VIEW_SLIDE_COLORS[activeIndex].fg }}>
               {titles[activeIndex]}
             </span>
           </div>
@@ -1377,7 +1400,7 @@ const HIFI_SLIDES = {
   },
 };
 
-function HifiCarousel({ lang, isDark }) {
+function HifiCarousel({ lang, isDark, showHint = true, onInteract }) {
   const slides = (HIFI_SLIDES[lang] ?? HIFI_SLIDES.en)[isDark ? 'dark' : 'light'];
   const titles = VIEW_SLIDE_TITLES[lang] ?? VIEW_SLIDE_TITLES.en;
   const trackRef = useRef(null);
@@ -1386,8 +1409,12 @@ function HifiCarousel({ lang, isDark }) {
 
   const isProgrammaticRef = useRef(false);
   const scrollTimerRef = useRef(null);
+  const hasInteractedRef = useRef(false);
+
+  const triggerInteract = () => { if (!hasInteractedRef.current) { hasInteractedRef.current = true; onInteract?.(); } };
 
   const scrollToSlide = (index) => {
+    triggerInteract();
     const track = trackRef.current;
     if (!track) return;
     const slide = track.children[index];
@@ -1403,6 +1430,7 @@ function HifiCarousel({ lang, isDark }) {
 
   const handleScroll = () => {
     if (isProgrammaticRef.current) return;
+    triggerInteract();
     const track = trackRef.current;
     if (!track) return;
     const items = Array.from(track.children);
@@ -1421,7 +1449,7 @@ function HifiCarousel({ lang, isDark }) {
       role="region"
       aria-label={lang === 'fr' ? 'Carrousel des maquettes haute-fidélité' : 'High-fidelity mock-ups carousel'}
       aria-roledescription="carousel"
-      className="flex flex-col gap-3 sm:gap-4"
+      className="flex flex-col gap-0 sm:gap-4"
     >
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {lang === 'fr' ? `Diapositive ${activeIndex + 1} sur ${slides.length}` : `Slide ${activeIndex + 1} of ${slides.length}`}
@@ -1436,18 +1464,18 @@ function HifiCarousel({ lang, isDark }) {
           onKeyDown={(e) => {
             if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollToSlide(Math.max(0, activeIndex - 1)); }
             if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxIndex(activeIndex); }
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerInteract(); setLightboxIndex(activeIndex); }
           }}
           aria-label={lang === 'fr' ? `Carrousel des maquettes haute-fidélité — utilisez les flèches pour naviguer, Entrée pour agrandir` : `High-fidelity mock-ups carousel — use arrow keys to navigate, Enter to expand`}
           className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
           style={{ scrollbarWidth: 'none' }}
         >
           {slides.map((slide, i) => (
-            <button key={i} tabIndex={-1} onClick={() => setLightboxIndex(i)} aria-label={lang === 'fr' ? `Agrandir : Maquette haute-fidélité ${i + 1}` : `Expand: high-fidelity mock-up ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
+            <button key={i} tabIndex={-1} onClick={() => { triggerInteract(); setLightboxIndex(i); }} aria-label={lang === 'fr' ? `Agrandir : Maquette haute-fidélité ${i + 1}` : `Expand: high-fidelity mock-up ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
               <picture>
                 <source media="(min-width: 1024px)" srcSet={slide.desktop} />
                 <source media="(min-width: 640px)" srcSet={slide.tablet} />
-                <img src={slide.mobile} alt={lang === 'fr' ? `Maquette haute-fidélité, diapositive ${i + 1} sur ${slides.length}` : `High-fidelity mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto" />
+                <img src={slide.mobile} alt={lang === 'fr' ? `Maquette haute-fidélité, diapositive ${i + 1} sur ${slides.length}` : `High-fidelity mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto sm:-mb-[8%] -mb-[18%]" />
               </picture>
             </button>
           ))}
@@ -1455,15 +1483,20 @@ function HifiCarousel({ lang, isDark }) {
       </div>
       {lightboxIndex !== null && <Lightbox slides={slides} initialIndex={lightboxIndex} lang={lang} onClose={() => setLightboxIndex(null)} />}
 
-      <div className={`${designTextOffset} flex flex-col gap-2`}>
+      <p aria-hidden={!showHint} className={`${designTextOffset} text-center text-caption text-fg-muted transition-opacity duration-500 ${showHint ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <span className="sm:hidden">{lang === 'fr' ? 'Balayer pour parcourir · Appuyer pour agrandir' : 'Swipe to browse · Tap to expand'}</span>
+        <span className="hidden sm:inline">{lang === 'fr' ? 'Défiler pour parcourir · Cliquer pour agrandir' : 'Scroll to browse · Select to expand'}</span>
+      </p>
+
+      <div className={`mt-2 ${designTextOffset} flex flex-col gap-2`}>
         <div className="sm:hidden">
-          <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+          <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex].bg, color: VIEW_SLIDE_COLORS[activeIndex].fg }}>
             {titles[activeIndex]}
           </span>
         </div>
         <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[1fr_auto_1fr] items-center">
           <div className="hidden sm:block">
-            <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'bgDark' : 'bg'], color: VIEW_SLIDE_COLORS[activeIndex][isDark ? 'fgDark' : 'fg'] }}>
+            <span data-squircle className="inline-block text-tag-m font-semibold leading-snug px-3 py-2 rounded-radius-3 whitespace-nowrap" style={{ backgroundColor: VIEW_SLIDE_COLORS[activeIndex].bg, color: VIEW_SLIDE_COLORS[activeIndex].fg }}>
               {titles[activeIndex]}
             </span>
           </div>
@@ -1534,9 +1567,8 @@ function UiConceptCard({ card }) {
   );
 }
 
-const designTextOffset = 'md:max-w-[33rem] lg:max-w-[41.5rem] md:ml-[calc((100vw-42rem)/2)] lg:ml-24';
 
-function DesignContent({ lang, isDark }) {
+function DesignContent({ lang, isDark, carouselHinted, onCarouselInteract }) {
   const d = DESIGN[lang] ?? DESIGN.en;
   const uf = isDark
     ? (lang === 'fr' ? { desktop: imgUserflowDesktopDarkFr, tablet: imgUserflowTabletDarkFr, mobile: imgUserflowMobileDarkFr }
@@ -1573,9 +1605,9 @@ function DesignContent({ lang, isDark }) {
               {s.h3 ? <TileEyebrow>{s.h3}</TileEyebrow> : <TileH4>{s.h4}</TileH4>}
               <TileBody>{s.body}</TileBody>
             </div>
-            {s.after === "conceptsCarousel" && <div className="mt-4 sm:mt-6 lg:mt-8"><ConceptsCarousel lang={lang} isDark={isDark} /></div>}
-            {s.after === "wireframesCarousel" && <div className="mt-6 sm:mt-8 lg:mt-10"><WireframesCarousel lang={lang} isDark={isDark} /></div>}
-            {s.after === "hifiCarousel" && <HifiCarousel lang={lang} isDark={isDark} />}
+            {s.after === "conceptsCarousel" && <div className="mt-4 sm:mt-6 lg:mt-8"><ConceptsCarousel lang={lang} isDark={isDark} showHint={!carouselHinted} onInteract={onCarouselInteract} /></div>}
+            {s.after === "wireframesCarousel" && <div className="mt-6 sm:mt-8 lg:mt-10"><WireframesCarousel lang={lang} isDark={isDark} showHint={!carouselHinted} onInteract={onCarouselInteract} /></div>}
+            {s.after === "hifiCarousel" && <HifiCarousel lang={lang} isDark={isDark} showHint={!carouselHinted} onInteract={onCarouselInteract} />}
             {s.after === "grid9" && (
               <div className="mt-4 sm:mt-6 lg:mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 lg:max-w-[95%] lg:mx-auto">
                 {(UI_CONCEPTS[lang] ?? UI_CONCEPTS.en).map((card, j) => (
@@ -1661,7 +1693,7 @@ const scrollToSection = (id) => {
 // ── Desktop secondary nav ─────────────────────────────────────────────────────
 function SecondaryNav({ sections, activeId, onNavigate }) {
   return (
-    <nav aria-label="Page sections" className="bg-bg-page rounded-radius-3 p-2">
+    <nav aria-label="Page sections" className="p-2">
       <ol className="grid gap-2" style={{ gridTemplateColumns: 'max-content' }}>
         {sections.map((s) => {
           const isActive = activeId === s.id;
@@ -1837,10 +1869,11 @@ const SECTIONS = {
 
 function SalesPlatform({ lang, isDark }) {
   const sections = SECTIONS[lang] ?? SECTIONS.en;
-  const [activeId, setActiveId]         = useState('');
-  const [scrolledDown, setScrolledDown] = useState(false);
-  const [atBottom, setAtBottom]         = useState(false);
-  const [scrollingDown, setScrollingDown] = useState(false);
+  const [activeId, setActiveId]               = useState('');
+  const [scrolledDown, setScrolledDown]       = useState(false);
+  const [atBottom, setAtBottom]               = useState(false);
+  const [scrollingDown, setScrollingDown]     = useState(false);
+  const [carouselHinted, setCarouselHinted]   = useState(false);
   const scrollTarget  = useRef(null);
   const navScrollRef  = useRef(false);
 
@@ -1948,7 +1981,7 @@ function SalesPlatform({ lang, isDark }) {
             {id === 'context'   && <ContextContent lang={lang} isDark={isDark} />}
             {id === 'emphasise' && <EmphasiseContent lang={lang} />}
             {id === 'define'    && <DefineContent lang={lang} isDark={isDark} />}
-            {id === 'design'    && <DesignContent lang={lang} isDark={isDark} />}
+            {id === 'design'    && <DesignContent lang={lang} isDark={isDark} carouselHinted={carouselHinted} onCarouselInteract={() => setCarouselHinted(true)} />}
             {id === 'impact'    && <ImpactContent lang={lang} />}
           </Section>
         ))}
