@@ -110,7 +110,7 @@ function Footer({ lang }) {
       data-squircle
       aria-label={t.manageCookies}
       onClick={() => window.dispatchEvent(new Event('show-cookie-banner'))}
-      className={`px-2 py-1 rounded-radius-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus hover:text-fg-primary hover:bg-nav-hover-bg cursor-pointer whitespace-nowrap`}
+      className={`px-2 py-1 rounded-radius-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus text-fg-muted hover:text-fg-primary hover:bg-nav-hover-bg cursor-pointer whitespace-nowrap`}
     >{t.manageCookies}</button>
   );
 
@@ -123,11 +123,7 @@ function Footer({ lang }) {
         to={to}
         tabIndex={0}
         onClick={() => { if (isActive) window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-        className={`px-2 py-1 rounded-radius-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
-          isActive
-            ? 'bg-nav-active-bg-solid text-fg-inverse font-semibold'
-            : 'hover:text-fg-primary hover:bg-nav-hover-bg'
-        }`}
+        className="px-2 py-1 rounded-radius-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus text-fg-muted hover:text-fg-primary hover:bg-nav-hover-bg"
       >{label}</Link>
     );
   };
@@ -204,7 +200,7 @@ function Footer({ lang }) {
             <ul className="flex items-center gap-1" aria-label="Legal">
               <li className="flex items-center gap-1">{legalLink('/privacy', t.privacy)}<div aria-hidden="true" className="w-px h-3 bg-border-subtle shrink-0" /></li>
               <li className="flex items-center gap-1">{manageCookiesBtn()}<div aria-hidden="true" className="w-px h-3 bg-border-subtle shrink-0" /></li>
-              <li>{legalLink('/terms', t.terms)}</li>
+              <li className="flex items-center">{legalLink('/terms', t.terms)}</li>
             </ul>
             <ul className="flex justify-center gap-6" aria-label="Copyright">
               <li><CopyrightTag year={year} tooltip={t.techTooltip} /></li>
@@ -216,7 +212,7 @@ function Footer({ lang }) {
             <ul className="flex items-center gap-1 justify-center" aria-label="Legal">
               <li className="flex items-center gap-1">{legalLink('/privacy', t.privacy)}<div aria-hidden="true" className="w-px h-3 bg-border-subtle shrink-0" /></li>
               <li className="flex items-center gap-1">{manageCookiesBtn()}<div aria-hidden="true" className="w-px h-3 bg-border-subtle shrink-0" /></li>
-              <li>{legalLink('/terms', t.terms)}</li>
+              <li className="flex items-center">{legalLink('/terms', t.terms)}</li>
             </ul>
             <span className="text-right">{t.thanks}</span>
           </div>

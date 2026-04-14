@@ -1,5 +1,30 @@
 # Changelog 
 
+## [2.1.6] — 2026-04-14
+
+### Resume two-column layout, contact modal icon, footer & map polish
+
+#### Resume — summary section
+- Two-column layout (photo + buttons left, bio right) now triggers at `md` (768px) instead of `lg` — tablets get the full desktop layout earlier
+- Removed intermediate tablet hack (`sm:flex-row` juggling); left column is now a clean `flex-col` at all sizes below `md`
+- Photo size steps simplified: `w-32 h-32` → `md:w-48 md:h-48`; border radius `radius-14` → `md:radius-18`
+- Button background visible only on mobile; transparent from `md` upward
+
+#### Nav — "Let's talk" modal
+- Added filled envelope SVG icon before the email address value, matching the LinkedIn icon treatment
+- Email row now visually consistent with LinkedIn (icon + value) and Location (flag + value)
+
+#### Nav — case studies dropdown
+- Press effect (`data-spring-desktop`) added to Sales Platform and Extended Reality links on desktop/tablet
+
+#### Footer
+- Safari bug fix: "Terms" `<li>` given `flex items-center` to override Safari's `list-item` display inside flex containers — was invisible in Safari
+- Active state removed from `legalLink` (no `bg-nav-active-bg-solid` on `<a>` elements)
+- `text-fg-muted` added to `legalLink` and `manageCookiesBtn` for consistent resting colour
+
+#### WorldMapDots — legend
+- Legend pill text weight: `font-normal lg:font-medium` — was `font-medium` at all sizes, appeared too heavy on mobile/tablet
+
 ## [2.1.5] — 2026-04-14
 
 ### Hero chat limit, send button polish, cookie notice, CV CTA

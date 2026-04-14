@@ -496,28 +496,31 @@ const bodyMuted = 'text-copy-m font-normal leading-loose text-fg-secondary';
 // ── Summary ────────────────────────────────────────────────────────────────────
 
 function SummarySection({ t, lang }) {
-  const btnBase = 'flex items-center justify-center gap-2 px-3 py-2 rounded-radius-4 transition-colors bg-bg-surface sm:bg-transparent sm:dark:bg-transparent hover:bg-nav-hover-bg';
+  const btnBase = 'flex items-center justify-center gap-2 px-3 py-2 rounded-radius-4 transition-colors bg-bg-surface md:bg-transparent md:dark:bg-transparent hover:bg-nav-hover-bg';
   const btnSquircle = { 'data-squircle': '' };
   const btnLabel = 'font-medium text-btn-m leading-[1.2] text-fg-primary whitespace-nowrap';
 
   return (
-    <section id="summary" className={`${divider} scroll-mt-24 pt-32 pb-16 sm:pt-32 sm:pb-16 lg:pt-48 lg:pb-16`}>
-      <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+    <section id="summary" className={`${divider} scroll-mt-24 pt-32 pb-16 md:pt-48 md:pb-16`}>
+      <div className="flex flex-col md:flex-row gap-12 md:gap-20 items-start">
 
         {/* ── Left column: photo + buttons ───────────────────────────── */}
-        <div className="flex flex-col items-center gap-6 shrink-0 w-full lg:w-auto">
-          <img
-            src={imgPortrait}
-            alt="Portrait of David V."
-            data-squircle
-            className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-radius-14 sm:rounded-radius-16 lg:rounded-radius-18 object-cover"
-          />
+        <div className="flex flex-col items-center gap-6 shrink-0 w-full md:w-auto">
 
-          <h1 className="lg:hidden text-h1 font-bold text-center text-fg-primary">
-            David V.
-          </h1>
+          {/* Photo + name */}
+          <div className="flex flex-col items-center gap-4">
+            <img
+              src={imgPortrait}
+              alt="Portrait of David V."
+              data-squircle
+              className="w-32 h-32 md:w-48 md:h-48 rounded-radius-14 md:rounded-radius-18 object-cover"
+            />
+            <h1 className="md:hidden text-h1 font-bold text-center text-fg-primary">
+              David V.
+            </h1>
+          </div>
 
-          <ul className="flex flex-col gap-4 sm:gap-3 w-56" aria-label="Contact and download">
+          <ul className="flex flex-col gap-4 w-56" aria-label="Contact and download">
             <li>
               <a data-spring {...btnSquircle} tabIndex={0} href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(lang === 'fr' ? 'Prise de contact' : 'Getting in touch')}`} className={`${btnBase} w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus`}>
                 <img src={imgSend} alt="" width={24} height={24} className="shrink-0 dark:invert" />
@@ -530,7 +533,7 @@ function SummarySection({ t, lang }) {
                 <span className={btnLabel}>{t.connect}</span>
               </button>
             </li>
-            <li className="sm:mt-3">
+            <li>
               <a
                 href="https://drive.google.com/uc?export=download&id=1-xtBf6L3nXJ5b0sQ1vfO8HSO_hN1jBU6"
                 target="_blank"
@@ -547,8 +550,8 @@ function SummarySection({ t, lang }) {
           </ul>
         </div>
 
-        <div className="flex flex-col gap-8 w-full px-4 sm:px-16 lg:px-0">
-          <h1 className="hidden lg:block text-h1 font-bold leading-tight text-fg-primary">
+        <div className="flex flex-col gap-8 w-full px-4 md:px-0">
+          <h1 className="hidden md:block text-h1 font-bold leading-tight text-fg-primary">
             David V.
           </h1>
 

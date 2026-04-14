@@ -261,6 +261,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
           <li key={key} role="none" className={locked ? 'opacity-[0.32]' : ''}>
             {to ? (
               <Link
+                data-spring-desktop
                 to={to}
                 onClick={onClose}
                 role="menuitem"
@@ -499,7 +500,13 @@ function ContactModal({ lang, onClose }) {
               <div {...rowInnerProps} className={`${rowInner} flex items-center justify-between gap-3`}>
                 <div className="min-w-0">
                   <h2 className={lbl}>{lang === 'fr' ? 'E-mail' : 'Email'}</h2>
-                  <span className={`${val} obf-email block`} data-u={u} data-d={d} aria-hidden="true" />
+                  <p className={`${val} flex items-center gap-2`}>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" className="shrink-0">
+                      <path d="M1 4.5A1.5 1.5 0 0 1 2.5 3h11A1.5 1.5 0 0 1 15 4.5v.97l-7 4.375L1 5.47V4.5Z"/>
+                      <path d="M1 6.72v4.78A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.72l-6.647 4.154a.75.75 0 0 1-.806 0L1 6.72Z"/>
+                    </svg>
+                    <span className="obf-email" data-u={u} data-d={d} aria-hidden="true" />
+                  </p>
                   <span className="sr-only">d@AtelierDigital.co.uk</span>
                 </div>
                 <button

@@ -466,7 +466,7 @@ export default function WorldMapDots({
                         onClick={(e) => e.stopPropagation()}
                       >
                         <div style={{ width: 8, height: 8, borderRadius: '50%', background: dot.color, flexShrink: 0 }} aria-hidden="true" />
-                        <span className={`text-label-s font-medium leading-[1.2] whitespace-nowrap ${isSelected ? 'text-fg-primary-inverse' : 'text-fg-muted'}`}>{lt.labels[dot.label] ?? dot.label}</span>
+                        <span className={`text-label-s font-normal lg:font-medium leading-[1.2] whitespace-nowrap ${isSelected ? 'text-fg-primary-inverse' : 'text-fg-muted'}`}>{lt.labels[dot.label] ?? dot.label}</span>
                       </button>
                     );
                   })}
