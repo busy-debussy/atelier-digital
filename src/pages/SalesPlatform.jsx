@@ -489,8 +489,8 @@ const CONTEXT_BODIES = {
     },
   },
   team: {
-    en: <>Fully remote, with the flexibility to work from anywhere, distributed globally 🌏. The <strong>design team</strong> collaborated closely with <strong>developers</strong> and the <strong>studio team</strong>, ensuring <strong>consistent communication</strong> and alignment across all launches.</>,
-    fr: <>100% télétravail, avec la flexibilité de travailler de n'importe où, dans le monde 🌏. L'<strong>équipe design</strong> a collaboré étroitement avec les <strong>développeurs</strong> et l'<strong>équipe studio</strong>, garantissant une <strong>communication cohérente</strong> et un alignement tout au long des lancements.</>,
+    en: <>Fully remote, with the flexibility to work from anywhere, and distributed globally 🌏</>,
+    fr: <>100% télétravail, avec la flexibilité de travailler de n'importe où, dans le monde 🌏</>,
   },
 };
 
@@ -632,21 +632,6 @@ function ContextContent({ lang, isDark }) {
       <Tile><TileEyebrow>{eyebrows[3]}</TileEyebrow><TileBody>{CONTEXT_BODIES.stakeholders[l]}</TileBody></Tile>
 
       <Tile>
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-8">
-          <TileEyebrow>{eyebrows[4]}</TileEyebrow>
-          <div className="flex items-start gap-8 sm:gap-12 shrink-0 my-4 sm:my-0 sm:-mt-2">
-            {CONTEXT_BODIES.myRole[l].stats.map((s, i) => (
-              <div key={i} className="flex flex-col items-start sm:items-end gap-1">
-                <span className="text-h3 font-semibold leading-snug text-fg-primary">{s.value}</span>
-                <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted text-left sm:text-right">{s.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <TileBody>{CONTEXT_BODIES.myRole[l].body}</TileBody>
-      </Tile>
-
-      <Tile>
         <TileEyebrow>{eyebrows[6]}</TileEyebrow>
         <TileBody>{CONTEXT_BODIES.team[l]}</TileBody>
         <div className="mt-6 max-w-2xl mx-auto w-full">
@@ -661,6 +646,21 @@ function ContextContent({ lang, isDark }) {
             tooltipOffsets={SP_TOOLTIP_OFFSETS}
           />
         </div>
+      </Tile>
+
+      <Tile>
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-8">
+          <TileEyebrow>{eyebrows[4]}</TileEyebrow>
+          <div className="flex items-start gap-8 sm:gap-12 shrink-0 my-4 sm:my-0 sm:-mt-2">
+            {CONTEXT_BODIES.myRole[l].stats.map((s, i) => (
+              <div key={i} className="flex flex-col items-start sm:items-end gap-1">
+                <span className="text-h3 font-semibold leading-snug text-fg-primary">{s.value}</span>
+                <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted text-left sm:text-right">{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <TileBody>{CONTEXT_BODIES.myRole[l].body}</TileBody>
       </Tile>
     </div>
   );

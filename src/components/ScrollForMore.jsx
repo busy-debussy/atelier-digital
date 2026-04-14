@@ -47,7 +47,7 @@ export default function ScrollForMore({ lang, scrollTarget }) {
             if (scrollTarget && mobile) {
               document.getElementById(scrollTarget)?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'center' });
             } else {
-              window.scrollBy({ top: window.innerHeight * 0.9, behavior: reduced ? 'instant' : 'smooth' });
+              window.scrollBy({ top: window.innerHeight * (mobile ? 1.0 : 0.9), behavior: reduced ? 'instant' : 'smooth' });
             }
           }}
           aria-label={label}

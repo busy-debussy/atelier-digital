@@ -91,7 +91,7 @@ const T = {
     ],
     bio: [
       <>Design is how it works. A background in <B>mechanical engineering</B>, <B>holography</B>, <B>spatial computing</B> and <B>digital twins</B> brings technical depth to every digital experience I craft.</>,
-      <><B>Driving innovation through design</B>, I am proficient at <B>prototyping</B> (digital twins, extended reality, web and mobile) while <B>collaborating</B> cross-functionally and <B>leading</B> a design team.</>,
+      <><B>Driving innovation through design</B>, I am proficient at <B>prototyping</B> (in tools like Figma and in code) while <B>collaborating</B> cross-functionally and <B>influencing</B> a design team.</>,
       <>Attentive, empathetic, curious and agile, I am a <B>first-principle</B> thinker with a <B>human-centred</B> approach to problem-solving.</>,
       <>Thriving on new challenges. Dedicated to <B>building better</B>.</>,
     ],
@@ -1252,7 +1252,7 @@ function CertificationCard({ card }) {
   const [flipped, setFlipped] = useState(false);
 
   const nameEl = card.nameParts ? (
-    <>{card.nameParts[0]}<span className="hidden lg:block" aria-hidden="true" />{card.nameParts[1]}</>
+    <>{card.nameParts[0]}<span className="hidden lg:block" aria-hidden="true" />{' '}{card.nameParts[1]}</>
   ) : card.name;
 
   const isSvg = card.svgIcon === true;
@@ -1376,29 +1376,39 @@ function SkillsCertSection({ t }) {
                 </li>
               ))}
             </ul>
-            <div className="flex items-center justify-end gap-2 mt-6 pr-6">
-              <button
-                onClick={() => scrollToCertPage(Math.max(0, activePage - 1))}
-                disabled={activePage === 0}
-                data-spring
-                aria-label={t.certNavPrev}
-                className="group p-2 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
-              >
-                <img src={imgChevronLeft} alt="" width={20} height={20}
-                  className="brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]"
-                />
-              </button>
-              <button
-                onClick={() => scrollToCertPage(Math.min(certPages.length - 1, activePage + 1))}
-                disabled={activePage === certPages.length - 1}
-                data-spring
-                aria-label={t.certNavNext}
-                className="group p-2 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
-              >
-                <img src={imgChevronRight} alt="" width={20} height={20}
-                  className="group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]"
-                />
-              </button>
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center mt-4 px-6">
+              <div />
+              <div className="flex items-center">
+                {certPages.map((_, i) => (
+                  <button key={i} onClick={() => scrollToCertPage(i)} aria-label={`Go to page ${i + 1}`} aria-current={i === activePage ? 'true' : undefined} className="group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 p-2">
+                    <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activePage ? 'w-4 h-2 bg-fg-dot-active' : 'w-2 h-2 bg-fg-dot-rest group-hover:bg-fg-dot-hover'}`} />
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 justify-self-end">
+                <button
+                  onClick={() => scrollToCertPage(Math.max(0, activePage - 1))}
+                  disabled={activePage === 0}
+                  data-spring
+                  aria-label={t.certNavPrev}
+                  className="group p-2 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
+                >
+                  <img src={imgChevronLeft} alt="" width={20} height={20}
+                    className="brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]"
+                  />
+                </button>
+                <button
+                  onClick={() => scrollToCertPage(Math.min(certPages.length - 1, activePage + 1))}
+                  disabled={activePage === certPages.length - 1}
+                  data-spring
+                  aria-label={t.certNavNext}
+                  className="group p-2 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
+                >
+                  <img src={imgChevronRight} alt="" width={20} height={20}
+                    className="group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]"
+                  />
+                </button>
+              </div>
             </div>
             </div>
           </div>
@@ -1502,7 +1512,7 @@ function Resume({ lang }) {
           to="/"
           data-spring
           onClick={() => setShowBack(false)}
-          className="flex items-center gap-2 h-9 bg-tooltip-bg/90 backdrop-blur-3 text-fg-primary-inverse text-tooltip font-medium px-4 rounded-full shadow-m hover:bg-bg-surface hover:text-fg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+          className="flex items-center gap-2 h-9 bg-tooltip-bg/90 backdrop-blur-3 text-fg-primary-inverse text-tooltip font-medium px-4 rounded-full shadow-m hover:bg-bg-surface hover:text-fg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus whitespace-nowrap"
           aria-label={lang === 'fr' ? "Retour à l'accueil" : 'Back to homepage'}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">

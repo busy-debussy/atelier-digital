@@ -228,6 +228,9 @@ function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
 
   const LG_CARD = 384, LG_GAP = 32;
 
+  const getCarouselPb = () => window.matchMedia('(min-width: 640px)').matches ? '52px' : '24px';
+  const [carouselPb, setCarouselPb] = useState(getCarouselPb);
+
   const getCarouselPl = () => {
     if (typeof window === 'undefined') return '1.5rem';
     const vw = window.innerWidth;
@@ -244,7 +247,7 @@ function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
   const [carouselPl, setCarouselPl] = useState(getCarouselPl);
 
   useEffect(() => {
-    const update = () => setCarouselPl(getCarouselPl());
+    const update = () => { setCarouselPl(getCarouselPl()); setCarouselPb(getCarouselPb()); };
     update();
     window.addEventListener('resize', update, { passive: true });
     const mqSm = window.matchMedia('(min-width: 640px)');
@@ -319,14 +322,14 @@ function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
         ref={trackRef}
         onScroll={handleScroll}
         className="relative flex gap-4 sm:gap-6 lg:gap-8 snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
-        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, paddingTop: '28px', paddingBottom: '52px', touchAction: 'pan-x pan-y' }}
+        style={{ overflowX: 'auto', overflowY: 'visible', scrollbarWidth: 'none', paddingLeft: carouselPl, paddingRight: carouselPl, paddingTop: '28px', paddingBottom: carouselPb, touchAction: 'pan-x pan-y' }}
         aria-label={t.heading}
       >
         {cards.map((card, i) => <CsCard key={i} card={card} t={t} />)}
       </ul>
 
       {/* Nav, mobile/tablet only */}
-      <div className="grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 px-6">
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center mt-0 sm:mt-5 px-6">
         <div />
         <div className="flex items-center">
           {cards.map((_, i) => {

@@ -60,6 +60,7 @@ const logos = [
 const T = {
   en: {
     heading:  'Key collaborations',
+    hint:     'Select a logo to learn more',
     close:    'Close',
     navPrev:  'View previous collaborator',
     navNext:  'View next collaborator',
@@ -79,6 +80,7 @@ const T = {
   },
   fr: {
     heading:  'Collaborations clés',
+    hint:     'Sélectionnez un logo pour en savoir plus',
     close:    'Fermer',
     navPrev:  'Voir le collaborateur précédent',
     navNext:  'Voir le collaborateur suivant',
@@ -114,6 +116,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
   const trackRef    = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
+  const [hintDismissed, setHintDismissed] = useState(false);
   const [contentVisible, setContentVisible] = useState(true);
   const isProgrammaticScroll = useRef(false);
   const programmaticScrollTimer = useRef(null);
@@ -200,6 +203,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
     modalJustOpenedRef.current = true;
     modalIndexRef.current = i;
     setActiveModal(i);
+    setHintDismissed(true);
     scrollToIndex(i);
   };
   const closeModal = (restoreFocus = true) => {
@@ -361,8 +365,13 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
           ))}
         </ul>
 
+        {/* Hint caption */}
+        <p className={`text-center text-caption text-fg-muted mt-1 transition-opacity duration-200 ${hintDismissed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+          {t.hint}
+        </p>
+
         {/* Normal nav, below track, reduced gap */}
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center mt-6 sm:mt-4 px-6 sm:px-28 lg:px-52">
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 px-6 sm:px-28 lg:px-52">
           <div />
           <div className="flex items-center">
             {collaborators.map((_, i) => {

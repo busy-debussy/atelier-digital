@@ -1,5 +1,48 @@
 # Changelog 
 
+## [2.1.3] — 2026-04-14
+
+### Resume, Sales Platform, Collaborations, carousel & scroll fixes
+
+#### Resume page
+- Bio para 2: "digital twins, extended reality, web and mobile" → "in tools like Figma and in code"
+- Bio para 2: "leading a design team" → "influencing a design team"
+- Certification carousel (mobile): added dot indicators centred below the track, matching other carousel patterns
+- Back-to-home chip: added `whitespace-nowrap` — prevents wrapping on French mobile
+- Certification card name: fixed missing space between "UX" and "Designer" on mobile (inline `{' '}` before second `nameParts` segment)
+
+#### Sales Platform page
+- "My role" tile moved to after "Our team" tile in the Context section
+- "Our team" para 1: trimmed to end at emoji — removed "The design team collaborated… all launches" sentence
+- "Our team" para 1: added "and" before "distributed globally"
+
+#### Collaborations component
+- Added hint caption "Select a logo to learn more" (FR: "Sélectionnez un logo pour en savoir plus") between carousel track and dots
+- Caption sits closer to the logos than the dots (`mt-1` above, `mt-4 sm:mt-5` below)
+- Caption fades out permanently after first logo is selected (`hintDismissed` state)
+
+#### CaseStudies component
+- Reduced mobile gap between carousel and dot/nav row: `paddingBottom` 52px → 24px on mobile via reactive `carouselPb` state; nav `mt-4` → `mt-0` on mobile
+
+#### ScrollForMore component
+- Mobile scroll amount increased from `0.9 × vh` to `1.0 × vh` — clears the full-screen hero on the homepage
+
+## [2.1.2] — 2026-04-14
+
+### Storybook design system integration, hero fade-up animation
+
+#### Hero intro animation (replaced typewriter)
+- Dropped typewriter, caret, char-by-char subtitle, interval chains, grid-height trick, and 8 state variables
+- Single `ready` boolean flipped on next paint; CSS `transition-delay` drives all stagger
+- Sequence: H1 (0ms) → H2 (100ms) → card (200ms) → pills stagger (320–595ms) → buttons (500ms); total ~900ms
+
+#### Storybook
+- `preview.jsx`: wraps every story in `bg-bg-page text-fg-primary min-h-screen font-sans`; dark mode toggle maps to `.dark` on `<html>`; built-in backgrounds addon disabled
+- `preview-head.html`: injects Inter font into Storybook's preview iframe
+- `manager.js` + `theme.js`: custom manager theme (sidebar, toolbar, inputs) in light and dark variants using exact semantic token values; switches on OS preference
+- `Configure.mdx`: replaced 389-line default boilerplate with design system landing page (token pipeline, dark mode architecture, writing stories guide, token groups table)
+- `TokenCatalog.stories.jsx`: replaced hardcoded `#6b7280`/`#9ca3af` colours, `fontFamily` strings, and inline borders with token classes (`text-fg-secondary`, `text-fg-muted`, `font-sans`, `font-mono`, `border-border-subtle`, `bg-bg-page`, etc.)
+
 ## [2.1.1] — 2026-04-13
 
 ### Hero animation speed, file cleanup
