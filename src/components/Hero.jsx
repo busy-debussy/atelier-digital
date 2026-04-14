@@ -58,6 +58,7 @@ const pills = lang === 'fr'
 
   const [ready, setReady] = useState(skip);
   const [chatInput, setChatInput] = useState('');
+  const [chatFocused, setChatFocused] = useState(false);
   const [phIdx, setPhIdx] = useState(0);
   const [phOut, setPhOut] = useState(false);
 
@@ -71,11 +72,14 @@ const pills = lang === 'fr'
     }
     phOrderRef.current = { order: indices, pos: -1 };
   }
+  const MAX_HERO_TURNS = 6;
   const [heroMessages, setHeroMessages] = useState([]);
   const [heroLoading, setHeroLoading] = useState(false);
   const [messagesClosing, setMessagesClosing] = useState(false);
   const messagesEndRef = useRef(null);
   const hasMessages = heroMessages.length > 0;
+  const heroTurns = heroMessages.filter(m => m.role === 'user').length;
+  const heroAtLimit = heroTurns >= MAX_HERO_TURNS;
 
   // Auto dark for French evening visitors
   useEffect(() => {
@@ -131,7 +135,7 @@ const pills = lang === 'fr'
 
   const sendHero = async () => {
     const text = chatInput.trim();
-    if (!text || heroLoading) return;
+    if (!text || heroLoading || heroAtLimit) return;
     const updated = [...heroMessages, { role: 'user', content: text }];
     setHeroMessages(updated);
     setChatInput('');
@@ -143,7 +147,8 @@ const pills = lang === 'fr'
         body: JSON.stringify({ messages: updated }),
       });
       const data = await res.json();
-      setHeroMessages(prev => [...prev, { role: 'assistant', content: data.content || data.error || (lang === 'fr' ? 'Une erreur s\'est produite.' : 'Something went wrong.') }]);
+      const reply = data.content || data.error || (lang === 'fr' ? 'Une erreur s\'est produite.' : 'Something went wrong.');
+      setHeroMessages([...updated, { role: 'assistant', content: reply }]);
     } catch {
       setHeroMessages(prev => [...prev, { role: 'assistant', content: lang === 'fr' ? 'Une erreur s\'est produite.' : 'Something went wrong.' }]);
     } finally {
@@ -252,6 +257,20 @@ const pills = lang === 'fr'
                     </div>
                   </div>
                 )}
+                {heroTurns >= 2 && !heroAtLimit && !heroLoading && (() => {
+                  const left = MAX_HERO_TURNS - heroTurns;
+                  const urgent = left === 1;
+                  return (
+                    <p className={`text-fine-print leading-normal text-center ${urgent ? 'text-feedback-warning-msg-fg font-medium' : 'text-fg-muted-inverse'}`}>
+                      {lang === 'fr' ? `${left} message${left === 1 ? '' : 's'} restant${left === 1 ? '' : 's'}` : `${left} message${left === 1 ? '' : 's'} remaining`}
+                    </p>
+                  );
+                })()}
+                {heroAtLimit && !heroLoading && (
+                  <p className="text-tooltip text-fg-muted-inverse text-center pt-2 leading-relaxed">
+                    {lang === 'fr' ? "C'est tout pour l'instant, n'hésitez pas à me contacter pour en savoir plus." : "All caught up, drop me a line if you'd like to know more."}
+                  </p>
+                )}
                 <div ref={messagesEndRef} />
               </div>
             </>
@@ -305,24 +324,27 @@ const pills = lang === 'fr'
               <input
                 type="text"
                 value={chatInput}
-                onChange={e => setChatInput(e.target.value)}
+                onChange={e => { if (!heroAtLimit) setChatInput(e.target.value); }}
                 onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendHero(); } }}
                 placeholder=""
+                disabled={heroAtLimit}
                 aria-label={lang === 'fr' ? 'Demandez à Claude sur mon travail…' : 'Ask Claude about my work…'}
+                onFocus={() => setChatFocused(true)}
+                onBlur={() => setTimeout(() => setChatFocused(false), 150)}
                 autoComplete="off"
-                className="w-full bg-transparent text-copy-s text-fg-primary outline-none"
+                className="w-full bg-transparent text-copy-s text-fg-primary outline-none disabled:opacity-40"
               />
             </div>
-            <div className="relative group shrink-0">
+            {!heroAtLimit && <div className="relative group shrink-0">
               <button
                 type="button"
                 onClick={sendHero}
                 disabled={!chatInput.trim() || heroLoading}
                 aria-label={lang === 'fr' ? 'Envoyer' : 'Send'}
-                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-150 ${chatInput.trim() && !heroLoading ? 'cursor-pointer bg-fg-primary' : 'cursor-default bg-fg-dot-rest'}`}
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-[colors,background] duration-150 ${chatInput.trim() && !heroLoading ? 'cursor-pointer bg-fg-primary' : 'cursor-default border border-glass-subtle'}`}
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--bg-page)' }} />
+                  <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: chatInput.trim() && !heroLoading ? 'var(--bg-page)' : 'var(--fg-dot-rest)' }} />
                 </svg>
               </button>
               {chatInput.trim() && (
@@ -333,22 +355,19 @@ const pills = lang === 'fr'
                   </div>
                 </div>
               )}
-            </div>
+            </div>}
           </div>
         </div>
 
-        {/* Expand to full chat — appears after first message */}
-        {hasMessages && !messagesClosing && (
-          <div className="mt-3 w-full max-w-lg flex justify-center" style={{ animation: 'fade-in 0.4s ease both' }}>
-            <button
-              type="button"
-              onClick={() => window.dispatchEvent(new Event('toggle-chat'))}
-              className="text-copy-xs text-fg-dot-rest hover:text-fg-muted transition-colors duration-150 cursor-pointer"
-            >
-              {lang === 'fr' ? 'Ouvrir le chat complet →' : 'Open full chat →'}
-            </button>
-          </div>
-        )}
+        {/* Cookie notice — space always reserved, visible only when input focused */}
+        <div className="mt-2 w-full max-w-lg text-center" style={{ ...fadeUp(420), opacity: chatFocused ? 1 : 0, transition: 'opacity 0.3s ease' }}>
+          <p className="text-copy-xs text-fg-dot-rest">
+            {lang === 'fr' ? "En utilisant ce chat vous acceptez la" : "By using this chat you agree to the"}{' '}
+            <Link to="/cookies" className="underline text-fg-primary hover:text-fg-muted transition-colors duration-150">
+              {lang === 'fr' ? 'politique de cookies' : 'cookies policy'}
+            </Link>
+          </p>
+        </div>
 
         {/* CTAs */}
         <div className="mt-10 sm:mt-12 flex items-center gap-8" style={fadeUp(500)}>

@@ -1,5 +1,29 @@
 # Changelog 
 
+## [2.1.5] — 2026-04-14
+
+### Hero chat limit, send button polish, cookie notice, CV CTA
+
+#### Hero — message limit
+- `MAX_HERO_TURNS = 6` — matches ChatBot panel limit
+- "X messages remaining" counter appears from 2nd turn; urgent (warning colour) at 1 remaining
+- At limit: centered limit message ("All caught up, drop me a line if you'd like to know more." / FR equivalent); input disabled; send button hidden
+- Collapse button remains visible at limit
+
+#### Hero — send button
+- Idle state: ghost circle (border only, muted arrow) instead of filled grey — signals interactivity without looking broken
+- Active state: filled solid as before
+
+#### Hero — cookie notice
+- "By using this chat you agree to the cookies policy" placed below input
+- Space always reserved (no layout shift on CTAs); fades in on input focus, fades out on blur
+- "cookies policy" link in `text-fg-primary`; 150ms blur delay to allow link clicks
+
+#### Hero — CTAs
+- "Interactive CV" secondary text link restored alongside "Case studies"
+- `text-cta-600 dark:text-cta-400`, hover `text-cta-700 dark:text-cta-300`, `gap-8` between CTAs
+- "Open full chat" button removed
+
 ## [2.1.4] — 2026-04-14
 
 ### Hero inline chat, floating button removal, nav & mobile polish
