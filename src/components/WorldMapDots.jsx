@@ -63,9 +63,12 @@ export default function WorldMapDots({
   const lt = translations[lang] ?? translations.en;
   const flatDots = legendGroups.flatMap(col => teamDots.filter(d => d.group === col.group));
 
-  const [hovered,    setHovered]    = useState(null);
-  const [selected,   setSelected]   = useState(null);
-  const [focusedIdx, setFocusedIdx] = useState(0);
+  const [hovered,        setHovered]       = useState(null);
+  const [selected,       setSelected]      = useState(null);
+  const [focusedIdx,     setFocusedIdx]    = useState(0);
+  const [legendOpen,     setLegendOpen]    = useState(false);
+  const [captionVisible, setCaptionVisible] = useState(true);
+  const hideCaption = () => setCaptionVisible(false);
   const containerRef    = useRef(null);
   const mapRef          = useRef(null);
   const touchOverlayRef = useRef(null);
@@ -85,6 +88,7 @@ export default function WorldMapDots({
   const handleMapKeyDown = (e) => {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
     e.preventDefault();
+    hideCaption();
     if (!tzList.length) return;
     const curr = selected ? tzList.indexOf(selected.tz) : -1;
     const next = e.key === 'ArrowRight'
@@ -297,6 +301,7 @@ export default function WorldMapDots({
 
     const onStart = (e) => {
       e.preventDefault();
+      hideCaption();
       startX = e.touches[0].clientX; startY = e.touches[0].clientY;
       prevY = startY; isHoriz = null;
       scrub(startX);
@@ -384,7 +389,7 @@ export default function WorldMapDots({
   }, [hovered, selected, isDark]);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 -mb-3 sm:-mb-6 lg:-mb-8">
       <div className="flex flex-col gap-1">
         <div
           ref={mapRef}
@@ -397,6 +402,7 @@ export default function WorldMapDots({
           onMouseOver={(e) => {
             const circle = e.target.closest?.('[data-tz]');
             if (!circle) return;
+            hideCaption();
             const tz      = circle.getAttribute('data-tz');
             const country = circle.getAttribute('data-country') || null;
             setHovered(prev => (prev?.tz === tz && prev?.country === country) ? prev : { tz, country });
@@ -427,14 +433,26 @@ export default function WorldMapDots({
             );
           })}
         </div>
-        <p className="text-fine-print leading-normal text-fg-muted mt-2 text-center" aria-hidden="true">{lt.mapCaption}</p>
+        <p className="text-fine-print leading-normal text-fg-muted mt-2 text-center transition-opacity duration-500" style={{ opacity: captionVisible ? 1 : 0, pointerEvents: 'none' }} aria-hidden="true">{lt.mapCaption}</p>
         <p className="sr-only">
           World map showing the geographic distribution of the team across four countries and their time zones.
           Use the buttons below to highlight each team member&apos;s location on the map.
         </p>
+        <div className="flex justify-center mt-3">
+          <button
+            type="button"
+            data-spring
+            onClick={() => setLegendOpen(o => !o)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-glass-subtle text-label-s font-medium text-fg-muted hover:bg-nav-hover-bg transition-colors cursor-pointer"
+            aria-expanded={legendOpen}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={`transition-transform duration-200 ${legendOpen ? 'rotate-180' : ''}`}><polyline points="6 9 12 15 18 9"/></svg>
+            {legendOpen ? (lt.hideLegend ?? 'Hide legend') : (lt.viewLegend ?? 'View legend')}
+          </button>
+        </div>
       </div>
 
-      <div ref={legendRef} role="group" aria-label={lt.groupAriaLabel} onKeyDown={handleLegendKeyDown}>
+      {legendOpen && <div ref={legendRef} role="group" aria-label={lt.groupAriaLabel} onKeyDown={handleLegendKeyDown}>
         {/* Mobile: two independent flex columns (odd groups → col 1, even → col 2) */}
         <div className="lg:hidden flex gap-x-10">
           {[legendGroups.filter((_, i) => i % 2 === 0), legendGroups.filter((_, i) => i % 2 === 1)].map((colGroups, ci) => (
@@ -525,7 +543,7 @@ export default function WorldMapDots({
             </div>
           ))}
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

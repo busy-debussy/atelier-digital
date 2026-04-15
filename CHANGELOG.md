@@ -1,5 +1,56 @@
 # Changelog 
 
+## [2.2.0] — 2026-04-15
+
+### SP content overhaul, callout system, map legend toggle
+
+#### SP — standalone callout tiles
+- Key decisions (Context), Key constraints (Define), User flow decision (Design) each extracted from parent tiles into their own standalone tiles
+- Key decisions and Key constraints: full tile with `bg-feedback-success/warning-bg` border and compact inner callout; Key constraints uses `bg-bg-page` outer tile
+- User flow decision: `bg-bg-page` tile constrained to `md:max-w-[39rem] lg:max-w-[49rem]` with `mx-auto` to match Define section width; `gap-6` between label and body
+
+#### SP — callout content & formatting
+- All decision/constraint callouts restructured: title "Decision" / "Trade-off" / "Issues", bold first line, `mt-6` between first line and body
+- h3 removed from Key decisions and Key constraints labels (back to `text-copy-m font-bold`)
+- Issues callout (Exploration): simplified to bullet list — "Multi-minute load times" / "High streaming costs"
+- Decision (Exploration): "Pre-rendered 3D over real-time" bold first line, `→ Faster load, scalable / → Reduced interactivity`
+- Decision (User flow): "Hierarchical navigation" bold, "Clarity over exploration" body
+- Decision (UX Strategy): "Desktop-first MVP" bold, `→ Prioritised sales agents / → Deferred mobile optimisation`
+- Trade-off (Concepts): removed entirely
+- `gap-6` spacing between label and body; `mt-4 sm:mt-5 lg:mt-6` before callouts within tiles; h4→body gap reduced to `gap-4 sm:gap-5 lg:gap-6`
+
+#### SP — feedback-error tokens
+- `--feedback-error-bg/border/fg` added to `semantic.css` (light + dark)
+- Registered in `tailwind.config.js` as `feedback-error-bg/border/fg`
+
+#### SP — world map legend toggle
+- Legend hidden by default; "View legend" button (pill style, `data-spring`) below map caption toggles visibility
+- Chevron icon rotates 180° when open; button label switches "View legend" / "Hide legend"
+- `legendOpen` state: negative bottom margin `-mb-3 sm:-mb-6 lg:-mb-8` always applied to reduce tile bottom space
+- Map caption fades out (`opacity-0`, 500ms transition) on first hover, touch slide, or arrow key interaction
+
+#### SP — content edits
+- Hero title: "A luxury off-plan sales platform"
+- Client: "Leading United Arab Emirates real estate developer expanding globally." (UAE removed from parens)
+- Mission: "Design a digital platform for exploring unbuilt properties and supporting high-pressure sales launches."
+- Scope → "Scope" (EN) / "Cadre" (FR); eyebrow and nav updated
+- Challenge eyebrow renamed "Problem"; nav entry updated; h4 "Firm deadlines" → "Constraints"
+- Challenge body: "Tight deadlines driven by high-volume launch-day sales (≈1,000 units per project)"
+- Exploration body: "We tested real-time rendering using Unreal Engine."
+- UX Strategy body (Incremental iterations): "Post-launch, iterated across 10 projects without delaying releases."
+- Launches timeline h4 removed
+- User flow body: "Principle: Guided exploration over free navigation"
+- Back layer body: "Dynamic CGI (lighting, day/night cycles) created immersive, real-world property environments."
+- Front layer body: "9-step guided journey from global exploration to interior detail."
+- My role body: two bullet points (`list-disc`) in EN and FR; "and subsequent launches." appended
+- My role stats: two separate neutral callout cards side by side; gap matches tile edge padding
+- Our team body: globe emoji → period; `mt-3` gap to map
+- Define challenge: "How can we help buyers explore unbuilt properties across multiple locations in an engaging, contextual way?"
+- Key constraints body: `mt-6` between items (block spans)
+
+#### SP — secondary nav
+- "Key decisions" added as subsection nav entry (`id="ctx-decisions"`) in Context
+
 ## [2.1.9] — 2026-04-15
 
 ### SP design carousels: Y-scroll fix, wireframes image crop

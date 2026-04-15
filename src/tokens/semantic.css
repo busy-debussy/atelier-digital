@@ -37,6 +37,9 @@
   --feedback-warning-border: #ffd97d;
   --feedback-warning-fg: #483a05;
   --feedback-warning-msg-fg: #994f00;
+  --feedback-error-bg: #fff3f3;
+  --feedback-error-border: #ffd5d5;
+  --feedback-error-fg: #391111;
   --feedback-neutral-bg: rgba(0, 0, 0, 0.04);
   --feedback-neutral-border: rgba(0, 0, 0, 0.06);
   --accent-gold: #c9a84c;
@@ -157,6 +160,9 @@
   --feedback-warning-border: #483a05;
   --feedback-warning-fg: #f9bc04;
   --feedback-warning-msg-fg: #d97706;
+  --feedback-error-bg: #1b0808;
+  --feedback-error-border: #391111;
+  --feedback-error-fg: #ffd5d5;
   --feedback-neutral-bg: rgba(255, 255, 255, 0.04);
   --feedback-neutral-border: rgba(255, 255, 255, 0.06);
   --accent-gold: #c9a84c;
