@@ -45,71 +45,66 @@ const T = {
     stats: [
       { countTo: 6, decimals: 0, prefix: '', suffix: '',        label: 'Apps' },
       { countTo: 3, decimals: 0, prefix: '', suffix: ' XR',     label: 'Experiences' },
-      { countTo: 1, decimals: 0, prefix: '', suffix: ' UX',     label: 'Designer' },
-      { countTo: 6, decimals: 0, prefix: '', suffix: ' weeks',  label: 'To deliver' },
+      { countTo: 1, decimals: 0, prefix: '', suffix: ' UX',     label: 'System' },
+      { countTo: 6, decimals: 0, prefix: '', suffix: ' weeks',  label: 'Delivery' },
     ],
     sections: [
       {
-        id:      'team',
-        eyebrow: 'Our team',
-        heading: 'Distributed by design',
-        body: [
-          <>Our core team of five, spanning four countries, led the <strong>end-to-end design</strong> and <strong>development</strong> of all applications. Film production was handled by our studio team.</>,
-          <>We operated in <strong>two-week sprints</strong> with daily <strong>stand-ups</strong> aligned to UK core hours, enabling:</>,
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
-            <li><strong>Alignment</strong> on design and development progress</li>
-            <li>Early identification of <strong>blockers</strong></li>
-            <li>Rapid navigation of <strong>trade-offs</strong> and <strong>technical constraints</strong></li>
-            <li>Iteration of design in response to <strong>feedback</strong></li>
-          </ul>,
-          { type: 'h3', text: 'My role' },
-          <>As the <strong>sole UX/UI designer</strong>, I led the design strategy for this high-profile project, ensuring consistency and clarity across all experiences. I collaborated closely with developers, engineers, and project managers, establishing a seamless workflow across diverse teams. I made key decisions that balanced user needs with technical constraints, driving the design process forward efficiently, even under tight timelines.</>,
-        ],
-        map: true,
-      },
-      {
         id:      'why',
-        eyebrow: 'Why',
-        heading: 'One shot at a first impression',
+        eyebrow: 'Context',
+        heading: 'One shot at first impression',
+        tile: true,
         body: [
-          <>We were given the opportunity to reveal one of the most ambitious urban developments ever proposed, to a <strong>global audience of investors</strong>. Every detail had to communicate the scale, ambition, and innovative nature of the project.</>,
-          { type: 'callout', variant: 'goal', label: 'The goal', body: <>Ensure visitors leave <strong>convinced</strong> this was <strong>a redefinition of what a city could be</strong>.</> },
-        ],
-      },
-      {
-        id:      'who',
-        eyebrow: 'Who',
-        heading: 'A high-stakes audience',
-        body: [
-          <>I had previously designed large-scale events in the tech industry (100k+ attendees). To tailor experiences for this high-investment, time-constrained audience, I quickly collaborated with a colleague experienced in Architecture, Engineering, and Construction events, reviewing delegate behavior, engagement patterns, and decision drivers.</>,
-          <>With delegate passes costing €2,500–€3,000 each, designing for such a time-constrained, high-investment audience demanded clarity, engagement, and efficiency.</>,
-          <>We targeted three audience types:</>,
-          <ul className="list-none flex flex-col gap-2 text-copy-m font-normal leading-loose text-fg-secondary">
-            <li><strong>Backers</strong> Investors seeking credibility, scale, and clear investable opportunity.</li>
-            <li><strong>Builders</strong> Developers and architects looking for tangible ways to engage.</li>
-            <li><strong>Visionaries</strong> Policymakers and strategists focused on long-term impact and legacy.</li>
-          </ul>,
-          { type: 'callout', label: 'UX Insight', body: <>We needed to design experiences that could <strong>adapt to different group sizes</strong> and <strong>engagement preferences</strong> while maintaining <strong>narrative clarity</strong> and <strong>storytelling integrity</strong>.</> },
+          <>We were commissioned to unveil a large-scale <strong>urban development</strong>.</>,
+          { type: 'callout', variant: 'goal', label: 'Goal', body: <>Immediate conviction of <strong>scale</strong> and <strong>ambition</strong>.</> },
         ],
       },
       {
         id:      'when-where',
         eyebrow: 'When & Where',
         heading: 'MIPIM, Cannes',
+        tile: true,
         body: [
-          <>Experiences were deployed at the world’s largest real estate and investment event, hosted over <strong>one week</strong> at the Palais des Festivals.</>,
-          <>Our client constructed a <strong>two-story pavilion</strong> dedicated to showcasing the development. Given the event's scale, the experiences had to <strong>capture attention quickly</strong> and deliver impact within minutes.</>,
-          { type: 'callout', label: 'Spatial UX Consideration', body: 'The layout was designed to guide visitors smoothly from one experience to the next, maximizing engagement.' },
+          <>A high-density <strong>one week</strong> event.</>,
         ],
+      },
+      {
+        id:      'who',
+        eyebrow: 'Who',
+        heading: 'A high-stakes audience',
+        tile: true,
+        body: [
+          <>Delegate passes cost <strong>€2,500 to €3,000</strong> per person.</>,
+<>We targeted three audience types:</>,
+          <ul className="list-none flex flex-col gap-2 text-copy-m font-normal leading-loose text-fg-secondary">
+            <li><strong>Investors</strong> seeking credibility and clear investable opportunity.</li>
+            <li><strong>Developers and architects</strong> looking for tangible ways to engage.</li>
+            <li><strong>Visionaries</strong> focused on long-term impact and legacy.</li>
+          </ul>,
+        ],
+      },
+      {
+        id:      'team',
+        eyebrow: 'Our team',
+        heading: 'Distributed by design',
+        body: [
+          <>Core team of <strong>five</strong> across <strong>four countries</strong> delivering <strong>XR system end-to-end</strong>.</>,
+          { type: 'h3', text: 'Delivery model' },
+          <><strong>2-week sprints</strong> · <strong>Daily UK-aligned stand-ups</strong><br />→ Fast trade-offs, rapid iteration, early blocker detection</>,
+          { type: 'callout', variant: 'gold', label: 'My role', body: <>Sole Senior UX/UI Designer across <strong>6 XR applications</strong>, I led interaction system design and cross-device UX decisions under tight delivery constraints.</>
+ },
+        ],
+        map: true,
+        tile: true,
       },
       {
         id:      'what',
         eyebrow: 'What',
-        heading: 'Complementary experiences',
+        heading: 'Experiential system',
         body: [
-          <>Instead of one large installation, we designed <strong>six separate, complementary experiences</strong>. Each served as an entry point to different aspects of the project's story.</>,
+          <>Instead of one large installation, <strong>six complementary experiences</strong> forming a single narrative system.</>,
         ],
-        footerCallout: { label: 'UX/UI Contribution:', body: <>I designed the UI and interaction patterns for the five interactive experiences. This included everything from <strong>AR/VR controller flows</strong> to interactions, onboarding, and visuals that aligned with the <strong>pavilion layout</strong> and overall narrative.</> },
+        footerCallout: { label: 'Spatial UX Consideration', body: 'Spatial flow guided visitors sequentially across experiences to maximise engagement.' },
         experiences: [
           {
             number: '01',
@@ -119,8 +114,8 @@ const T = {
           },
           {
             number: '02',
-            title:  'Interactive map app',
-            tech:   'Transparent touchscreen display',
+            title:  'Interactive map',
+            tech:   'Transparent touchscreen',
             body:   "A transparent touchscreen offering a satellite view of the development's geographic context.",
           },
           {
@@ -152,18 +147,18 @@ const T = {
       {
         id:      'prioritise',
         eyebrow: 'Prioritise & Choose',
-        heading: 'Decision-making under constraints',
+        heading: 'Decision under constraints',
         body: [
-          <>The AR table was prioritized as the centerpiece, due to expected engagement and logistics (built in Saudi Arabia, shipped to France). We designed the table for comfort and hardware needs, including each Magic Leap headset, controller, and computer power unit.</>,
-          <>At the center of the table, I designed an AR tracker, derived from the client logo. Its size and pattern were critical as Magic Leap sensors and iPad cameras needed to detect it reliably, ensuring the 3D imagery remained precisely locked even as users moved around.</>,
+          <><strong>AR table</strong> prioritised as the central experience based on engagement and logistical constraints.<br />→ Optimised for hardware setup and group interaction.</>,
+          <>Designed a <strong>branded AR tracker</strong>, optimised for reliable detection across <strong>Magic Leap</strong> and <strong>iPad</strong>.</>,
           { type: 'h3', text: 'What didn\'t make it' },
-          <>We explored a multiplayer AR experience, but chose not to pursue it. While compelling, it required more devices than we could properly test or troubleshoot. In addition, network conditions at high-density events were unpredictable to rely on.</>,
-          <>One element we did carry forward was the <strong>colour coded laser pointer</strong> from that early concept. Each participant was assigned a distinct colour, so they could see one another's focus point during the shared experience.</>,
+          <>Multiplayer AR was explored but not pursued due to <strong>device limitations</strong> and <strong>unreliable event network conditions</strong>.</>,
+          <>A <strong>colour-coded laser pointer</strong> system was retained to support shared focus during the experience.</>,
           { type: 'h3', text: 'What was overdelivered' },
-          <>While not initially in the brief, I pushed to develop an <strong>iPad companion app</strong>, as it added value by <strong>engaging non-headset users</strong> and enhancing the overall experience.</>,
+          <><strong>iPad companion app</strong> introduced to extend engagement beyond headset users.</>,
           { type: 'h3', text: 'What was scoped down' },
-          <>The interactive map was intentionally scoped back to prioritise clarity and reliability over additional features, ensuring it delivered value without introducing risk.</>,
-          { type: 'callout', label: 'UX Insight', body: 'Every constraint became an opportunity to maximize engagement and storytelling.' },
+          <>Interactive map scoped back to prioritise <strong>clarity</strong> and <strong>reliability</strong> over feature depth.</>,
+          { type: 'callout', label: 'UX Insight', body: <>Technical and spatial constraints led to <strong>structured, presenter-led</strong> and <strong>guided interactions</strong>.</> },
         ],
       },
       {
@@ -171,11 +166,11 @@ const T = {
         eyebrow: 'Solve',
         heading: 'Form follows constraint',
         body: [
-          <>Every experience came with its own set of <strong>technical and spatial challenges</strong>, which shaped the design decisions:</>,
+          <>Each experience was shaped by <strong>technical and spatial constraints</strong>:</>,
           <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
-            <li><strong>Transparent display:</strong> Needed to show both interface and the space behind it clearly</li>
-            <li><strong>AR (Magic Leap 2):</strong> Optimised 3D assets for device constraints; designed for up to five participants simultaneously</li>
-            <li><strong>iPad app:</strong> Mirrored the AR session in real time for non-headset users, boosting engagement and curiosity</li>
+            <li><strong>Transparent display:</strong> Balanced UI visibility with physical environment</li>
+            <li><strong>AR (Magic Leap 2):</strong> Optimised for device limits and up to five concurrent users</li>
+            <li><strong>iPad app:</strong> Mirrored AR sessions for non-headset engagement</li>
             <li><strong>VR (Meta Quest 3):</strong> Immersive walkthrough at human scale, with mirrored view for observers</li>
             <li><strong>Digital twin:</strong> Built for cross-platform accessibility</li>
           </ul>,
@@ -186,37 +181,27 @@ const T = {
             <li>On the interactive map, each district had a distinct identity to clarify the development</li>
           </ul>,
           { type: 'h3', text: 'Interaction patterns' },
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
-            <li>Shared AR experience was guided by a single narrator to preserve narrative clarity</li>
-            <li>Table placement and mirrored screens enabled multiple participants and passersby to engage naturally</li>
-            <li>iPad ensured non-headset participants remained connected and curious</li>
-            <li>Consistent interaction patterns across touch, AR/VR controllers, and gamepad/mouse allowed seamless transitions between experiences</li>
-          </ul>,
-          <>Every decision balanced technical feasibility, user experience, and storytelling impact, creating a coherent and immersive journey across all six experiences.</>,
+          <>A <strong>presenter-led AR flow</strong> anchored the experience, supported by mirrored outputs that extended engagement beyond headset users. Consistent interaction logic across <strong>AR, VR, touch, and gamepad</strong> ensured seamless transitions between experiences and devices.</>,
           { type: 'h3', text: 'Approaches' },
-          <>Our initial plan let users choose solo or shared modes on the AR table, but friction points in selecting the app, scanning the AR tracker, and placing the 3D model slowed engagement. I streamlined it into a single, presenter-led, pre-calibrated flow, keeping participation smooth and intuitive.</>,
-          <>This approach reflected a broader principle applied across all six experiences. Every interaction was designed to minimize friction, maximize clarity, and preserve narrative flow, whether users were engaging with AR, VR, touchscreens, or the digital twin.</>,
-          <><strong>Key decisions</strong></>,
+          <>Initial AR flow allowed users to choose between solo and shared modes, but onboarding steps (app selection, tracking, calibration) introduced <strong>friction</strong> and delayed engagement.</>,
+          <>We consolidated this into a single <strong>presenter-led, pre-calibrated experience</strong>, removing setup complexity and standardising the interaction flow.</>,
+          { type: 'h3', text: 'System decisions' },
           <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
-            <li><strong>Magic Leap AR table:</strong> Single guided flow; iPad mirrored the session for observers, sparking curiosity</li>
-            <li><strong>VR walkthrough:</strong> Mirrored wall display ensured bystanders could follow without interrupting immersion</li>
-            <li><strong>Interactive map and Digital Twin:</strong> Simplified navigation, optimised for touch, mouse, and gamepad</li>
-            <li><strong>Film installation:</strong> Carefully timed pacing and spatial cues guided large groups through the story</li>
+            <li><strong>AR table:</strong> Single guided flow with mirrored iPad for observers</li>
+            <li><strong>VR:</strong> Wall mirroring enabled shared viewing without breaking immersion</li>
+            <li><strong>Interactive map + digital twin:</strong> Simplified navigation across input types</li>
+            <li><strong>Film installation:</strong> Controlled pacing and spatial cues for group flow</li>
           </ul>,
-          { type: 'callout', label: 'UX Contribution', body: 'I reframed the iPad companion into a deliberate engagement strategy' },
+          { type: 'callout', label: 'Key principle', body: <>All interactions were designed to minimise friction, preserve <strong>narrative flow</strong>, and ensure <strong>consistency</strong> across AR, VR, and screen-based experiences.</> },
         ],
       },
       {
         id:      'measure',
-        eyebrow: 'Measure & Review',
-        heading: 'Iterating live under pressure',
+        eyebrow: 'Measure & Impact',
+        heading: 'Live deployment',
         body: [
-          <>As the sole designer on-site, I led AR sessions, calibrated headsets, and resolved technical issues in real time. Being present allowed me to observe participant behavior directly and refine the flow on the spot, adjusting pacing and interactions based on audience responses.</>,
-          <><strong>Impact</strong></>,
-          <>The presenter-led AR sessions, lasting around ten minutes each, retained nearly all participants from start to finish. Observers remained engaged through mirrored iPad and VR displays, allowing multiple attendees to follow the experience without interrupting immersion. The pavilion consistently ran at full capacity throughout the week, and the project’s success extended beyond the event, establishing a multi-year partnership with the client and generating strong, positive feedback from attendees.</>,
-          <><strong>Reflection</strong></>,
-          <>Leading live, presenter-led AR sessions provided unique insights. Being in the room allowed me to observe participant behavior in real time. This enabled rapid decision-making and immediate iteration. These moments confirmed design assumptions, revealed subtle engagement patterns, and ensured that the experiences delivered exactly as intended.</>,
-          <>This project reinforced the importance of system-level UX thinking, multi-device interaction consistency, and design-for-context. It demonstrated that even under tight deadlines and logistical constraints, thoughtful design can create immersive, engaging, and memorable experiences for high-stakes audiences.</>,
+          <>Presenter-led AR sessions consistently retained participants for full <strong>10-minute experiences</strong>. Observers remained engaged through mirrored <strong>iPad and VR outputs</strong>, enabling parallel participation across formats. The pavilion operated at <strong>full capacity</strong> throughout the event, leading to strong client feedback and an extended <strong>multi-year partnership</strong>.</>,
+          { type: 'callout', label: 'UX Insight', body: <>Working on-site allowed direct observation of participant behaviour, enabling rapid refinements to <strong>pacing</strong> and <strong>interaction flow</strong> in response to real-time engagement patterns and session dynamics.</> },
         ],
       },
     ],
@@ -258,7 +243,7 @@ const T = {
       xbox:      'Xbox controller keybindings designed for the Digital Twin exploration.',
       magicLeap: 'Magic Leap 2 headset and controller used for the AR experience.',
       building:  'Two-storey building constructed by our client specifically for the event.',
-      tracker:   "This AR tracker ensured sensor reliability while remaining brand-compliant.",
+      tracker:   "Reliable tracking, aligned with brand.",
       floorPlan: 'Floor plan of the experience space with the six installations.',
       arSession: 'Leading a presenter-led AR session at MIPIM.',
       satellite: 'Representation of the sheer size of the development site.',
@@ -275,71 +260,65 @@ const T = {
     stats: [
       { countTo: 6, decimals: 0, prefix: '', suffix: '',           label: 'Apps' },
       { countTo: 3, decimals: 0, prefix: '', suffix: ' XR',        label: 'Expériences' },
-      { countTo: 1, decimals: 0, prefix: '', suffix: ' UX',        label: 'Designer' },
+      { countTo: 1, decimals: 0, prefix: '', suffix: ' UX',        label: 'Système' },
       { countTo: 6, decimals: 0, prefix: '', suffix: ' semaines',  label: 'Pour livrer' },
     ],
     sections: [
       {
-        id:      'team',
-        eyebrow: "L'équipe",
-        heading: 'Plusieurs fuseaux horaires',
-        body: [
-          <>Notre équipe de cinq personnes, répartie dans quatre pays, a assuré la <strong>conception et le développement</strong> de bout en bout de toutes les applications. La production vidéo a été prise en charge par notre équipe studio.</>,
-          <>Nous avons fonctionné en <strong>sprints de deux semaines</strong> avec des <strong>réunions quotidiennes</strong> alignées sur les horaires du Royaume-Uni, permettant :</>,
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
-            <li><strong>Coordination</strong> sur l'avancement du design et du développement</li>
-            <li>Identification précoce des <strong>blocages</strong></li>
-            <li>Navigation rapide des <strong>compromis</strong> et <strong>contraintes techniques</strong></li>
-            <li>Itération du design en réponse aux <strong>retours</strong></li>
-          </ul>,
-          { type: 'h3', text: 'Mon rôle' },
-          <>En tant que <strong>seul designer UX/UI</strong>, j'ai dirigé la stratégie design de ce projet d'envergure, en assurant cohérence et clarté sur l'ensemble des expériences. J'ai collaboré étroitement avec les développeurs, ingénieurs et chefs de projet, instaurant un flux de travail fluide entre des équipes diverses. J'ai pris des décisions clés équilibrant les besoins utilisateurs et les contraintes techniques, faisant avancer le processus de design efficacement, même dans des délais serrés.</>,
-        ],
-        map: true,
-      },
-      {
         id:      'why',
-        eyebrow: 'Pourquoi',
-        heading: 'Une seule chance de marquer les esprits',
+        eyebrow: 'Contexte',
+        heading: 'Une chance de marquer les esprits',
+        tile: true,
         body: [
-          <>Nous avons eu l'opportunité de révéler l'un des projets urbains les plus ambitieux jamais proposés à un <strong>public mondial d'investisseurs</strong>. Chaque détail devait rendre l'ampleur et l'ambition du projet immédiatement tangibles.</>,
-          { type: 'callout', variant: 'goal', label: "L'objectif", body: <>Faire en sorte que chaque visiteur reparte <strong>convaincu</strong> qu'il s'agissait d'une <strong>redéfinition de ce qu'une ville pouvait être</strong>.</> },
-        ],
-      },
-      {
-        id:      'who',
-        eyebrow: 'Qui',
-        heading: 'Un public à enjeux élevés',
-        body: [
-          <>J'avais précédemment conçu des événements à grande échelle dans l'industrie tech (100k+ participants). Pour adapter les expériences à ce public à fort investissement et contraintes de temps, j'ai rapidement collaboré avec un collègue expérimenté dans les événements Architecture, Ingénierie et Construction, en analysant les comportements délégués, les schémas d'engagement et les facteurs de décision.</>,
-          <>Avec des pass délégués à 2 500–3 000 € chacun, concevoir pour un public aussi investi et contraint par le temps exigeait clarté, engagement et efficacité.</>,
-          <>Nous avons ciblé trois types de public :</>,
-          <ul className="list-none flex flex-col gap-2 text-copy-m font-normal leading-loose text-fg-secondary">
-            <li><strong>Les investisseurs</strong> À la recherche de crédibilité, d'ampleur et d'opportunités d'investissement claires.</li>
-            <li><strong>Les bâtisseurs</strong> Promoteurs et architectes cherchant des moyens concrets de s'impliquer.</li>
-            <li><strong>Les visionnaires</strong> Décideurs et stratèges axés sur l'impact à long terme et l'héritage.</li>
-          </ul>,
-          { type: 'callout', label: 'UX Insight', body: <>Nous devions concevoir des expériences capables de <strong>s'adapter à différentes tailles de groupes</strong> et <strong>préférences d'engagement</strong>, tout en maintenant la <strong>clarté narrative</strong> et l'<strong>intégrité du storytelling</strong>.</> },
+          <>Nous avons eu l'opportunité de révéler un <strong>développement urbain</strong>.</>,
+          { type: 'callout', variant: 'goal', label: 'Objectif', body: <>Conviction immédiate d'<strong>ampleur</strong> et d'<strong>ambition</strong>.</> },
         ],
       },
       {
         id:      'when-where',
         eyebrow: 'Où et quand',
         heading: 'MIPIM, Cannes',
+        tile: true,
         body: [
-          <>Les expériences ont été déployées au plus grand événement mondial dédié à l'immobilier et à l'investissement, accueilli pendant <strong>une semaine</strong> au Palais des Festivals.</>,
-          <>Notre client a construit un <strong>pavillon sur deux niveaux</strong> dédié à la présentation du développement. Compte tenu de l'envergure de l'événement, les expériences devaient <strong>capter l'attention rapidement</strong> et produire un impact en quelques minutes.</>,
-          { type: 'callout', label: 'Considération UX Spatiale', body: "La disposition a été conçue pour guider les visiteurs fluidement d'une expérience à l'autre, en maximisant l'engagement." },
+          <>Un événement à haute densité sur <strong>une semaine</strong>.</>,
         ],
+      },
+      {
+        id:      'who',
+        eyebrow: 'Qui',
+        heading: 'Un public à enjeux élevés',
+        tile: true,
+        body: [
+          <>Les passes délégués coûtaient <strong>2 500 à 3 000 €</strong> par personne.</>,
+          <>Nous avons ciblé trois types de public :</>,
+          <ul className="list-none flex flex-col gap-2 text-copy-m font-normal leading-loose text-fg-secondary">
+            <li><strong>Les investisseurs</strong> en quête de crédibilité et d'une opportunité d'investissement claire.</li>
+            <li><strong>Les développeurs et architectes</strong> cherchant des moyens concrets de s'impliquer.</li>
+            <li><strong>Les visionnaires</strong> focalisés sur l'impact à long terme et l'héritage.</li>
+          </ul>,
+        ],
+      },
+      {
+        id:      'team',
+        eyebrow: "L'équipe",
+        heading: 'Sur plusieurs fuseaux',
+        body: [
+          <>Équipe de <strong>cinq</strong> personnes répartie dans <strong>quatre pays</strong>, pour livrer le <strong>système XR de bout en bout</strong>.</>,
+          { type: 'h3', text: 'Modèle de travail' },
+          <><strong>Sprints de 2 semaines</strong> · <strong>Stand-ups quotidiens alignés sur le Royaume-Uni</strong><br />→ Arbitrages rapides, itération accélérée, détection précoce des blocages</>,
+          { type: 'callout', variant: 'gold', label: 'Mon rôle', body: <>Seul Senior UX/UI Designer sur <strong>6 applications XR</strong>, j'ai piloté la conception du système d'interaction et les décisions UX multi-appareils dans des délais de livraison serrés.</> },
+        ],
+        map: true,
+        tile: true,
       },
       {
         id:      'what',
         eyebrow: 'Quoi',
-        heading: 'Des expériences complémentaires',
+        heading: 'Système expérientiel',
         body: [
-          <>Plutôt qu'une grande installation unique, nous avons conçu <strong>six expériences distinctes et complémentaires</strong>. Chacune servait de point d'entrée vers différents aspects de l'histoire du projet.</>,
+          <>Plutôt qu'une grande installation unique, <strong>six expériences complémentaires</strong> formant un système narratif cohérent.</>,
         ],
-        footerCallout: { label: 'Contribution UX/UI :', body: <>J'ai conçu l'UI et les patterns d'interaction pour les cinq expériences interactives. Cela incluait tout, des <strong>flux contrôleurs AR/VR</strong> aux interactions, à l'onboarding et aux visuels alignés avec la <strong>disposition du pavillon</strong> et la narration globale.</> },
+        footerCallout: { label: 'Considération UX Spatiale', body: 'Le flux spatial guidait les visiteurs séquentiellement à travers les expériences pour maximiser l\'engagement.' },
         experiences: [
           {
             number: '01',
@@ -382,18 +361,18 @@ const T = {
       {
         id:      'prioritise',
         eyebrow: 'Prioriser et choisir',
-        heading: 'Décisions sous contraintes',
+        heading: 'Décision sous contraintes',
         body: [
-          <>La table AR a été priorisée comme pièce maîtresse, en raison de l'engagement attendu et des contraintes logistiques (construite en Arabie Saoudite, expédiée en France). Nous l'avons conçue pour le confort et les besoins matériels, incluant chaque casque Magic Leap, contrôleur et unité de traitement.</>,
-          <>Au centre, j'ai conçu un marqueur AR dérivé du logo client. Sa taille et son motif étaient critiques : les capteurs Magic Leap et les caméras iPad devaient le détecter de manière fiable, maintenant les images 3D précisément ancrées même lors des déplacements des utilisateurs.</>,
-          { type: 'h3', text: 'Ce qui n\'a pas été retenu' },
-          <>Nous avons exploré une expérience AR multijoueur, mais avons choisi de ne pas la poursuivre. Bien que prometteuse, elle nécessitait plus d'appareils que nous ne pouvions tester correctement, et les conditions réseau dans des environnements à forte densité étaient trop imprévisibles.</>,
-          <>Un élément que nous avons conservé est le <strong>pointeur laser coloré</strong> issu de ce concept initial. Chaque participant se voyait attribuer une couleur distincte, lui permettant de voir le point de focus des autres pendant l'expérience partagée.</>,
+          <><strong>Table AR</strong> priorisée comme expérience centrale en raison de l'engagement et des contraintes logistiques.<br />→ Optimisée pour l'installation matérielle et l'interaction en groupe.</>,
+          <>Conception d'un <strong>tracker AR brandé</strong>, optimisé pour une détection fiable sur <strong>Magic Leap</strong> et <strong>iPad</strong>.</>,
+          { type: 'h3', text: "Ce qui n'a pas été retenu" },
+          <>La réalité augmentée multijoueur a été explorée mais abandonnée en raison des <strong>limitations des appareils</strong> et des <strong>conditions réseau instables en événement</strong>.</>,
+          <>Un système de <strong>pointeur laser coloré</strong> a été conservé pour maintenir une attention partagée pendant l'expérience.</>,
           { type: 'h3', text: 'Ce qui a été livré en plus' },
-          <>Non prévu initialement dans le brief, j'ai poussé pour développer une <strong>application compagnon iPad</strong>, car elle apportait de la valeur en <strong>engageant les participants sans casque</strong> et en enrichissant l'expérience globale.</>,
+          <><strong>Application compagnon iPad</strong> introduite pour prolonger l'engagement au-delà des utilisateurs avec casque.</>,
           { type: 'h3', text: 'Ce qui a été simplifié' },
-          <>La carte interactive a été intentionnellement simplifiée pour prioriser la clarté et la fiabilité plutôt que des fonctionnalités supplémentaires.</>,
-          { type: 'callout', label: 'UX Insight', body: "Chaque contrainte est devenue une opportunité de maximiser l'engagement et la narration." },
+          <>La carte interactive a été recentrée pour prioriser la <strong>clarté</strong> et la <strong>fiabilité</strong> plutôt que la profondeur fonctionnelle.</>,
+          { type: 'callout', label: 'UX Insight', body: <>Les contraintes techniques et spatiales ont orienté vers des <strong>interactions structurées, guidées par un présentateur</strong>.</> },
         ],
       },
       {
@@ -401,11 +380,11 @@ const T = {
         eyebrow: 'Concevoir',
         heading: 'La forme suit la contrainte',
         body: [
-          <>Chaque expérience avait ses propres <strong>défis techniques et spatiaux</strong>, qui ont façonné les décisions de design :</>,
+          <>Chaque expérience a été façonnée par des <strong>contraintes techniques et spatiales</strong> :</>,
           <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
-            <li><strong>Écran transparent :</strong> Devait afficher l'interface et laisser voir l'espace derrière</li>
-            <li><strong>AR (Magic Leap 2) :</strong> Assets 3D optimisés pour les contraintes de l'appareil ; conçu pour cinq participants simultanément</li>
-            <li><strong>Application iPad :</strong> Miroir de la session AR en temps réel pour les participants sans casque, renforçant l'engagement et la curiosité</li>
+            <li><strong>Écran transparent :</strong> Équilibre entre visibilité de l'interface et environnement physique</li>
+            <li><strong>AR (Magic Leap 2) :</strong> Optimisé pour les limites de l'appareil et jusqu'à cinq utilisateurs simultanés</li>
+            <li><strong>Application iPad :</strong> Sessions AR en miroir pour l'engagement sans casque</li>
             <li><strong>VR (Meta Quest 3) :</strong> Visite immersive à échelle humaine, avec vue miroir pour les observateurs</li>
             <li><strong>Jumeau numérique :</strong> Conçu pour l'accessibilité multiplateforme</li>
           </ul>,
@@ -416,37 +395,27 @@ const T = {
             <li>Sur la carte interactive, chaque quartier avait une identité distincte pour clarifier le développement</li>
           </ul>,
           { type: 'h3', text: "Patterns d'interaction" },
-          <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
-            <li>L'expérience AR partagée était guidée par un seul narrateur pour préserver la clarté narrative</li>
-            <li>La disposition de la table et les écrans en miroir permettaient à plusieurs participants et passants de s'engager naturellement</li>
-            <li>L'iPad maintenait les participants sans casque connectés et curieux</li>
-            <li>Des patterns d'interaction cohérents sur tactile, contrôleurs AR/VR et manette/souris permettaient des transitions fluides entre les expériences</li>
-          </ul>,
-          <>Chaque décision équilibrait faisabilité technique, expérience utilisateur et impact narratif, créant un parcours cohérent et immersif.</>,
+          <>Un <strong>flux AR guidé par un présentateur</strong> ancrait l'expérience, soutenu par des sorties en miroir qui étendaient l'engagement au-delà des utilisateurs avec casque. Une logique d'interaction cohérente sur <strong>AR, VR, tactile et manette</strong> assurait des transitions fluides entre les expériences et les appareils.</>,
           { type: 'h3', text: 'Approches' },
-          <>Notre plan initial laissait les utilisateurs choisir entre les modes solo et partagé sur la table AR, mais des points de friction dans la sélection de l'application, le scan du marqueur AR et le placement du modèle 3D ralentissaient l'engagement. J'ai simplifié en un flux unique, guidé par un présentateur et pré-calibré, gardant la participation fluide et intuitive.</>,
-          <>Cette approche reflétait un principe plus large appliqué à l'ensemble des six expériences. Chaque interaction était conçue pour minimiser les frictions, maximiser la clarté et préserver le flux narratif, que les utilisateurs s'engagent avec l'AR, la VR, les écrans tactiles ou le jumeau numérique.</>,
-          <><strong>Décisions clés</strong></>,
+          <>Le flux AR initial permettait aux utilisateurs de choisir entre les modes solo et partagé, mais les étapes d'onboarding (sélection d'app, tracking, calibration) introduisaient des <strong>frictions</strong> et retardaient l'engagement.</>,
+          <>Nous avons consolidé cela en une <strong>expérience unique guidée par un présentateur, pré-calibrée</strong>, supprimant la complexité de configuration et standardisant le flux d'interaction.</>,
+          { type: 'h3', text: 'Décisions système' },
           <ul className="list-disc pl-5 flex flex-col gap-1 text-copy-m font-normal leading-loose text-fg-secondary">
-            <li><strong>Table AR Magic Leap :</strong> Flux guidé unique ; l'iPad reflétait la session pour les observateurs, suscitant la curiosité</li>
-            <li><strong>Visite VR :</strong> L'écran mural en miroir permettait aux passants de suivre sans interrompre l'immersion</li>
-            <li><strong>Carte interactive et jumeau numérique :</strong> Navigation simplifiée, optimisée pour le tactile, la souris et la manette</li>
-            <li><strong>Installation audiovisuelle :</strong> Un rythme soigneusement calibré et des repères spatiaux guidaient les grands groupes</li>
+            <li><strong>Table AR :</strong> Flux guidé unique avec iPad en miroir pour les observateurs</li>
+            <li><strong>VR :</strong> Le miroir mural permettait une visualisation partagée sans rompre l'immersion</li>
+            <li><strong>Carte interactive + jumeau numérique :</strong> Navigation simplifiée sur tous les types de saisie</li>
+            <li><strong>Installation audiovisuelle :</strong> Rythme contrôlé et repères spatiaux pour le flux de groupe</li>
           </ul>,
-          { type: 'callout', label: 'Contribution UX', body: "J'ai retravaillé le compagnon iPad, initialement une solution de contournement, en une stratégie d'engagement délibérée." },
+          { type: 'callout', label: 'Principe clé', body: <>Toutes les interactions ont été conçues pour minimiser les frictions, préserver le <strong>flux narratif</strong> et garantir la <strong>cohérence</strong> sur les expériences AR, VR et sur écran.</> },
         ],
       },
       {
         id:      'measure',
         eyebrow: 'Mesurer et analyser',
-        heading: 'Itérer en direct, sous pression',
+        heading: 'Déploiement en direct',
         body: [
-          <>En tant que seul designer sur place, j'ai animé les sessions AR, calibré les casques et résolu les problèmes techniques en temps réel. Ma présence m'a permis d'observer directement le comportement des participants et d'affiner le flux sur le moment, en ajustant le rythme et les interactions selon les réactions du public.</>,
-          <><strong>Impact</strong></>,
-          <>Les sessions AR guidées par le présentateur, d'une durée d'environ dix minutes, retenaient presque tous les participants du début à la fin. Les observateurs restaient engagés grâce aux écrans iPad et VR en miroir. Le pavillon fonctionnait à pleine capacité tout au long de la semaine, et le succès du projet a posé les bases d'un partenariat pluriannuel avec le client, générant des retours très positifs des participants.</>,
-          <><strong>Réflexion</strong></>,
-          <>Animer des sessions AR en présentiel a fourni des enseignements uniques. Être dans la salle m'a permis d'observer le comportement des participants en temps réel, de prendre des décisions rapides et d'itérer immédiatement. Ces moments ont confirmé les hypothèses de design, révélé des schémas d'engagement subtils et garanti que les expériences se déroulaient exactement comme prévu.</>,
-          <>Ce projet a renforcé l'importance de la réflexion UX au niveau système, de la cohérence des interactions multi-appareils et du design adapté au contexte. Il a démontré que même sous des délais serrés et des contraintes logistiques, un design réfléchi peut créer des expériences immersives, engageantes et mémorables pour des publics à forts enjeux.</>,
+          <>Les sessions de réalité augmentée guidées retenaient régulièrement les participants pendant la totalité des <strong>10 minutes</strong>. Les observateurs restaient engagés grâce aux sorties <strong>iPad et VR en miroir</strong>, permettant une participation parallèle sur tous les formats. Le pavillon a fonctionné à <strong>pleine capacité</strong> tout au long de l'événement, générant des retours clients très positifs et un <strong>partenariat pluriannuel</strong>.</>,
+          { type: 'callout', label: 'UX Insight', body: <>La présence sur place a permis l'observation directe du comportement des participants, permettant des ajustements rapides du <strong>rythme</strong> et du <strong>flux d'interaction</strong> en réponse aux dynamiques d'engagement en temps réel.</> },
         ],
       },
     ],
@@ -491,7 +460,7 @@ const T = {
       tracker:   "Le tracker AR garantit la fiabilité des capteurs tout en respectant l'identité de la marque.",
       floorPlan: "Plan de l'espace d'exposition avec les six installations.",
       arSession: "Animation d'une session AR en présentiel au MIPIM.",
-      satellite: "Représentation de la taille immense du site de développement.",
+      satellite: "Représentation de la taille immense du site.",
       map:       "Interagissez avec la carte pour explorer les fuseaux horaires.",
     },
   },
@@ -563,15 +532,16 @@ const SVG_FR = {
 
 // ── Flowchart lightbox ────────────────────────────────────────────────────────
 function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
-  const [index, setIndex]   = useState(initialIndex);
-  const [zoom, setZoom]     = useState(1);
-  const [pan, setPan]       = useState({ x: 0, y: 0 });
-  const indexRef            = useRef(initialIndex);
-  const zoomRef             = useRef(1);
-  const panRef              = useRef({ x: 0, y: 0 });
-  const dialogRef           = useRef(null);
-  const closeButtonRef      = useRef(null);
-  const returnFocusRef      = useRef(typeof document !== 'undefined' ? document.activeElement : null);
+  const [index, setIndex]       = useState(initialIndex);
+  const [zoom, setZoom]         = useState(1);
+  const [pan, setPan]           = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const indexRef                = useRef(initialIndex);
+  const zoomRef                 = useRef(1);
+  const panRef                  = useRef({ x: 0, y: 0 });
+  const dialogRef               = useRef(null);
+  const closeButtonRef          = useRef(null);
+  const returnFocusRef          = useRef(typeof document !== 'undefined' ? document.activeElement : null);
 
   // Inert background + restore focus on close
   useEffect(() => {
@@ -677,6 +647,60 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
     };
   }, [slides.length]);
 
+  // Mouse: scroll-to-zoom · drag-to-pan
+  useEffect(() => {
+    const el = dialogRef.current;
+    if (!el) return;
+
+    const onWheel = (e) => {
+      e.preventDefault();
+      const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+      const newZoom = Math.max(1, Math.min(4, zoomRef.current * factor));
+      zoomRef.current = newZoom;
+      if (newZoom === 1) { panRef.current = { x: 0, y: 0 }; setPan({ x: 0, y: 0 }); }
+      setZoom(newZoom);
+    };
+
+    let dragging = false, hasMoved = false;
+    let dragStartX = 0, dragStartY = 0, dragStartPanX = 0, dragStartPanY = 0;
+
+    const onMouseDown = (e) => {
+      if (zoomRef.current <= 1) return;
+      e.preventDefault();
+      dragging = true; hasMoved = false;
+      dragStartX = e.clientX; dragStartY = e.clientY;
+      dragStartPanX = panRef.current.x; dragStartPanY = panRef.current.y;
+      setIsDragging(true);
+    };
+
+    const onMouseMove = (e) => {
+      if (!dragging) return;
+      hasMoved = true;
+      const newPan = { x: dragStartPanX + e.clientX - dragStartX, y: dragStartPanY + e.clientY - dragStartY };
+      panRef.current = newPan; setPan(newPan);
+    };
+
+    const onMouseUp = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      setIsDragging(false);
+      // Prevent click-to-close if we actually panned
+      if (hasMoved) e.stopPropagation();
+    };
+
+    el.addEventListener('wheel',     onWheel,     { passive: false });
+    el.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup',   onMouseUp,   { capture: true });
+
+    return () => {
+      el.removeEventListener('wheel',     onWheel);
+      el.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup',   onMouseUp,   { capture: true });
+    };
+  }, []);
+
   const closeLbl = lang === 'fr' ? 'Fermer' : 'Close';
   const prevLbl  = lang === 'fr' ? 'Diagramme précédent' : 'Previous chart';
   const nextLbl  = lang === 'fr' ? 'Diagramme suivant'   : 'Next chart';
@@ -688,7 +712,7 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
       aria-modal="true"
       aria-label={lang === 'fr' ? 'Diagramme en plein écran' : 'Fullscreen chart'}
       className="fixed inset-0 z-[600] flex items-center justify-center overflow-hidden"
-      style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.95)' }}
+      style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.95)', cursor: zoom > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default' }}
       onClick={onClose}
     >
       {/* Chart */}
@@ -762,7 +786,8 @@ function FlowSection({ isDark, lang, labels }) {
       if (expandViewBox) svg = svg.replace(/viewBox="[^"]*"/, `viewBox="${expandViewBox}"`);
       if (isDark) {
         svg = svg
-          .replace(/(<svg[^>]*>)/, '$1<style>text,tspan{fill:rgba(255,255,255,0.85)}</style><rect width="100%" height="100%" fill="#141414"/>')
+          .replace(/fill="#815A00" stroke="#815A00"/g, 'fill="#C9A84C" stroke="#C9A84C"')
+          .replace(/(<svg[^>]*>)/, '$1<style>text,tspan{fill:rgba(255,255,255,0.85)} g:has(rect[fill="#C9A84C"]) text,g:has(rect[fill="#C9A84C"]) tspan{fill:#000000!important}</style><rect width="100%" height="100%" fill="#141414"/>')
           .replace(/fill="white" stroke=/g,        'fill="#141414" stroke=')
           .replace(/stroke="#FF0000"/g,             'stroke="#C0392B"')
           .replace(/fill="#1E1E1E"/g,               'fill="white" fill-opacity="0.8"')
@@ -771,15 +796,15 @@ function FlowSection({ isDark, lang, labels }) {
       } else {
         svg = svg
           .replace(/fill="#815A00" stroke="#815A00"/g, 'fill="#C9A84C" stroke="#C9A84C"')
-          .replace(/(<(?:text|tspan)\b[^>]*)fill="white"/g, '$1fill="#1A1200"');
+          .replace(/(<(?:text|tspan)\b[^>]*)fill="white"/g, '$1fill="#000000"');
       }
       let lightboxSvg = svg
         .replace(/style="width:100%;height:auto"/, 'style="height:80vh;width:auto;max-width:90vw;display:block"')
-        .replace(/<rect width="100%" height="100%"[^>]*\/>/, '');
+        .replace(/<rect width="100%" height="100%"[^>]*\/>/, '')
+        .replace(/(<(?:text|tspan)\b[^>]*)\s+fill-opacity="[^"]*"/g, '$1');
       if (!isDark) {
         lightboxSvg = lightboxSvg
-          .replace(/fill="#1A1200"/g, 'fill="white"')
-          .replace(/fill="black"/g,   'fill="white"');
+          .replace(/fill="black"/g, 'fill="white"');
       }
       return { svg, lightboxSvg, label, ariaLabel };
     });
@@ -871,12 +896,12 @@ function XRToolIcon({ name, icon, darkInvert = false, circle = false, contain = 
 
 function XRToolsSection({ label, categories }) {
   return (
-    <div data-squircle className="rounded-radius-6 bg-feedback-neutral-bg border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
-      <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</p>
+    <div data-squircle className="rounded-radius-6 bg-bg-page border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
+      <h2 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</h2>
       <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
         {categories.map(cat => (
           <div key={cat.label} className="flex flex-col gap-3">
-            <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label}</p>
+            <h3 className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label}</h3>
             <div className="flex flex-wrap gap-5">
               {cat.tools.map(tool => (
                 <XRToolIcon key={tool.name} {...tool} />
@@ -1100,13 +1125,13 @@ function XRExperiences({ lang, isDark }) {
         id="main-content"
         aria-label={t.title}
         tabIndex={-1}
-        className={`bg-bg-page min-h-screen transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`}
+        className={`bg-bg-surface min-h-screen transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`}
       >
 
         {/* ── Hero ── */}
         <section
           aria-labelledby="xr-hero-heading"
-          className="relative min-h-screen flex flex-col bg-bg-page overflow-hidden"
+          className="relative min-h-screen flex flex-col bg-bg-surface overflow-hidden"
           onTouchStart={onHeroTouchStart}
           onTouchEnd={onHeroTouchEnd}
         >
@@ -1155,8 +1180,9 @@ function XRExperiences({ lang, isDark }) {
                   id={section.id}
                   aria-labelledby={`${section.id}-heading`}
                   tabIndex={-1}
-                  className="py-16 sm:py-20 lg:py-24 scroll-mt-24 focus-visible:outline-none flex flex-col gap-8 sm:gap-10 lg:gap-12"
+                  className={`${si === 0 ? 'pt-8' : 'pt-3'} ${si === t.sections.length - 1 ? 'pb-16' : 'pb-3'} sm:${si === 0 ? 'pt-10' : 'pt-5'} sm:${si === t.sections.length - 1 ? 'pb-20' : 'pb-5'} lg:${si === 0 ? 'pt-24' : 'pt-6'} lg:${si === t.sections.length - 1 ? 'pb-24' : 'pb-6'} scroll-mt-24 focus-visible:outline-none${section.tile !== false ? '' : ' flex flex-col gap-8 sm:gap-10 lg:gap-12'}`}
                 >
+                  <div className={section.tile !== false ? 'bg-bg-page rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 p-6 sm:p-12 lg:p-[60px] flex flex-col gap-6 sm:gap-8' : 'contents'}>
                   {/* Eyebrow + heading */}
                   <div className="flex flex-col gap-3">
                     <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider gold-text">
@@ -1171,7 +1197,7 @@ function XRExperiences({ lang, isDark }) {
                   </div>
 
                   {/* Body paragraphs — first para, then map (if any), then rest */}
-                  <div className="flex flex-col gap-8 max-w-3xl">
+                  <div className={`flex flex-col gap-8${section.tile !== false ? '' : ' max-w-3xl'}`}>
                     {section.body.slice(0, 1).map((p, i) => (
                       p?.type === 'ul'
                         ? <div key={i}>{p}</div>
@@ -1180,15 +1206,40 @@ function XRExperiences({ lang, isDark }) {
                   </div>
 
 
+                  {/* Building photo — after first para in When & Where */}
+                  {section.id === 'when-where' && (
+                    <figure className="flex flex-col gap-2 max-w-lg mx-auto">
+                      <img
+                        src={eventBuildingPhoto}
+                        alt="Two-storey building constructed by our client at MIPIM"
+                        className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover"
+                      />
+                      <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.building}</figcaption>
+                    </figure>
+                  )}
+
+                  {/* AR session photo — in Measure section */}
+                  {section.id === 'measure' && (
+                    <figure className="flex flex-col gap-2 max-w-lg mx-auto">
+                      <img
+                        src={eventPresentationPhoto}
+                        alt="Leading a presenter-led AR session at MIPIM"
+                        data-squircle
+                        className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover"
+                      />
+                      <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.arSession}</figcaption>
+                    </figure>
+                  )}
+
                   {/* World map — between para 1 and the rest */}
                   {section.map && (
-                    <div className="max-w-[40rem] mx-auto w-full my-6 sm:my-8">
-                      <WorldMapDots isDark={isDark} lang={lang} />
+                    <div className={`${section.tile ? 'w-full' : 'max-w-[40rem] mx-auto w-full'} -mt-2 sm:-mt-3 mb-2`}>
+                      <WorldMapDots isDark={isDark} lang={lang} legendBg="" />
                     </div>
                   )}
 
                   {section.body.length > 1 && (
-                    <div className={`flex flex-col gap-8 max-w-3xl${section.map ? ' mt-4' : ''}`}>
+                    <div className={`flex flex-col gap-8${section.tile !== false ? '' : ' max-w-3xl'}${section.map ? ' mt-4' : ''}`}>
                       {section.body.slice(1).map((p, i) => (
                         <Fragment key={i}>
                           {/* Satellite photo — after para 1 of Why */}
@@ -1228,22 +1279,12 @@ function XRExperiences({ lang, isDark }) {
                             <FlowSection isDark={isDark} lang={lang} labels={t.flowLabels} />
                           )}
                           {section.id === 'prioritise' && i === 0 && (
-                            <figure className="flex flex-col gap-2 max-w-sm mx-auto">
+                            <figure className="flex flex-col gap-2 max-w-sm mx-auto mb-4">
                               <div className="grid" style={{ gridTemplateColumns: '4fr 1fr' }}>
                                 <img data-squircle src={magicLeapPhoto} alt="Magic Leap 2 AR glasses" className="w-full rounded-radius-3 sm:rounded-radius-4 object-cover" />
                                 <img data-squircle src={magicLeapControllerPhoto} alt="Magic Leap 2 controller" className="w-full rounded-radius-3 sm:rounded-radius-4 object-cover" />
                               </div>
                               <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.magicLeap}</figcaption>
-                            </figure>
-                          )}
-                          {section.id === 'when-where' && i === 0 && (
-                            <figure className="flex flex-col gap-2 max-w-lg mx-auto">
-                              <img
-                                src={eventBuildingPhoto}
-                                alt="Two-storey building constructed by our client at MIPIM"
-                                className="w-full rounded-radius-4 sm:rounded-radius-5 object-cover"
-                              />
-                              <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{t.captions.building}</figcaption>
                             </figure>
                           )}
                           {section.id === 'prioritise' && i === 1 && (
@@ -1255,19 +1296,33 @@ function XRExperiences({ lang, isDark }) {
                           {p?.type === 'callout'
                             ? p.variant === 'goal'
                               ? (
-                                <div data-squircle className="mt-6 -mb-4 rounded-radius-4 bg-feedback-success-bg border border-feedback-success-border px-5 py-4 flex flex-col gap-3">
+                                <div data-squircle className="mt-6 rounded-radius-4 bg-feedback-success-bg border border-feedback-success-border px-5 py-4 flex flex-col gap-3">
                                   <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-feedback-success-fg">{p.label}</span>
                                   <p className={bodyText}>{p.body}</p>
                                 </div>
                               )
+                              : p.variant === 'neutral'
+                              ? (
+                                <div data-squircle className="mt-6 -mb-4 rounded-radius-4 bg-feedback-neutral-bg border border-feedback-neutral-border px-5 py-4 flex flex-col gap-3">
+                                  <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{p.label}</span>
+                                  <p className={bodyText}>{p.body}</p>
+                                </div>
+                              )
+                              : p.variant === 'sky' || p.variant === 'gold'
+                              ? (
+                                <div data-squircle className={`mt-6 rounded-radius-4 px-5 py-4 flex flex-col gap-3 ${p.variant === 'gold' ? 'bg-feedback-warning-bg border border-feedback-warning-border' : 'bg-palette-sky-bg border border-palette-indigo-bg'}`}>
+                                  <span className={`text-overline-s font-medium leading-[1.4] uppercase tracking-wider ${p.variant === 'gold' ? 'text-palette-yellow-fg' : 'text-palette-indigo-fg'}`}>{p.label}</span>
+                                  <p className={bodyText}>{p.body}</p>
+                                </div>
+                              )
                               : (
-                              <div data-squircle className="mt-6 -mb-4 rounded-radius-4 bg-feedback-warning-bg border border-feedback-warning-border px-5 py-4 flex flex-col gap-3">
+                              <div data-squircle className="mt-6 rounded-radius-4 bg-feedback-warning-bg border border-feedback-warning-border px-5 py-4 flex flex-col gap-3">
                                 <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-feedback-warning-fg">{p.label}</span>
                                 <p className={bodyText}>{p.body}</p>
                               </div>
                             )
                             : p?.type === 'h3'
-                              ? <h3 className="mt-4 text-h3 font-semibold leading-snug text-fg-primary">{p.text}</h3>
+                              ? <h3 className={`${p.mt ?? 'mt-4'} text-h3 font-semibold leading-snug text-fg-primary`}>{p.text}</h3>
                             : p?.type === 'ul'
                               ? <div>{p}</div>
                               : <p className={bodyText}>{p}</p>}
@@ -1308,12 +1363,13 @@ function XRExperiences({ lang, isDark }) {
                   )}
 
                   {section.footerCallout && (
-                    <div data-squircle className="mt-6 -mb-4 rounded-radius-4 bg-feedback-warning-bg border border-feedback-warning-border px-5 py-4 flex flex-col gap-3 max-w-3xl">
+                    <div data-squircle className="mt-6 rounded-radius-4 bg-feedback-warning-bg border border-feedback-warning-border px-5 py-4 flex flex-col gap-3 max-w-3xl">
                       <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-feedback-warning-fg">{section.footerCallout.label}</span>
                       <div className={bodyText}>{section.footerCallout.body}</div>
                     </div>
                   )}
 
+                  </div>{/* end tile/contents wrapper */}
                 </section>
               ))}
               {/* ── Tools row ── */}

@@ -1,5 +1,47 @@
 # Changelog 
 
+## [2.3.0] — 2026-04-15
+
+### XR case study overhaul, FR sync, map legend i18n, lightbox zoom, a11y fixes
+
+#### XR — French translation sync
+- All 8 FR sections rewritten to match EN: why, when-where, who, team, what, prioritise, solve, measure
+- `why`: single sentence + goal callout ("Objectif")
+- `when-where`: single sentence ("Un événement à haute densité sur **une semaine**.")
+- `who`: delegate cost line + 3 audience types list; UX Insight callout removed
+- `team`: heading "Distribué par conception"; h3 "Modèle de livraison"; sprint line; gold "Mon rôle" callout
+- `what`: heading "Système expérientiel"; updated body + footerCallout ("Considération UX Spatiale")
+- `prioritise`: heading "Décision sous contraintes"; matching EN structure with 3 h3s + UX Insight callout
+- `solve`: matching EN structure (constraints ul, strategies ul, single interaction-patterns para, 2 approaches paras, system-decisions ul, "Principe clé" callout)
+- `measure`: heading "Déploiement en direct"; single results para + UX Insight callout
+
+#### XR — lightbox zoom & pan
+- Mouse scroll wheel zooms in/out (1×–4×); drag-to-pan when zoomed
+- Cursor changes to `grab`/`grabbing` when zoom > 1
+- Dragging suppresses click-to-close; zoom resets on slide change
+- Touch pinch-to-zoom and one-finger pan were already present
+
+#### XR / SP — map legend i18n
+- `viewLegend` / `hideLegend` keys added to `DEFAULT_LEGEND_T` (en/fr) in `WorldMapDots`
+- Same keys added to `SP_LEGEND_T` in `SalesPlatform`
+- FR: "Voir la légende" / "Masquer la légende"
+
+#### XR / SP — tools section accessibility
+- "Tools Used" / "Outils utilisés" heading promoted from `<p>` to `<h2>`
+- Category labels (Design, Development, etc.) promoted from `<p>` to `<h3>`
+- Applies to both `XRToolsSection` (XR) and `ToolsGrid` (SP)
+
+#### XR / SP — tools section background
+- Tools Used tile background changed from `bg-feedback-neutral-bg` to `bg-bg-page`
+
+#### XR — flowchart SVG colour fixes
+- Light mode: `fill="white"` text (arrow labels, gold-shape text) → `fill="#000000"` (pure black)
+- Dark mode: `#815A00` → `#C9A84C` gold shapes; CSS `:has(rect[fill="#C9A84C"])` rule forces gold-shape text to `#000000 !important` without touching other text
+- Lightbox: `fill-opacity` stripped from all `<text>`/`<tspan>` elements to prevent accessibility tool false positives; `fill="black"` text → `fill="white"` for dark lightbox backdrop
+
+#### XR — callout bottom padding
+- Removed `-mb-4` from goal callout (why tile), footerCallout (what tile), and default warning callout (prioritise tile) so bottom padding equals side padding
+
 ## [2.2.0] — 2026-04-15
 
 ### SP content overhaul, callout system, map legend toggle

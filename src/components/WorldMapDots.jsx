@@ -36,6 +36,8 @@ const DEFAULT_LEGEND_T = {
   en: {
     headings:       { dev: 'Engineering', design: 'Design', management: 'Management', studio: 'Studio' },
     labels:         { Designer: 'Designer', Unity: 'Unity', 'Creative Team': 'Creative Team', 'Project Manager': 'Project Manager', 'Product Manager': 'Product Manager', 'Unreal Engine': 'Unreal Engine' },
+    viewLegend:     'View legend',
+    hideLegend:     'Hide legend',
     mapCaption:     'Slide or hover over the map to explore time zones.',
     groupAriaLabel: 'Team members by location',
     mapAriaLabel:   'World map showing team locations. Use left and right arrow keys to explore time zones.',
@@ -43,6 +45,8 @@ const DEFAULT_LEGEND_T = {
   fr: {
     headings:       { dev: 'Ingénierie', design: 'Design', management: 'Management', studio: 'Studio' },
     labels:         { Designer: 'Designer', Unity: 'Unity', 'Creative Team': 'Équipe créative', 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', 'Unreal Engine': 'Unreal Engine' },
+    viewLegend:     'Voir la légende',
+    hideLegend:     'Masquer la légende',
     mapCaption:     'Survolez la carte pour explorer les fuseaux horaires.',
     groupAriaLabel: "Membres de l'équipe par localisation",
     mapAriaLabel:   "Carte du monde montrant les localisations de l'équipe. Utilisez les flèches gauche et droite pour explorer les fuseaux horaires.",
@@ -59,6 +63,7 @@ export default function WorldMapDots({
   translations    = DEFAULT_LEGEND_T,
   dotIdMap        = {}, // { countryName: 'exact-svg-base-id' } — pin a country to one specific dot
   tooltipOffsets  = {}, // { countryName: { x: 0, y: 0 } } — nudge tooltip position in px
+  legendBg        = 'bg-feedback-neutral-bg border border-feedback-neutral-border px-5 py-4',
 }) {
   const lt = translations[lang] ?? translations.en;
   const flatDots = legendGroups.flatMap(col => teamDots.filter(d => d.group === col.group));
@@ -389,7 +394,7 @@ export default function WorldMapDots({
   }, [hovered, selected, isDark]);
 
   return (
-    <div className="flex flex-col gap-8 -mb-3 sm:-mb-6 lg:-mb-8">
+    <div className="w-full flex flex-col gap-8 -mb-3 sm:-mb-6 lg:-mb-8">
       <div className="flex flex-col gap-1">
         <div
           ref={mapRef}
@@ -452,9 +457,9 @@ export default function WorldMapDots({
         </div>
       </div>
 
-      {legendOpen && <div ref={legendRef} role="group" aria-label={lt.groupAriaLabel} onKeyDown={handleLegendKeyDown}>
+      {legendOpen && <div data-squircle ref={legendRef} role="group" aria-label={lt.groupAriaLabel} onKeyDown={handleLegendKeyDown} className={`${legendBg} flex flex-col gap-4`}>
         {/* Mobile: two independent flex columns (odd groups → col 1, even → col 2) */}
-        <div className="lg:hidden flex gap-x-10">
+        <div className="lg:hidden flex gap-x-4">
           {[legendGroups.filter((_, i) => i % 2 === 0), legendGroups.filter((_, i) => i % 2 === 1)].map((colGroups, ci) => (
             <div key={ci} className="flex-1 flex flex-col gap-6">
               {colGroups.map((col) => (

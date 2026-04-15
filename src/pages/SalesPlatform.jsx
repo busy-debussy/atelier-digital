@@ -436,12 +436,12 @@ function ToolIcon({ name, icon, darkInvert = false, circle = false, contain = fa
 function ToolsGrid({ lang }) {
   const label = (CONTEXT_EYEBROWS[lang] ?? CONTEXT_EYEBROWS.en)[5];
   return (
-    <div data-squircle className="rounded-radius-6 bg-feedback-neutral-bg border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
-      <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</p>
+    <div data-squircle className="rounded-radius-6 bg-bg-page border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
+      <h2 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</h2>
       <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
         {CONTEXT_TOOLS.map(cat => (
           <div key={cat.label.en} className="flex flex-col gap-3">
-            <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label[lang] ?? cat.label.en}</p>
+            <h3 className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label[lang] ?? cat.label.en}</h3>
             <div className="flex flex-wrap gap-5">
               {cat.tools.map(tool => (
                 <ToolIcon key={tool.name} {...tool} />
@@ -573,6 +573,8 @@ const SP_LEGEND_T = {
   en: {
     headings:       { design: 'Design', studio: 'Studio', dev: 'Engineering', qa: 'QA', marketing: 'Marketing', management: 'Management' },
     labels:         { 'UX/UI': 'UX/UI', Interaction: 'Interaction', Visual: 'Visual', 'Creative Team': 'Creative Team', '3D Artists': '3D Artists', 'QA Testers': 'QA Testers', Marketing: 'Marketing', 'Project Manager': 'Project Manager', 'Product Manager': 'Product Manager', Developer: 'Developer', Cyprus: 'Cyprus', UAE: 'UAE' },
+    viewLegend:     'View legend',
+    hideLegend:     'Hide legend',
     mapCaption:     'Slide or hover over the map to explore time zones.',
     groupAriaLabel: 'Team members by location',
     mapAriaLabel:   'World map showing team locations. Use left and right arrow keys to explore time zones.',
@@ -580,6 +582,8 @@ const SP_LEGEND_T = {
   fr: {
     headings:       { design: 'Design', studio: 'Studio', dev: 'Ingénierie', qa: 'Qualité', marketing: 'Marketing', management: 'Management' },
     labels:         { 'UX/UI': 'UX/UI', Interaction: 'Interaction', Visual: 'Visuel', 'Creative Team': 'Équipe créative', '3D Artists': 'Artistes 3D', 'QA Testers': 'Testeurs', Marketing: 'Marketing', 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', Developer: 'Développeur', Cyprus: 'Chypre', UAE: 'EAU' },
+    viewLegend:     'Voir la légende',
+    hideLegend:     'Masquer la légende',
     mapCaption:     'Survolez la carte pour explorer les fuseaux horaires.',
     groupAriaLabel: "Membres de l'équipe par localisation",
     mapAriaLabel:   "Carte du monde montrant les localisations de l'équipe. Utilisez les flèches gauche et droite pour explorer les fuseaux horaires.",
@@ -645,6 +649,7 @@ function ContextContent({ lang, isDark }) {
             translations={SP_LEGEND_T}
             dotIdMap={SP_DOT_ID_MAP}
             tooltipOffsets={SP_TOOLTIP_OFFSETS}
+            legendBg=""
           />
         </div>
       </Tile>
