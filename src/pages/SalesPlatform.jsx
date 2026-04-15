@@ -1241,6 +1241,20 @@ function WireframesCarousel({ lang, isDark, showHint = true, onInteract }) {
   const scrollTimerRef = useRef(null);
   const hasInteractedRef = useRef(false);
 
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const onWheel = (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        const delta = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
+        window.scrollBy(0, delta);
+      }
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, []);
+
   const triggerInteract = () => { if (!hasInteractedRef.current) { hasInteractedRef.current = true; onInteract?.(); } };
 
   const scrollToSlide = (index) => {
@@ -1296,14 +1310,14 @@ function WireframesCarousel({ lang, isDark, showHint = true, onInteract }) {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerInteract(); setLightboxIndex(activeIndex); }
         }}
-        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary lg:max-w-[95%] lg:mx-auto"
+        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory touch-pan-x focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary lg:max-w-[95%] lg:mx-auto"
         style={{ scrollbarWidth: 'none' }}
       >
         {slides.map((slide, i) => (
           <button key={i} tabIndex={-1} onClick={() => { triggerInteract(); setLightboxIndex(i); }} aria-label={lang === 'fr' ? `Agrandir : Maquette filaire ${i + 1}` : `Expand: wireframe ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
             <picture>
               <source media="(min-width: 640px)" srcSet={slide.desktop} />
-              <img src={slide.mobile} alt={lang === 'fr' ? `Maquette filaire, diapositive ${i + 1} sur ${slides.length}` : `Wireframe mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto sm:-mb-[6%]" />
+              <img src={slide.mobile} alt={lang === 'fr' ? `Maquette filaire, diapositive ${i + 1} sur ${slides.length}` : `Wireframe mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto sm:-mb-[0%]" />
             </picture>
           </button>
         ))}
@@ -1411,6 +1425,20 @@ function HifiCarousel({ lang, isDark, showHint = true, onInteract }) {
   const scrollTimerRef = useRef(null);
   const hasInteractedRef = useRef(false);
 
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const onWheel = (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        const delta = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
+        window.scrollBy(0, delta);
+      }
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, []);
+
   const triggerInteract = () => { if (!hasInteractedRef.current) { hasInteractedRef.current = true; onInteract?.(); } };
 
   const scrollToSlide = (index) => {
@@ -1467,7 +1495,7 @@ function HifiCarousel({ lang, isDark, showHint = true, onInteract }) {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerInteract(); setLightboxIndex(activeIndex); }
           }}
           aria-label={lang === 'fr' ? `Carrousel des maquettes haute-fidélité — utilisez les flèches pour naviguer, Entrée pour agrandir` : `High-fidelity mock-ups carousel — use arrow keys to navigate, Enter to expand`}
-          className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
+          className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary"
           style={{ scrollbarWidth: 'none' }}
         >
           {slides.map((slide, i) => (

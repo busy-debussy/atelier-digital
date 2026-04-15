@@ -1,5 +1,18 @@
 # Changelog 
 
+## [2.1.9] — 2026-04-15
+
+### SP design carousels: Y-scroll fix, wireframes image crop
+
+#### SP — wireframes carousel
+- Non-passive `wheel` listener added to track: vertical scroll (`|deltaY| > |deltaX|`) is intercepted, `preventDefault()` stops the track from capturing it, and `window.scrollBy()` redirects it to the page; handles all `deltaMode` values (pixels / lines / pages)
+- `touch-pan-y` removed from track — now `touch-pan-x` only, preventing tablet touch from accidentally scrolling the carousel in the Y axis
+- Image bottom margin reduced from `sm:-mb-[6%]` to `sm:-mb-[0%]` — previous value was clipping actual wireframe content; whitespace reduction reverted in favour of full image visibility
+
+#### SP — hifi carousel
+- Same non-passive `wheel` listener added to track (identical logic to wireframes)
+- `touch-pan-y` removed from track — now `touch-pan-x` only
+
 ## [2.1.8] — 2026-04-14
 
 ### SP carousel hints, colour tokens, image spacing
