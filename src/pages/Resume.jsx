@@ -175,7 +175,7 @@ const T = {
         course:      'multimedia & communication',
         flag:        '🇫🇷',
         location:    'Tours, France',
-        period:      '2007-2010',
+        period:      '2009-2010',
         logo:        imgLogoUnivTours,
         logoDark:    null,
         logoClass:   'max-h-[48px] sm:max-h-[72px] lg:max-h-[80px]',
@@ -223,7 +223,7 @@ const T = {
         logoDark: imgLogoSoluisDark,
         drawers: [
           { label: 'Digital twin',   content: <>Led the design of <strong>digital twin solutions</strong> (Unreal Engine) accelerating <strong>macro-engineering projects</strong>, featuring <strong>real-time simulation</strong>, measuring, and viewing tools, accessible via multiple inputs.</> },
-          { label: 'Sales platform', content: <>Responsive web-based app allowing users to explore <strong>3D generated representations</strong> of unbuilt properties. The platform facilitated sales of <strong>£5B+</strong> in the first year of collab, <strong>24% increase YoY</strong>.</> },
+          { label: 'Sales platform', content: <>Responsive web-based app allowing users to explore <strong>3D generated representations</strong> of unbuilt properties. The platform facilitated sales of <strong>£6.8B</strong>, a <strong>20% increase YoY</strong>.</> },
           { label: 'AR/VR',          content: <>Designed <strong>interactive and immersive 3D experiences</strong> using augmented reality technologies (<strong>Magic Leap 2</strong>, iPad), and virtual reality headsets (<strong>Meta Quest</strong>) for international trade shows.</> },
         ],
       },
@@ -382,7 +382,7 @@ const T = {
         logoDark: imgLogoSoluisDark,
         drawers: [
           { label: 'Jumeau numérique',    content: "Lead design de solutions de jumeaux numériques (Unreal Engine) pour accélérer des projets de macro-ingénierie, intégrant des outils de simulation, mesure et visualisation en temps réel, accessibles via plusieurs types d'interfaces." },
-          { label: 'Plateforme de vente', content: "Lead designer d'une plateforme immobilière 3D facilitant la visualisation de propriétés sur plan, ayant contribué à plus de £5 milliards de ventes dès la première année (+24 % en un an)." },
+          { label: 'Plateforme de vente', content: "Lead designer d'une plateforme immobilière 3D facilitant la visualisation de propriétés sur plan, ayant contribué à £6,8 milliards de ventes (+20 % en un an)." },
           { label: 'Réalité étendue (XR)',               content: "Designer d'expériences 3D interactives et immersives utilisant la réalité augmentée (Magic Leap 2, iPad) et la réalité virtuelle (Meta Quest) pour des salons internationaux." },
         ],
       },
@@ -451,7 +451,7 @@ const T = {
         course:      'ATC - Activités et techniques de communication',
         flag:        '🇫🇷',
         location:    'Tours, France',
-        period:      '2007-2010',
+        period:      '2009-2010',
         logo:        imgLogoUnivTours,
         logoDark:    null,
         drawers: [

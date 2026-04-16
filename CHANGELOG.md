@@ -1,5 +1,14 @@
 # Changelog 
 
+## [2.3.1] — 2026-04-16
+
+#### Resume — data corrections
+- Université de Tours education period corrected: `2007–2010` → `2009–2010` (EN and FR)
+- Soluis sales platform metrics updated (EN): `£5B+ in first year, +24% YoY` → `£6.8B, +20% YoY`
+- Soluis sales platform metrics updated (FR): same figures mirrored in French copy
+
+---
+
 ## [2.3.0] — 2026-04-15
 
 ### XR case study overhaul, FR sync, map legend i18n, lightbox zoom, a11y fixes
