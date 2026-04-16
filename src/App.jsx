@@ -101,8 +101,17 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
   );
 }
 
+function isNightInUK() {
+  try {
+    const h = parseInt(
+      new Date().toLocaleString('en-US', { timeZone: 'Europe/London', hour: 'numeric', hour12: false }), 10
+    );
+    return h >= 22 || h < 8;
+  } catch { return false; }
+}
+
 function App() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(isNightInUK);
   const [lang, setLang] = useState('en');
 
   useEffect(() => initSpringPress(), []);

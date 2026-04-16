@@ -2,6 +2,30 @@
 
 ## [2.3.1] — 2026-04-16
 
+#### Hero — placeholder cycling animation
+- Left-to-right mask reveal replaces simple fade-in: CSS mask sweeps across text with a soft trailing edge (`ph-ltr` keyframe, `.ph-ltr-reveal` class)
+- Fade-out remains a plain opacity transition (300ms)
+- Removed `key={phIdx}` — single persistent span eliminates DOM remount flicker between cycles
+- Reduced motion: falls back to plain opacity crossfade
+- Removed now-unused `ph-in` keyframe
+
+#### Hero — pill colours
+- Replaced per-pill `uiConceptAccent` rainbow with `bg-bg-surface border border-glass-subtle text-fg-secondary` — neutral, no false interactivity signal
+- Removed `color` import and `hexToRgba` helper from `Hero.jsx` (no longer needed)
+
+#### Hero — spacing
+- H1 → H2 gap: `mt-8 sm:mt-10` → `mt-4 sm:mt-6`
+- H2 → card gap: `mt-12 sm:mt-20` → `mt-8 sm:mt-12`
+
+#### App — auto dark mode by UK time
+- Site initialises in dark mode when UK time is between 22:00 and 08:00 (`Europe/London`, GMT/BST aware)
+- Implemented as a lazy `useState` initialiser in `App.jsx` — no flash, no effect delay
+- User can still override via the dark mode toggle
+
+#### Hero — accent glow removed
+- Removed `.hero-accent-glow` radial gradient (CTA blue at 5% opacity — imperceptible)
+- Removed corresponding div from `Hero.jsx` and class from `index.css`
+
 #### Resume — data corrections
 - Université de Tours education period corrected: `2007–2010` → `2009–2010` (EN and FR)
 - Soluis sales platform metrics updated (EN): `£5B+ in first year, +24% YoY` → `£6.8B, +20% YoY`

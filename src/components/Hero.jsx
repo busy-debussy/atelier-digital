@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { color } from '../design-system';
 
 const API_URL = import.meta.env.VITE_CHAT_API_URL || '/api/chat';
 
@@ -31,11 +30,6 @@ function getHeading(lang, dark) {
   if (lang === 'fr') return dark ? "Bonsoir, c'est David\u00a0!" : "Bonjour, c'est David\u00a0!";
   return isAfterWorkHoursLocal() ? "Hey, I'm David!" : "Hi, I'm David!";
 }
-
-const hexToRgba = (hex, alpha) => {
-  const [r, g, b] = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
-  return `rgba(${r},${g},${b},${alpha})`;
-};
 
 const EASE = 'cubic-bezier(0.22,1,0.36,1)';
 
@@ -166,7 +160,6 @@ const pills = lang === 'fr'
   return (
     <section aria-label={lang === 'fr' ? 'Présentation' : 'Introduction'} className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 pb-24">
       <div aria-hidden="true" className="hero-surface-gradient pointer-events-none absolute inset-0" />
-      <div aria-hidden="true" className="hero-accent-glow pointer-events-none absolute inset-0 dark:hidden" />
 
       <div className="relative flex flex-col items-center gap-0">
 
@@ -178,14 +171,14 @@ const pills = lang === 'fr'
         </div>
 
         {/* H2 */}
-        <div className="mt-8 sm:mt-10" style={hasMessages && !messagesClosing ? { opacity: 0, transition: 'opacity 300ms ease', pointerEvents: 'none' } : fadeUp(100)}>
+        <div className="mt-4 sm:mt-6" style={hasMessages && !messagesClosing ? { opacity: 0, transition: 'opacity 300ms ease', pointerEvents: 'none' } : fadeUp(100)}>
           <h2 className="text-display-2 font-semibold leading-tight text-fg-muted">
             {subtitle}
           </h2>
         </div>
 
         {/* Slot — always in flow at card height; card and messages swap inside without affecting input position */}
-        <div className="relative mt-12 sm:mt-20 w-full max-w-lg" style={fadeUp(200, 480)}>
+        <div className="relative mt-8 sm:mt-12 w-full max-w-lg" style={fadeUp(200, 480)}>
 
           {/* Card */}
           <div className={`transition-opacity duration-300 ${hasMessages && !messagesClosing ? 'opacity-0 pointer-events-none' : ''}`}>
@@ -201,19 +194,11 @@ const pills = lang === 'fr'
                 {pills.map((pill, i) => (
                   <li
                     key={pill}
-                    className="px-2 py-1 sm:px-4 sm:py-2 rounded-full text-tag-s font-medium leading-normal flex items-center justify-center"
-                    style={{
-                      ...(skip ? {} : {
-                        opacity:    ready ? 1 : 0,
-                        transform:  prefersReduced ? undefined : (ready ? 'none' : 'translateY(10px)'),
-                        transition: `opacity 480ms ${320 + i * 55}ms ${EASE}, transform 480ms ${320 + i * 55}ms ${EASE}`,
-                      }),
-                      backgroundColor: isDark
-                        ? color.uiConceptAccent[i % color.uiConceptAccent.length].bgDark
-                        : hexToRgba(color.uiConceptAccent[i % color.uiConceptAccent.length].bg, 0.45),
-                      color: isDark
-                        ? color.uiConceptAccent[i % color.uiConceptAccent.length].fgDark
-                        : color.uiConceptAccent[i % color.uiConceptAccent.length].fg,
+                    className="px-2 py-1 sm:px-4 sm:py-2 rounded-full text-tag-s font-medium leading-normal flex items-center justify-center bg-bg-surface border border-glass-subtle text-fg-secondary"
+                    style={skip ? {} : {
+                      opacity:    ready ? 1 : 0,
+                      transform:  prefersReduced ? undefined : (ready ? 'none' : 'translateY(10px)'),
+                      transition: `opacity 480ms ${320 + i * 55}ms ${EASE}, transform 480ms ${320 + i * 55}ms ${EASE}`,
                     }}
                   >
                     {pill}
@@ -309,13 +294,9 @@ const pills = lang === 'fr'
                   </span>
                 ) : (
                   <span
-                    key={phIdx}
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 flex items-center pl-3 text-copy-s text-fg-dot-rest"
-                    style={phOut
-                      ? { opacity: 0, transition: 'opacity 300ms ease' }
-                      : { animation: 'ph-in 400ms ease both' }
-                    }
+                    className={`pointer-events-none absolute inset-0 flex items-center pl-3 text-copy-s text-fg-dot-rest${!phOut && !prefersReduced ? ' ph-ltr-reveal' : ''}`}
+                    style={phOut ? { opacity: 0, transition: 'opacity 300ms ease' } : (prefersReduced ? { opacity: 1, transition: 'opacity 350ms ease' } : {})}
                   >
                     {chatPlaceholders[phIdx]}
                   </span>

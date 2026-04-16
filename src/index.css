@@ -64,14 +64,24 @@ body {
   to   { opacity: 1; }
 }
 
-@keyframes ph-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
 @keyframes slide-up {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ph-ltr {
+  from { mask-position: 150% center; -webkit-mask-position: 150% center; }
+  to   { mask-position: 0% center;   -webkit-mask-position: 0% center; }
+}
+
+.ph-ltr-reveal {
+  -webkit-mask-image: linear-gradient(90deg, black 60%, transparent 100%);
+  mask-image: linear-gradient(90deg, black 60%, transparent 100%);
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: ph-ltr 500ms ease forwards;
 }
 
 .page-enter {
@@ -99,11 +109,6 @@ body {
   .border-glass-medium    { border-color: var(--border-glass-medium); }
   .border-glass-default   { border-color: var(--border-glass-default); }
   .border-inverted-subtle { border-color: var(--border-inverted-subtle); }
-}
-
-/* Hero accent glow — CTA blue at 5% opacity; inline rgba not possible with CSS vars */
-.hero-accent-glow {
-  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(1, 82, 236, 0.05) 0%, transparent 70%);
 }
 
 /* Hero surface gradient — subtle top-to-bottom depth */
