@@ -124,7 +124,13 @@ function Tooltip({ label, isDark, offset = 8, shortcut }) {
 function useDelayedTooltip(delay = 600) {
   const [visible, setVisible] = useState(false);
   const timer = useRef(null);
-  const show = () => { timer.current = setTimeout(() => setVisible(true), delay); };
+  const show = (guard) => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      if (guard && !guard()) return;
+      setVisible(true);
+    }, delay);
+  };
   const hide = () => { clearTimeout(timer.current); setVisible(false); };
   useEffect(() => () => clearTimeout(timer.current), []);
   return [visible, show, hide];
@@ -132,11 +138,14 @@ function useDelayedTooltip(delay = 600) {
 
 // DarkModeToggle
 function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
+  const buttonRef = useRef(null);
   const [hovered, setHovered]           = useState(false);
   const [pressed, setPressed]           = useState(false);
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
   const suppressRef = useRef(false);
   const suppressTimer = useRef(null);
+  // Safari fires spurious mouseenter on re-render / focus regain — verify via :hover at fire time.
+  const tryShowTip = () => showTip(() => buttonRef.current?.matches(':hover'));
 
   const suppress = () => {
     hideTip();
@@ -176,10 +185,11 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
   return (
     <div className="relative">
       <button
+        ref={buttonRef}
         onPointerDown={() => setPressed(true)}
         onPointerUp={() => { setPressed(false); handleClick(); }}
         onPointerLeave={() => { setPressed(false); hideTip(); }}
-        onMouseEnter={() => { setHovered(true);  if (!noTooltip && !suppressRef.current) showTip(); }}
+        onMouseEnter={() => { setHovered(true);  if (!noTooltip && !suppressRef.current) tryShowTip(); }}
         onMouseLeave={() => { setHovered(false); hideTip(); }}
         onBlur={() => { setHovered(false); hideTip(); }}
         aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}

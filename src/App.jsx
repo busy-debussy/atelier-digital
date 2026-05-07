@@ -7,7 +7,7 @@ import { GA_ID, loadGoogleAnalytics, loadClarity, trackPageView, trackEvent } fr
 import Nav from './components/Nav';
 import ScrollForMore from './components/ScrollForMore';
 import CookieBanner from './components/CookieBanner';
-import ChatBot from './components/ChatBot';
+// import ChatBot from './components/ChatBot';
 import Home from './pages/Home';
 import SalesPlatform from './pages/SalesPlatform';
 import XRExperiences from './pages/XRExperiences';
@@ -220,7 +220,7 @@ function App() {
         <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
         <CookieBanner lang={lang} hideFloating={secondaryNavVisible} />
       </div>
-      <ChatBot lang={lang} />
+      {/* <ChatBot lang={lang} /> */}
     </BrowserRouter>
   );
 }

@@ -1,5 +1,19 @@
 # Changelog 
 
+## [2.3.2] — 2026-05-07
+
+#### ChatBot — temporarily disabled
+- Import and global mount in `App.jsx` commented out (no usage telemetry to justify keeping it live)
+- Component code retained for easy restoration; `chatOpen` state left in place (harmless, always `false`)
+
+#### Nav — Safari tooltip fix on dark mode toggle
+- Tooltip was appearing spuriously in Safari (random pop-ins, especially in dark mode) caused by Safari firing phantom `mouseenter` events on re-render / focus regain
+- `useDelayedTooltip.show()` now clears any pending timer before queuing a new one — prevents stacked timers from racing past `hide()`
+- `show()` accepts an optional `guard` callback evaluated when the timer fires; `DarkModeToggle` passes `() => buttonRef.current?.matches(':hover')` so the tooltip only reveals when the cursor is genuinely over the button
+- Other tooltips (logo, projects, lang, NavLinks, contact) unchanged — they pass no guard, behave as before
+
+---
+
 ## [2.3.1] — 2026-04-16
 
 #### Hero — placeholder cycling animation
