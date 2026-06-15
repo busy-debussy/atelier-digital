@@ -67,12 +67,12 @@ const T = {
     collaborators: [
       { name: 'Government of the United Kingdom',              description: 'We contributed to improve simulated environments by automating the creation of <strong>human digital twins</strong>.' },
       { name: 'Looking Glass Factory',                         description: 'We delivered <strong>real-time</strong> solutions in terrain mapping, and <strong>medical imaging</strong> via a suite of enterprise apps running on 3D light-field displays.' },
-      { name: 'Defence Science and Technology Laboratory',     description: 'A holographic <strong>telexistence system</strong> enabling <strong>remote operations</strong> in hazardous environments.' },
+      { name: 'Defence Science and Technology Laboratory',     shortName: 'Defence Science and Tech. Lab.', description: 'A holographic <strong>telexistence system</strong> enabling <strong>remote operations</strong> in hazardous environments.' },
       { name: 'Jaguar Land Rover',                             description: 'We partnered with Jaguar Land Rover to bring holographic innovations that <strong>enhance car safety</strong>.' },
       { name: 'Nokia',                                         description: 'A 5G-powered real-time <strong>3D telepresence</strong> system, featuring 3D capture and light-field displays for lifelike human connections.' },
       { name: 'Public Investment Funds',                       description: 'We engaged investors by revealing a mega construction project through <strong>immersive</strong> AR and VR experiences. (Magic Leap 2, Meta Quest Pro)' },
       { name: 'Etisalat',                                      description: 'A <strong>3D telemedicine</strong> platform showcasing <strong>healthcare innovations</strong> to 100,000+ attendees.' },
-      { name: 'European Organization for Nuclear Research',    description: 'We celebrated the Higgs Boson discovery by recreating the collision event in a <strong>digital hologram</strong>.' },
+      { name: 'European Organization for Nuclear Research',    shortName: 'Europ. Org. for Nuclear Research', description: 'We celebrated the Higgs Boson discovery by recreating the collision event in a <strong>digital hologram</strong>.' },
       { name: 'The University of Edinburgh',                   description: 'Together with an anatomy professor, we created a <strong>life-size hologram</strong> to support the teaching of the <strong>human body</strong>.' },
       { name: 'IBM',                                           description: 'We aimed to reshape the future of digital interactions, by teaming up with IBM, to build an <strong>AI-powered</strong> 3D Avatar.' },
       { name: 'University Hospital Hamburg',                   description: 'We supported surgical training with a leading academic hospital by designing a series of 3D <strong>eye surgery animations</strong>.' },
@@ -87,12 +87,12 @@ const T = {
     collaborators: [
       { name: 'Gouvernement du Royaume-Uni',                        description: 'Nous avons contribué à améliorer des environnements simulés en automatisant la création de <strong>jumeaux numériques humains</strong>.' },
       { name: 'Looking Glass Factory',                              description: 'Une suite d’applis pro pour écrans 3D, offrant des <strong>solutions en temps réel</strong> pour la cartographie et l’imagerie médicale.' },
-      { name: 'Laboratoire de science et technologie de défense',   description: 'Un système de <strong>télé-existence holographique</strong> pour des <strong>opérations à distance</strong> dans des environnements dangereux.' },
+      { name: 'Laboratoire de science et technologie de défense',   shortName: 'Lab. de science et tech. de défense', description: 'Un système de <strong>télé-existence holographique</strong> pour des <strong>opérations à distance</strong> dans des environnements dangereux.' },
       { name: 'Jaguar Land Rover',                                  description: 'En collaboration avec Jaguar Land Rover, nous avons développé des innovations pour <strong>renforcer la sécurité des véhicules</strong>. ' },
       { name: 'Nokia',                                              description: 'Un <strong>système de télé-présence</strong> 3D en temps réel, propulsé par la 5G, avec capture 3D et écrans volumétriques pour rapprocher les gens.' },
       { name: "Fonds public d'investissement",                      description: 'Nous avons présenté un méga-projet à des investisseurs via des expériences 3D en <strong>réalité augmentée</strong> (Magic Leap 2) et en <strong>réalité virtuelle</strong>.' },
       { name: 'Etisalat',                                           description: 'Une <strong>plateforme de télé-médecine</strong> 3D présentant des <strong>innovations de santé</strong> lors d’un événement rassemblant plus de 100k participants.' },
-      { name: "Organisation européenne pour la recherche nucléaire", description: 'Nous avons rendu hommage à la découverte du boson de Higgs en recréant l’événement de collision dans un <strong>hologramme</strong>.' },
+      { name: "Conseil européen pour la recherche nucléaire", shortName: 'Conseil europ. recherche nucléaire', description: 'Nous avons rendu hommage à la découverte du boson de Higgs en recréant l’événement de collision dans un <strong>hologramme</strong>.' },
       { name: "Université d'Édimbourg",                             description: 'Avec un professeur d’anatomie, nous avons créé un <strong>hologramme grandeur nature</strong> pour aider l’enseignement du <strong>corps humain</strong>.' },
       { name: 'IBM',                                                description: 'Nous avons tenté d’améliorer le futur des intéractions, avec IBM, en créant un avatar 3D <strong>propulsé par l’IA</strong>.' },
       { name: "Centre hospitalier universitaire d’Hambourg",       description: 'Nous avons soutenu la formation chirurgicale, avec un hôpital universitaire, en concevant une série d’animations 3D de <strong>chirurgies oculaires</strong>.' },
@@ -460,7 +460,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                 {collaborators.map((collab, i) => (
                   <div
                     key={i}
-                    className="shrink-0 w-full h-full flex flex-col justify-between gap-2 sm:gap-[14px] lg:gap-4 pt-4 sm:pt-7 lg:pt-9 pb-2 sm:pb-3 lg:pb-4 px-4 sm:px-10 lg:px-14"
+                    className="shrink-0 w-full h-full flex flex-col justify-between gap-2 sm:gap-[14px] lg:gap-4 pt-6 sm:pt-7 lg:pt-9 pb-2 sm:pb-3 lg:pb-4 pl-6 pr-4 sm:px-10 lg:px-14"
                     style={{ scrollSnapAlign: 'start' }}
                   >
                     <div className="flex-1 min-h-0 overflow-hidden" style={{ opacity: contentVisible ? 1 : 0, transition: 'opacity 150ms ease' }}>
@@ -474,7 +474,12 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
                         {collab.logoSmallDark && <img src={collab.logoSmallDark} alt="" className="hidden dark:block w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain shrink-0" />}
                       </>
                       <span className="text-fine-print sm:text-copy-s lg:text-label-s font-semibold text-fg-primary">
-                        {collab.name}
+                        {collab.shortName ? (
+                          <>
+                            <span className="sm:hidden">{collab.shortName}</span>
+                            <span className="hidden sm:inline">{collab.name}</span>
+                          </>
+                        ) : collab.name}
                       </span>
                     </div>
                   </div>

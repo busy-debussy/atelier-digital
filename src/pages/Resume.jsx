@@ -308,7 +308,7 @@ const T = {
       { name: 'Excellence en Holographie',                                            issuer: 'International Hologram Manufacturers Association', icon: imgIconAward,   svgIcon: true },
     ],
     bio: [
-      <>Le design, c'est comment ça fonctionne. Un parcours en <B>ingénierie mécanique</B>, <B>holographie</B>, <B>informatique spatiale</B> et <B>jumeaux numériques</B> apporte une profondeur technique à chaque expérience digitale que je conçois.</>,
+      <>Le design, c'est la façon dont ça fonctionne. Un parcours en <B>ingénierie mécanique</B>, <B>holographie</B>, <B>informatique spatiale</B> et <B>jumeaux numériques</B> apporte une profondeur technique à chaque expérience digitale que je conçois.</>,
       <>Promouvant l'innovation via le design, j'ai acquis une expertise en <B>prototypage</B>, tout en <B>collaborant</B>  étroitement avec des équipes inter-fonctionnelles, et  <B>dirigeant</B>  une équipe.</>,
       <>Attentif, dans l'empathie, et curieux, je suis un <B>penseur créatif</B>, animé par une méthode de résolution des problèmes, et de gestion des projets d'innovation, <B>centrée sur les usagers</B>.</>,
       <>Avide de nouveaux défis, et de contribuer à un <B>avenir meilleur</B>.</>,

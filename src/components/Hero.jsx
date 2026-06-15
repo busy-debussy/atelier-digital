@@ -185,16 +185,16 @@ const pills = lang === 'fr'
             <Link
               data-spring
               to="/resume?from=home#experience"
-              className="group block border border-glass-subtle hover:border-border-subtle rounded-radius-8 px-6 py-5 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-s dark:hover:shadow-s-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 cursor-pointer"
+              className="group block border border-glass-subtle hover:border-border-subtle rounded-radius-8 px-4 py-5 sm:px-6 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-s dark:hover:shadow-s-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 cursor-pointer"
             >
               <h3 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted">
                 {expLabel}
               </h3>
-              <ul aria-label={expLabel} className="list-none grid grid-cols-3 gap-2 p-0 m-0">
+              <ul aria-label={expLabel} className="list-none grid grid-cols-3 gap-1.5 sm:gap-2 p-0 m-0">
                 {pills.map((pill, i) => (
                   <li
                     key={pill}
-                    className="px-2 py-1 sm:px-4 sm:py-2 rounded-full text-tag-s font-medium leading-normal flex items-center justify-center bg-bg-surface border border-glass-subtle text-fg-secondary"
+                    className="px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-tag-s font-medium leading-normal flex items-center justify-center bg-bg-surface border border-glass-subtle text-fg-secondary"
                     style={skip ? {} : {
                       opacity:    ready ? 1 : 0,
                       transform:  prefersReduced ? undefined : (ready ? 'none' : 'translateY(10px)'),

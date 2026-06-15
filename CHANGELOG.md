@@ -1,5 +1,26 @@
 # Changelog 
 
+## [2.5.1] — 2026-06-15
+
+#### Home — case-study cards
+- Status badge restyled for legibility: solid opaque neutral-dark pill (`#1c1c1e`, ~17:1 contrast over any photo) with a colour-coded status dot (emerald = shipped, amber = in alpha), replacing the saturated solid green/amber pill; dropped the uppercase/semibold/tracking and the shadow
+- Title & subtitle nudged 2px right (`pl-0.5`) so they no longer sit flush under the chip row
+
+#### Home — "experienced in" pills (mobile)
+- Reworked mobile spacing so "Design systems" no longer wraps to two lines: card horizontal padding `px-6` → `px-4` (sm+ unchanged), grid gap `gap-2` → `gap-1.5`, pill padding `px-2` → `px-2.5`
+
+#### Home — Key collaborations (mobile)
+- Description card given more top/left breathing room (`pt-4`/`px-4` → `pt-6`/`pl-6`)
+- Two long collaborator names now shortened on mobile only (full name retained at `sm+`) via a new `shortName` field: "Defence Science and Technology Laboratory" → "Defence Science and Tech. Lab."; "European Organization for Nuclear Research" → "Europ. Org. for Nuclear Research" (FR: "Conseil europ. recherche nucléaire")
+- Corrected CERN's French name to "Conseil européen pour la recherche nucléaire"
+
+#### Canap case study
+- Open-in-Figma button: the Figma app-icon plate is now a full circle (`rounded-full`)
+- "Built with AI" (process) section background is now a grey → white top-to-bottom gradient (the context section's gradient, flipped)
+- Impact → Outcome tile background set to the white page token (`bg-bg-page`) so it stands out from the section
+
+---
+
 ## [2.5.0] — 2026-06-15
 
 ### Canap case study, collapsible secondary navigation, legal-page nav redesign, accessibility pass

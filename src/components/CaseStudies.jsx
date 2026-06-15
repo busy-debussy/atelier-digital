@@ -164,16 +164,19 @@ function CsCard({ card, t }) {
         />
       )}
 
-      {/* Status badge — top-left, solid tone pill (deep green = shipped, deep
-          amber = in alpha) with a white uppercase label. Tones are dark enough
-          that white passes AA contrast. Sits above the hero, under the locked
-          overlay. */}
+      {/* Status badge — top-left. Solid neutral-dark pill (opaque, so white
+          text reliably passes contrast over any photo region) with a small
+          colour-coded status dot (emerald = shipped, amber = in alpha). */}
       {card.status && (
         <span
           data-squircle
-          className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 lg:top-4 lg:left-4 z-10 px-2 py-1 rounded-radius-3 text-chip-xs font-semibold uppercase tracking-wide text-white leading-none whitespace-nowrap shadow-sm"
-          style={{ backgroundColor: card.status.tone === 'shipped' ? '#15803D' : '#B45309' }}
+          className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 lg:top-4 lg:left-4 z-10 flex items-center gap-1.5 px-2 py-1 rounded-radius-3 bg-[#1c1c1e] ring-1 ring-white/10 text-chip-xs font-medium text-white leading-none whitespace-nowrap"
         >
+          <span
+            aria-hidden="true"
+            className="w-1.5 h-1.5 rounded-full shrink-0"
+            style={{ backgroundColor: card.status.tone === 'shipped' ? '#34D399' : '#FBBF24' }}
+          />
           {card.status.label}
         </span>
       )}
@@ -201,7 +204,7 @@ function CsCard({ card, t }) {
         </div>
 
         <div className="flex items-end justify-between gap-2">
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 pl-0.5">
             <h3 className="text-h4 font-bold text-white leading-tight">
               {card.title}
             </h3>

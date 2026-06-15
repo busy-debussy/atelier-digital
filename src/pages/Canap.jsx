@@ -184,8 +184,8 @@ const T = {
     insights: {
       header: 'Key insights',
       items: [
-        'Users expect a unified experience across films, TV, and documentaries.',
-        'Existing products don’t directly address the challenge of group coordination.',
+        'Users expect a unified experience across films, TV, and docus.',
+        'Existing products don’t directly address group coordination.',
         'Discovery and decision-making are separate moments.',
       ],
     },
@@ -244,7 +244,7 @@ const T = {
       items: [
         { title: 'Unify the entertainment journey', body: 'Films, TV series, and documentaries are part of a single experience.' },
         { title: 'Support shared decision-making', body: 'Make it easier for groups to find content they want to watch together.' },
-        { title: 'Capture and share recommendations', body: 'Allow users to save and send recommendations instantly, at anytime.' },
+        { title: 'Enable recommendation sharing', body: 'Allow users to save and send recommendations instantly, at anytime.' },
       ],
     },
     coreFeatures: {
@@ -317,12 +317,12 @@ const T = {
       },
       journey: {
         header: 'User journey',
-        intro: 'At the heart of the experience is a lightweight content-management flow, enabling users to quickly track, prioritise or discard titles.',
+        intro: 'At the heart of the experience is a content-management flow, enabling users to quickly track, prioritise or discard titles.',
         imgAlt: 'The path to marking a title — find it, act in place or open it, then pick where it belongs — landing in one of five states: Watching, Want to watch, Watched, Stopped or Dismissed.',
       },
       interaction: {
         header: 'Interaction model',
-        intro: 'Posters are the primary interactive element across the app. They keep the international 2:3 ratio, which sits naturally on mobile.',
+        intro: 'Posters are the primary interactive element across the app. They keep the 2:3 ratio, which sits naturally on mobile.',
         posterAlt: 'A poster carrying its status badge, action chip and metadata',
         badgeStatus: 'Watching',
         metaYear: '2013',
@@ -378,7 +378,7 @@ const T = {
           {
             n: '02',
             title: 'Verification code',
-            body: 'The six-digit code is split into two groups of three for easier scanning and entry.',
+            body: 'The code is split into two groups of three for easier memorising and entry.',
             img: 'code',
             alt: 'Verification screen: “Check your inbox” above six code boxes, the first two filled, with a numeric keypad below.',
           },
@@ -747,7 +747,7 @@ const T = {
     },
     design: {
       header: 'Conception',
-      iaHeader: 'Architecture de l’information',
+      iaHeader: 'Architecture de l’info',
       iaCarousel: {
         carouselLabel: 'Architecture de l’information',
         navPrev: 'Voir l’onglet précédent',
@@ -2571,9 +2571,9 @@ function CardCarousel({ items, copy, renderItem, itemName, maxDots }) {
 // is a plain string (leaf) or `{ name, children }` for a single nested level
 // (rendered as a bulleted sub-item). Labels mirror the shipping iOS app.
 const INFO_ARCHITECTURE = [
-  { icon: 'home', name: 'Home', children: ['Continue Watching', 'Trending', 'Recommendations', 'Award winners', 'Coming soon', 'Top rated'] },
+  { icon: 'home', name: 'Home', children: ['Keep watching', 'Trending', 'Recommendations', 'Award winners', 'Coming soon', 'Top rated'] },
   { icon: 'library', name: 'Library', children: ['Watching', 'To Watch', 'Watched', 'Stopped', 'Dismissed', 'Collections'] },
-  { icon: 'groups', name: 'Groups', children: ['Watching together', 'Top matches', 'Sessions', 'Coming soon', 'Watched together', 'Stats'] },
+  { icon: 'groups', name: 'Groups', children: ['Group watching', 'Top matches', 'Sessions', 'Coming soon', 'Group Watched', 'Stats'] },
   { icon: 'search', name: 'Search', children: ['Trending', 'Recent searches', 'Suggestions', 'Search results'] },
   { icon: 'profile', name: 'Profile', children: ['Public profile', 'Calendar', 'Favourite people', 'Recommend', 'Import', 'Account settings'] },
 ];
@@ -3638,7 +3638,7 @@ function Canap({ lang = 'en', isDark }) {
               {/* Icon sits on a matched #161616 plate (same as the app-icon's
                   own background) with padding, so the black bg reads larger
                   without scaling the glyph. */}
-              <span className="inline-flex items-center justify-center rounded-radius-3 bg-[#161616] shadow-xs p-[3px]">
+              <span className="inline-flex items-center justify-center rounded-full bg-[#161616] shadow-xs p-[3px]">
                 <img src={imgFigmaAppIcon} alt="" width={20} height={20} className="rounded-radius-2" />
               </span>
               {t.designSystem.openFigma}
@@ -3710,7 +3710,7 @@ function Canap({ lang = 'en', isDark }) {
             shipped, coherent result. Five numbered sections, each a tile with
             paragraphs, lead-in bullet lists, labelled sub-groups and the odd
             key-takeaway callout (see ProcessBlock). */}
-        <Section id="process" title={t.process.header} bgClass="bg-bg-page" titleInset>
+        <Section id="process" title={t.process.header} bgClass="bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]" titleInset>
           {/* Two paragraphs (split on the newline) rendered as separate <p>s
               with a normal gap, so the type matches every other section intro
               instead of the cramped single-line-height of whitespace-pre-line. */}
@@ -3764,7 +3764,7 @@ function Canap({ lang = 'en', isDark }) {
           titleInset
         >
           <div className="grid grid-cols-1 gap-6 sm:gap-7 lg:gap-8">
-            <Tile>
+            <Tile bgClass="bg-bg-page">
               <TileEyebrow id="imp-outcome">{t.impact.outcome.eyebrow}</TileEyebrow>
               <div className="space-y-4">
                 {t.impact.outcome.body.map((p, i) => (
