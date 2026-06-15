@@ -22,8 +22,9 @@ const T = {
   en: {
     projects:          'case studies',
     'digital twin':    'digital twins',
-    'sales platform':  'sales platform',
+    'sales platform':  'web app',
     'extended reality':'extended reality',
+    'iphone app':      'iPhone app',
     holograms:         'holograms',
     résumé:            'résumé',
     "let's talk":      "let's talk",
@@ -38,8 +39,9 @@ const T = {
   fr: {
     projects:          'études de cas',
     'digital twin':    'digital twins',
-    'sales platform':  'plateforme web',
+    'sales platform':  'application web',
     'extended reality':'réalité étendue',
+    'iphone app':      'app iPhone',
     holograms:         'hologrammes',
     résumé:            'CV interactif',
     "let's talk":      'coordonnées',
@@ -127,7 +129,7 @@ function useDelayedTooltip(delay = 600) {
   const show = (guard) => {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
-      if (guard && !guard()) return;
+      if (typeof guard === 'function' && !guard()) return;
       setVisible(true);
     }, delay);
   };
@@ -247,7 +249,8 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
   const items = [
     { key: 'sales platform',   to: '/case-study/sales-platform', locked: false },
     { key: 'extended reality', to: '/case-study/xr',             locked: false },
-    { key: 'digital twin',     to: null,                       locked: true  },
+    { key: 'digital twin',     to: null,                         locked: true  },
+    { key: 'iphone app',       to: '/case-study/canap',          locked: false },
   ];
 
   useEffect(() => {
@@ -730,7 +733,8 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
   const subItems = [
     { key: 'sales platform',   to: '/case-study/sales-platform', locked: false },
     { key: 'extended reality', to: '/case-study/xr',             locked: false },
-    { key: 'digital twin',     to: null,                       locked: true  },
+    { key: 'digital twin',     to: null,                         locked: true  },
+    { key: 'iphone app',       to: '/case-study/canap',          locked: false },
   ];
 
   return (

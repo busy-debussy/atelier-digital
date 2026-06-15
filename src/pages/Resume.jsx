@@ -99,7 +99,7 @@ const T = {
       {
         title:       'Prototyping',
         icon:        imgIconTouch,
-        description: <>4+ years designing <B>user-flows</B>, <B>wireframes</B>, and <B>high-fidelity interactive prototypes</B> for mobile, web, AR/VR and <B>digital twins</B>.</>,
+        description: <>5+ years designing <B>user-flows</B>, <B>wireframes</B>, and <B>high-fidelity interactive prototypes</B> for mobile, web, AR/VR and <B>digital twins</B>.</>,
         tools: [
           { name: 'Figma',      icon: imgToolFigma },
           { name: 'Claude Code', icon: imgToolClaude, noBg: true },
@@ -317,7 +317,7 @@ const T = {
       {
         title:       'Prototypage',
         icon:        imgIconTouch,
-        description: <>Plus de 4 ans d'expérience conception de <B>parcours utilisateurs</B>, <B>maquettes</B>, et <B>prototypes</B> de pour mobile, web, réalité étendue et <B>jumeaux numériques</B>.</>,
+        description: <>Plus de 5 ans d'expérience conception de <B>parcours utilisateurs</B>, <B>maquettes</B>, et <B>prototypes</B> de pour mobile, web, réalité étendue et <B>jumeaux numériques</B>.</>,
         tools: [
           { name: 'Figma',      icon: imgToolFigma },
           { name: 'Claude Code', icon: imgToolClaude, noBg: true },

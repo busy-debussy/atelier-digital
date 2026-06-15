@@ -1,5 +1,49 @@
 # Changelog 
 
+## [2.5.0] — 2026-06-15
+
+### Canap case study, collapsible secondary navigation, legal-page nav redesign, accessibility pass
+
+#### New case study — Canap (native iPhone app)
+- New page `Canap.jsx` (~3.8k lines) and route `/case-study/canap` (`App.jsx`); `ScrollForMore` enabled for it; `sitemap.xml` entry added
+- Added to the Home case-studies grid (`CaseStudies.jsx`) with an animated counter-scrolling poster-grid backdrop (`CanapCardBackdrop`) mirroring the app's login screen; separate hero backdrop (`CanapHeroBackdrop`); poster data in `src/data/canapPosters.js`
+- Case-study cards now carry a status badge — deep-green "Shipped" / deep-amber "In alpha", white label (AA contrast)
+- 78 case-study assets (SF Symbol glyphs, UX-flow Figma/build pairs, user-journey + behaviour-path SVGs, sign-in flow, technical-direction, posters), tool logos (Xcode, SwiftUI, Next.js, Prisma, Neon, Vercel, Tailwind, SF Symbols, Icon Composer), competition logos (JustWatch, Letterboxd, Trakt, TV Time)
+- `index.css`: post-it tilt/offset system, dark-mode `<strong>` override so pastel post-its keep dark bold text, Canap card marquee keyframes
+- `sharp` added to devDependencies (asset processing)
+
+#### Canap — polish
+- UX & Core Flows carousel: each flow title prefixed with its in-app SF Symbol (Home / Library / For You / Groups / Search); added `icon-sparkles.svg` for the For You tab
+- Core-feature card titles promoted to semantic `<h4>`
+- Flow slides: horizontal padding now tracks the card corner radius so the card reads concentric with the iPhone, and the card was widened so the screenshots keep their original size
+
+#### Secondary navigation — collapsible (all six navs)
+- Hovering the right edge highlights it, reveals a chevron just outside the panel, and shows a delayed "Minimise" / "Réduire" tooltip (mirrors the dark-mode toggle); `w-resize` cursor; hit zone extends ~3px past the edge
+- Click **or** drag-left collapses the nav into a centre-left pill ("Expand navigation" tooltip) that restores it; an empty placeholder preserves the column so page content does not shift
+- Applied to Privacy, Cookies, Terms and XR (in-flow sticky columns) and to Canap & SalesPlatform (floating panels — the pill follows the same scroll-gated visibility; subsections untouched)
+
+#### Legal pages — secondary nav redesign (Privacy, Cookies, Terms)
+- Secondary nav moved to the left of the content (matching the case studies) and vertically centred in the viewport (`sticky top-1/2 -translate-y-1/2`)
+- Reduced nav width (`w-36` / `w-44`) and shortened the labels via a new `navLabel` field (EN + FR) so each fits on one line
+- Footer: sitemap "sales platform" link renamed "web app"; home / résumé nav-button left padding aligned with sibling items (`px-2` → `px-3`)
+
+#### Accessibility
+- Removed redundant `aria-hidden` from `inert` collapsed subsection containers (Canap, SalesPlatform) — clears the "aria-hidden used on parent of focusable" errors and the resulting "button has no accessible name" errors
+- Duplicate "Design" heading: tool-category labels demoted `<h3>` → `<p>` (Canap, SalesPlatform, XR)
+- Contrast: Canap review stars recoloured to `fg-secondary` (was faint App-Store gold, ~1.9:1); XR flow-diagram gold-container labels now render black-on-gold in dark mode via deterministic attribute recolour (replacing a fragile `:has()` rule that never matched the flat SVG)
+- `<ul>` nested in `<p>` hydration error fixed — SalesPlatform callout/body wrappers changed `<p>` → `<div>`
+- `<br>`-for-layout replaced with real `<p>` paragraphs in Canap context / design-system copy; redundant pain-quote line breaks removed; closing-aside footnote de-italicised
+- Form fields: `name` added to the ChatBot textarea and Hero chat input
+
+#### Fixes
+- Nav: `useDelayedTooltip` threw "guard is not a function" when `show` was wired straight to `onMouseEnter` (the event was passed as `guard`) — now type-checks `guard` before calling it
+
+#### Misc
+- XR hero: removed the "1 UX / System" stat (now Apps / Experiences / Delivery)
+- Hero pills: "Vibe-coding" → "AI collab" / "Collab IA"
+
+---
+
 ## [2.3.3] — 2026-05-07
 
 #### ChatBot — re-enabled

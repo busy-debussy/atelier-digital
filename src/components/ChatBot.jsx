@@ -223,6 +223,7 @@ export default function ChatBot({ lang = 'en', onOpenChange }) {
                   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
                   if (e.key === 'Tab' && !e.shiftKey) { e.preventDefault(); closeRef.current?.focus(); }
                 }}
+                name="chatbot-message"
                 placeholder={l.placeholder}
                 aria-label={l.placeholder}
                 autoComplete="off"

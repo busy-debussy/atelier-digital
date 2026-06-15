@@ -24,7 +24,8 @@ const T = {
     collaborators:'collaborators',
     projects:     'case studies',
     digitalTwins: 'digital twins',
-    salesPlatform:'sales platform',
+    iphoneApp:    'iPhone app',
+    salesPlatform:'web app',
     xr:           'extended reality',
     holograms:    'holograms',
     resume:       'résumé',
@@ -46,6 +47,7 @@ const T = {
     collaborators:'collaborateurs',
     projects:     'études de cas',
     digitalTwins: 'jumeaux numériques',
+    iphoneApp:    'app iPhone',
     salesPlatform:'plateforme web',
     xr:           'réalité étendue',
     holograms:    'hologrammes',
@@ -141,7 +143,7 @@ function Footer({ lang }) {
             <ul className="flex flex-col sm:flex-row gap-6 sm:gap-10 lg:gap-16">
 
               <li className="flex flex-col gap-2">
-                <Link data-spring tabIndex={0} to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row} ${focusRing} hover:bg-nav-hover-bg transition-colors px-2 -mx-2 rounded-radius-2`}>{t.home}</Link>
+                <Link data-spring tabIndex={0} to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row} ${focusRing} hover:bg-nav-hover-bg transition-colors px-3 -mx-3 rounded-radius-2`}>{t.home}</Link>
                 <ul className="flex flex-col gap-2">
                   <li><Link data-spring tabIndex={0} to="/#case-studies" onClick={delayedNav('/#case-studies')} className={`${muted} ${hover} ${row} ${focusRing}`}>{t.caseStudies}</Link></li>
                   <li><Link data-spring tabIndex={0} to="/#collaborators" onClick={delayedNav('/#collaborators')} className={`${muted} ${hover} ${row} ${focusRing}`}>{t.collaborators}</Link></li>
@@ -164,11 +166,17 @@ function Footer({ lang }) {
                     </Link>
                   </li>
                   <li><Locked label={t.digitalTwins} /></li>
+                  <li>
+                    <Link data-spring tabIndex={0} to="/case-study/canap" onClick={() => { if (pathname === '/case-study/canap') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`inline-flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
+                      <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
+                      {t.iphoneApp}
+                    </Link>
+                  </li>
                 </ul>
               </li>
 
               <li className="flex flex-col gap-2">
-                <Link data-spring tabIndex={0} to="/resume" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row} ${focusRing} hover:bg-nav-hover-bg transition-colors px-2 -mx-2 rounded-radius-2`}>{t.resume}</Link>
+                <Link data-spring tabIndex={0} to="/resume" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={`${strong} ${row} ${focusRing} hover:bg-nav-hover-bg transition-colors px-3 -mx-3 rounded-radius-2`}>{t.resume}</Link>
                 <ul className="flex flex-col gap-2">
                   <li><Link data-spring tabIndex={0} to="/resume#experience" onClick={delayedNav('/resume#experience')} className={`${muted} ${hover} ${row} ${focusRing}`}>{t.experience}</Link></li>
                   <li><Link data-spring tabIndex={0} to="/resume#expertise"  onClick={delayedNav('/resume#expertise')}  className={`${muted} ${hover} ${row} ${focusRing}`}>{t.expertise}</Link></li>

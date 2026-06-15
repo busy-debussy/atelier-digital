@@ -43,8 +43,8 @@ export default function Hero({ lang, isDark, enableDark, onDone }) {
   const expLabel  = lang === 'fr' ? 'expert en'               : 'experienced in';
   const btnCases  = lang === 'fr' ? 'Études de cas'           : 'Case studies';
 const pills = lang === 'fr'
-    ? ['Digital twins', 'Design 3D', 'Accessibilité', 'Design systems', 'Vibe-coding', 'Stratégie UX']
-    : ['Digital twins', '3D design', 'Accessibility', 'Design systems', 'Vibe-coding', 'UX strategy'];
+    ? ['Digital twins', 'Design 3D', 'Accessibilité', 'Design systems', 'Collab IA', 'Stratégie UX']
+    : ['Digital twins', '3D design', 'Accessibility', 'Design systems', 'AI collab', 'UX strategy'];
 
   const chatPlaceholders = lang === 'fr'
     ? ['Demandez à Claude sur mon travail…', 'Demandez à Claude sur mon expérience…', "J'ai entraîné Claude sur mon portfolio…", 'Demandez à Claude sur mes compétences…', "L'I.A. me connaît bien…", 'Demandez sur ma formation…', 'Que souhaitez-vous savoir?…', 'Claude a été briefé sur mon travail…']
@@ -304,6 +304,7 @@ const pills = lang === 'fr'
               )}
               <input
                 type="text"
+                name="hero-chat-message"
                 value={chatInput}
                 onChange={e => { if (!heroAtLimit) setChatInput(e.target.value); }}
                 onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendHero(); } }}

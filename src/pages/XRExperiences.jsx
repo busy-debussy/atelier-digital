@@ -40,12 +40,11 @@ const T = {
     skipToMain:  'Skip to main content',
     pageTitle:   'XR Experiences • Atelier Digital',
     label:       'Case study • Extended Reality',
-    title:       'Revealing a Megaproject',
+    title:       'An XR system for revealing megaprojects',
     tagline:     'The architecture of engagement',
     stats: [
       { countTo: 6, decimals: 0, prefix: '', suffix: '',        label: 'Apps' },
       { countTo: 3, decimals: 0, prefix: '', suffix: ' XR',     label: 'Experiences' },
-      { countTo: 1, decimals: 0, prefix: '', suffix: ' UX',     label: 'System' },
       { countTo: 6, decimals: 0, prefix: '', suffix: ' weeks',  label: 'Delivery' },
     ],
     sections: [
@@ -255,12 +254,11 @@ const T = {
     skipToMain:  'Aller au contenu principal',
     pageTitle:   'Expériences XR • Atelier Digital',
     label:       'Étude de cas • Réalité étendue',
-    title:       'Révéler un Mégaprojet',
+    title:       'Un système XR pour révéler un mégaprojet',
     tagline:     "L'architecture de l'engagement",
     stats: [
       { countTo: 6, decimals: 0, prefix: '', suffix: '',           label: 'Apps' },
       { countTo: 3, decimals: 0, prefix: '', suffix: ' XR',        label: 'Expériences' },
-      { countTo: 1, decimals: 0, prefix: '', suffix: ' UX',        label: 'Système' },
       { countTo: 6, decimals: 0, prefix: '', suffix: ' semaines',  label: 'Pour livrer' },
     ],
     sections: [
@@ -787,8 +785,12 @@ function FlowSection({ isDark, lang, labels }) {
       if (isDark) {
         svg = svg
           .replace(/fill="#815A00" stroke="#815A00"/g, 'fill="#C9A84C" stroke="#C9A84C"')
-          .replace(/(<svg[^>]*>)/, '$1<style>text,tspan{fill:rgba(255,255,255,0.85)} g:has(rect[fill="#C9A84C"]) text,g:has(rect[fill="#C9A84C"]) tspan{fill:#000000!important}</style><rect width="100%" height="100%" fill="#141414"/>')
+          .replace(/(<svg[^>]*>)/, '$1<rect width="100%" height="100%" fill="#141414"/>')
           .replace(/fill="white" stroke=/g,        'fill="#141414" stroke=')
+          // Gold-container labels were white-on-dark-gold in the source; the
+          // gold lightens to #C9A84C in dark mode, so flip those labels black.
+          // (Runs after the box recolor above, so only text retains fill="white".)
+          .replace(/(<(?:text|tspan)\b[^>]*)fill="white"/g, '$1fill="#000000"')
           .replace(/stroke="#FF0000"/g,             'stroke="#C0392B"')
           .replace(/fill="#1E1E1E"/g,               'fill="white" fill-opacity="0.8"')
           .replace(/fill="black" fill-opacity="0\.8"/g, 'fill="white" fill-opacity="0.8"')
@@ -901,7 +903,7 @@ function XRToolsSection({ label, categories }) {
       <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
         {categories.map(cat => (
           <div key={cat.label} className="flex flex-col gap-3">
-            <h3 className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label}</h3>
+            <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label}</p>
             <div className="flex flex-wrap gap-5">
               {cat.tools.map(tool => (
                 <XRToolIcon key={tool.name} {...tool} />
@@ -915,30 +917,123 @@ function XRToolsSection({ label, categories }) {
 }
 
 // ── Desktop secondary nav ─────────────────────────────────────────────────────
-function SecondaryNav({ sections, activeId, onNavigate }) {
+// Frosted floating panel (matches the Canap case study). This nav is a sticky
+// in-flow sidebar with no opacity fade, so the backdrop-blur is applied directly
+// — the panel hugs its links (w-fit) within the reserved w-44 column.
+function SecondaryNav({ sections, activeId, onNavigate, lang }) {
+  // Collapsible secondary nav. Hovering the right edge highlights it and shows
+  // a delayed "Minimise" tooltip; clicking (or dragging left) collapses the nav
+  // into a centre-left pill that restores it.
+  const [collapsed, setCollapsed] = useState(false);
+  const [tipVisible, setTipVisible] = useState(false);
+  const timerRef = useRef(null);
+  const showTip = () => { clearTimeout(timerRef.current); timerRef.current = setTimeout(() => setTipVisible(true), 500); };
+  const hideTip = () => { clearTimeout(timerRef.current); setTipVisible(false); };
+  useEffect(() => () => clearTimeout(timerRef.current), []);
+
+  // Drag-left-to-minimise: a leftward drag on the edge past a small threshold
+  // collapses the nav (a plain click collapses too, via onClick).
+  const dragStartX = useRef(null);
+  const onEdgePointerDown = (e) => { dragStartX.current = e.clientX; e.currentTarget.setPointerCapture?.(e.pointerId); };
+  const onEdgePointerMove = (e) => {
+    if (dragStartX.current == null) return;
+    if (e.clientX - dragStartX.current <= -24) { dragStartX.current = null; setCollapsed(true); hideTip(); }
+  };
+  const onEdgePointerUp = () => { dragStartX.current = null; };
+
+  const minimiseLabel = lang === 'fr' ? 'Réduire' : 'Minimise';
+  const expandLabel   = lang === 'fr' ? 'Afficher la navigation' : 'Expand navigation';
+
+  if (collapsed) {
+    return (
+      <>
+        <div className="hidden md:block w-44 shrink-0" aria-hidden="true" />
+        <div className="hidden md:block fixed left-2 top-1/2 -translate-y-1/2 z-10">
+          <button
+            type="button"
+            onClick={() => { setCollapsed(false); hideTip(); }}
+            onMouseEnter={showTip}
+            onMouseLeave={hideTip}
+            onFocus={showTip}
+            onBlur={hideTip}
+            aria-label={expandLabel}
+            className="flex items-center justify-center w-9 h-9 backdrop-blur-3 bg-nav-bg rounded-radius-4 shadow-xs ring-1 ring-nav-ring text-fg-muted hover:text-fg-primary hover:bg-nav-active-bg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 7h16M4 12h12M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+          {tipVisible && (
+            <div role="tooltip" className="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-nav-active-bg-solid text-fg-inverse shadow-xs pointer-events-none z-20">
+              {expandLabel}
+            </div>
+          )}
+        </div>
+      </>
+    );
+  }
+
   return (
     <nav aria-label="Page sections" className="hidden md:block sticky top-16 self-start z-10 w-44 shrink-0 pt-28">
-      <ol className="grid gap-2" style={{ gridTemplateColumns: 'max-content' }}>
-        {sections.map((s) => {
-          const isActive = activeId === s.id;
-          return (
-            <li key={s.id}>
-              <button
-                onClick={() => onNavigate(s.id)}
-                aria-current={isActive ? 'location' : undefined}
-                className={`relative text-tooltip leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
-                  isActive
-                    ? 'text-fg-primary font-semibold bg-nav-active-bg'
-                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
-                }`}
-              >
-                <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.eyebrow}</span>
-                <span className="absolute inset-0 py-2 px-2 whitespace-nowrap">{s.eyebrow}</span>
-              </button>
-            </li>
-          );
-        })}
-      </ol>
+      <div className="relative p-2 backdrop-blur-3 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring w-fit">
+        <ol className="grid gap-1" style={{ gridTemplateColumns: 'max-content' }}>
+          {sections.map((s) => {
+            const isActive = activeId === s.id;
+            return (
+              <li key={s.id}>
+                <button
+                  onClick={() => onNavigate(s.id)}
+                  aria-current={isActive ? 'location' : undefined}
+                  className={`relative text-tooltip leading-snug py-2 px-3 rounded-full text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                    isActive
+                      ? 'text-fg-primary font-semibold bg-nav-active-bg'
+                      : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
+                  }`}
+                >
+                  <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.eyebrow}</span>
+                  <span className="absolute inset-0 py-2 px-3 whitespace-nowrap">{s.eyebrow}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+
+        {/* Right-edge minimise affordance — hovering highlights the edge and
+            reveals a chevron just outside the panel; clicking collapses the nav. */}
+        <button
+          type="button"
+          onClick={() => { setCollapsed(true); hideTip(); }}
+          onPointerDown={onEdgePointerDown}
+          onPointerMove={onEdgePointerMove}
+          onPointerUp={onEdgePointerUp}
+          onMouseEnter={showTip}
+          onMouseLeave={hideTip}
+          onFocus={showTip}
+          onBlur={hideTip}
+          aria-label={minimiseLabel}
+          className="group/edge absolute top-0 -right-[3px] h-full w-[15px] cursor-w-resize select-none rounded-r-radius-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-inset"
+        >
+          <span
+            aria-hidden="true"
+            className="absolute inset-y-6 right-[3px] w-[3px] rounded-full bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
+            style={{
+              maskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
+              WebkitMaskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
+            }}
+          />
+          <span aria-hidden="true" className="absolute left-full top-1/2 -translate-y-1/2 ml-[3px] text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M14 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
+
+        {tipVisible && (
+          <div role="tooltip" className="absolute left-full top-1/2 -translate-y-1/2 ml-7 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-nav-active-bg-solid text-fg-inverse shadow-xs pointer-events-none z-20">
+            {minimiseLabel}
+          </div>
+        )}
+      </div>
     </nav>
   );
 }
@@ -1136,23 +1231,51 @@ function XRExperiences({ lang, isDark }) {
           onTouchEnd={onHeroTouchEnd}
         >
           <img src={mipimPhoto} alt="" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} />
-          <div className="absolute inset-0 pointer-events-none transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0, background: 'linear-gradient(to bottom, rgba(20,20,20,0.2) 0%, rgba(20,20,20,1) 100%)' }} />
+          {/* Gradient overlay — same pattern as the SalesPlatform
+              and Canap heroes (`from-transparent via-black/40
+              to-black/95`). Photo's top half reads clear, fading
+              to dark at the bottom where the chrome sits. */}
+          <div
+            className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-black/40 to-black/95 transition-opacity duration-700"
+            style={{ opacity: heroReady ? 1 : 0 }}
+          />
 
-          <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 mt-auto relative z-10 pb-24 sm:pb-28 lg:pb-32 pt-40 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
+          {/* Entrance fade (`opacity heroReady`) is on each CHILD below, not
+              here: the pill has a `backdrop-blur`, and an ancestor with
+              opacity < 1 disables backdrop-filter — fading the container made
+              the pill's blur + edge pop in at the end. Per-child fade lets the
+              pill ease in with its blur intact. (The page mount-fade finishes
+              at 500ms, before heroReady at 600ms, so it doesn't re-break it.) */}
+          <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 mt-auto relative z-10 pb-24 sm:pb-28 lg:pb-32 pt-40">
             <div className="flex flex-col gap-6 sm:gap-8">
-              <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-white">
+              {/* Pill-style eyebrow — same treatment as the
+                  Canap + SalesPlatform case study heroes. Token-
+                  driven: `text-tag-m` typography, `bg-inverted-
+                  subtle` + `border-inverted-subtle` for the
+                  auto-flipping light/dark fill, `text-fg-on-dark-
+                  opacity-90` for the text. */}
+              <span
+                className="inline-flex self-start items-center text-tag-m uppercase tracking-widest font-semibold text-fg-on-dark-opacity-90 bg-inverted-subtle backdrop-blur-sm border border-inverted-subtle px-4 py-1.5 rounded-full transition-opacity duration-700"
+                style={{ opacity: heroReady ? 1 : 0 }}
+              >
                 {t.label}
-              </p>
+              </span>
               <h1
                 id="xr-hero-heading"
-                className="text-display-1 font-bold leading-tight text-white"
+                className="text-display-1 font-bold leading-tight text-white transition-opacity duration-700"
+                style={{ opacity: heroReady ? 1 : 0 }}
               >
                 {t.title}
               </h1>
-              <p className="text-display-2 font-semibold leading-tight text-fg-on-dark-opacity-90 max-w-2xl lg:whitespace-nowrap">
-                {t.tagline}
-              </p>
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-6 sm:flex sm:flex-wrap sm:gap-x-16 mt-2" aria-label="Key figures">
+              {/* Tagline removed for hero-shape consistency with
+                  the other case studies. The phrase
+                  ("The architecture of engagement") was doing
+                  thesis work — if the case study still wants
+                  that line, it should land in the Context section
+                  body copy or as a section eyebrow rather than as
+                  hero chrome. `t.tagline` remains in the EN/FR T
+                  bundles unused for now in case it's reinstated. */}
+              <ul className="grid grid-cols-2 gap-x-6 gap-y-6 sm:flex sm:flex-wrap sm:gap-x-16 mt-2 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }} aria-label="Key figures">
                 {t.stats.map((s, i) => (
                   <li key={i} className="flex flex-col gap-1">
                     <span className="text-display-2 font-semibold leading-tight tabular-nums whitespace-nowrap" style={{ color: GOLD }}>
@@ -1169,8 +1292,8 @@ function XRExperiences({ lang, isDark }) {
         {/* ── Content sections ── */}
         <div className="px-6 flex flex-col items-center">
           <div className="flex items-start gap-10 w-full max-w-6xl">
-            {/* Left spacer — mirrors the right nav width to keep content centred */}
-            <div className="hidden md:block w-20 shrink-0" />
+            {/* Secondary nav — left of the content column, matching the Canap case study */}
+            <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} lang={lang} />
 
             {/* Main column */}
             <div className="flex-1 min-w-0">
@@ -1296,8 +1419,8 @@ function XRExperiences({ lang, isDark }) {
                           {p?.type === 'callout'
                             ? p.variant === 'goal'
                               ? (
-                                <div data-squircle className="mt-6 rounded-radius-4 bg-feedback-success-bg border border-feedback-success-border px-5 py-4 flex flex-col gap-3">
-                                  <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-feedback-success-fg">{p.label}</span>
+                                <div data-squircle className="mt-6 rounded-radius-4 bg-palette-sky-bg border border-palette-indigo-bg px-5 py-4 flex flex-col gap-3">
+                                  <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-palette-indigo-fg">{p.label}</span>
                                   <p className={bodyText}>{p.body}</p>
                                 </div>
                               )
@@ -1378,7 +1501,8 @@ function XRExperiences({ lang, isDark }) {
               </div>
             </div>
 
-            <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
+            {/* Right spacer — mirrors the nav width to keep the content centred */}
+            <div className="hidden md:block w-20 shrink-0" />
           </div>
         </div>
 

@@ -26,6 +26,13 @@ html.dark strong {
   color: #ffffff;
 }
 
+/* …except on the post-it notes, whose pastel paper stays light in dark mode —
+   their bold words must stay dark, not flip to white. Higher specificity than
+   the rule above. */
+html.dark .canap-postit strong {
+  color: #171717;
+}
+
 /* Accessible gold — 6:1 on white in light mode, reverts to brand gold in dark mode */
 .gold-text { color: #7A5C00; }
 html.dark .gold-text { color: #C9A84C; }
@@ -119,4 +126,32 @@ body {
 /* Email obfuscation — address is assembled by CSS only, never present as a DOM text node */
 .obf-email::before {
   content: attr(data-u) "\40" attr(data-d);
+}
+
+/* Slow horizontal marquee for the Canap case-study card backdrop.
+ * Ported from the Canap login-page poster grid. Strip is rendered
+ * twice back-to-back inside a single flex container so the -50%
+ * keyframe always lands on identical content — wrap is invisible.
+ * Even / odd rows counter-scroll for visual interest. */
+@keyframes canap-card-marquee-left {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes canap-card-marquee-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+
+/* Post-it tilt + offset — each PostItNote sets `--tilt`, `--off-x`,
+   and `--off-y` inline. At sm+ the full tilt and offset apply so
+   the grid reads as slightly hand-placed. On mobile both are
+   suppressed: tilt scales down to 20% and offset zeroes out (the
+   single-column stack would only show offsets as awkward gaps). */
+.canap-postit {
+  transform: translate(var(--off-x, 0px), var(--off-y, 0px)) rotate(var(--tilt, 0deg));
+}
+@media (max-width: 639px) {
+  .canap-postit {
+    transform: rotate(calc(var(--tilt, 0deg) * 0.2));
+  }
 }

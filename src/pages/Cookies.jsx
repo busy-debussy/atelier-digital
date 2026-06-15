@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-04-14');
+const LAST_UPDATED = new Date('2026-06-15');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -28,6 +28,7 @@ const T = {
       {
         id: 'how-used',
         heading: 'How cookies are used?',
+        navLabel: 'Usage',
         body: 'Cookies are used to better understand how visitors interact with this portfolio and to improve the user experience. They are used for these purposes:',
         bullets: [
           { label: 'Essential', text: 'required for site functionality' },
@@ -81,6 +82,7 @@ const T = {
       {
         id: 'updates',
         heading: 'Updates to this policy',
+        navLabel: 'Updates',
         body: "This Cookies Policy may be updated occasionally to reflect changes in technology or legal requirements. Any updates will be posted on this page with a revised 'Last updated' date.",
       },
       {
@@ -105,11 +107,13 @@ const T = {
       {
         id: 'what-are-cookies',
         heading: 'Que sont les cookies ?',
+        navLabel: 'Définition',
         body: "Les cookies sont de petits fichiers texte stockés sur votre appareil lorsque vous visitez un site web. Ils contribuent à améliorer votre expérience de navigation en fournissant des statistiques d'utilisation anonymes.",
       },
       {
         id: 'how-used',
         heading: 'Comment les cookies sont-ils utilisés ?',
+        navLabel: 'Utilisation',
         body: "Les cookies sont utilisés pour mieux comprendre comment les visiteurs interagissent avec ce portfolio et pour améliorer l'expérience utilisateur. Ils sont utilisés à ces fins :",
         bullets: [
           { label: 'Essentiels', text: 'requis pour le bon fonctionnement du site' },
@@ -145,6 +149,7 @@ const T = {
       {
         id: 'managing',
         heading: 'Gestion des cookies',
+        navLabel: 'Gestion',
         body: 'Vous pouvez contrôler les cookies via les paramètres de votre navigateur :',
         bullets: ['Bloquer ou supprimer les cookies', 'Autoriser uniquement les cookies de sites de confiance', 'Effacer les cookies après chaque session'],
         browsers: [
@@ -163,6 +168,7 @@ const T = {
       {
         id: 'updates',
         heading: 'Mises à jour de cette politique',
+        navLabel: 'Mises à jour',
         body: "Cette politique de cookies peut être mise à jour occasionnellement pour refléter des changements technologiques ou légaux. Toute mise à jour sera publiée sur cette page avec une nouvelle date.",
       },
       {
@@ -320,32 +326,128 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   );
 }
 
-function SecondaryNav({ sections, activeId, onNavigate }) {
+function SecondaryNav({ sections, activeId, onNavigate, lang }) {
+  // Collapsible secondary nav. Hovering the right edge highlights it and shows
+  // a delayed "Minimise" tooltip; clicking (or dragging left) collapses the nav
+  // into a centre-left pill that restores it.
+  const [collapsed, setCollapsed] = useState(false);
+  const [tipVisible, setTipVisible] = useState(false);
+  const timerRef = useRef(null);
+  const showTip = () => { clearTimeout(timerRef.current); timerRef.current = setTimeout(() => setTipVisible(true), 500); };
+  const hideTip = () => { clearTimeout(timerRef.current); setTipVisible(false); };
+  useEffect(() => () => clearTimeout(timerRef.current), []);
+
+  // Drag-left-to-minimise: a leftward drag on the edge past a small threshold
+  // collapses the nav (a plain click collapses too, via onClick).
+  const dragStartX = useRef(null);
+  const onEdgePointerDown = (e) => { dragStartX.current = e.clientX; e.currentTarget.setPointerCapture?.(e.pointerId); };
+  const onEdgePointerMove = (e) => {
+    if (dragStartX.current == null) return;
+    if (e.clientX - dragStartX.current <= -24) { dragStartX.current = null; setCollapsed(true); hideTip(); }
+  };
+  const onEdgePointerUp = () => { dragStartX.current = null; };
+
+  const minimiseLabel = lang === 'fr' ? 'Réduire' : 'Minimise';
+  const expandLabel   = lang === 'fr' ? 'Afficher la navigation' : 'Expand navigation';
+
+  // Collapsed → fixed pill at the centre-left of the viewport. An empty
+  // placeholder keeps the original nav column width so the page content does
+  // not shift when minimising/restoring.
+  if (collapsed) {
+    return (
+      <>
+        <div className="hidden md:block w-44 shrink-0" aria-hidden="true" />
+        <div className="hidden md:block fixed left-2 top-1/2 -translate-y-1/2 z-10">
+          <button
+            type="button"
+            onClick={() => { setCollapsed(false); hideTip(); }}
+            onMouseEnter={showTip}
+            onMouseLeave={hideTip}
+            onFocus={showTip}
+            onBlur={hideTip}
+            aria-label={expandLabel}
+            className="flex items-center justify-center w-9 h-9 backdrop-blur-3 bg-nav-bg rounded-radius-4 shadow-xs ring-1 ring-nav-ring text-fg-muted hover:text-fg-primary hover:bg-nav-active-bg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 7h16M4 12h12M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+          {tipVisible && (
+            <div role="tooltip" className="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-nav-active-bg-solid text-fg-inverse shadow-xs pointer-events-none z-20">
+              {expandLabel}
+            </div>
+          )}
+        </div>
+      </>
+    );
+  }
+
   return (
-    <nav aria-label="Page sections" className="hidden md:block sticky top-16 self-start z-10 w-44 shrink-0 pt-28">
-      <ol className="space-y-2">
-        {sections.map((s, i) => {
+    <nav aria-label="Page sections" className="hidden md:block sticky top-1/2 -translate-y-1/2 self-start z-10 w-44 shrink-0">
+      {/* Frosted panel — matches the Canap secondary-nav styling. */}
+      <div className="relative p-2 backdrop-blur-3 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring">
+      <ol className="space-y-1">
+        {sections.map((s) => {
           const isActive = activeId === s.id;
           return (
             <li key={s.id}>
               <button
                 onClick={() => onNavigate(s.id)}
-                aria-label={s.heading}
-                aria-current={isActive ? 'true' : undefined}
-                className={`relative text-tooltip leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                aria-label={s.navLabel ?? s.heading}
+                aria-current={isActive ? 'location' : undefined}
+                className={`relative text-tooltip leading-snug py-2 px-3 rounded-full text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
                     ? 'text-fg-primary font-semibold bg-nav-active-bg'
                     : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
                 }`}
               >
                 {/* Invisible bold copy locks the button height to its semibold size — prevents 1→2 line reflow on hover */}
-                <span aria-hidden="true" className="font-semibold invisible block select-none">{s.heading}</span>
-                <span className="absolute inset-0 py-2 px-2">{s.heading}</span>
+                <span aria-hidden="true" className="font-semibold invisible block select-none">{s.navLabel ?? s.heading}</span>
+                <span className="absolute inset-0 py-2 px-3">{s.navLabel ?? s.heading}</span>
               </button>
             </li>
           );
         })}
       </ol>
+
+      {/* Right-edge minimise affordance — hovering highlights the edge and
+          reveals a chevron just outside the panel; clicking collapses the nav. */}
+      <button
+        type="button"
+        onClick={() => { setCollapsed(true); hideTip(); }}
+        onPointerDown={onEdgePointerDown}
+        onPointerMove={onEdgePointerMove}
+        onPointerUp={onEdgePointerUp}
+        onMouseEnter={showTip}
+        onMouseLeave={hideTip}
+        onFocus={showTip}
+        onBlur={hideTip}
+        aria-label={minimiseLabel}
+        className="group/edge absolute top-0 -right-[3px] h-full w-[15px] cursor-w-resize select-none rounded-r-radius-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-inset"
+      >
+        {/* edge highlight — only on edge hover/focus */}
+        <span
+          aria-hidden="true"
+          className="absolute inset-y-6 right-[3px] w-[3px] rounded-full bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
+          }}
+        />
+        {/* chevron, rendered just outside the nav container */}
+        <span aria-hidden="true" className="absolute left-full top-1/2 -translate-y-1/2 ml-[3px] text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M14 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      </button>
+
+      {tipVisible && (
+        <div role="tooltip" className="absolute left-full top-1/2 -translate-y-1/2 ml-7 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-nav-active-bg-solid text-fg-inverse shadow-xs pointer-events-none z-20">
+          {minimiseLabel}
+        </div>
+      )}
+      </div>
     </nav>
   );
 }
@@ -426,8 +528,8 @@ function Cookies({ lang }) {
         {/* Shared layout wrapper */}
         <div className="px-6 flex flex-col items-center">
           <div className="flex items-start gap-10 w-full max-w-6xl">
-            {/* Left spacer — smaller than the secondary nav to shift content left without losing all whitespace */}
-            <div className="hidden md:block w-20 shrink-0" />
+            {/* Secondary nav — left of the content column, matching the case studies */}
+            <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} lang={lang} />
 
             {/* Main column */}
             <div className="flex-1 min-w-0">
@@ -454,8 +556,6 @@ function Cookies({ lang }) {
               </ol>
             </div>{/* py-8 */}
             </div>{/* main column */}
-
-            <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />
           </div>{/* flex row */}
 
           {/* Outro — outside flex row so sticky nav stops before it */}

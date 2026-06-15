@@ -334,21 +334,41 @@ function Hero({ lang }) {
         />
       </picture>
 
-      {/* Gradient overlay, animates in with text */}
-      <div className="absolute inset-0 pointer-events-none transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0, background: 'linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.2) 100%)' }} />
+      {/* Gradient overlay — transparent at the top so the
+          photo's upper half reads clearly, fading to dark at the
+          bottom where the chrome sits. Tuned for SalesPlatform's
+          luxury sales photo where the top half is the "hero
+          image" and the bottom carries the title block. */}
+      <div
+        className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-black/40 to-black/95 transition-opacity duration-700"
+        style={{ opacity: heroReady ? 1 : 0 }}
+      />
 
-      {/* Main content, bottom */}
-      <div className="relative z-10 mt-auto max-w-5xl mx-auto w-full px-6 sm:px-8 lg:px-10 pb-24 sm:pb-28 lg:pb-32 flex flex-col gap-6 sm:gap-8 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
+      {/* Main content, bottom. The entrance fade (`opacity heroReady`) is on
+          each CHILD below, not this container: the pill has a `backdrop-blur`,
+          and an ancestor with opacity < 1 disables backdrop-filter — so fading
+          the container made the pill's blur + edge pop in at the end. Fading
+          the children individually lets the pill ease in with its blur intact. */}
+      <div className="relative z-10 mt-auto max-w-5xl mx-auto w-full px-6 sm:px-8 lg:px-10 pb-24 sm:pb-28 lg:pb-32 flex flex-col gap-6 sm:gap-8">
 
-        <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-on-dark-opacity-64">
+        {/* Pill-style eyebrow — same treatment as the Canap case
+            study hero. Token-driven: `text-tag-m` for typography,
+            `bg-inverted-subtle` + `border-inverted-subtle` for the
+            auto-flipping light/dark fill, `text-fg-on-dark-opacity-90`
+            for white-at-90% text. Reads as a category tag rather
+            than a small eyebrow. */}
+        <span
+          className="inline-flex self-start items-center text-tag-m uppercase tracking-widest font-semibold text-fg-on-dark-opacity-90 bg-inverted-subtle backdrop-blur-sm border border-inverted-subtle px-4 py-1.5 rounded-full transition-opacity duration-700"
+          style={{ opacity: heroReady ? 1 : 0 }}
+        >
           {h.category}
-        </p>
+        </span>
 
-        <h1 id="hero-heading" className="text-display-1 font-bold leading-tight text-white max-w-3xl">
+        <h1 id="hero-heading" className="text-display-1 font-bold leading-tight text-white max-w-3xl transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
           {h.title}
         </h1>
 
-        <ul role="list" className="flex items-start gap-8 sm:gap-12 lg:gap-16 pt-2 list-none">
+        <ul role="list" className="flex items-start gap-8 sm:gap-12 lg:gap-16 pt-2 list-none transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
           {h.stats.map((s, i) => {
             const finalValue = s.decimals > 0 ? s.countTo.toFixed(s.decimals) : s.countTo;
             return (
@@ -441,7 +461,7 @@ function ToolsGrid({ lang }) {
       <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
         {CONTEXT_TOOLS.map(cat => (
           <div key={cat.label.en} className="flex flex-col gap-3">
-            <h3 className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label[lang] ?? cat.label.en}</h3>
+            <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label[lang] ?? cat.label.en}</p>
             <div className="flex flex-wrap gap-5">
               {cat.tools.map(tool => (
                 <ToolIcon key={tool.name} {...tool} />
@@ -668,11 +688,11 @@ function ContextContent({ lang, isDark }) {
       </Tile>
 
       {CONTEXT_BODIES.myRole[l].keyDecisions && (
-        <div id="ctx-decisions" data-squircle className="rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-feedback-success-bg border border-feedback-success-border p-6 sm:p-12 lg:p-[60px] flex flex-col gap-4 sm:gap-5 lg:gap-6">
+        <div id="ctx-decisions" data-squircle className="rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-palette-sky-bg border border-palette-indigo-bg p-6 sm:p-12 lg:p-[60px] flex flex-col gap-4 sm:gap-5 lg:gap-6">
           <div className="flex items-center gap-2">
-            <h3 className="text-h3 font-semibold leading-snug text-feedback-success-fg">{l === 'fr' ? 'Décisions clés' : 'Key decisions'}</h3>
+            <h3 className="text-h3 font-semibold leading-snug text-palette-indigo-fg">{l === 'fr' ? 'Décisions clés' : 'Key decisions'}</h3>
           </div>
-          <p className={tileBodyText}>{CONTEXT_BODIES.myRole[l].keyDecisions}</p>
+          <div className={tileBodyText}>{CONTEXT_BODIES.myRole[l].keyDecisions}</div>
         </div>
       )}
     </div>
@@ -852,7 +872,7 @@ function DefineContent({ lang, isDark }) {
               {d.challenge.warningCallout.emoji && <span aria-hidden="true" className="shrink-0">{d.challenge.warningCallout.emoji}</span>}
               <span className="text-copy-m font-bold leading-snug text-feedback-warning-fg">{d.challenge.warningCallout.label}</span>
             </div>
-            <p className={tileBodyText}>{d.challenge.warningCallout.body}</p>
+            <div className={tileBodyText}>{d.challenge.warningCallout.body}</div>
           </div>
         </Tile>
       )}
@@ -868,16 +888,16 @@ function DefineContent({ lang, isDark }) {
                   {s.errorCallout.emoji && <span aria-hidden="true" className="shrink-0">{s.errorCallout.emoji}</span>}
                   <span className="text-copy-m font-bold leading-snug text-feedback-error-fg">{s.errorCallout.label}</span>
                 </div>
-                <p className={tileBodyText}>{s.errorCallout.body}</p>
+                <div className={tileBodyText}>{s.errorCallout.body}</div>
               </div>
             )}
             {s.callout && (
-              <div data-squircle className="mt-4 sm:mt-5 lg:mt-6 rounded-radius-4 bg-feedback-success-bg border border-feedback-success-border px-5 py-4 flex flex-col gap-6">
+              <div data-squircle className="mt-4 sm:mt-5 lg:mt-6 rounded-radius-4 bg-palette-sky-bg border border-palette-indigo-bg px-5 py-4 flex flex-col gap-6">
                 <div className="flex items-center gap-2">
                   {s.callout.emoji && <span aria-hidden="true" className="shrink-0">{s.callout.emoji}</span>}
-                  <span className="text-copy-m font-bold leading-snug text-feedback-success-fg">{s.callout.label}</span>
+                  <span className="text-copy-m font-bold leading-snug text-palette-indigo-fg">{s.callout.label}</span>
                 </div>
-                <p className={tileBodyText}>{s.callout.body}</p>
+                <div className={tileBodyText}>{s.callout.body}</div>
               </div>
             )}
           </div>
@@ -894,12 +914,12 @@ function DefineContent({ lang, isDark }) {
                 ? <>{s.before && <TileBody>{s.before}</TileBody>}<div className="mt-1 sm:mt-2 mb-8 sm:mb-10"><LaunchesTimeline /></div><TileBody>{s.after}</TileBody></>
                 : null}
             {s.callout && (
-              <div data-squircle className="rounded-radius-4 bg-feedback-success-bg border border-feedback-success-border px-5 py-4 flex flex-col gap-6">
+              <div data-squircle className="rounded-radius-4 bg-palette-sky-bg border border-palette-indigo-bg px-5 py-4 flex flex-col gap-6">
                 <div className="flex items-center gap-2">
                   {s.callout.emoji && <span aria-hidden="true" className="shrink-0">{s.callout.emoji}</span>}
-                  <span className="text-copy-m font-bold leading-snug text-feedback-success-fg">{s.callout.label}</span>
+                  <span className="text-copy-m font-bold leading-snug text-palette-indigo-fg">{s.callout.label}</span>
                 </div>
-                <p className={tileBodyText}>{s.callout.body}</p>
+                <div className={tileBodyText}>{s.callout.body}</div>
               </div>
             )}
           </div>
@@ -1676,7 +1696,7 @@ function DesignContent({ lang, isDark, carouselHinted, onCarouselInteract }) {
       <Tile bgClass="bg-bg-surface md:bg-bg-page">
         <div className={`${designTextOffset} flex flex-col gap-4 sm:gap-5 lg:gap-6`}>
           <TileEyebrow id="des-flow">{d.userFlow.eyebrow}</TileEyebrow>
-          <p className={tileBodyText}>{d.userFlow.body}</p>
+          <div className={tileBodyText}>{d.userFlow.body}</div>
         </div>
         <div className="mt-6 sm:mt-8 sm:max-w-[80%] sm:mx-auto lg:max-w-[95%] lg:mx-auto">
           <picture>
@@ -1690,12 +1710,12 @@ function DesignContent({ lang, isDark, carouselHinted, onCarouselInteract }) {
       {d.userFlow.callout && (
         <div className="md:max-w-[39rem] lg:max-w-[49rem] mx-auto w-full -mt-6 sm:-mt-7 lg:-mt-8">
           <Tile bgClass="bg-bg-page">
-            <div data-squircle className="rounded-radius-4 bg-feedback-success-bg border border-feedback-success-border px-5 py-4 flex flex-col gap-6">
+            <div data-squircle className="rounded-radius-4 bg-palette-sky-bg border border-palette-indigo-bg px-5 py-4 flex flex-col gap-6">
               <div className="flex items-center gap-2">
                 {d.userFlow.callout.emoji && <span aria-hidden="true" className="shrink-0">{d.userFlow.callout.emoji}</span>}
-                <span className="text-copy-m font-bold leading-snug text-feedback-success-fg">{d.userFlow.callout.label}</span>
+                <span className="text-copy-m font-bold leading-snug text-palette-indigo-fg">{d.userFlow.callout.label}</span>
               </div>
-              <p className={tileBodyText}>{d.userFlow.callout.body}</p>
+              <div className={tileBodyText}>{d.userFlow.callout.body}</div>
             </div>
           </Tile>
         </div>
@@ -1722,12 +1742,12 @@ function DesignContent({ lang, isDark, carouselHinted, onCarouselInteract }) {
               </div>
             )}
             {s.callout && (
-              <div data-squircle className={`${designTextOffset} mt-6 sm:mt-8 rounded-radius-4 px-5 py-4 flex flex-col gap-6 ${s.callout.variant === 'success' ? 'bg-feedback-success-bg border border-feedback-success-border' : 'bg-feedback-warning-bg border border-feedback-warning-border'}`}>
+              <div data-squircle className={`${designTextOffset} mt-6 sm:mt-8 rounded-radius-4 px-5 py-4 flex flex-col gap-6 ${s.callout.variant === 'success' ? 'bg-palette-sky-bg border border-palette-indigo-bg' : 'bg-feedback-warning-bg border border-feedback-warning-border'}`}>
                 <div className="flex items-center gap-2">
                   {s.callout.emoji && <span aria-hidden="true" className="shrink-0">{s.callout.emoji}</span>}
-                  <span className={`text-copy-m font-bold leading-snug ${s.callout.variant === 'success' ? 'text-feedback-success-fg' : 'text-feedback-warning-fg'}`}>{s.callout.label}</span>
+                  <span className={`text-copy-m font-bold leading-snug ${s.callout.variant === 'success' ? 'text-palette-indigo-fg' : 'text-feedback-warning-fg'}`}>{s.callout.label}</span>
                 </div>
-                <p className={tileBodyText}>{s.callout.body}</p>
+                <div className={tileBodyText}>{s.callout.body}</div>
               </div>
             )}
           </div>
@@ -1806,29 +1826,92 @@ const scrollToSection = (id) => {
 };
 
 // ── Desktop secondary nav ─────────────────────────────────────────────────────
-function SecondaryNav({ sections, activeId, activeSubId, onNavigate }) {
+// Frosted floating panel (matches the Canap case study): the opacity fade lives
+// on the <nav> itself (driven by `visible`), NOT on an ancestor — an ancestor
+// with opacity < 1 disables the backdrop-blur, making it pop in at the end.
+function SecondaryNav({ sections, activeId, activeSubId, onNavigate, visible, lang }) {
+  // Collapsible secondary nav. Hovering the right edge highlights it and shows
+  // a delayed "Minimise" tooltip; clicking (or dragging left) collapses the nav
+  // into a centre-left pill that restores it. The pill follows the same
+  // scroll-gated visibility as the floating panel.
+  const [collapsed, setCollapsed] = useState(false);
+  const [tipVisible, setTipVisible] = useState(false);
+  const timerRef = useRef(null);
+  const showTip = () => { clearTimeout(timerRef.current); timerRef.current = setTimeout(() => setTipVisible(true), 500); };
+  const hideTip = () => { clearTimeout(timerRef.current); setTipVisible(false); };
+  useEffect(() => () => clearTimeout(timerRef.current), []);
+
+  const dragStartX = useRef(null);
+  const onEdgePointerDown = (e) => { dragStartX.current = e.clientX; e.currentTarget.setPointerCapture?.(e.pointerId); };
+  const onEdgePointerMove = (e) => {
+    if (dragStartX.current == null) return;
+    if (e.clientX - dragStartX.current <= -24) { dragStartX.current = null; setCollapsed(true); hideTip(); }
+  };
+  const onEdgePointerUp = () => { dragStartX.current = null; };
+
+  const minimiseLabel = lang === 'fr' ? 'Réduire' : 'Minimise';
+  const expandLabel   = lang === 'fr' ? 'Afficher la navigation' : 'Expand navigation';
+
+  if (collapsed) {
+    return (
+      <div className={`fixed left-2 top-1/2 -translate-y-1/2 z-10 transition-opacity duration-180 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <button
+          type="button"
+          onClick={() => { setCollapsed(false); hideTip(); }}
+          onMouseEnter={showTip}
+          onMouseLeave={hideTip}
+          onFocus={showTip}
+          onBlur={hideTip}
+          aria-label={expandLabel}
+          className="flex items-center justify-center w-9 h-9 backdrop-blur-3 bg-nav-bg rounded-radius-4 shadow-xs ring-1 ring-nav-ring text-fg-muted hover:text-fg-primary hover:bg-nav-active-bg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h12M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
+        {tipVisible && (
+          <div role="tooltip" className="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-nav-active-bg-solid text-fg-inverse shadow-xs pointer-events-none z-20">
+            {expandLabel}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
-    <nav aria-label="Page sections" className="p-2">
+    <nav aria-label="Page sections" className={`relative p-2 backdrop-blur-3 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring transition-opacity duration-180 ${visible ? 'opacity-100' : 'opacity-0'}`}>
       <ol className="grid gap-1" style={{ gridTemplateColumns: 'max-content' }}>
         {sections.map((s) => {
           const isActive = activeId === s.id;
           return (
             <li key={s.id}>
+              {/* When a section is active AND has sub-items, the light-grey
+                  background expands to wrap the main item and its sub-items as
+                  one group, so the sub-items read as nested rather than as more
+                  top-level links. Active-without-subs stays a simple pill. */}
+              <div className={isActive && s.subsections?.length > 0 ? 'bg-nav-active-bg rounded-radius-4' : ''}>
               <button
                 onClick={() => onNavigate(s.id)}
                 aria-current={isActive ? 'location' : undefined}
-                className={`relative text-tooltip leading-snug py-2 px-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                className={`relative text-tooltip leading-snug py-2 px-3 rounded-full text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
-                    ? 'text-fg-primary font-semibold bg-nav-active-bg'
+                    ? `text-fg-primary font-semibold${s.subsections?.length > 0 ? '' : ' bg-nav-active-bg'}`
                     : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
                 }`}
               >
                 <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.title}</span>
-                <span className="absolute inset-0 py-2 px-2 whitespace-nowrap">{s.title}</span>
+                <span className="absolute inset-0 py-2 px-3 whitespace-nowrap">{s.title}</span>
               </button>
 
-              {isActive && s.subsections?.length > 0 && (
-                <ol className="mt-0.5 mb-1 hidden min-[920px]:grid gap-0">
+              {s.subsections?.length > 0 && (
+                /* Subsections render for every section (collapsed when the
+                   section isn't active) so the nav reserves the widest possible
+                   width and never resizes as you scroll between sections. */
+                <div
+                  className={`hidden min-[920px]:block ${isActive ? '' : 'max-h-0 overflow-hidden'}`}
+                  inert={isActive ? undefined : true}
+                >
+                <ol className="grid gap-0">
                   {s.subsections.map((sub) => {
                     const isSubActive = activeSubId === sub.id;
                     return (
@@ -1836,7 +1919,7 @@ function SecondaryNav({ sections, activeId, activeSubId, onNavigate }) {
                         <button
                           onClick={() => onNavigate(sub.id)}
                           aria-current={isSubActive ? 'location' : undefined}
-                          className={`relative text-chip-xs leading-snug py-1.5 pl-4 pr-2 rounded-radius-2 text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                          className={`relative text-chip-xs leading-snug py-1.5 pl-4 pr-2 rounded-full text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                             isSubActive
                               ? 'text-fg-primary font-semibold'
                               : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
@@ -1849,11 +1932,49 @@ function SecondaryNav({ sections, activeId, activeSubId, onNavigate }) {
                     );
                   })}
                 </ol>
+                </div>
               )}
+              </div>
             </li>
           );
         })}
       </ol>
+
+      {/* Right-edge minimise affordance — hovering highlights the edge and
+          reveals a chevron just outside the panel; clicking collapses the nav. */}
+      <button
+        type="button"
+        onClick={() => { setCollapsed(true); hideTip(); }}
+        onPointerDown={onEdgePointerDown}
+        onPointerMove={onEdgePointerMove}
+        onPointerUp={onEdgePointerUp}
+        onMouseEnter={showTip}
+        onMouseLeave={hideTip}
+        onFocus={showTip}
+        onBlur={hideTip}
+        aria-label={minimiseLabel}
+        className="group/edge absolute top-0 -right-[3px] h-full w-[15px] cursor-w-resize select-none rounded-r-radius-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-inset"
+      >
+        <span
+          aria-hidden="true"
+          className="absolute inset-y-6 right-[3px] w-[3px] rounded-full bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
+          }}
+        />
+        <span aria-hidden="true" className="absolute left-full top-1/2 -translate-y-1/2 ml-[3px] text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M14 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      </button>
+
+      {tipVisible && (
+        <div role="tooltip" className="absolute left-full top-1/2 -translate-y-1/2 ml-7 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-nav-active-bg-solid text-fg-inverse shadow-xs pointer-events-none z-20">
+          {minimiseLabel}
+        </div>
+      )}
     </nav>
   );
 }
@@ -1997,7 +2118,7 @@ const SECTIONS = {
       { id: 'ctx-stakeholders', title: 'Scope'  },
       { id: 'ctx-team',         title: 'Our team'      },
       { id: 'ctx-role',         title: 'My role'       },
-      { id: 'ctx-decisions',    title: 'Key decisions' },
+      { id: 'ctx-decisions',    title: 'Decisions' },
     ]},
     { id: 'emphasise', title: 'Emphasise', subsections: [
       { id: 'emp-audience', title: 'Audience' },
@@ -2027,7 +2148,7 @@ const SECTIONS = {
       { id: 'ctx-stakeholders', title: 'Cadre' },
       { id: 'ctx-team',         title: 'Notre équipe'      },
       { id: 'ctx-role',         title: 'Mon rôle'          },
-      { id: 'ctx-decisions',    title: 'Décisions clés'    },
+      { id: 'ctx-decisions',    title: 'Décisions'    },
     ]},
     { id: 'emphasise', title: 'Comprendre', subsections: [
       { id: 'emp-audience', title: "L'audience" },
@@ -2139,7 +2260,7 @@ function SalesPlatform({ lang, isDark }) {
       const firstEl = document.getElementById(firstId);
       const lastEl  = document.getElementById(lastId);
       if (firstEl) setScrolledDown(firstEl.getBoundingClientRect().top < 80);
-      if (lastEl)  setAtBottom(lastEl.getBoundingClientRect().bottom < 200);
+      if (lastEl)  setAtBottom(lastEl.getBoundingClientRect().bottom < 700);
     };
     update();
     window.addEventListener('scroll', update, { passive: true });
@@ -2225,12 +2346,15 @@ function SalesPlatform({ lang, isDark }) {
         </div>
       </main>
 
-      {/* ── Desktop secondary nav — fixed, visible once scrolled past hero ── */}
+      {/* ── Desktop secondary nav — fixed, visible once scrolled past hero ──
+          The opacity fade lives on the inner <nav> (see SecondaryNav), NOT on
+          this wrapper: an ancestor with opacity < 1 disables the nav's
+          backdrop-blur. The wrapper only handles position + interaction-blocking. */}
       <div
         inert={scrolledDown && !atBottom ? undefined : true}
-        className={`hidden min-[920px]:block fixed z-10 top-[80px] min-[920px]:left-[calc(50%_+_20.5rem)] lg:left-[calc(50%_+_25.5rem)] transition-opacity duration-300 ${scrolledDown && !atBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`hidden min-[920px]:block fixed z-10 top-[240px] min-[920px]:right-[calc(50%_+_20.5rem)] lg:right-[calc(50%_+_25.5rem)] ${scrolledDown && !atBottom ? '' : 'pointer-events-none'}`}
       >
-        <SecondaryNav sections={sections} activeId={activeId} activeSubId={activeSubId} onNavigate={handleNavigate} />
+        <SecondaryNav sections={sections} activeId={activeId} activeSubId={activeSubId} onNavigate={handleNavigate} visible={scrolledDown && !atBottom} lang={lang} />
       </div>
 
       {/* ── Mobile floating nav ── */}

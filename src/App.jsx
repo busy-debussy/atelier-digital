@@ -11,6 +11,7 @@ import ChatBot from './components/ChatBot';
 import Home from './pages/Home';
 import SalesPlatform from './pages/SalesPlatform';
 import XRExperiences from './pages/XRExperiences';
+import Canap from './pages/Canap';
 import Resume from './pages/Resume';
 import Cookies from './pages/Cookies';
 import Privacy from './pages/Privacy';
@@ -49,7 +50,7 @@ function AnimatedRoutes({ children, enterDirRef }) {
   );
 }
 
-const PROJECTS = ['/case-study/sales-platform', '/case-study/xr'];
+const PROJECTS = ['/case-study/sales-platform', '/case-study/xr', '/case-study/canap'];
 
 function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
   const { pathname } = useLocation();
@@ -86,11 +87,12 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
         {lang === 'fr' ? 'Aller au contenu principal' : 'Skip to main content'}
       </a>
       <Nav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} />
-      {(pathname === '/resume' || pathname === '/case-study/sales-platform' || pathname === '/case-study/xr') && <ScrollForMore lang={lang} scrollTarget={pathname === '/resume' ? 'summary-bio' : undefined} />}
+      {(pathname === '/resume' || pathname === '/case-study/sales-platform' || pathname === '/case-study/xr' || pathname === '/case-study/canap') && <ScrollForMore lang={lang} scrollTarget={pathname === '/resume' ? 'summary-bio' : undefined} />}
       <AnimatedRoutes enterDirRef={enterDirRef}><Routes>
         <Route path="/" element={<Home lang={lang} isDark={isDark} enableDark={() => setIsDark(true)} />} />
         <Route path="/case-study/sales-platform" element={<SalesPlatform lang={lang} isDark={isDark} />} />
         <Route path="/case-study/xr" element={<XRExperiences lang={lang} isDark={isDark} />} />
+        <Route path="/case-study/canap" element={<Canap lang={lang} isDark={isDark} />} />
 <Route path="/resume" element={<Resume lang={lang} />} />
         <Route path="/cookies" element={<Cookies lang={lang} />} />
         <Route path="/privacy" element={<Privacy lang={lang} />} />

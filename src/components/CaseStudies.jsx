@@ -8,6 +8,7 @@ import imgLockLg       from '../assets/icons/icon-lock-lg.svg';
 import imgIconAR       from '../assets/icons/icon-ar.svg';
 import imgIconWeb      from '../assets/icons/icon-responsive.svg';
 import imgIconTwin     from '../assets/icons/icon-inputs.svg';
+import { CanapCardBackdrop } from './CanapCardBackdrop';
 import imgBgSales      from '../assets/photos/photo-cgi-interactive-platform.webp';
 import imgBgXR         from '../assets/photos/photo-xr-experiences.webp';
 import imgBgTwin       from '../assets/photos/photo-digital-twins.webp';
@@ -31,6 +32,7 @@ const T = {
         bg:           imgBgSales,
         title:        'An interactive platform',
         subtitle:     'supercharging sales by 20%',
+        status:       { label: 'Shipped', tone: 'shipped' },
         primaryChip:  { label: 'Web app', icon: imgIconWeb },
         secondaryChips: [{ label: 'React' }],
         tint:         'blue',
@@ -41,6 +43,7 @@ const T = {
         bg:           imgBgXR,
         title:        'Shared XR experiences',
         subtitle:     'engaging the public',
+        status:       { label: 'Shipped', tone: 'shipped' },
         primaryChip:  { label: 'Augmented Reality', icon: imgIconAR },
         secondaryChips: [{ label: 'Unity' }, { label: 'Unreal' }],
         tint:         'blue',
@@ -51,12 +54,25 @@ const T = {
         bg:           imgBgTwin,
         title:        'Real-time digital twins',
         subtitle:     'accelerating megaprojects',
+        status:       { label: 'Shipped', tone: 'shipped' },
         primaryChip:  { label: 'Digital twin', icon: imgIconTwin },
         secondaryChips: [{ label: 'Unreal Engine' }],
         tint:         null,
         cta:          'locked',
         href:         null,
         mailSubject:  'Digital twins — enquiry',
+      },
+      {
+        bg:           null,
+        customBg:     'canap-poster-grid',
+        title:        'A native iPhone app',
+        subtitle:     'Built from strach',
+        status:       { label: 'In alpha', tone: 'alpha' },
+        primaryChip:  { label: 'iOS 26', icon: imgIconWeb },
+        secondaryChips: [{ label: 'SwiftUI' }, { label: 'NDA-free' }],
+        tint:         'blue',
+        cta:          'go',
+        href:         '/case-study/canap',
       },
     ],
   },
@@ -72,6 +88,7 @@ const T = {
         bg:           imgBgSales,
         title:        'Une plateforme web',
         subtitle:     'booste les ventes de 20%',
+        status:       { label: 'Livré', tone: 'shipped' },
         primaryChip:  { label: 'Web app', icon: imgIconWeb },
         secondaryChips: [{ label: 'React' }],
         tint:         'blue',
@@ -82,6 +99,7 @@ const T = {
         bg:           imgBgXR,
         title:        'Des expériences XR',
         subtitle:     'engagent le public',
+        status:       { label: 'Livré', tone: 'shipped' },
         primaryChip:  { label: 'Réalité augmentée', icon: imgIconAR },
         secondaryChips: [{ label: 'Unity' }, { label: 'Unreal' }],
         tint:         'blue',
@@ -92,12 +110,25 @@ const T = {
         bg:           imgBgTwin,
         title:        'Un jumeau numérique',
         subtitle:     'accélére la macro-ingénierie',
+        status:       { label: 'Livré', tone: 'shipped' },
         primaryChip:  { label: 'Jumeau numérique', icon: imgIconTwin },
         secondaryChips: [{ label: 'Unreal Engine' }],
         tint:         null,
         cta:          'locked',
         href:         null,
         mailSubject:  "Jumeaux numériques — plus d'infos",
+      },
+      {
+        bg:           null,
+        customBg:     'canap-poster-grid',
+        title:        'Une app iPhone native',
+        subtitle:     'du problème à l’alpha',
+        status:       { label: 'En alpha', tone: 'alpha' },
+        primaryChip:  { label: 'iOS · Web', icon: imgIconWeb },
+        secondaryChips: [{ label: 'SwiftUI' }, { label: 'Next.js' }, { label: 'sans NDA' }],
+        tint:         'blue',
+        cta:          'go',
+        href:         '/case-study/canap',
       },
     ],
   },
@@ -111,7 +142,41 @@ function CsCard({ card, t }) {
 
   const inner = (
     <>
-      <img src={card.bg} alt="" className="absolute inset-0 w-full h-full object-cover" />
+      {card.customBg === 'canap-poster-grid' ? (
+        // Animated poster grid (mirrors the Canap login page) — slow
+        // counter-scrolling rows of TMDB posters. Self-contained
+        // component handles the marquee + dim overlay.
+        <CanapCardBackdrop />
+      ) : card.bg ? (
+        <img src={card.bg} alt="" className="absolute inset-0 w-full h-full object-cover" />
+      ) : (
+        // Gradient placeholder for cards without a hero asset yet.
+        // Kept on-brand (deep purples) so it reads as "deliberate"
+        // rather than "missing image". Swap for a real <img> once the
+        // case-study hero asset lands.
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'linear-gradient(135deg, #1f1430 0%, #432f5a 45%, #2a1f3a 100%)',
+          }}
+        />
+      )}
+
+      {/* Status badge — top-left, solid tone pill (deep green = shipped, deep
+          amber = in alpha) with a white uppercase label. Tones are dark enough
+          that white passes AA contrast. Sits above the hero, under the locked
+          overlay. */}
+      {card.status && (
+        <span
+          data-squircle
+          className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 lg:top-4 lg:left-4 z-10 px-2 py-1 rounded-radius-3 text-chip-xs font-semibold uppercase tracking-wide text-white leading-none whitespace-nowrap shadow-sm"
+          style={{ backgroundColor: card.status.tone === 'shipped' ? '#15803D' : '#B45309' }}
+        >
+          {card.status.label}
+        </span>
+      )}
 
       <div
         className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 lg:p-4 flex flex-col gap-2 sm:gap-3 lg:gap-3 backdrop-blur-8"
