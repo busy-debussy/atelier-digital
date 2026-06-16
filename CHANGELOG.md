@@ -1,5 +1,18 @@
 # Changelog 
 
+## [2.5.3] — 2026-06-16
+
+#### Case studies — "Tools used" tooltip clipping (Canap, Sales Platform, XR)
+- Icon tooltips on the top row were being clipped by the card's `data-squircle` `clip-path`. Split the squircle surface + border into an `absolute inset-0` layer behind the content (`aria-hidden`, `pointer-events-none`); the icons and their tooltips now sit in an unclipped content layer and overflow the card freely. Corner smoothing, padding (`px-5 py-4`) and `sm:w-fit` sizing unchanged
+
+#### Secondary navigation — removed on mobile (Privacy, Cookies, Terms, Sales Platform, XR)
+- The floating mobile secondary-nav pill (shown `< md`) no longer renders — its wrapper changed `md:hidden` → `hidden`. The desktop/tablet secondary nav (separate `md:block` / `min-[920px]:block` block) is unchanged, so tablet and desktop keep it. The mobile chat-pill scroll coordination (`chat-force-visible`) is left intact
+
+#### Home — "experienced in" card non-interactive
+- The card was a `<Link>` to the résumé experience section; temporarily converted to a plain `<div>` — removed the route, hover border/shadow, focus ring, `cursor-pointer`, and the `data-spring` press effect. Appearance is unchanged; original `Link` target + `data-spring` noted in a comment for easy restore
+
+---
+
 ## [2.5.2] — 2026-06-16
 
 #### Canap — design-system palette (mobile)

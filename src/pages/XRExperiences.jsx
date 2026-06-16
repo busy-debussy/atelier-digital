@@ -898,19 +898,25 @@ function XRToolIcon({ name, icon, darkInvert = false, circle = false, contain = 
 
 function XRToolsSection({ label, categories }) {
   return (
-    <div data-squircle className="rounded-radius-6 bg-bg-page border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
-      <h2 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</h2>
-      <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
-        {categories.map(cat => (
-          <div key={cat.label} className="flex flex-col gap-3">
-            <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label}</p>
-            <div className="flex flex-wrap gap-5">
-              {cat.tools.map(tool => (
-                <XRToolIcon key={tool.name} {...tool} />
-              ))}
+    <div className="relative sm:w-fit">
+      {/* Squircle surface + border drawn as a layer behind the content so the
+          icon tooltips (positioned above the top row) aren't clipped by the
+          card's squircle clip-path. */}
+      <div data-squircle aria-hidden="true" className="absolute inset-0 rounded-radius-6 bg-bg-page border border-feedback-neutral-border pointer-events-none" />
+      <div className="relative flex flex-col gap-4 px-5 py-4">
+        <h2 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</h2>
+        <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
+          {categories.map(cat => (
+            <div key={cat.label} className="flex flex-col gap-3">
+              <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label}</p>
+              <div className="flex flex-wrap gap-5">
+                {cat.tools.map(tool => (
+                  <XRToolIcon key={tool.name} {...tool} />
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -1522,10 +1528,10 @@ function XRExperiences({ lang, isDark }) {
 
       </main>
 
-      {/* ── Mobile floating nav ── */}
+      {/* ── Mobile floating nav — disabled: secondary nav is tablet/desktop only ── */}
       <div
         inert={scrolledDown && !atBottom && !scrollingDown ? undefined : true}
-        className={`md:hidden fixed bottom-2 left-4 right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`hidden fixed bottom-2 left-4 right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <div className="pointer-events-auto w-full">
           <MobileSecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} />

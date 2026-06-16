@@ -182,10 +182,11 @@ const pills = lang === 'fr'
 
           {/* Card */}
           <div className={`transition-opacity duration-300 ${hasMessages && !messagesClosing ? 'opacity-0 pointer-events-none' : ''}`}>
-            <Link
-              data-spring
-              to="/resume?from=home#experience"
-              className="group block border border-glass-subtle hover:border-border-subtle rounded-radius-8 px-4 py-5 sm:px-6 flex flex-col items-center gap-4 max-w-lg transition-[border-color,box-shadow] duration-200 hover:shadow-s dark:hover:shadow-s-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 cursor-pointer"
+            {/* Temporarily non-interactive: was a <Link to="/resume?from=home#experience">
+                with hover border/shadow and a data-spring press effect.
+                Restore the Link + data-spring to re-enable. */}
+            <div
+              className="block border border-glass-subtle rounded-radius-8 px-4 py-5 sm:px-6 flex flex-col items-center gap-4 max-w-lg"
             >
               <h3 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted">
                 {expLabel}
@@ -205,7 +206,7 @@ const pills = lang === 'fr'
                   </li>
                 ))}
               </ul>
-            </Link>
+            </div>
           </div>
 
           {/* Messages — absolutely overlaid on the card slot */}

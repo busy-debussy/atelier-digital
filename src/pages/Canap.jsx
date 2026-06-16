@@ -155,7 +155,7 @@ const T = {
     },
     context: {
       header: 'Context',
-      eyebrows: ['Origin', 'Pain-points', 'Problem statement'],
+      eyebrows: ['Origin', 'Pain points', 'Problem statement'],
       painsIntro: <><p>Finding content worth watching can be more difficult than it should. Especially in group settings.</p><p>Across conversations, clear patterns emerged:</p></>,
       client: <><p>Many of the projects I worked on are challenging to share publicly due to client ownership and confidentiality agreements.</p><p>To provide a clearer view of how I think and work, I invested the equivalent of <strong>six weeks in designing and building</strong> a product from scratch.</p><p>The project addresses a <strong>recurring problem</strong> observed within my circle, and it highlights my end-to-end approach to <strong>product strategy</strong>, <strong>UX/UI design</strong>, <strong>execution</strong>, and <strong>AI-assisted development</strong>.</p></>,
       painPoints: [
@@ -1028,7 +1028,7 @@ const SECTIONS = {
   en: [
     { id: 'context',    title: 'Context',             subsections: [
       { id: 'ctx-origin', title: 'Origin' },
-      { id: 'ctx-pains',  title: 'Pain-points' },
+      { id: 'ctx-pains',  title: 'Pain points' },
     ] },
     { id: 'research',   title: 'Research',            subsections: [
       { id: 'existing',     title: 'Competition' },
@@ -1197,19 +1197,25 @@ function ToolIcon({ name, icon, fallback, darkInvert = false, lightInvert = fals
 function ToolsGrid({ lang }) {
   const label = T[lang].tools.label;
   return (
-    <div data-squircle className="rounded-radius-6 bg-bg-page border border-feedback-neutral-border px-5 py-4 flex flex-col gap-4 sm:w-fit">
-      <h2 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</h2>
-      <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
-        {CANAP_TOOLS.map(cat => (
-          <div key={cat.label.en} className="flex flex-col gap-3">
-            <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label[lang] ?? cat.label.en}</p>
-            <div className="flex flex-wrap gap-5">
-              {cat.tools.map(tool => (
-                <ToolIcon key={tool.name} {...tool} />
-              ))}
+    <div className="relative sm:w-fit">
+      {/* Squircle surface + border drawn as a layer behind the content so the
+          icon tooltips (positioned above the top row) aren't clipped by the
+          card's squircle clip-path. */}
+      <div data-squircle aria-hidden="true" className="absolute inset-0 rounded-radius-6 bg-bg-page border border-feedback-neutral-border pointer-events-none" />
+      <div className="relative flex flex-col gap-4 px-5 py-4">
+        <h2 className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-secondary">{label}</h2>
+        <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
+          {CANAP_TOOLS.map(cat => (
+            <div key={cat.label.en} className="flex flex-col gap-3">
+              <p className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{cat.label[lang] ?? cat.label.en}</p>
+              <div className="flex flex-wrap gap-5">
+                {cat.tools.map(tool => (
+                  <ToolIcon key={tool.name} {...tool} />
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
