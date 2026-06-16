@@ -1,5 +1,21 @@
 # Changelog 
 
+## [2.5.2] — 2026-06-16
+
+#### Canap — design-system palette (mobile)
+- Mobile palette swatches now show only the central pill; the dark-tint container and hairline stroke appear just for the selected (tapped) swatch, so the row reads as evenly spaced pills instead of crowding together. Desktop (`lg+`) unchanged — the container stays visible on every swatch
+- Tint driven by a `--tint` CSS variable (`bg-[var(--tint)]`) with a 150ms colour transition; border stays present (transparent off-state) so toggling never shifts layout; keyboard focus also reveals the container
+
+#### Canap — copy tightening (EN)
+- Constraint: trimmed to "…narrows the scope to mobile-first content discovery and viewing decisions" and "iOS also offers strong native support for sharing, saving, song recognition, and notifications"
+- Key insight: "unified experience across films, TV, and docus" → "consistent experience across content types"
+- Competitor "does well": Letterboxd → "Strong community built around comments and lists"; JustWatch → "Makes it easy to find where content is streaming"
+- Product principles: lighter phrasing across all three bodies (one experience / help groups find content / save and share recommendations instantly)
+- Status-badge annotation: "…showing the title already belongs to a list" → "…indicating the title belongs to a list"
+- Onboarding intro: "first-time experience" → "onboarding experience", "given" → "applied"
+
+---
+
 ## [2.5.1] — 2026-06-15
 
 #### Home — case-study cards

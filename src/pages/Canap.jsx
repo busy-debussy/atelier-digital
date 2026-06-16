@@ -168,8 +168,8 @@ const T = {
       problemStatement: 'When people want to watch something together, discovering and agreeing on content can be difficult. Content is fragmented across platforms, turning a simple decision into a time-consuming process that often results in unsatisfying compromises.',
       constraintLabel: 'Constraint',
       constraint: [
-        'Designing for iOS narrows the scope and focus on mobile-first behaviours around discovering and deciding what to watch.',
-        'iOS also provides strong native capabilities for sharing, saving, song recognition and notifications.',
+        'Designing for iOS narrows the scope to mobile-first content discovery and viewing decisions.',
+        'iOS also offers strong native support for sharing, saving, song recognition, and notifications.',
       ],
     },
     research: { header: 'Research' },
@@ -184,7 +184,7 @@ const T = {
     insights: {
       header: 'Key insights',
       items: [
-        'Users expect a unified experience across films, TV, and docus.',
+        'Users expect a consistent experience across content types.',
         'Existing products don’t directly address group coordination.',
         'Discovery and decision-making are separate moments.',
       ],
@@ -200,7 +200,7 @@ const T = {
         {
           name: 'Letterboxd',
           category: 'Film social network',
-          doesWell: 'Strong taste-driven community built around reviews, lists, and discovery.',
+          doesWell: 'Strong community built around comments and lists.',
           gap: 'Limited to films, with no support for TV or group coordination.',
         },
         {
@@ -212,7 +212,7 @@ const T = {
         {
           name: 'JustWatch',
           category: 'Streaming router',
-          doesWell: 'Makes it easy to find where content is available across platforms.',
+          doesWell: 'Makes it easy to find where content is streaming.',
           gap: 'No watch history, no social layer, and no taste-based discovery.',
         },
         {
@@ -242,9 +242,9 @@ const T = {
     productPrinciples: {
       header: 'Product principles',
       items: [
-        { title: 'Unify the entertainment journey', body: 'Films, TV series, and documentaries are part of a single experience.' },
-        { title: 'Support shared decision-making', body: 'Make it easier for groups to find content they want to watch together.' },
-        { title: 'Enable recommendation sharing', body: 'Allow users to save and send recommendations instantly, at anytime.' },
+        { title: 'Unify the entertainment journey', body: 'Films, TV series, and documentaries are part of one experience.' },
+        { title: 'Support shared decision-making', body: 'Help groups find content to watch together.' },
+        { title: 'Enable recommendation sharing', body: 'Enable users to save and share recommendations instantly.' },
       ],
     },
     coreFeatures: {
@@ -328,7 +328,7 @@ const T = {
         metaYear: '2013',
         metaRating: '8.0',
         annotations: [
-          { n: '1', title: 'Status badge', body: 'A frosted disk indicates a status is set, giving immediate feedback and showing the title already belongs to a list.' },
+          { n: '1', title: 'Status badge', body: 'A frosted disk indicates a status is set, giving immediate feedback and indicating the title belongs to a list.' },
           { n: '2', title: 'Action menu', body: 'A long press opens a contextual menu and a three-dot chip in the bottom-right makes that menu discoverable.' },
           { n: '3', title: 'Adaptive metadata', body: 'Release year, IMDb score, user’s own rating. Only what’s relevant surfaces, always in a familiar place.' },
         ],
@@ -359,7 +359,7 @@ const T = {
       },
       signIn: {
         header: 'Onboarding flow',
-        intro: 'Attention to details was given throughout the app, including in the first-time experience, from account creation to profile setup.',
+        intro: 'Attention to details was applied throughout the app, including in the onboarding experience, from account creation to profile setup.',
         figmaCta: 'Open the prototype in Figma',
         carousel: {
           carouselLabel: 'Sign-in flow',
@@ -1708,10 +1708,14 @@ function DsPalette({ label }) {
             onClick={() => reveal(i)}
             className="group relative block p-0 leading-none focus:outline-none"
           >
+            {/* Mobile: pill only — the tinted container + stroke appear just for
+                the selected swatch (revealed) so the row reads as spaced pills.
+                Desktop (lg+): container is always shown. Border stays present but
+                transparent off-state so toggling tint never shifts layout. */}
             <span
               data-squircle
-              className="flex items-center p-2 rounded-radius-5 border border-white/[0.08]"
-              style={{ backgroundColor: `${c}26` }}
+              className={`flex items-center p-2 rounded-radius-5 border transition-colors duration-150 lg:bg-[var(--tint)] lg:border-white/[0.08] group-focus-visible:bg-[var(--tint)] group-focus-visible:border-white/[0.08] ${revealed === i ? 'bg-[var(--tint)] border-white/[0.08]' : 'bg-transparent border-transparent'}`}
+              style={{ '--tint': `${c}26` }}
             >
               <span className="block w-6 h-11 rounded-radius-4" style={{ backgroundColor: c }} />
             </span>
