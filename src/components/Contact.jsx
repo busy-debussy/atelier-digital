@@ -245,7 +245,7 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
   return (
     <section id="contact" aria-labelledby="contact-heading" className={`py-16 scroll-mt-24 ${noBg ? '' : 'bg-bg-surface'}`}>
 
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem]">
         <h2 id="contact-heading" className="text-h2 font-bold leading-tight text-fg-primary mb-8">
           {t.heading}
         </h2>

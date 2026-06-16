@@ -1,5 +1,42 @@
 # Changelog 
 
+## [2.5.4] — 2026-06-16
+
+### XR/Sales Platform carousels + collapsible sections, case-study width unification, blue Figma CTA
+
+#### Extended Reality — collapsible sections, mobile flow carousel, hero
+- Section content reworked into collapsible accordions below 920px: each section's gold eyebrow + heading become a toggle with a chevron, and the body card collapses beneath them; at ≥920px (secondary nav shown) sections stay expanded with no chevron. Eyebrow + heading stay **inside** the card (kept XR's existing card design)
+- "Initial plan" / "shipped product" flow images are now a swipe carousel `< 640px` (one flow per view, `snap-x`, site-styled dots + prev/next arrows); `sm+` still shows both flows side by side and centered
+- Hero: the three key figures now sit on **one line on mobile** (`flex justify-between`, was a 2-col grid); stat values recoloured gold → white (`text-fg-on-dark-primary`)
+- Hero pill label "Case study • Extended Reality" → "Extended Reality" (FR "Réalité étendue")
+- Reading column narrowed to `max-w-[52rem]` with `px-6 sm:px-8 lg:px-10` and the secondary nav repositioned centre-relative — both now match Canap + Sales Platform exactly
+- Secondary-nav labels shortened via a new `navLabel` field: "Where", "Prioritise", "Impact" (FR "Où", "Prioriser", "Impact")
+- Copy: context heading "One shot at first impression" → "One shot to impress" (FR "Une chance de marquer les esprits" → "Une seule chance"); What-section 4th item "Real-time companion app" → "Real-time companion"
+
+#### Sales Platform — carousels, collapsible sections, Context, backgrounds
+- Carousel scroll behaviour fixed across all three tracks (Concepts / Wireframes / Hi-fi): an axis-locked wheel handler pins the off-axis position so vertical scroll moves the page (not the slide) and horizontal scroll pans the slide (not its content); tracks set `overflow-y-hidden`. Added an `offAxisRun` sustained-flip guard so a mid-animation trackpad direction change no longer makes the slide jiggle up and down
+- Sections collapsible `< 920px`; the collapse chevron only renders when the secondary nav is hidden, and at `≥920px` the header is a plain, non-interactive heading
+- h2 section titles realigned to match Canap (`max-w-[52rem]` container + `pl-6 sm:pl-12 lg:pl-[60px]` inset)
+- Context: Client / Mission / Scope merged into one `bg-bg-surface` card (each subsection grouped) and removed from the secondary-nav subsection lists (EN + FR)
+- "Define" section background → light-grey-top / white-centre / light-grey-bottom gradient; "Impact / Reflections" (last section) given a light-grey gradient background
+- Key decisions trimmed to two (Pre-rendered 3D, Desktop-first MVP); ✅ emoji removed from every decision callout
+- Hero pill "Case Study · Responsive Web App" → "Responsive Web App" (FR "Étude de cas · Appli Web Réactive" → "Appli Web Réactive")
+
+#### Canap
+- "Open Figma file" button restyled to match the "Back to case studies" CTA — `bg-blue-600` fill, white semibold text, white trailing arrow (`brightness-0 invert`); Figma app-icon plate unchanged
+- Design-system palette (desktop/tablet): the tinted container + hairline stroke now appear on hover/focus only (`md:group-hover`), instead of being shown persistently on every swatch
+- Hero pill "NDA-free side project · 2026" → "NDA-free side project" (FR "Projet perso · 2026" → "Projet perso")
+
+#### Home & Résumé — section-title positions
+- Home h2 titles (Case studies, Key collaborations, Get in touch) moved right to a middle-ground position: narrowed `max-w-[52rem]` reading column, no `pl` inset
+- Résumé h2 titles given the same treatment — Experience / Expertise / Education narrowed to `max-w-[52rem]`; Top skills indented (`md:pl-14 lg:pl-28`) and Certifications (`md:pl-14 lg:pl-0`) so the titles shift right without moving the skill pills or cert grid
+
+#### Secondary navigation — edge hover bar (all six navs)
+- Reveal bar narrowed `3px` → `2px` and recoloured for light mode (mid-grey `fg-muted-inverse`, still `fg-muted` in dark) so it no longer reads too dark
+- "Minimise" tooltip now triggers from hovering the chevron only (pointer cursor on the chevron vs the `w-resize` edge band), not the whole edge
+
+---
+
 ## [2.5.3] — 2026-06-16
 
 #### Case studies — "Tools used" tooltip clipping (Canap, Sales Platform, XR)

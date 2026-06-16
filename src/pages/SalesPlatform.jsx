@@ -257,7 +257,7 @@ import imgHifi09MobileFrDark   from '../assets/case-study/sales-platform/hifi/hi
 // ── Hero ──────────────────────────────────────────────────────────────────────
 const HERO = {
   en: {
-    category: 'Case Study · Responsive Web App',
+    category: 'Responsive Web App',
     title: 'A luxury off-plan sales platform',
     stats: [
       { prefix: '£', countTo: 6.8, decimals: 1, suffix: 'B',  label: 'in sales generated'      },
@@ -266,7 +266,7 @@ const HERO = {
     ],
   },
   fr: {
-    category: 'Étude de cas · Appli Web Réactive',
+    category: 'Appli Web Réactive',
     title: 'Une plateforme de vente sur plan',
     stats: [
       { prefix: '',  countTo: 8,  decimals: 0, suffix: ' Mds €', label: 'de ventes générées'           },
@@ -507,9 +507,7 @@ const CONTEXT_BODIES = {
       body: <ul className="list-disc pl-5 space-y-2"><li>Led <strong>4 designers</strong> across <strong>UX, UI, interaction</strong>, and <strong>visual design</strong>.</li><li>Partnered with <strong>product, engineering</strong>, and <strong>3D studio</strong> to define and deliver <strong>MVP through to launch</strong> and subsequent launches.</li></ul>,
       keyDecisions: <>
         <strong>Pre-rendered 3D over real-time</strong><br />→ Faster load, scalable<br />→ Reduced interactivity<br /><br />
-        <strong>Desktop-first MVP</strong><br />→ Enabled reliable launch-day sales<br />→ Delayed mobile optimisation<br /><br />
-        <strong>Hierarchical navigation</strong><br />→ Improved clarity<br />→ Reduced free exploration<br /><br />
-        <strong>3D/UI layering</strong><br />→ Balanced immersion with usability
+        <strong>Desktop-first MVP</strong><br />→ Enabled reliable launch-day sales<br />→ Delayed mobile optimisation
       </>,
     },
     fr: {
@@ -520,9 +518,7 @@ const CONTEXT_BODIES = {
       body: <ul className="list-disc pl-5 space-y-2"><li>Dirigé <strong>4 designers</strong> couvrant l'<strong>UX, l'UI, l'interaction</strong> et le <strong>design visuel</strong>.</li><li>Collaboration avec <strong>produit, ingénierie</strong> et <strong>studio 3D</strong> pour définir et livrer le <strong>MVP jusqu'au lancement</strong> et les lancements suivants.</li></ul>,
       keyDecisions: <>
         <strong>Rendu pré-calculé vs temps réel</strong><br />→ Chargement rapide, scalable<br />→ Interactivité réduite<br /><br />
-        <strong>MVP desktop-first</strong><br />→ Ventes du jour J fiabilisées<br />→ Optimisation mobile différée<br /><br />
-        <strong>Navigation hiérarchique</strong><br />→ Clarté améliorée<br />→ Exploration libre réduite<br /><br />
-        <strong>Superposition 3D/UI</strong><br />→ Immersion et utilisabilité équilibrées
+        <strong>MVP desktop-first</strong><br />→ Ventes du jour J fiabilisées<br />→ Optimisation mobile différée
       </>,
     },
   },
@@ -655,12 +651,24 @@ function ContextContent({ lang, isDark }) {
   const l = lang in CONTEXT_BODIES.mission ? lang : 'en';
   return (
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
+      {/* Client + Mission + Scope share one card; each subsection groups its
+          eyebrow with its body, and the Tile's gap separates the three. */}
       <Tile bgClass="bg-bg-surface">
-        <TileEyebrow id="ctx-client">{eyebrows[0]}</TileEyebrow>
-        <TileBody>{lang === 'fr' ? <>Principal promoteur immobilier des <strong>Émirats arabes unis</strong>, en <strong>expansion mondiale</strong>.</> : <><strong>Leading United Arab Emirates</strong> real estate developer expanding <strong>globally</strong>.</>}</TileBody>
+        {/* Inner wrapper sets the gap BETWEEN subsections (larger), while each
+            subsection keeps its eyebrow + body tight. */}
+        <div className="flex flex-col gap-8 sm:gap-10">
+          <div className="flex flex-col gap-2 sm:gap-3">
+            <TileEyebrow id="ctx-client">{eyebrows[0]}</TileEyebrow>
+            <TileBody>{lang === 'fr' ? <>Principal promoteur immobilier des <strong>Émirats arabes unis</strong>, en <strong>expansion mondiale</strong>.</> : <><strong>Leading United Arab Emirates</strong> real estate developer expanding <strong>globally</strong>.</>}</TileBody>
+          </div>
+          <div className="flex flex-col gap-2 sm:gap-3">
+            <TileEyebrow id="ctx-mission">{eyebrows[2]}</TileEyebrow><TileBody>{CONTEXT_BODIES.mission[l]}</TileBody>
+          </div>
+          <div className="flex flex-col gap-2 sm:gap-3">
+            <TileEyebrow id="ctx-stakeholders">{eyebrows[3]}</TileEyebrow><TileBody>{CONTEXT_BODIES.stakeholders[l]}</TileBody>
+          </div>
+        </div>
       </Tile>
-      <Tile bgClass="bg-bg-surface"><TileEyebrow id="ctx-mission">{eyebrows[2]}</TileEyebrow><TileBody>{CONTEXT_BODIES.mission[l]}</TileBody></Tile>
-      <Tile bgClass="bg-bg-surface"><TileEyebrow id="ctx-stakeholders">{eyebrows[3]}</TileEyebrow><TileBody>{CONTEXT_BODIES.stakeholders[l]}</TileBody></Tile>
 
       <Tile bgClass="bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]">
         <TileEyebrow id="ctx-team">{eyebrows[6]}</TileEyebrow>
@@ -739,7 +747,7 @@ function ImpactContent({ lang }) {
         <TileEyebrow id="imp-outcome">{t.outcome.eyebrow}</TileEyebrow>
         <TileBody>{t.outcome.body}</TileBody>
       </Tile>
-      <Tile>
+      <Tile bgClass="bg-bg-surface">
         <TileEyebrow id="imp-retrospective">{t.retrospective.eyebrow}</TileEyebrow>
         <TileBody>{t.retrospective.body}</TileBody>
       </Tile>
@@ -803,7 +811,7 @@ const DEFINE = {
           h4: "Integrating 3D without compromising performance",
           body: <>We tested <strong>real-time rendering</strong> using Unreal Engine.</>,
           errorCallout: { emoji: '🛑', label: 'Issues', body: <ul className="list-disc pl-5 space-y-0"><li>Multi-minute load times</li><li>High streaming costs</li></ul> },
-          callout: { emoji: '✅', label: 'Decision', body: <><span className="block"><strong>Pre-rendered 3D over real-time</strong></span><span className="block mt-6">→ Faster load, scalable<br />→ Reduced interactivity</span></> },
+          callout: { label: 'Decision', body: <><span className="block"><strong>Pre-rendered 3D over real-time</strong></span><span className="block mt-6">→ Faster load, scalable<br />→ Reduced interactivity</span></> },
         },
       ],
     },
@@ -815,7 +823,7 @@ const DEFINE = {
           body: <>Tight deadlines driven by high-volume launch-day sales (≈1,000 units per project)</>,
         },
         {
-          callout: { emoji: '✅', label: 'Decision', body: <><span className="block"><strong>Desktop-first MVP</strong></span><span className="block mt-6">→ Prioritised sales agents<br />→ Deferred mobile optimisation</span></> },
+          callout: { label: 'Decision', body: <><span className="block"><strong>Desktop-first MVP</strong></span><span className="block mt-6">→ Prioritised sales agents<br />→ Deferred mobile optimisation</span></> },
         },
         {
           h4: "Incremental iterations",
@@ -838,7 +846,7 @@ const DEFINE = {
           h4: "Intégration 3D sans compromettre les perfs",
           body: <>Nous avons testé le <strong>rendu en temps réel</strong> avec Unreal Engine.</>,
           errorCallout: { emoji: '🛑', label: 'Défis', body: <><strong>Temps de chargement longs :</strong> Les larges ensembles de données 3D causaient des temps de chargement de plusieurs minutes.<br /><strong>Coûts de streaming élevés :</strong> Le coût par utilisateur du streaming 3D à grande échelle était <strong>insoutenable</strong> pour le projet.</> },
-          callout: { emoji: '✅', label: 'Décision : rendu pré-calculé vs temps réel', body: <>→ Chargement rapide, scalable<br />→ Interactivité réduite</> },
+          callout: { label: 'Décision : rendu pré-calculé vs temps réel', body: <>→ Chargement rapide, scalable<br />→ Interactivité réduite</> },
         },
       ],
     },
@@ -850,7 +858,7 @@ const DEFINE = {
           body: <>Compte tenu du <strong>rythme soutenu</strong> du marché immobilier de luxe, les livraisons de projets avaient des <strong>délais stricts</strong>. Le client visait à vendre de grandes quantités de lots dès le jour du lancement, ce qui signifiait que chaque lot (environ <strong>1 000 par projet</strong>) devait être visible dans l'application dès le premier jour.</>,
         },
         {
-          callout: { emoji: '✅', label: "Décision : MVP desktop-first pour le cas d'usage critique du lancement", body: <>Avec seulement <strong>15 semaines</strong> et une dépendance directe aux <strong>ventes du jour J</strong>, nous avons priorisé <strong>l'expérience des agents commerciaux</strong> plutôt qu'une plateforme entièrement responsive.<br />→ Cela impliquait de <strong>reporter l'optimisation mobile</strong> pour garantir la fiabilité dans des <strong>environnements de vente sous pression</strong>.</> },
+          callout: { label: "Décision : MVP desktop-first pour le cas d'usage critique du lancement", body: <>Avec seulement <strong>15 semaines</strong> et une dépendance directe aux <strong>ventes du jour J</strong>, nous avons priorisé <strong>l'expérience des agents commerciaux</strong> plutôt qu'une plateforme entièrement responsive.<br />→ Cela impliquait de <strong>reporter l'optimisation mobile</strong> pour garantir la fiabilité dans des <strong>environnements de vente sous pression</strong>.</> },
         },
         {
           h4: "Itérations incrémentales",
@@ -1121,6 +1129,59 @@ function ConceptsCarousel({ lang, isDark, showHint = true, onInteract }) {
   const scrollTimerRef = useRef(null);
   const hasInteractedRef = useRef(false);
 
+  // The track is a native horizontal scroller (overflow-x-auto + snap). A
+  // trackpad streams wheel events whose dominant axis flickers, so a diagonal
+  // gesture would scroll the carousel sideways AND the page vertically at once,
+  // making the slide pan in all directions. Lock each gesture to ONE axis at
+  // its start (reset after a short idle) and pin the OFF-axis each frame so it
+  // can't drift. Stays PASSIVE — both axes keep their native scroll momentum:
+  //  • horizontal gesture → carousel scrolls natively, the PAGE is held still;
+  //  • vertical gesture   → the page scrolls natively, the CAROUSEL is held still.
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    let axis = null;          // 'x' | 'y' for the active gesture
+    let pinnedLeft = null;
+    let pinnedTop = null;
+    let idleTimer;
+    let offAxisRun = 0;       // consecutive events whose dominant axis opposes the lock
+    const onWheel = (e) => {
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => { axis = null; offAxisRun = 0; }, 120);
+      const horizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+      if (axis === null) {
+        axis = horizontal ? 'x' : 'y';
+      } else if ((axis === 'x') !== horizontal) {
+        // A SUSTAINED off-axis run (e.g. scrolling up/down mid horizontal
+        // momentum) flips the lock so the new axis scrolls NATIVELY instead of
+        // being pinned/fought — that fight is what made the slide jiggle.
+        // A single off-axis frame (diagonal noise) won't flip it.
+        if (++offAxisRun >= 2) { axis = horizontal ? 'x' : 'y'; offAxisRun = 0; }
+      } else {
+        offAxisRun = 0;
+      }
+      if (axis === 'x') {
+        // Horizontal browse: hold the page where it is.
+        if (pinnedTop === null) {
+          pinnedTop = window.scrollY;
+          requestAnimationFrame(() => {
+            if (pinnedTop !== null && window.scrollY !== pinnedTop) window.scrollTo(window.scrollX, pinnedTop);
+            pinnedTop = null;
+          });
+        }
+      } else if (pinnedLeft === null) {
+        // Vertical scroll: hold the carousel where it is.
+        pinnedLeft = el.scrollLeft;
+        requestAnimationFrame(() => {
+          if (pinnedLeft !== null && el.scrollLeft !== pinnedLeft) el.scrollLeft = pinnedLeft;
+          pinnedLeft = null;
+        });
+      }
+    };
+    el.addEventListener('wheel', onWheel, { passive: true });
+    return () => { el.removeEventListener('wheel', onWheel); clearTimeout(idleTimer); };
+  }, []);
+
   const triggerInteract = () => { if (!hasInteractedRef.current) { hasInteractedRef.current = true; onInteract?.(); } };
 
   const scrollToSlide = (index) => {
@@ -1176,7 +1237,7 @@ function ConceptsCarousel({ lang, isDark, showHint = true, onInteract }) {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerInteract(); setLightboxIndex(activeIndex); }
         }}
-        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary sm:max-w-[80%] sm:mx-auto lg:max-w-[95%] lg:mx-auto"
+        className="flex gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x touch-pan-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary sm:max-w-[80%] sm:mx-auto lg:max-w-[95%] lg:mx-auto"
         style={{ scrollbarWidth: 'none' }}
       >
         {slides.map((slide, i) => (
@@ -1335,18 +1396,57 @@ function WireframesCarousel({ lang, isDark, showHint = true, onInteract }) {
   const scrollTimerRef = useRef(null);
   const hasInteractedRef = useRef(false);
 
+  // The track is a native horizontal scroller (overflow-x-auto + snap). A
+  // trackpad streams wheel events whose dominant axis flickers, so a diagonal
+  // gesture would scroll the carousel sideways AND the page vertically at once,
+  // making the slide pan in all directions. Lock each gesture to ONE axis at
+  // its start (reset after a short idle) and pin the OFF-axis each frame so it
+  // can't drift. Stays PASSIVE — both axes keep their native scroll momentum:
+  //  • horizontal gesture → carousel scrolls natively, the PAGE is held still;
+  //  • vertical gesture   → the page scrolls natively, the CAROUSEL is held still.
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
+    let axis = null;          // 'x' | 'y' for the active gesture
+    let pinnedLeft = null;
+    let pinnedTop = null;
+    let idleTimer;
+    let offAxisRun = 0;       // consecutive events whose dominant axis opposes the lock
     const onWheel = (e) => {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        e.preventDefault();
-        const delta = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
-        window.scrollBy(0, delta);
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => { axis = null; offAxisRun = 0; }, 120);
+      const horizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+      if (axis === null) {
+        axis = horizontal ? 'x' : 'y';
+      } else if ((axis === 'x') !== horizontal) {
+        // A SUSTAINED off-axis run (e.g. scrolling up/down mid horizontal
+        // momentum) flips the lock so the new axis scrolls NATIVELY instead of
+        // being pinned/fought — that fight is what made the slide jiggle.
+        // A single off-axis frame (diagonal noise) won't flip it.
+        if (++offAxisRun >= 2) { axis = horizontal ? 'x' : 'y'; offAxisRun = 0; }
+      } else {
+        offAxisRun = 0;
+      }
+      if (axis === 'x') {
+        // Horizontal browse: hold the page where it is.
+        if (pinnedTop === null) {
+          pinnedTop = window.scrollY;
+          requestAnimationFrame(() => {
+            if (pinnedTop !== null && window.scrollY !== pinnedTop) window.scrollTo(window.scrollX, pinnedTop);
+            pinnedTop = null;
+          });
+        }
+      } else if (pinnedLeft === null) {
+        // Vertical scroll: hold the carousel where it is.
+        pinnedLeft = el.scrollLeft;
+        requestAnimationFrame(() => {
+          if (pinnedLeft !== null && el.scrollLeft !== pinnedLeft) el.scrollLeft = pinnedLeft;
+          pinnedLeft = null;
+        });
       }
     };
-    el.addEventListener('wheel', onWheel, { passive: false });
-    return () => el.removeEventListener('wheel', onWheel);
+    el.addEventListener('wheel', onWheel, { passive: true });
+    return () => { el.removeEventListener('wheel', onWheel); clearTimeout(idleTimer); };
   }, []);
 
   const triggerInteract = () => { if (!hasInteractedRef.current) { hasInteractedRef.current = true; onInteract?.(); } };
@@ -1404,7 +1504,7 @@ function WireframesCarousel({ lang, isDark, showHint = true, onInteract }) {
           if (e.key === 'ArrowRight') { e.preventDefault(); scrollToSlide(Math.min(slides.length - 1, activeIndex + 1)); }
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerInteract(); setLightboxIndex(activeIndex); }
         }}
-        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory touch-pan-x focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary sm:max-w-[80%] sm:mx-auto lg:max-w-[95%] lg:mx-auto"
+        className="flex gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden snap-x snap-mandatory touch-pan-x focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary sm:max-w-[80%] sm:mx-auto lg:max-w-[95%] lg:mx-auto"
         style={{ scrollbarWidth: 'none' }}
       >
         {slides.map((slide, i) => (
@@ -1519,18 +1619,57 @@ function HifiCarousel({ lang, isDark, showHint = true, onInteract }) {
   const scrollTimerRef = useRef(null);
   const hasInteractedRef = useRef(false);
 
+  // The track is a native horizontal scroller (overflow-x-auto + snap). A
+  // trackpad streams wheel events whose dominant axis flickers, so a diagonal
+  // gesture would scroll the carousel sideways AND the page vertically at once,
+  // making the slide pan in all directions. Lock each gesture to ONE axis at
+  // its start (reset after a short idle) and pin the OFF-axis each frame so it
+  // can't drift. Stays PASSIVE — both axes keep their native scroll momentum:
+  //  • horizontal gesture → carousel scrolls natively, the PAGE is held still;
+  //  • vertical gesture   → the page scrolls natively, the CAROUSEL is held still.
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
+    let axis = null;          // 'x' | 'y' for the active gesture
+    let pinnedLeft = null;
+    let pinnedTop = null;
+    let idleTimer;
+    let offAxisRun = 0;       // consecutive events whose dominant axis opposes the lock
     const onWheel = (e) => {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        e.preventDefault();
-        const delta = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
-        window.scrollBy(0, delta);
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => { axis = null; offAxisRun = 0; }, 120);
+      const horizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+      if (axis === null) {
+        axis = horizontal ? 'x' : 'y';
+      } else if ((axis === 'x') !== horizontal) {
+        // A SUSTAINED off-axis run (e.g. scrolling up/down mid horizontal
+        // momentum) flips the lock so the new axis scrolls NATIVELY instead of
+        // being pinned/fought — that fight is what made the slide jiggle.
+        // A single off-axis frame (diagonal noise) won't flip it.
+        if (++offAxisRun >= 2) { axis = horizontal ? 'x' : 'y'; offAxisRun = 0; }
+      } else {
+        offAxisRun = 0;
+      }
+      if (axis === 'x') {
+        // Horizontal browse: hold the page where it is.
+        if (pinnedTop === null) {
+          pinnedTop = window.scrollY;
+          requestAnimationFrame(() => {
+            if (pinnedTop !== null && window.scrollY !== pinnedTop) window.scrollTo(window.scrollX, pinnedTop);
+            pinnedTop = null;
+          });
+        }
+      } else if (pinnedLeft === null) {
+        // Vertical scroll: hold the carousel where it is.
+        pinnedLeft = el.scrollLeft;
+        requestAnimationFrame(() => {
+          if (pinnedLeft !== null && el.scrollLeft !== pinnedLeft) el.scrollLeft = pinnedLeft;
+          pinnedLeft = null;
+        });
       }
     };
-    el.addEventListener('wheel', onWheel, { passive: false });
-    return () => el.removeEventListener('wheel', onWheel);
+    el.addEventListener('wheel', onWheel, { passive: true });
+    return () => { el.removeEventListener('wheel', onWheel); clearTimeout(idleTimer); };
   }, []);
 
   const triggerInteract = () => { if (!hasInteractedRef.current) { hasInteractedRef.current = true; onInteract?.(); } };
@@ -1589,7 +1728,7 @@ function HifiCarousel({ lang, isDark, showHint = true, onInteract }) {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerInteract(); setLightboxIndex(activeIndex); }
           }}
           aria-label={lang === 'fr' ? `Carrousel des maquettes haute-fidélité — utilisez les flèches pour naviguer, Entrée pour agrandir` : `High-fidelity mock-ups carousel — use arrow keys to navigate, Enter to expand`}
-          className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary sm:max-w-[90%] sm:mx-auto"
+          className="flex gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden snap-x snap-mandatory rounded-radius-3 sm:rounded-radius-4 lg:rounded-radius-6 touch-pan-x focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary sm:max-w-[90%] sm:mx-auto"
           style={{ scrollbarWidth: 'none' }}
         >
           {slides.map((slide, i) => (
@@ -1646,24 +1785,24 @@ function HifiCarousel({ lang, isDark, showHint = true, onInteract }) {
 // ── Design section content ────────────────────────────────────────────────────
 const DESIGN = {
   en: {
-    userFlow: { eyebrow: "User flow", body: <>Principle: <strong>Guided exploration</strong> over free navigation</>, callout: { emoji: '✅', label: 'Decision', body: <><span className="block"><strong>Hierarchical navigation</strong></span><span className="block mt-6">→ We introduced a <strong>structured, layered flow</strong> to guide users from global to interior views, balancing <strong>exploration with clarity</strong>.</span></> } },
+    userFlow: { eyebrow: "User flow", body: <>Principle: <strong>Guided exploration</strong> over free navigation</>, callout: { label: 'Decision', body: <><span className="block"><strong>Hierarchical navigation</strong></span><span className="block mt-6">→ We introduced a <strong>structured, layered flow</strong> to guide users from global to interior views, balancing <strong>exploration with clarity</strong>.</span></> } },
     concepts: {
       eyebrow: "Concepts",
       subsections: [
         { h4: "Back layer: computer generated images (CGI)", body: <>Dynamic CGI (lighting, day/night cycles) created immersive, real-world property environments.</>, after: "conceptsCarousel" },
-        { h4: "Front layer: user interface", topSpacing: true, body: <>9-step guided journey from <strong>global exploration</strong> to <strong>interior detail</strong>.</>, after: "grid9", callout: { variant: 'success', emoji: '✅', label: 'Decision', body: <>Structured progression <strong>enabled features</strong> to be <strong>introduced gradually</strong> across views.</> } },
+        { h4: "Front layer: user interface", topSpacing: true, body: <>9-step guided journey from <strong>global exploration</strong> to <strong>interior detail</strong>.</>, after: "grid9", callout: { variant: 'success', label: 'Decision', body: <>Structured progression <strong>enabled features</strong> to be <strong>introduced gradually</strong> across views.</> } },
         { h3: "Wireframes", id: "des-wireframes", body: <>Wireframes aligned teams across <strong>design, 3D</strong>, and <strong>engineering</strong>.</>, after: "wireframesCarousel", topSpacing: true },
         { h3: "High-fidelity mock-ups", id: "des-hifi", topSpacing: true, body: <><strong>Design system</strong> enabled fast iteration across projects.</>, after: "hifiCarousel" },
       ],
     },
   },
   fr: {
-    userFlow: { eyebrow: "Flux utilisateur", body: <>Principe : <strong>exploration guidée</strong> plutôt que navigation libre</>, callout: { emoji: '✅', label: "Décision : navigation hiérarchique plutôt qu'exploration libre", body: <>Nous avons exploré une navigation libre dans l'<strong>espace 3D</strong>, mais elle créait de la <strong>désorientation</strong> et augmentait la <strong>charge cognitive</strong>.<br />→ Nous avons introduit un <strong>flux structuré en couches</strong> pour guider les utilisateurs des vues globales aux vues intérieures, en équilibrant <strong>exploration et clarté</strong>.</> } },
+    userFlow: { eyebrow: "Flux utilisateur", body: <>Principe : <strong>exploration guidée</strong> plutôt que navigation libre</>, callout: { label: "Décision : navigation hiérarchique plutôt qu'exploration libre", body: <>Nous avons exploré une navigation libre dans l'<strong>espace 3D</strong>, mais elle créait de la <strong>désorientation</strong> et augmentait la <strong>charge cognitive</strong>.<br />→ Nous avons introduit un <strong>flux structuré en couches</strong> pour guider les utilisateurs des vues globales aux vues intérieures, en équilibrant <strong>exploration et clarté</strong>.</> } },
     concepts: {
       eyebrow: "Conceptualisation",
       subsections: [
         { h4: "Arrière-plan : images de synthèse", body: <>En collaboration avec l'équipe 3D, nous avons réfléchi à la manière dont chaque vue pourrait intégrer des <strong>éléments CGI dynamiques</strong> pour renforcer l'immersion, tels que des <strong>changements d'éclairage</strong> et des <strong>cycles jour/nuit</strong>. Cette approche nous a permis de simuler des <strong>environnements réels</strong>, offrant aux utilisateurs une <strong>expérience engageante</strong> d'espaces non construits.</>, after: "conceptsCarousel", callout: { emoji: '⚖️', label: 'Compromis : immersion visuelle vs utilisabilité', body: <>Si le <strong>CGI immersif</strong> était central dans l'expérience, nous devions garantir que la <strong>clarté de l'interface</strong> ne soit pas compromise.<br />→ Nous avons séparé l'expérience en un <strong>"arrière-plan" (CGI)</strong> et un <strong>"premier-plan" (UI)</strong>, permettant aux deux de scaler indépendamment.</> } },
-        { h4: "Premier-plan : interface utilisateur", topSpacing: true, body: <>Lors d'une première <strong>séance de brainstorming</strong> avec l'équipe design, nous avons défini les <strong>fonctionnalités clés</strong> pour chacune des <strong>9 vues séquentielles</strong>. Chaque vue introduisait progressivement de nouvelles capacités, permettant aux utilisateurs de naviguer d'une <strong>vue d'ensemble globale</strong> jusqu'aux <strong>espaces intérieurs détaillés</strong>.</>, after: "grid9", callout: { variant: 'success', emoji: '✅', label: 'Décision : parcours fixe en 9 étapes vs points d\'entrée flexibles', body: <>Nous avons envisagé de permettre aux utilisateurs de <strong>naviguer librement entre les niveaux</strong>, mais cela introduisait de la complexité dans la <strong>gestion des états</strong> et l'<strong>orientation des utilisateurs</strong>.<br />→ Une <strong>progression structurée</strong> a assuré la <strong>cohérence entre les projets</strong> et simplifié le scaling.</> } },
+        { h4: "Premier-plan : interface utilisateur", topSpacing: true, body: <>Lors d'une première <strong>séance de brainstorming</strong> avec l'équipe design, nous avons défini les <strong>fonctionnalités clés</strong> pour chacune des <strong>9 vues séquentielles</strong>. Chaque vue introduisait progressivement de nouvelles capacités, permettant aux utilisateurs de naviguer d'une <strong>vue d'ensemble globale</strong> jusqu'aux <strong>espaces intérieurs détaillés</strong>.</>, after: "grid9", callout: { variant: 'success', label: 'Décision : parcours fixe en 9 étapes vs points d\'entrée flexibles', body: <>Nous avons envisagé de permettre aux utilisateurs de <strong>naviguer librement entre les niveaux</strong>, mais cela introduisait de la complexité dans la <strong>gestion des états</strong> et l'<strong>orientation des utilisateurs</strong>.<br />→ Une <strong>progression structurée</strong> a assuré la <strong>cohérence entre les projets</strong> et simplifié le scaling.</> } },
         { h3: "Maquettes filaires", id: "des-wireframes", body: <>Les maquettes filaires ont aligné les équipes <strong>design, 3D</strong> et <strong>ingénierie</strong>.</>, after: "wireframesCarousel", topSpacing: true },
         { h3: "Maquettes haute-fidélité", id: "des-hifi", topSpacing: true, body: <>Le <strong>design system</strong> a permis une itération rapide entre les projets.</>, after: "hifiCarousel" },
       ],
@@ -1954,8 +2093,6 @@ function SecondaryNav({ sections, activeId, activeSubId, onNavigate, visible, la
         onPointerDown={onEdgePointerDown}
         onPointerMove={onEdgePointerMove}
         onPointerUp={onEdgePointerUp}
-        onMouseEnter={showTip}
-        onMouseLeave={hideTip}
         onFocus={showTip}
         onBlur={hideTip}
         aria-label={minimiseLabel}
@@ -1963,13 +2100,13 @@ function SecondaryNav({ sections, activeId, activeSubId, onNavigate, visible, la
       >
         <span
           aria-hidden="true"
-          className="absolute inset-y-6 right-[3px] w-[3px] rounded-full bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
+          className="absolute inset-y-6 right-[3px] w-[2px] rounded-full bg-fg-muted-inverse dark:bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
           style={{
             maskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
             WebkitMaskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
           }}
         />
-        <span aria-hidden="true" className="absolute left-full top-1/2 -translate-y-1/2 ml-[3px] text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
+        <span aria-hidden="true" onMouseEnter={showTip} onMouseLeave={hideTip} className="absolute left-full top-1/2 -translate-y-1/2 pl-[3px] cursor-pointer text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
             <path d="M14 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -2029,7 +2166,19 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
 function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgClass, openHeaderDark = false, contentBgClass = 'bg-bg-surface', contentInnerBgClass, contentClass = '', first = false }) {
   const [open, setOpen] = useState(true);
   const [hidden, setHidden] = useState(false);
-  const darkHeader = open && openHeaderDark;
+  // The collapse/expand accordion is only active when the secondary nav is
+  // hidden (< 920px). At ≥920px the secondary nav handles navigation, so
+  // sections stay expanded with no chevron and a non-interactive header.
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 920px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 920px)');
+    const onChange = () => setIsDesktop(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  const collapsible = !isDesktop;
+  const sectionOpen = collapsible ? open : true;
+  const darkHeader = sectionOpen && openHeaderDark;
   const btnRef = useRef(null);
   const contentRef = useRef(null);
   const gridRef = useRef(null);
@@ -2062,26 +2211,16 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
     }
   };
 
-  return (
-    <section id={id} aria-labelledby={headingId} className="overflow-hidden">
-
-      {/* Header row, fully clickable */}
-      <div className={open && openHeaderBgClass ? openHeaderBgClass : headerBgClass}>
-      <button
-        ref={btnRef}
-        onClick={handleToggle}
-        aria-label={open
-          ? (lang === 'fr' ? `Réduire ${title}` : `Collapse ${title}`)
-          : (lang === 'fr' ? `Développer ${title}` : `Expand ${title}`)
-        }
-        aria-expanded={open}
-        aria-controls={`${id}-content`}
-        className={`w-full max-w-5xl mx-auto px-6 py-6 sm:py-7 lg:py-8 flex items-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary${first ? ' pt-20 sm:pt-28 lg:pt-36' : ''}`}
-      >
-        <div className="w-full md:max-w-[39rem] lg:max-w-[49rem] md:mx-auto flex items-center justify-between gap-4">
-        <h2 id={headingId} className={`text-h2 font-bold leading-tight ${darkHeader ? 'text-white' : 'text-fg-primary'}`}>
-          {title}
-        </h2>
+  // Title row — shared by the collapsible (mobile) header button and the static
+  // (≥920px) heading. Mirrors Canap's section-title container (max-w-[52rem] +
+  // px-6 sm:px-8 lg:px-10) so the h2 — with the same pl-[60px] titleInset —
+  // lands at the identical x as Canap. The chevron only renders when collapsible.
+  const headerInner = (
+    <div className="w-full md:max-w-2xl lg:max-w-[52rem] md:mx-auto px-6 sm:px-8 lg:px-10 flex items-center justify-between gap-4">
+      <h2 id={headingId} className={`text-h2 font-bold leading-tight pl-6 sm:pl-12 lg:pl-[60px] ${darkHeader ? 'text-white' : 'text-fg-primary'}`}>
+        {title}
+      </h2>
+      {collapsible && (
         <div className={`group shrink-0 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center transition-colors ${darkHeader ? 'hover:bg-lightbox-btn-bg-hover' : 'hover:bg-btn-nav-bg-hover'}`}>
           <img
             src={imgChevronUp}
@@ -2089,20 +2228,48 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
             className={`w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 transition-[filter,transform] duration-300 forced-colors:brightness-[unset] forced-colors:invert-0 ${open ? '' : 'rotate-180'} ${darkHeader ? 'brightness-0 invert' : 'brightness-0 dark:invert group-hover:invert dark:group-hover:brightness-0 dark:group-hover:invert-0'}`}
           />
         </div>
+      )}
+    </div>
+  );
+
+  return (
+    <section id={id} aria-labelledby={headingId} className="overflow-hidden">
+
+      {/* Header — a collapse/expand toggle only when the secondary nav is hidden
+          (< 920px). With the secondary nav shown (≥920px) it's a plain,
+          always-expanded heading with no chevron. */}
+      <div className={sectionOpen && openHeaderBgClass ? openHeaderBgClass : headerBgClass}>
+      {collapsible ? (
+        <button
+          ref={btnRef}
+          onClick={handleToggle}
+          aria-label={open
+            ? (lang === 'fr' ? `Réduire ${title}` : `Collapse ${title}`)
+            : (lang === 'fr' ? `Développer ${title}` : `Expand ${title}`)
+          }
+          aria-expanded={open}
+          aria-controls={`${id}-content`}
+          className={`w-full max-w-5xl mx-auto py-6 sm:py-7 lg:py-8 flex items-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary${first ? ' pt-20 sm:pt-28 lg:pt-36' : ''}`}
+        >
+          {headerInner}
+        </button>
+      ) : (
+        <div className={`w-full max-w-5xl mx-auto py-6 sm:py-7 lg:py-8 flex items-center${first ? ' pt-20 sm:pt-28 lg:pt-36' : ''}`}>
+          {headerInner}
         </div>
-      </button>
+      )}
       </div>
 
       <div
         ref={gridRef}
         id={`${id}-content`}
-        style={hidden ? { display: 'none' } : undefined}
-        className={`grid overflow-hidden [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} ${contentBgClass}`}
-        inert={!open}
+        style={collapsible && hidden ? { display: 'none' } : undefined}
+        className={`grid overflow-hidden [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${sectionOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} ${contentBgClass}`}
+        inert={!sectionOpen}
       >
         <div ref={contentRef} className="overflow-hidden min-h-0">
           <div className={contentInnerBgClass ?? contentBgClass}>
-            <div className={`max-w-5xl mx-auto px-6 py-8 sm:py-10 lg:py-12 ${contentClass}`}>
+            <div className={`max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 ${contentClass}`}>
               {children ?? (
                 <p className="text-fg-muted text-copy-m">Content coming soon.</p>
               )}
@@ -2119,9 +2286,6 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
 const SECTIONS = {
   en: [
     { id: 'context',   title: 'Context',   subsections: [
-      { id: 'ctx-client',       title: 'Client'    },
-      { id: 'ctx-mission',      title: 'Mission'   },
-      { id: 'ctx-stakeholders', title: 'Scope'  },
       { id: 'ctx-team',         title: 'Our team'      },
       { id: 'ctx-role',         title: 'My role'       },
       { id: 'ctx-decisions',    title: 'Decisions' },
@@ -2149,9 +2313,6 @@ const SECTIONS = {
   ],
   fr: [
     { id: 'context',   title: 'Contexte',   subsections: [
-      { id: 'ctx-client',       title: 'Le client'         },
-      { id: 'ctx-mission',      title: 'La mission'        },
-      { id: 'ctx-stakeholders', title: 'Cadre' },
       { id: 'ctx-team',         title: 'Notre équipe'      },
       { id: 'ctx-role',         title: 'Mon rôle'          },
       { id: 'ctx-decisions',    title: 'Décisions'    },
@@ -2309,7 +2470,7 @@ function SalesPlatform({ lang, isDark }) {
             headerBgClass={
               id === 'context'   ? 'bg-bg-surface' :
               id === 'emphasise' ? 'bg-bg-surface' :
-              id === 'define'    ? 'bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]' : ''
+              id === 'define'    ? 'bg-bg-surface' : ''
             }
             openHeaderBgClass={
               id === 'context' ? 'bg-bg-page' :
@@ -2317,11 +2478,12 @@ function SalesPlatform({ lang, isDark }) {
             }
             contentBgClass={
               id === 'context' ? 'bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]' :
-              id === 'define' || id === 'design' ? 'bg-bg-page' :
+              id === 'define'  ? 'bg-gradient-to-b from-[#f6f6f6] via-white to-[#f6f6f6] dark:from-[#1f1f1f] dark:via-[#141414] dark:to-[#1f1f1f]' :
+              id === 'design'  ? 'bg-bg-page' :
               id === 'impact' ? 'bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]' :
               'bg-bg-surface'
             }
-            contentInnerBgClass={id === 'impact' ? '' : undefined}
+            contentInnerBgClass={id === 'impact' || id === 'define' ? '' : undefined}
             contentClass={id !== 'design' ? 'md:max-w-2xl lg:max-w-[52rem]' : ''}
           >
             {id === 'context'   && <ContextContent lang={lang} isDark={isDark} />}

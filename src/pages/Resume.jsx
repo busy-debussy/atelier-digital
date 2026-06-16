@@ -737,7 +737,7 @@ function ExperienceSection({ t }) {
   return (
     <section id="experience" className={`${divider} py-16 scroll-mt-0`}>
 
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem]">
         <h2 className={h2class}>{t.experience}</h2>
       </div>
 
@@ -949,7 +949,7 @@ function ExpertiseSection({ t }) {
   return (
     <section id="expertise" className={`${divider} py-16 scroll-mt-24 bg-bg-surface`}>
 
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem]">
         <h2 className={h2class}>{t.expertise}</h2>
       </div>
 
@@ -1177,7 +1177,7 @@ function EducationSection({ t }) {
   return (
     <section id="education" className={`${divider} py-16 scroll-mt-24`}>
 
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem]">
         <h2 className={h2class}>{t.education}</h2>
       </div>
 
@@ -1330,7 +1330,7 @@ function SkillsCertSection({ t }) {
 
         {/* ── Left: Top Skills ───────────────────────────────── */}
         <div className="lg:flex-1">
-          <h2 className={h2class}>{t.topSkills}</h2>
+          <h2 className={`${h2class} md:pl-14 lg:pl-28`}>{t.topSkills}</h2>
           <ul className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-4 lg:mt-16 sm:px-16 lg:px-0 list-none">
             {t.topSkillsList.map((skill, i) => (
               <li
@@ -1345,7 +1345,7 @@ function SkillsCertSection({ t }) {
 
         {/* ── Right: Certifications ──────────────────────────── */}
         <div id="certifications" className="scroll-mt-24 lg:w-[448px]">
-          <h2 className={h2class}>{t.certifications}</h2>
+          <h2 className={`${h2class} md:pl-14 lg:pl-0`}>{t.certifications}</h2>
 
           <div className="hidden sm:grid grid-cols-2 gap-4 lg:gap-6 sm:px-16 lg:px-0">
             {certs.map((card, i) => <CertificationCard key={i} card={card} />)}

@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import imgArrowRight  from '../assets/icons/icon-arrow-right.svg';
 import imgChevronLeft  from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight from '../assets/icons/icon-chevron-right.svg';
+import imgChevronUp    from '../assets/icons/icon-chevron-up.svg';
 import { CanapHeroBackdrop } from '../components/CanapHeroBackdrop';
 // Interaction-model poster cards, exported straight from Figma so the badge,
 // three-dot chip, metadata line and per-size corner radii are pixel-exact.
@@ -144,7 +145,7 @@ const T = {
   en: {
     pageTitle: 'Canap • Case study',
     hero: {
-      category: 'NDA-free side project · 2026',
+      category: 'NDA-free side project',
       // The headline angle the audit recommends: cross-platform consumer
       // product shipped solo. Keep it punchy — display-1 reads at a
       // distance.
@@ -586,7 +587,7 @@ const T = {
   fr: {
     pageTitle: 'Canap • Étude de cas',
     hero: {
-      category: 'Projet perso · 2026',
+      category: 'Projet perso',
       title: 'Une app média pour mieux choisir',
       stats: [
         { prefix: '', countTo: 6, decimals: 0, suffix: ' semaines', label: 'de l’idée à l’alpha' },
@@ -1324,31 +1325,126 @@ function Callout({ emoji, label, body, variant = 'success' }) {
 // Section — collapsible-style wrapper used by every block below. Simpler
 // than SalesPlatform's animated grid-rows transition; intent is the
 // same shell shape, ready for the lifted version when the time comes.
-function Section({ id, title, eyebrowOffset, contentClass = '', bgClass = 'bg-bg-page', titleInset = false, children }) {
-  // `titleInset` gives the h2 the same reading-column inset as the sub-section
-  // h3s (matches `introInset`). The title now sits in the SAME width-constrained
-  // container as the content (below), so the h2 tracks the h3s exactly instead
-  // of drifting at widths between the 52rem and 5xl breakpoints.
-  const titlePad = titleInset ? 'pl-6 sm:pl-12 lg:pl-[60px]' : '';
-  // Content max-width is constrained to `md:max-w-2xl lg:max-w-[52rem]`
-  // (same as SalesPlatform + XR) so the fixed secondary nav, now pinned to
-  // the LEFT at `min-[920px]:right-[calc(50%_+_20.5rem)]`, doesn't overlap
-  // tile content. The outer max-w-5xl gives horizontal rhythm for
-  // section padding; the inner narrow constraint protects the reading
-  // column.
+// Accordion collapse for the case-study sections — active ONLY when the
+// secondary nav is hidden (< 920px), matching SalesPlatform. At ≥920px the
+// secondary nav handles navigation, so sections stay expanded with no chevron.
+function useSectionCollapse() {
+  const [open, setOpen] = useState(true);
+  const [hidden, setHidden] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 920px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 920px)');
+    const onChange = () => setIsDesktop(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  const btnRef = useRef(null);
+  const contentRef = useRef(null);
+  const gridRef = useRef(null);
+  const handleToggle = () => {
+    if (open) {
+      if (contentRef.current?.contains(document.activeElement)) btnRef.current?.focus();
+      setOpen(false);
+      const el = gridRef.current;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setHidden(true);
+      } else {
+        const onEnd = (e) => {
+          if (e.propertyName !== 'grid-template-rows') return;
+          el?.removeEventListener('transitionend', onEnd);
+          setHidden(true);
+        };
+        el?.addEventListener('transitionend', onEnd);
+      }
+    } else {
+      setHidden(false);
+      requestAnimationFrame(() => setOpen(true));
+    }
+  };
+  const collapsible = !isDesktop;
+  return { collapsible, open, sectionOpen: collapsible ? open : true, hidden, handleToggle, btnRef, contentRef, gridRef };
+}
+
+const collapseLabel = (open, title, lang) =>
+  open ? (lang === 'fr' ? `Réduire ${title}` : `Collapse ${title}`)
+       : (lang === 'fr' ? `Développer ${title}` : `Expand ${title}`);
+
+function SectionChevron({ open }) {
   return (
-    <section id={id} aria-labelledby={`${id}-heading`} className={bgClass}>
+    <div className="group shrink-0 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center transition-colors hover:bg-btn-nav-bg-hover">
+      <img
+        src={imgChevronUp}
+        alt=""
+        className={`w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 transition-[filter,transform] duration-300 forced-colors:brightness-[unset] forced-colors:invert-0 ${open ? '' : 'rotate-180'} brightness-0 dark:invert group-hover:invert dark:group-hover:brightness-0 dark:group-hover:invert-0`}
+      />
+    </div>
+  );
+}
+
+// CollapseBody — wraps section content so it can animate closed on mobile.
+// On desktop (not collapsible) it renders the content untouched (no
+// overflow-hidden) so nothing in Canap's richer content gets clipped.
+function CollapseBody({ id, c, className, children }) {
+  // `className` set → wrap content in one max-width column (the standard
+  // Section). Omitted → render the raw children (sections whose carousels
+  // break full-bleed). Either way, untouched on desktop (no overflow-hidden).
+  const inner = className != null ? <div className={className}>{children}</div> : <>{children}</>;
+  if (!c.collapsible) return inner;
+  return (
+    <div
+      ref={c.gridRef}
+      id={`${id}-content`}
+      style={c.hidden ? { display: 'none' } : undefined}
+      className={`grid [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${c.sectionOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+      inert={!c.sectionOpen}
+    >
+      <div ref={c.contentRef} className="overflow-hidden min-h-0">
+        {inner}
+      </div>
+    </div>
+  );
+}
+
+// SectionHeading — the h2 + (mobile) collapse chevron. Renders as a toggle
+// button when collapsible, a plain heading otherwise. Shared by `Section` and
+// the raw carousel sections (Research, Ideate). Drop inside the title wrapper.
+function SectionHeading({ c, id, title, lang, titleInset = false }) {
+  const titlePad = titleInset ? 'pl-6 sm:pl-12 lg:pl-[60px]' : '';
+  const heading = (
+    <div className="flex items-center justify-between gap-4">
+      <h2 id={`${id}-heading`} className={`text-h2 font-semibold text-fg-primary py-6 sm:py-7 lg:py-8 ${titlePad}`}>
+        {title}
+      </h2>
+      {c.collapsible && <SectionChevron open={c.open} />}
+    </div>
+  );
+  if (!c.collapsible) return heading;
+  return (
+    <button
+      ref={c.btnRef}
+      onClick={c.handleToggle}
+      aria-label={collapseLabel(c.open, title, lang)}
+      aria-expanded={c.open}
+      aria-controls={`${id}-content`}
+      className="w-full text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary"
+    >
+      {heading}
+    </button>
+  );
+}
+
+function Section({ id, title, eyebrowOffset, contentClass = '', bgClass = 'bg-bg-page', titleInset = false, lang = 'en', children }) {
+  // Below 920px (secondary nav hidden) the h2 becomes a collapse/expand toggle
+  // with a chevron; at ≥920px it's a plain, always-expanded heading.
+  const c = useSectionCollapse();
+  return (
+    <section id={id} aria-labelledby={`${id}-heading`} className={c.collapsible && !c.sectionOpen ? 'bg-bg-page' : bgClass}>
       <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pt-8 sm:pt-10 lg:pt-12 pb-2 sm:pb-3 md:max-w-2xl lg:max-w-[52rem]">
-        <h2
-          id={`${id}-heading`}
-          className={`text-h2 font-semibold text-fg-primary py-6 sm:py-7 lg:py-8 ${titlePad}`}
-        >
-          {title}
-        </h2>
+        <SectionHeading c={c} id={id} title={title} lang={lang} titleInset={titleInset} />
       </div>
-      <div className={`max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pb-16 sm:pb-20 lg:pb-24 md:max-w-2xl lg:max-w-[52rem] ${contentClass}`}>
+      <CollapseBody id={id} c={c} className={`max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pb-16 sm:pb-20 lg:pb-24 md:max-w-2xl lg:max-w-[52rem] ${contentClass}`}>
         {children}
-      </div>
+      </CollapseBody>
     </section>
   );
 }
@@ -1714,13 +1810,14 @@ function DsPalette({ label }) {
             onClick={() => reveal(i)}
             className="group relative block p-0 leading-none focus:outline-none"
           >
-            {/* Mobile: pill only — the tinted container + stroke appear just for
-                the selected swatch (revealed) so the row reads as spaced pills.
-                Desktop (lg+): container is always shown. Border stays present but
-                transparent off-state so toggling tint never shifts layout. */}
+            {/* Mobile (phone): pill only — the tinted container + stroke appear
+                just for the selected swatch (revealed/tap) so the row reads as
+                spaced pills. Tablet/desktop (md+): container appears on hover
+                (and focus) only. Border stays present but transparent off-state
+                so toggling tint never shifts layout. */}
             <span
               data-squircle
-              className={`flex items-center p-2 rounded-radius-5 border transition-colors duration-150 lg:bg-[var(--tint)] lg:border-white/[0.08] group-focus-visible:bg-[var(--tint)] group-focus-visible:border-white/[0.08] ${revealed === i ? 'bg-[var(--tint)] border-white/[0.08]' : 'bg-transparent border-transparent'}`}
+              className={`flex items-center p-2 rounded-radius-5 border transition-colors duration-150 md:group-hover:bg-[var(--tint)] md:group-hover:border-white/[0.08] group-focus-visible:bg-[var(--tint)] group-focus-visible:border-white/[0.08] ${revealed === i ? 'bg-[var(--tint)] border-white/[0.08]' : 'bg-transparent border-transparent'}`}
               style={{ '--tint': `${c}26` }}
             >
               <span className="block w-6 h-11 rounded-radius-4" style={{ backgroundColor: c }} />
@@ -2033,8 +2130,6 @@ function SecondaryNav({ sections, activeId, activeSubId, onNavigate, visible, la
         onPointerDown={onEdgePointerDown}
         onPointerMove={onEdgePointerMove}
         onPointerUp={onEdgePointerUp}
-        onMouseEnter={showTip}
-        onMouseLeave={hideTip}
         onFocus={showTip}
         onBlur={hideTip}
         aria-label={minimiseLabel}
@@ -2042,13 +2137,13 @@ function SecondaryNav({ sections, activeId, activeSubId, onNavigate, visible, la
       >
         <span
           aria-hidden="true"
-          className="absolute inset-y-6 right-[3px] w-[3px] rounded-full bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
+          className="absolute inset-y-6 right-[3px] w-[2px] rounded-full bg-fg-muted-inverse dark:bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
           style={{
             maskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
             WebkitMaskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
           }}
         />
-        <span aria-hidden="true" className="absolute left-full top-1/2 -translate-y-1/2 ml-[3px] text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
+        <span aria-hidden="true" onMouseEnter={showTip} onMouseLeave={hideTip} className="absolute left-full top-1/2 -translate-y-1/2 pl-[3px] cursor-pointer text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
             <path d="M14 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -3194,6 +3289,10 @@ function Canap({ lang = 'en', isDark }) {
   const [scrollingDown, setScrollingDown] = useState(false);
   const scrollTarget = useRef(null);
   const navScrollRef = useRef(false);
+  // Mobile (< 920px) collapse state for the two raw carousel sections, which
+  // aren't rendered via the <Section> component. Research & Ideate.
+  const researchC = useSectionCollapse();
+  const ideateC = useSectionCollapse();
 
   const handleNavigate = (id) => {
     const parentSection = sections.find(s => s.subsections?.some(sub => sub.id === id));
@@ -3313,6 +3412,7 @@ function Canap({ lang = 'en', isDark }) {
         <Section
           id="context"
           title={t.context.header}
+          lang={lang}
           bgClass="bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]"
           titleInset
         >
@@ -3387,17 +3487,13 @@ function Canap({ lang = 'en', isDark }) {
         <section
           id="research"
           aria-labelledby="research-heading"
-          className="bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]"
+          className={researchC.collapsible && !researchC.sectionOpen ? 'bg-bg-page' : 'bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]'}
         >
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pt-8 sm:pt-10 lg:pt-12 pb-2 sm:pb-3 md:max-w-2xl lg:max-w-[52rem]">
-            <h2
-              id="research-heading"
-              className="text-h2 font-semibold text-fg-primary py-6 sm:py-7 lg:py-8 pl-6 sm:pl-12 lg:pl-[60px]"
-            >
-              {t.research.header}
-            </h2>
+            <SectionHeading c={researchC} id="research" title={t.research.header} lang={lang} titleInset />
           </div>
 
+          <CollapseBody id="research" c={researchC}>
           {/* Sub-section: Existing solutions — heading only; the cards carry
               the survey and the outro lands the verdict, so no intro line. */}
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem] mb-10">
@@ -3490,6 +3586,7 @@ function Canap({ lang = 'en', isDark }) {
               component uses `pb-16/20/24`) so the gap below Research equals
               the gap below Context. */}
           <div className="pb-16 sm:pb-20 lg:pb-24" />
+          </CollapseBody>
         </section>
 
         {/* ---------- IDEATE ---------------------------------------- */}
@@ -3505,14 +3602,10 @@ function Canap({ lang = 'en', isDark }) {
           className="bg-bg-page"
         >
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pt-8 sm:pt-10 lg:pt-12 pb-2 sm:pb-3 md:max-w-2xl lg:max-w-[52rem]">
-            <h2
-              id="ideate-heading"
-              className="text-h2 font-semibold text-fg-primary py-6 sm:py-7 lg:py-8 pl-6 sm:pl-12 lg:pl-[60px]"
-            >
-              {t.ideate.header}
-            </h2>
+            <SectionHeading c={ideateC} id="ideate" title={t.ideate.header} lang={lang} titleInset />
           </div>
 
+          <CollapseBody id="ideate" c={ideateC}>
           {/* Sub-section: Product principles — the guardrails that shaped
               what to build. Numbered list (title + rationale), echoing the
               Key insights list. */}
@@ -3576,6 +3669,7 @@ function Canap({ lang = 'en', isDark }) {
           */}
 
           <div className="pb-16 sm:pb-20 lg:pb-24" />
+          </CollapseBody>
         </section>
 
         {/* ---------- DESIGN ---------------------------------------- */}
@@ -3584,7 +3678,7 @@ function Canap({ lang = 'en', isDark }) {
             principle it proves. Phone alternates left/right for rhythm. The
             screens are real Figma exports; the closing block embeds the
             whole file so visitors can inspect it directly. */}
-        <Section id="design" title={t.design.header} bgClass="bg-bg-page" titleInset>
+        <Section id="design" title={t.design.header} lang={lang} bgClass="bg-bg-page" titleInset>
           {/* Sub-section: Information architecture — the user at the centre of
               every tab. A horizontal snap carousel of the tab cards at every
               breakpoint (desktop included). First design beat, before the
@@ -3643,7 +3737,7 @@ function Canap({ lang = 'en', isDark }) {
               target="_blank"
               rel="noreferrer noopener"
               data-spring
-              className="inline-flex items-center gap-2 pl-3.5 pr-4 py-2.5 rounded-full bg-bg-surface border border-glass-subtle text-fg-primary font-medium text-btn-m hover:bg-btn-bg-over transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+              className="inline-flex items-center gap-2 pl-3.5 pr-4 py-2.5 rounded-full bg-blue-600 text-white font-semibold text-btn-m hover:bg-blue-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
             >
               {/* Icon sits on a matched #161616 plate (same as the app-icon's
                   own background) with padding, so the black bg reads larger
@@ -3657,7 +3751,7 @@ function Canap({ lang = 'en', isDark }) {
                 alt=""
                 width={16}
                 height={16}
-                className="ml-0.5 brightness-0 dark:invert"
+                className="ml-0.5 brightness-0 invert"
                 draggable="false"
               />
             </a>
@@ -3720,7 +3814,7 @@ function Canap({ lang = 'en', isDark }) {
             shipped, coherent result. Five numbered sections, each a tile with
             paragraphs, lead-in bullet lists, labelled sub-groups and the odd
             key-takeaway callout (see ProcessBlock). */}
-        <Section id="process" title={t.process.header} bgClass="bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]" titleInset>
+        <Section id="process" title={t.process.header} lang={lang} bgClass="bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]" titleInset>
           {/* Two paragraphs (split on the newline) rendered as separate <p>s
               with a normal gap, so the type matches every other section intro
               instead of the cramped single-line-height of whitespace-pre-line. */}
@@ -3770,6 +3864,7 @@ function Canap({ lang = 'en', isDark }) {
         <Section
           id="impact"
           title={t.impact.header}
+          lang={lang}
           bgClass="bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]"
           titleInset
         >

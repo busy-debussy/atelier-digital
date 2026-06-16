@@ -242,8 +242,6 @@ function SecondaryNav({ sections, activeId, onNavigate, lang }) {
         onPointerDown={onEdgePointerDown}
         onPointerMove={onEdgePointerMove}
         onPointerUp={onEdgePointerUp}
-        onMouseEnter={showTip}
-        onMouseLeave={hideTip}
         onFocus={showTip}
         onBlur={hideTip}
         aria-label={minimiseLabel}
@@ -252,14 +250,14 @@ function SecondaryNav({ sections, activeId, onNavigate, lang }) {
         {/* edge highlight — only on edge hover/focus */}
         <span
           aria-hidden="true"
-          className="absolute inset-y-6 right-[3px] w-[3px] rounded-full bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
+          className="absolute inset-y-6 right-[3px] w-[2px] rounded-full bg-fg-muted-inverse dark:bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
           style={{
             maskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
             WebkitMaskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
           }}
         />
         {/* chevron, rendered just outside the nav container */}
-        <span aria-hidden="true" className="absolute left-full top-1/2 -translate-y-1/2 ml-[3px] text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
+        <span aria-hidden="true" onMouseEnter={showTip} onMouseLeave={hideTip} className="absolute left-full top-1/2 -translate-y-1/2 pl-[3px] cursor-pointer text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
             <path d="M14 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>

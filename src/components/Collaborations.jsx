@@ -319,7 +319,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
       aria-labelledby="collab-heading"
       className="scroll-mt-24 py-16"
     >
-      <div {...(activeModal !== null ? { inert: '' } : {})} className="max-w-5xl mx-auto px-6 mb-12 sm:mb-14 lg:mb-16">
+      <div {...(activeModal !== null ? { inert: '' } : {})} className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem] mb-12 sm:mb-14 lg:mb-16">
         <h2 id="collab-heading" className="text-h2 font-bold leading-tight text-fg-primary">
           {t.heading}
         </h2>

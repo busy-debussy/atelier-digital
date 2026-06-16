@@ -8,6 +8,7 @@ import imgArrowRight   from '../assets/icons/icon-arrow-right.svg';
 import imgClose        from '../assets/icons/icon-close.svg';
 import imgChevronLeft  from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight from '../assets/icons/icon-chevron-right.svg';
+import imgChevronUp    from '../assets/icons/icon-chevron-up.svg';
 import mipimPhoto from '../assets/photos/photo-MIPIM.webp';
 import eventBuildingPhoto from '../assets/photos/photo-event-building.webp';
 import eventSpacePhoto from '../assets/photos/photo-event-space.webp';
@@ -39,7 +40,7 @@ const T = {
   en: {
     skipToMain:  'Skip to main content',
     pageTitle:   'XR Experiences • Atelier Digital',
-    label:       'Case study • Extended Reality',
+    label:       'Extended Reality',
     title:       'An XR system for revealing megaprojects',
     tagline:     'The architecture of engagement',
     stats: [
@@ -51,7 +52,7 @@ const T = {
       {
         id:      'why',
         eyebrow: 'Context',
-        heading: 'One shot at first impression',
+        heading: 'One shot to impress',
         tile: true,
         body: [
           <>We were commissioned to unveil a large-scale <strong>urban development</strong>.</>,
@@ -61,6 +62,7 @@ const T = {
       {
         id:      'when-where',
         eyebrow: 'When & Where',
+        navLabel: 'Where',
         heading: 'MIPIM, Cannes',
         tile: true,
         body: [
@@ -125,7 +127,7 @@ const T = {
           },
           {
             number: '04',
-            title:  'Real-time companion app',
+            title:  'Real-time companion',
             tech:   'iPad',
             body:   'A real-time mirrored view of the AR experience, ensuring non-headset participants remained engaged.',
           },
@@ -146,6 +148,7 @@ const T = {
       {
         id:      'prioritise',
         eyebrow: 'Prioritise & Choose',
+        navLabel: 'Prioritise',
         heading: 'Decision under constraints',
         body: [
           <><strong>AR table</strong> prioritised as the central experience based on engagement and logistical constraints.<br />→ Optimised for hardware setup and group interaction.</>,
@@ -197,6 +200,7 @@ const T = {
       {
         id:      'measure',
         eyebrow: 'Measure & Impact',
+        navLabel: 'Impact',
         heading: 'Live deployment',
         body: [
           <>Presenter-led AR sessions consistently retained participants for full <strong>10-minute experiences</strong>. Observers remained engaged through mirrored <strong>iPad and VR outputs</strong>, enabling parallel participation across formats. The pavilion operated at <strong>full capacity</strong> throughout the event, leading to strong client feedback and an extended <strong>multi-year partnership</strong>.</>,
@@ -253,7 +257,7 @@ const T = {
   fr: {
     skipToMain:  'Aller au contenu principal',
     pageTitle:   'Expériences XR • Atelier Digital',
-    label:       'Étude de cas • Réalité étendue',
+    label:       'Réalité étendue',
     title:       'Un système XR pour révéler un mégaprojet',
     tagline:     "L'architecture de l'engagement",
     stats: [
@@ -265,7 +269,7 @@ const T = {
       {
         id:      'why',
         eyebrow: 'Contexte',
-        heading: 'Une chance de marquer les esprits',
+        heading: 'Une seule chance',
         tile: true,
         body: [
           <>Nous avons eu l'opportunité de révéler un <strong>développement urbain</strong>.</>,
@@ -275,6 +279,7 @@ const T = {
       {
         id:      'when-where',
         eyebrow: 'Où et quand',
+        navLabel: 'Où',
         heading: 'MIPIM, Cannes',
         tile: true,
         body: [
@@ -338,7 +343,7 @@ const T = {
           },
           {
             number: '04',
-            title:  'Application compagnon en temps réel',
+            title:  'Compagnon en temps réel',
             tech:   'iPad',
             body:   "Une vue miroir en temps réel de l'expérience AR, garantissant l'engagement des participants sans casque.",
           },
@@ -359,6 +364,7 @@ const T = {
       {
         id:      'prioritise',
         eyebrow: 'Prioriser et choisir',
+        navLabel: 'Prioriser',
         heading: 'Décision sous contraintes',
         body: [
           <><strong>Table AR</strong> priorisée comme expérience centrale en raison de l'engagement et des contraintes logistiques.<br />→ Optimisée pour l'installation matérielle et l'interaction en groupe.</>,
@@ -410,6 +416,7 @@ const T = {
       {
         id:      'measure',
         eyebrow: 'Mesurer et analyser',
+        navLabel: 'Impact',
         heading: 'Déploiement en direct',
         body: [
           <>Les sessions de réalité augmentée guidées retenaient régulièrement les participants pendant la totalité des <strong>10 minutes</strong>. Les observateurs restaient engagés grâce aux sorties <strong>iPad et VR en miroir</strong>, permettant une participation parallèle sur tous les formats. Le pavillon a fonctionné à <strong>pleine capacité</strong> tout au long de l'événement, générant des retours clients très positifs et un <strong>partenariat pluriannuel</strong>.</>,
@@ -771,6 +778,34 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
 
 function FlowSection({ isDark, lang, labels }) {
   const [lightboxIndex, setLightboxIndex] = useState(null);
+  // Mobile carousel state (the two flows are a swipe carousel < 640px).
+  const trackRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const isProg = useRef(false);
+  const scrollToCard = (i) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const card = track.children[i];
+    if (card) {
+      const left = card.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+      track.scrollTo({ left, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    }
+    setActiveIndex(i);
+    isProg.current = true;
+    setTimeout(() => { isProg.current = false; }, 400);
+  };
+  const handleScroll = () => {
+    if (isProg.current) return;
+    const track = trackRef.current;
+    if (!track) return;
+    let closest = 0, min = Infinity;
+    Array.from(track.children).forEach((c, i) => {
+      const left = c.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+      const d = Math.abs(left - track.scrollLeft);
+      if (d < min) { min = d; closest = i; }
+    });
+    setActiveIndex(closest);
+  };
 
   const slides = useMemo(() => {
     const configs = [
@@ -817,9 +852,15 @@ function FlowSection({ isDark, lang, labels }) {
   return (
     <>
       <div className="flex flex-col gap-2 w-full">
-        <div className="flex flex-col sm:flex-row gap-4 w-full">
+        {/* Mobile: horizontal swipe carousel (one flow per view). sm+: side by side. */}
+        <div
+          ref={trackRef}
+          onScroll={handleScroll}
+          className="flex gap-4 w-full overflow-x-auto snap-x snap-mandatory sm:overflow-x-visible sm:snap-none"
+          style={{ scrollbarWidth: 'none' }}
+        >
           {slides.map((slide, i) => (
-            <figure key={slide.label} className="flex flex-col gap-2 flex-1">
+            <figure key={slide.label} className="flex flex-col gap-2 shrink-0 w-full snap-center sm:w-auto sm:flex-1">
               <button
                 type="button"
                 onClick={() => setLightboxIndex(i)}
@@ -831,6 +872,44 @@ function FlowSection({ isDark, lang, labels }) {
               <figcaption className="text-fine-print font-normal leading-normal text-fg-muted text-center">{slide.label}</figcaption>
             </figure>
           ))}
+        </div>
+
+        {/* Carousel nav (dots + arrows) — mobile only; sm+ shows both flows side by side. */}
+        <div className="sm:hidden grid grid-cols-[1fr_auto_1fr] items-center mt-2">
+          <div />
+          <div className="flex items-center">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToCard(i)}
+                aria-label={lang === 'fr' ? `Diapositive ${i + 1} sur ${slides.length}` : `Slide ${i + 1} of ${slides.length}`}
+                aria-current={i === activeIndex ? 'true' : undefined}
+                className="group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary rounded-full motion-safe:transition-all motion-safe:duration-200 p-2"
+              >
+                <span className={`block rounded-full motion-safe:transition-all motion-safe:duration-200 ${i === activeIndex ? 'w-4 h-2 bg-fg-dot-active' : 'w-2 h-2 bg-fg-dot-rest group-hover:bg-fg-dot-hover'}`} />
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 justify-self-end">
+            <button
+              onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
+              disabled={activeIndex === 0}
+              data-spring
+              aria-label={lang === 'fr' ? 'Diapositive précédente' : 'Previous slide'}
+              className="group p-2 rounded-full bg-btn-nav-bg-rest-subtle enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
+            >
+              <img src={imgChevronLeft} alt="" width={20} height={20} className="brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]" />
+            </button>
+            <button
+              onClick={() => scrollToCard(Math.min(slides.length - 1, activeIndex + 1))}
+              disabled={activeIndex === slides.length - 1}
+              data-spring
+              aria-label={lang === 'fr' ? 'Diapositive suivante' : 'Next slide'}
+              className="group p-2 rounded-full bg-btn-nav-bg-rest-subtle enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color,color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer"
+            >
+              <img src={imgChevronRight} alt="" width={20} height={20} className="group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]" />
+            </button>
+          </div>
         </div>
       </div>
       {lightboxIndex !== null && (
@@ -855,6 +934,127 @@ function translateFlowSvg(svg, lang) {
 
 // ── Shared styles ─────────────────────────────────────────────────────────────
 const bodyText = 'text-copy-m font-normal leading-loose text-fg-secondary';
+
+// ── Collapsible sections ──────────────────────────────────────────────────────
+// Below 920px (secondary nav hidden) each section's eyebrow + heading become a
+// collapse/expand toggle with a chevron, and the body card collapses below —
+// matching the Canap & Sales Platform case studies. At ≥920px the secondary nav
+// handles navigation, so sections stay expanded with no chevron.
+function useSectionCollapse() {
+  const [open, setOpen] = useState(true);
+  const [hidden, setHidden] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 920px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 920px)');
+    const onChange = () => setIsDesktop(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  const btnRef = useRef(null);
+  const contentRef = useRef(null);
+  const gridRef = useRef(null);
+  const handleToggle = () => {
+    if (open) {
+      if (contentRef.current?.contains(document.activeElement)) btnRef.current?.focus();
+      setOpen(false);
+      const el = gridRef.current;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setHidden(true);
+      } else {
+        const onEnd = (e) => {
+          if (e.propertyName !== 'grid-template-rows') return;
+          el?.removeEventListener('transitionend', onEnd);
+          setHidden(true);
+        };
+        el?.addEventListener('transitionend', onEnd);
+      }
+    } else {
+      setHidden(false);
+      requestAnimationFrame(() => setOpen(true));
+    }
+  };
+  const collapsible = !isDesktop;
+  return { collapsible, open, sectionOpen: collapsible ? open : true, hidden, handleToggle, btnRef, contentRef, gridRef };
+}
+
+const collapseLabel = (open, title, lang) =>
+  open ? (lang === 'fr' ? `Réduire ${title}` : `Collapse ${title}`)
+       : (lang === 'fr' ? `Développer ${title}` : `Expand ${title}`);
+
+function SectionChevron({ open }) {
+  return (
+    <div className="group shrink-0 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center transition-colors hover:bg-btn-nav-bg-hover">
+      <img
+        src={imgChevronUp}
+        alt=""
+        className={`w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 transition-[filter,transform] duration-300 forced-colors:brightness-[unset] forced-colors:invert-0 ${open ? '' : 'rotate-180'} brightness-0 dark:invert group-hover:invert dark:group-hover:brightness-0 dark:group-hover:invert-0`}
+      />
+    </div>
+  );
+}
+
+// CollapseBody — wraps the body so it can animate closed on mobile. On desktop
+// (not collapsible) the body is rendered untouched (no overflow-hidden) so
+// nothing in the section content gets clipped. `className` keeps the body's
+// flex-gap whether it's a fragment (desktop) or wrapped (mobile).
+function CollapseBody({ id, c, className, children }) {
+  const inner = className != null ? <div className={className}>{children}</div> : <>{children}</>;
+  if (!c.collapsible) return inner;
+  return (
+    <div
+      ref={c.gridRef}
+      id={`${id}-content`}
+      style={c.hidden ? { display: 'none' } : undefined}
+      className={`grid [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${c.sectionOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+      inert={!c.sectionOpen}
+    >
+      <div ref={c.contentRef} className="overflow-hidden min-h-0">
+        {inner}
+      </div>
+    </div>
+  );
+}
+
+// CollapsibleSection — keeps XR's card design: the gold eyebrow + heading stay
+// INSIDE the card with the chevron beside them (mobile), and the body collapses
+// within the card. On desktop (≥920px) it's the original, always-open card.
+function CollapsibleSection({ section, si, isLast, lang, children }) {
+  const c = useSectionCollapse();
+  const headingId = `${section.id}-heading`;
+  const tile = section.tile !== false;
+  const bodyGap = tile ? 'flex flex-col gap-6 sm:gap-8' : 'flex flex-col gap-8 sm:gap-10 lg:gap-12';
+  const heading = (
+    <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col gap-3">
+        <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider gold-text">{section.eyebrow}</p>
+        <h2 id={headingId} className="text-h2 font-bold leading-tight text-fg-primary">{section.heading}</h2>
+      </div>
+      {c.collapsible && <SectionChevron open={c.open} />}
+    </div>
+  );
+  const pad = `${si === 0 ? 'pt-8' : 'pt-3'} ${isLast ? 'pb-16' : 'pb-3'} sm:${si === 0 ? 'pt-10' : 'pt-5'} sm:${isLast ? 'pb-20' : 'pb-5'} lg:${si === 0 ? 'pt-24' : 'pt-6'} lg:${isLast ? 'pb-24' : 'pb-6'}`;
+  return (
+    <section id={section.id} aria-labelledby={headingId} tabIndex={-1} className={`${pad} scroll-mt-24 focus-visible:outline-none`}>
+      <div className={tile ? `bg-bg-page rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 p-6 sm:p-12 lg:p-[60px] ${bodyGap}` : bodyGap}>
+        {c.collapsible ? (
+          <button
+            ref={c.btnRef}
+            onClick={c.handleToggle}
+            aria-label={collapseLabel(c.open, section.heading, lang)}
+            aria-expanded={c.open}
+            aria-controls={`${section.id}-content`}
+            className="w-full text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary"
+          >
+            {heading}
+          </button>
+        ) : heading}
+        <CollapseBody id={section.id} c={c} className={bodyGap}>
+          {children}
+        </CollapseBody>
+      </div>
+    </section>
+  );
+}
 
 // ── Scroll helper ─────────────────────────────────────────────────────────────
 const scrollToSection = (id) => {
@@ -923,10 +1123,13 @@ function XRToolsSection({ label, categories }) {
 }
 
 // ── Desktop secondary nav ─────────────────────────────────────────────────────
-// Frosted floating panel (matches the Canap case study). This nav is a sticky
-// in-flow sidebar with no opacity fade, so the backdrop-blur is applied directly
-// — the panel hugs its links (w-fit) within the reserved w-44 column.
-function SecondaryNav({ sections, activeId, onNavigate, lang }) {
+// Frosted floating panel. Positioned by its render-site wrapper as a fixed
+// element that floats just left of the centred content (top-[240px], offset
+// from page centre) — identical to Canap + Sales Platform. Scroll-gated opacity
+// fade lives on the inner blurred panel — NOT an ancestor — so an ancestor
+// opacity < 1 never disables the backdrop-blur. It fades in once past the hero
+// and out at the last section.
+function SecondaryNav({ sections, activeId, onNavigate, visible, lang }) {
   // Collapsible secondary nav. Hovering the right edge highlights it and shows
   // a delayed "Minimise" tooltip; clicking (or dragging left) collapses the nav
   // into a centre-left pill that restores it.
@@ -952,36 +1155,33 @@ function SecondaryNav({ sections, activeId, onNavigate, lang }) {
 
   if (collapsed) {
     return (
-      <>
-        <div className="hidden md:block w-44 shrink-0" aria-hidden="true" />
-        <div className="hidden md:block fixed left-2 top-1/2 -translate-y-1/2 z-10">
-          <button
-            type="button"
-            onClick={() => { setCollapsed(false); hideTip(); }}
-            onMouseEnter={showTip}
-            onMouseLeave={hideTip}
-            onFocus={showTip}
-            onBlur={hideTip}
-            aria-label={expandLabel}
-            className="flex items-center justify-center w-9 h-9 backdrop-blur-3 bg-nav-bg rounded-radius-4 shadow-xs ring-1 ring-nav-ring text-fg-muted hover:text-fg-primary hover:bg-nav-active-bg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 7h16M4 12h12M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </button>
-          {tipVisible && (
-            <div role="tooltip" className="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-nav-active-bg-solid text-fg-inverse shadow-xs pointer-events-none z-20">
-              {expandLabel}
-            </div>
-          )}
-        </div>
-      </>
+      <div className={`fixed left-2 top-1/2 -translate-y-1/2 z-10 transition-opacity duration-180 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <button
+          type="button"
+          onClick={() => { setCollapsed(false); hideTip(); }}
+          onMouseEnter={showTip}
+          onMouseLeave={hideTip}
+          onFocus={showTip}
+          onBlur={hideTip}
+          aria-label={expandLabel}
+          className="flex items-center justify-center w-9 h-9 backdrop-blur-3 bg-nav-bg rounded-radius-4 shadow-xs ring-1 ring-nav-ring text-fg-muted hover:text-fg-primary hover:bg-nav-active-bg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h12M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
+        {tipVisible && (
+          <div role="tooltip" className="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-nav-active-bg-solid text-fg-inverse shadow-xs pointer-events-none z-20">
+            {expandLabel}
+          </div>
+        )}
+      </div>
     );
   }
 
   return (
-    <nav aria-label="Page sections" className="hidden md:block sticky top-16 self-start z-10 w-44 shrink-0 pt-28">
-      <div className="relative p-2 backdrop-blur-3 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring w-fit">
+    <nav aria-label="Page sections">
+      <div className={`relative p-2 backdrop-blur-3 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring w-fit transition-opacity duration-180 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <ol className="grid gap-1" style={{ gridTemplateColumns: 'max-content' }}>
           {sections.map((s) => {
             const isActive = activeId === s.id;
@@ -996,8 +1196,8 @@ function SecondaryNav({ sections, activeId, onNavigate, lang }) {
                       : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
                   }`}
                 >
-                  <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.eyebrow}</span>
-                  <span className="absolute inset-0 py-2 px-3 whitespace-nowrap">{s.eyebrow}</span>
+                  <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.navLabel ?? s.eyebrow}</span>
+                  <span className="absolute inset-0 py-2 px-3 whitespace-nowrap">{s.navLabel ?? s.eyebrow}</span>
                 </button>
               </li>
             );
@@ -1012,8 +1212,6 @@ function SecondaryNav({ sections, activeId, onNavigate, lang }) {
           onPointerDown={onEdgePointerDown}
           onPointerMove={onEdgePointerMove}
           onPointerUp={onEdgePointerUp}
-          onMouseEnter={showTip}
-          onMouseLeave={hideTip}
           onFocus={showTip}
           onBlur={hideTip}
           aria-label={minimiseLabel}
@@ -1021,13 +1219,13 @@ function SecondaryNav({ sections, activeId, onNavigate, lang }) {
         >
           <span
             aria-hidden="true"
-            className="absolute inset-y-6 right-[3px] w-[3px] rounded-full bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
+            className="absolute inset-y-6 right-[3px] w-[2px] rounded-full bg-fg-muted-inverse dark:bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
             style={{
               maskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
               WebkitMaskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
             }}
           />
-          <span aria-hidden="true" className="absolute left-full top-1/2 -translate-y-1/2 ml-[3px] text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
+          <span aria-hidden="true" onMouseEnter={showTip} onMouseLeave={hideTip} className="absolute left-full top-1/2 -translate-y-1/2 pl-[3px] cursor-pointer text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
               <path d="M14 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -1187,8 +1385,8 @@ function XRExperiences({ lang, isDark }) {
     const lastEl  = document.getElementById(t.sections[t.sections.length - 1].id);
     if (!firstEl || !lastEl) return;
     const update = () => {
-      setScrolledDown(firstEl.getBoundingClientRect().top < 150);
-      setAtBottom(lastEl.getBoundingClientRect().bottom < 200);
+      setScrolledDown(firstEl.getBoundingClientRect().top < 80);
+      setAtBottom(lastEl.getBoundingClientRect().bottom < 700);
     };
     update();
     window.addEventListener('scroll', update, { passive: true });
@@ -1281,10 +1479,10 @@ function XRExperiences({ lang, isDark }) {
                   body copy or as a section eyebrow rather than as
                   hero chrome. `t.tagline` remains in the EN/FR T
                   bundles unused for now in case it's reinstated. */}
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-6 sm:flex sm:flex-wrap sm:gap-x-16 mt-2 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }} aria-label="Key figures">
+              <ul className="flex justify-between gap-x-2 gap-y-6 sm:justify-start sm:flex-wrap sm:gap-x-16 mt-2 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }} aria-label="Key figures">
                 {t.stats.map((s, i) => (
                   <li key={i} className="flex flex-col gap-1">
-                    <span className="text-display-2 font-semibold leading-tight tabular-nums whitespace-nowrap" style={{ color: GOLD }}>
+                    <span className="text-display-2 font-semibold leading-tight tabular-nums whitespace-nowrap text-fg-on-dark-primary">
                       <AnimatedStat prefix={s.prefix} countTo={s.countTo} suffix={s.suffix} ready={heroReady} />
                     </span>
                     <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-on-dark-opacity-64">{s.label}</span>
@@ -1296,34 +1494,20 @@ function XRExperiences({ lang, isDark }) {
         </section>
 
         {/* ── Content sections ── */}
-        <div className="px-6 flex flex-col items-center">
-          <div className="flex items-start gap-10 w-full max-w-6xl">
-            {/* Secondary nav — left of the content column, matching the Canap case study */}
-            <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} lang={lang} />
-
-            {/* Main column */}
-            <div className="flex-1 min-w-0">
+        <div className="flex flex-col items-center">
+          {/* Centred reading column — same max-width AND horizontal padding as
+              Canap + Sales Platform (px-6 sm:px-8 lg:px-10, max-w-[52rem]) so the
+              section cards render at an identical width across the three case
+              studies; the fixed secondary nav (after </main>) is also identical. */}
+          <div className="w-full max-w-5xl md:max-w-2xl lg:max-w-[52rem] px-6 sm:px-8 lg:px-10">
               {t.sections.map((section, si) => (
-                <section
+                <CollapsibleSection
                   key={section.id}
-                  id={section.id}
-                  aria-labelledby={`${section.id}-heading`}
-                  tabIndex={-1}
-                  className={`${si === 0 ? 'pt-8' : 'pt-3'} ${si === t.sections.length - 1 ? 'pb-16' : 'pb-3'} sm:${si === 0 ? 'pt-10' : 'pt-5'} sm:${si === t.sections.length - 1 ? 'pb-20' : 'pb-5'} lg:${si === 0 ? 'pt-24' : 'pt-6'} lg:${si === t.sections.length - 1 ? 'pb-24' : 'pb-6'} scroll-mt-24 focus-visible:outline-none${section.tile !== false ? '' : ' flex flex-col gap-8 sm:gap-10 lg:gap-12'}`}
+                  section={section}
+                  si={si}
+                  isLast={si === t.sections.length - 1}
+                  lang={lang}
                 >
-                  <div className={section.tile !== false ? 'bg-bg-page rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 p-6 sm:p-12 lg:p-[60px] flex flex-col gap-6 sm:gap-8' : 'contents'}>
-                  {/* Eyebrow + heading */}
-                  <div className="flex flex-col gap-3">
-                    <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider gold-text">
-                      {section.eyebrow}
-                    </p>
-                    <h2
-                      id={`${section.id}-heading`}
-                      className="text-h2 font-bold leading-tight text-fg-primary"
-                    >
-                      {section.heading}
-                    </h2>
-                  </div>
 
                   {/* Body paragraphs — first para, then map (if any), then rest */}
                   <div className={`flex flex-col gap-8${section.tile !== false ? '' : ' max-w-3xl'}`}>
@@ -1498,17 +1682,12 @@ function XRExperiences({ lang, isDark }) {
                     </div>
                   )}
 
-                  </div>{/* end tile/contents wrapper */}
-                </section>
+                </CollapsibleSection>
               ))}
               {/* ── Tools row ── */}
               <div className="pb-16 sm:pb-20 flex justify-center">
                 <XRToolsSection label={t.toolsLabel} categories={t.toolCategories} />
               </div>
-            </div>
-
-            {/* Right spacer — mirrors the nav width to keep the content centred */}
-            <div className="hidden md:block w-20 shrink-0" />
           </div>
         </div>
 
@@ -1527,6 +1706,17 @@ function XRExperiences({ lang, isDark }) {
         </div>
 
       </main>
+
+      {/* ── Desktop secondary nav — fixed, floats just left of the centred
+          content. Position is identical to Canap + Sales Platform. The opacity
+          fade lives on the inner blurred panel (see SecondaryNav), NOT this
+          wrapper, so an ancestor opacity < 1 never disables the backdrop-blur. ── */}
+      <div
+        inert={scrolledDown && !atBottom ? undefined : true}
+        className={`hidden min-[920px]:block fixed z-10 top-[240px] min-[920px]:right-[calc(50%_+_20.5rem)] lg:right-[calc(50%_+_25.5rem)] ${scrolledDown && !atBottom ? '' : 'pointer-events-none'}`}
+      >
+        <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} visible={scrolledDown && !atBottom} lang={lang} />
+      </div>
 
       {/* ── Mobile floating nav — disabled: secondary nav is tablet/desktop only ── */}
       <div
