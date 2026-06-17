@@ -1,5 +1,29 @@
 # Changelog 
 
+## [2.5.8] — 2026-06-17
+
+### Canap image performance, iOS Build & Testing carousel rework, shared icon+title cards
+
+#### Canap — image loading (much faster)
+- Resized the 16 oversized phone screenshots (`ux-flows` ×10, `sign-in-flow` ×6) from ~1800px wide to **820px, webp q82** — they only ever display ~360px wide, so no visible change — and converted `menu-dropdown.png` + `poster-card-list.png` to webp. Page image payload **~5.9 MB → ~1.6 MB (−74%)**
+- Hero poster wall now requests TMDB **`w185`** (was `w342`) — the posters render ~167px wide
+- Case-studies dropdown mini-card posters dropped to **`w92`** (was `w154`) and are now **preloaded on idle** so they're cached before the dropdown opens (the backdrop only mounts on open, so they used to download then)
+
+#### Canap — iOS Build & Testing carousel
+- Each slide now carries a **numbered step eyebrow** (01–08); the title is pinned to the top of the card (the "Unexpected discovery" slide's title moved into that top slot so it aligns with the others)
+- Body content sits centred-but-nudged-up below the title; on **mobile** the cards are shorter (trimmed the centering bias + card padding)
+- Fixed the **height jump on the 4th slide**: the behaviour-paths diagram was a lazy image with no reserved height, so the track resized when it loaded — now reserved via `aspect-[223/214]`. The diagram is also slightly enlarged and rides up over the step number
+
+#### Canap — shared icon + title card header
+- The tab/feature glyph now sits with its title **to the right** (was stacked above) across three places using one consistent treatment: **Information-architecture** cards, **UX & Core Flows** carousel, and **Core-features** cards
+- The "For you" flow now uses the correct **`sparkles.2`** SF Symbol (`icon-sparkles-2.svg`)
+
+#### Copy & layout
+- Get-in-touch heading: "Let's build something great together." → **"Let's build great things together."** (shared by Home + Résumé)
+- Résumé top section: the three buttons (Message / Let's connect / Download PDF) now match the **photo's width** on desktop & tablet (`md:w-48`)
+
+---
+
 ## [2.5.7] — 2026-06-17
 
 ### Sales Platform "Problem" tile + secondary-nav polish

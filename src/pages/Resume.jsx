@@ -520,7 +520,7 @@ function SummarySection({ t, lang }) {
             </h1>
           </div>
 
-          <ul className="flex flex-col gap-4 w-56" aria-label="Contact and download">
+          <ul className="flex flex-col gap-4 w-56 md:w-48" aria-label="Contact and download">
             <li>
               <a data-spring {...btnSquircle} tabIndex={0} href={`mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent(lang === 'fr' ? 'Prise de contact' : 'Getting in touch')}`} className={`${btnBase} w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus`}>
                 <img src={imgSend} alt="" width={24} height={24} className="shrink-0 dark:invert" />

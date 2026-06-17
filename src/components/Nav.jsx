@@ -22,6 +22,7 @@ import imgCardSales    from '../assets/photos/photo-cgi-interactive-platform.web
 import imgCardXR       from '../assets/photos/photo-xr-experiences.webp';
 import imgCardTwin     from '../assets/photos/photo-digital-twins.webp';
 import { CanapCardBackdrop } from './CanapCardBackdrop';
+import { POSTER_PATHS, POSTER_BASE } from '../data/canapPosters';
 
 // Translations
 const T = {
@@ -281,7 +282,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
       {customBg === 'canap-poster-grid' ? (
         // Same tilted, counter-scrolling poster wall the homepage Canap card
         // uses, with tighter gaps + smaller radii to suit the ~142px mini card.
-        <CanapCardBackdrop posterGap="gap-1" posterRadius="rounded-[6px]" rowGap="gap-1" posterSize="w154" />
+        <CanapCardBackdrop posterGap="gap-1" posterRadius="rounded-[6px]" rowGap="gap-1" posterSize="w92" />
       ) : (
         <img src={img} alt="" draggable="false" className="absolute inset-0 w-full h-full object-cover" />
       )}
@@ -961,6 +962,17 @@ function Nav({ isDark, toggleDark, lang, toggleLang }) {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Warm the cache for the case-studies dropdown's Canap poster wall so the
+  // mini-card images are already loaded by the time the dropdown is opened
+  // (the backdrop only mounts on open, so otherwise they'd download then).
+  useEffect(() => {
+    const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1500));
+    const cancel = window.cancelIdleCallback || clearTimeout;
+    const base = POSTER_BASE.replace(/\/w\d+$/, '/w92');
+    const id = idle(() => { POSTER_PATHS.forEach((p) => { const img = new Image(); img.decoding = 'async'; img.src = `${base}${p}`; }); });
+    return () => cancel(id);
   }, []);
 
   return (

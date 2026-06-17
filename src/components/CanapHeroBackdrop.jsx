@@ -1,5 +1,9 @@
 import { POSTER_PATHS, POSTER_BASE } from '../data/canapPosters';
 
+// The hero posters render ~167px wide in a moving, rotated wall, so the default
+// w342 is oversized — w185 halves the bytes with no visible loss here.
+const HERO_POSTER_BASE = POSTER_BASE.replace(/\/w\d+$/, '/w185');
+
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -36,7 +40,7 @@ function PosterRow({ posters, rowIdx }) {
         {[...posters, ...posters].map((path, i) => (
           <img
             key={`${path}-${i}`}
-            src={`${POSTER_BASE}${path}`}
+            src={`${HERO_POSTER_BASE}${path}`}
             alt=""
             loading="lazy"
             decoding="async"

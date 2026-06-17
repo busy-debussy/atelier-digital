@@ -24,7 +24,7 @@ const T = {
     emailCard: {
       icon: imgSendLight, iconDark: imgSendDark,
       title: 'Hit my inbox',
-      description: 'Let’s build something great together.',
+      description: 'Let’s build great things together.',
       buttonLabel: 'Message',
       action: { type: 'email', href: `mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent('Getting in touch')}` },
     },

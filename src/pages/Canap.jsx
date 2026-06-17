@@ -14,9 +14,9 @@ import imgPosterHerM from '../assets/case-study/canap/poster-her-size-m.webp';
 import imgPosterOppenheimerM from '../assets/case-study/canap/poster.oppenheimer-size-m.webp';
 import imgPoster2001S from '../assets/case-study/canap/poster-2001-size-s.webp';
 import imgPosterPluribusXs from '../assets/case-study/canap/poster-pluribus-size-xs.webp';
-import imgMenuDropdown from '../assets/case-study/canap/menu-dropdown.png';
+import imgMenuDropdown from '../assets/case-study/canap/menu-dropdown.webp';
 // Poster shown in its real app context (cards list).
-import imgPosterCardList from '../assets/case-study/canap/poster-card-list.png';
+import imgPosterCardList from '../assets/case-study/canap/poster-card-list.webp';
 import imgUndo from '../assets/case-study/canap/undo.webp';
 
 // Tool logos for the Tools section.
@@ -117,7 +117,7 @@ import iconMessage         from '../assets/case-study/canap/icon-message.svg';
 import iconPaperplane      from '../assets/case-study/canap/icon-paperplane.svg';
 import iconHouseFill       from '../assets/case-study/canap/icon-house-fill.svg';
 import iconPersonCropCircle from '../assets/case-study/canap/icon-person-crop-circle.svg';
-import iconSparkles        from '../assets/case-study/canap/icon-sparkles.svg';
+import iconSparkles2       from '../assets/case-study/canap/icon-sparkles-2.svg';
 
 // ---------------------------------------------------------------------------
 // Canap — case study page (SCAFFOLD)
@@ -534,7 +534,7 @@ const T = {
           { id: 'slide-2', text: '', diagram: 'behaviourPaths' },
           { id: 'slide-3', label: 'Key behavioural insights', bullets: ['The vast majority of users went through the Library', 'Only 36% switched to card view to rate in bulk', 'Only 20% sorted the list by “Unrated”', 'Users who optimised their flow were 80% faster'] },
           { id: 'slide-aha', aha: { label: 'Unexpected discovery', text: 'During a test, a swipe to remove a title from “Watched” triggered an unintended rating.' } },
-          { id: 'slide-4', label: 'Product changes', bullets: ['The “Watched” tab is shown in card view by default', 'A tooltip explains the purpose of the sort button on first visit', 'The swipe gesture is separated from rating to avoid errors', 'Marking a title as watched opens a rating sheet — a “Don’t show again” button lets users hide it when it feels redundant'] },
+          { id: 'slide-4', label: 'Product changes', bullets: ['The “Watched” tab is shown in card view by default', 'A tooltip explains the purpose of the sort button on first visit', 'The swipe gesture is separated from rating to avoid errors', 'Marking a title as watched opens a rating sheet and  a “Don’t show again” button lets users hide it when it feels redundant'] },
           { id: 'slide-5', label: 'Impact', bullets: ['Rating adoption rose to ~48% of new users', '80% of users who discovered sorting use it to rate', 'Card view became dominant in the “Watched” list'] },
         ],
       },
@@ -556,7 +556,7 @@ const T = {
         {
           id: 'process-build',
           title: 'iOS Build & Testing',
-          caption: 'AI supported implementation in Xcode by speeding up SwiftUI scaffolding and iteration inside the iOS Simulator.\nCombined with TestFlight testing, this enabled rapid validation of real-world behaviour, especially around synchronisation, session stability, and interaction timing, feeding insights back into the product loop.',
+          caption: 'AI supported implementation in Xcode by speeding up SwiftUI scaffolding and iteration inside the iOS Simulator.\nCombined with TestFlight testing, this enabled rapid validation of real-world behaviour, especially around interactions, feeding insights back into the product loop.',
           image: null,
           carousel: 'iosBuild',
         },
@@ -2722,7 +2722,7 @@ const FEATURE_ICONS = {
   recommendations: iconPaperplane,   // paperplane
   home: iconHouseFill,               // house.fill
   profile: iconPersonCropCircle,     // person.crop.circle
-  'for-you': iconSparkles,           // sparkles
+  'for-you': iconSparkles2,          // sparkles.2
 };
 
 function FeatureGlyph({ name, className = '' }) {
@@ -2753,8 +2753,11 @@ function FeatureGlyph({ name, className = '' }) {
 function FeatureCard({ f, className = '' }) {
   return (
     <div data-squircle className={`rounded-radius-6 sm:rounded-radius-8 bg-bg-surface p-6 sm:p-7 ${className}`}>
-      <FeatureGlyph name={f.icon} className="w-10 h-10 text-fg-primary mb-3.5" />
-      <h4 className="text-h4 font-semibold text-fg-primary mb-2">{f.title}</h4>
+      {/* Same icon + title treatment as the Information-architecture cards. */}
+      <div className="flex items-center gap-3 mb-3">
+        <FeatureGlyph name={f.icon} className="w-10 h-10 text-fg-primary shrink-0" />
+        <h4 className="text-h4 font-semibold text-fg-primary">{f.title}</h4>
+      </div>
       <p className={tileBodyText}>{f.body}</p>
     </div>
   );
@@ -2768,10 +2771,12 @@ function IaCard({ root, className = '' }) {
       data-squircle
       className={`rounded-radius-6 bg-bg-surface border border-black/[0.06] dark:border-white/[0.08] p-5 ${className}`}
     >
-      {/* Tab header — the tab's SF-Symbol glyph above its name, matching the
-          Core-features cards (same 40px icon). */}
-      <FeatureGlyph name={root.icon} className="w-10 h-10 text-fg-primary mb-3" />
-      <p className="text-h4 font-semibold text-fg-primary text-left mb-5 sm:mb-6">{root.name}</p>
+      {/* Tab header — the tab's SF-Symbol glyph with its name to the right
+          (same 40px icon as the Core-features cards). */}
+      <div className="flex items-center gap-3 mb-5 sm:mb-6">
+        <FeatureGlyph name={root.icon} className="w-10 h-10 text-fg-primary shrink-0" />
+        <p className="text-h4 font-semibold text-fg-primary text-left">{root.name}</p>
+      </div>
       {/* Up to six leaves laid out column-first in a 2-column / max-3-row grid,
           each item bulleted. grid-flow-col fills column 1 (items 1–3) before
           column 2 (items 4–6); shorter tabs (e.g. Search) just leave the tail
@@ -3183,10 +3188,11 @@ function UxFlowsCarousel({ copy }) {
               data-squircle
               className="shrink-0 w-[calc(100vw-3rem)] sm:w-[428px] lg:w-[460px] snap-center list-none rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-surface p-6 sm:py-7 sm:px-8 lg:px-12"
             >
-              <p className="flex items-center gap-2 text-copy-l font-semibold text-fg-primary mb-5">
-                <FeatureGlyph name={s.id} className="w-5 h-5 shrink-0 text-fg-primary" />
-                {s.label}
-              </p>
+              {/* Same icon + title treatment as the Information-architecture cards. */}
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <FeatureGlyph name={s.id} className="w-10 h-10 text-fg-primary shrink-0" />
+                <p className="text-h4 font-semibold text-fg-primary text-left">{s.label}</p>
+              </div>
               <div className="flex gap-3 sm:gap-4">
                 {pair.map((ph, j) => (
                   <figure key={j} className="flex-1 m-0">
@@ -3220,7 +3226,9 @@ function BehaviourPathsDiagram({ isDark, lang }) {
       src={src}
       alt="Behavioural paths observed: users entered rating from either the Library or a Content page, then changed sorting, switched between card and list view, and batch-rating behaviour emerged."
       loading="lazy"
-      className="w-full h-auto"
+      width={223}
+      height={214}
+      className="w-full h-auto aspect-[223/214]"
     />
   );
 }
@@ -3247,35 +3255,45 @@ function IosBuildCarousel({ copy, isDark, lang }) {
         copy={copy.carousel}
         renderItem={(s, i) => {
           const isContent = s.label || s.text || s.bullets || s.diagram || s.aha;
+          // The aha slide's title lives on `aha.label`; treat it like any other
+          // slide title so it sits in the same top slot.
+          const title = s.label || s.aha?.label;
+          const stepNum = String(i + 1).padStart(2, '0');
+          // Text/bullet bodies stay centred but get extra bottom padding so they
+          // sit a touch above centre; the diagram slide fills the card as-is.
+          const hasDiagram = s.diagram === 'behaviourPaths';
           return (
             <li
               key={i}
               data-squircle
-              className="shrink-0 w-[80vw] sm:w-[360px] snap-center list-none rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-surface p-6 sm:p-7"
+              className={`shrink-0 w-[80vw] sm:w-[360px] snap-center list-none rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-surface px-6 sm:px-7 pb-4 sm:pb-7 ${hasDiagram ? 'pt-3 sm:pt-4' : 'pt-4 sm:pt-7'}`}
             >
               {isContent ? (
-                <div className="flex flex-col h-full justify-center">
-                  {s.label && <p className="text-h4 font-semibold text-fg-primary mb-3">{s.label}</p>}
-                  {s.text && <p className="text-copy-l font-medium leading-snug text-fg-primary">{s.text}</p>}
-                  {s.diagram === 'behaviourPaths' && (
-                    <div className="mt-4"><BehaviourPathsDiagram isDark={isDark} lang={lang} /></div>
-                  )}
-                  {s.bullets && (
-                    <ul className="flex flex-col gap-2.5">
-                      {s.bullets.map((bz, j) => (
-                        <li key={j} className="flex gap-2 text-copy-s text-fg-secondary leading-snug">
-                          <span aria-hidden="true" className="text-fg-muted shrink-0">→</span>
-                          <span>{bz}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {s.aha && (
-                    <div>
-                      <p className="text-h4 font-semibold text-fg-primary mb-3">{s.aha.label}</p>
+                <div className="flex flex-col h-full">
+                  {/* Step number + title pinned to the top so the title lands at
+                      the same spot on every slide; the rest centres in the
+                      remaining space so sparse slides don't read as empty. */}
+                  <p className="text-overline-s font-mono uppercase tracking-widest text-fg-muted mb-2">{stepNum}</p>
+                  {title && <p className="text-h4 font-semibold text-fg-primary mb-3">{title}</p>}
+                  <div className={`flex-1 flex flex-col justify-center ${hasDiagram ? '' : 'pb-3 sm:pb-10'}`}>
+                    {s.text && <p className="text-copy-l font-medium leading-snug text-fg-primary">{s.text}</p>}
+                    {s.diagram === 'behaviourPaths' && (
+                      <div className="-mt-3 w-full max-w-[300px] mx-auto"><BehaviourPathsDiagram isDark={isDark} lang={lang} /></div>
+                    )}
+                    {s.bullets && (
+                      <ul className="flex flex-col gap-2.5">
+                        {s.bullets.map((bz, j) => (
+                          <li key={j} className="flex gap-2 text-copy-s text-fg-secondary leading-snug">
+                            <span aria-hidden="true" className="text-fg-muted shrink-0">→</span>
+                            <span>{bz}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {s.aha?.text && (
                       <p className="text-copy-s text-fg-secondary leading-snug">{s.aha.text}</p>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               ) : IOS_BUILD_IMG[s.id] ? (
                 <img src={IOS_BUILD_IMG[s.id]} alt="" loading="lazy" className="block w-full max-w-[240px] mx-auto h-auto rounded-radius-3" />
