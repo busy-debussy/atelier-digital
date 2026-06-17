@@ -1385,8 +1385,10 @@ function XRExperiences({ lang, isDark }) {
     const lastEl  = document.getElementById(t.sections[t.sections.length - 1].id);
     if (!firstEl || !lastEl) return;
     const update = () => {
-      setScrolledDown(firstEl.getBoundingClientRect().top < 80);
-      setAtBottom(lastEl.getBoundingClientRect().bottom < 700);
+      // Anchor = scroll-mt-24 (96px). Nav visible at the first/last anchors,
+      // hiding 50px past either end: top buffer = 96 + 50; bottom = (96 + height) − 50.
+      setScrolledDown(firstEl.getBoundingClientRect().top < 146);
+      setAtBottom(lastEl.getBoundingClientRect().bottom < lastEl.offsetHeight + 46);
     };
     update();
     window.addEventListener('scroll', update, { passive: true });

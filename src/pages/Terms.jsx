@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-06-16');
+const LAST_UPDATED = new Date('2026-06-17');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -150,7 +150,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
   );
 }
 
-function SecondaryNav({ sections, activeId, onNavigate, lang }) {
+function SecondaryNav({ sections, activeId, onNavigate, lang, visible = true }) {
   // Collapsible secondary nav. Hovering the right edge highlights it and shows
   // a delayed "Minimise" tooltip; clicking (or dragging left) collapses the nav
   // into a centre-left pill that restores it.
@@ -181,7 +181,7 @@ function SecondaryNav({ sections, activeId, onNavigate, lang }) {
     return (
       <>
         <div className="hidden md:block w-36 shrink-0" aria-hidden="true" />
-        <div className="hidden md:block fixed left-2 top-1/2 -translate-y-1/2 z-10">
+        <div className={`hidden md:block fixed left-2 top-1/2 -translate-y-1/2 z-10 transition-opacity duration-180 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <button
             type="button"
             onClick={() => { setCollapsed(false); hideTip(); }}
@@ -207,9 +207,14 @@ function SecondaryNav({ sections, activeId, onNavigate, lang }) {
   }
 
   return (
-    <nav aria-label="Page sections" className="hidden md:block sticky top-1/2 -translate-y-1/2 self-start z-10 w-36 shrink-0">
+    <>
+      {/* Placeholder reserves the nav column; the panel itself is position:
+          fixed (like the case-study navs) so it holds a constant y and never
+          drifts at the end of the page. */}
+      <div className="hidden md:block w-36 shrink-0" aria-hidden="true" />
+      <nav aria-label="Page sections" className="hidden md:block fixed top-[240px] left-6 min-[1200px]:left-[calc(50%_-_36rem)] z-10 w-36">
       {/* Frosted panel — matches the Canap secondary-nav styling. */}
-      <div className="relative p-2 backdrop-blur-3 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring">
+      <div className={`relative p-2 backdrop-blur-3 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring transition-opacity duration-180 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
       <ol className="space-y-1">
         {sections.map((s) => {
           const isActive = activeId === s.id;
@@ -271,6 +276,7 @@ function SecondaryNav({ sections, activeId, onNavigate, lang }) {
       )}
       </div>
     </nav>
+    </>
   );
 }
 
@@ -309,8 +315,11 @@ function Terms({ lang }) {
     const lastEl  = document.getElementById(t.sections[t.sections.length - 1].id);
     if (!firstEl || !lastEl) return;
     const update = () => {
-      setScrolledDown(firstEl.getBoundingClientRect().top < 150);
-      setAtBottom(lastEl.getBoundingClientRect().bottom < 200);
+      // Anchor = scroll-mt-24 (96px). Mirrors the case-study pattern: the nav is
+      // visible at the first and last sections' anchors and hides ~50px past
+      // either end. Top buffer = 96 + 50; bottom = (96 + section height) − 50.
+      setScrolledDown(firstEl.getBoundingClientRect().top < 146);
+      setAtBottom(lastEl.getBoundingClientRect().bottom < lastEl.offsetHeight + 46);
     };
     update();
     window.addEventListener('scroll', update, { passive: true });
@@ -349,7 +358,7 @@ function Terms({ lang }) {
         <div className="px-6 flex flex-col items-center">
           <div className="flex items-start gap-10 w-full max-w-6xl">
             {/* Secondary nav — left of the content column, matching the case studies */}
-            <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} lang={lang} />
+            <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} lang={lang} visible={scrolledDown && !atBottom} />
 
             {/* Main column */}
             <div className="flex-1 min-w-0">

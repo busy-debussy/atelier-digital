@@ -1,5 +1,29 @@
 # Changelog 
 
+## [2.5.5] — 2026-06-17
+
+### Secondary-nav scroll behaviour, anchor offsets, and reliable nav jumps
+
+#### Secondary navigation — legal pages (Privacy, Cookies, Terms)
+- Desktop secondary nav now fades in/out on scroll like the case studies — the page already tracked `scrolledDown`/`atBottom` for the mobile pill; that state is now wired into the desktop `SecondaryNav` via a new `visible` prop (opacity fade on the frosted panel and the collapsed pill)
+- Nav converted from `sticky top-1/2` (vertically centred) to `position: fixed` at `top-[240px]` with a placeholder column, so it holds a constant vertical position and no longer drifts upward at the end of the page (a centred sticky element can't stay centred once its container's bottom scrolls into view). Left edge: `left-6`, then `left-[calc(50%-36rem)]` once the `max-w-6xl` row centres (≥1200px)
+- Appear/disappear buffer set to ~50px relative to the section anchors (`scroll-mt-24` = 96px): `scrolledDown` top < 146, `atBottom` bottom < `lastEl.offsetHeight + 46`
+
+#### Secondary navigation — case studies (Canap, XR)
+- Canap & XR appear/disappear buffer cleaned up to ~50px past the first/last anchors: Canap sections anchor at 0 (`top < 50`, `bottom < offsetHeight − 50`); XR sections anchor at `scroll-mt-24` (`top < 146`, `bottom < offsetHeight + 46`)
+- Canap: the disappear point is now gated by the **last sub-item** anchor ("Next steps" / `imp-next-steps`) instead of the last section, so the nav stays visible until ~50px past that sub-item (reads the anchor's `scroll-margin-top` from computed style, with a fallback to the section id)
+- Sales Platform: reverted to the hand-tuned thresholds (`top < 20`, `bottom < 550`)
+
+#### Sales Platform — anchors clear the fixed top nav
+- Subsection anchors (`TileEyebrow` — Outcome, Reflections, and every other sub-item) given `scroll-mt-28` so they no longer scroll to behind the floating top nav
+- Non-first section anchors (Emphasise / Define / Design / Impact) given `scroll-mt-20` on the `<section>` so their titles clear the nav; Context is left as-is since its intro padding already clears it
+
+#### Nav jumps land on the right anchor (Canap, Sales Platform)
+- `scrollToSection` is now self-correcting: lazy images below the fold were loading mid-scroll and growing the page, so a jump (e.g. clicking "Impact" from the top) landed short on an earlier section and needed a second click. After the smooth scroll it re-aligns whenever `document.scrollHeight` changes (an image settled), bails the moment the user scrolls (`wheel`/`touchmove`), and stops once layout stabilises (~3s)
+- Sales Platform carousels (Concepts / Wireframes / Hi-fi) also given breakpoint-matched `aspect-ratio` reservations (e.g. hi-fi `aspect-[1376/2384] sm:aspect-[2816/1920] lg:aspect-[4768/2816]`) so they no longer collapse before their lazy images load — removes the layout shift (and CLS) at the source
+
+---
+
 ## [2.5.4] — 2026-06-16
 
 ### XR/Sales Platform carousels + collapsible sections, case-study width unification, blue Figma CTA

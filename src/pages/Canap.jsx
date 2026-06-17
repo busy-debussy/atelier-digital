@@ -2001,8 +2001,32 @@ const dsCatLabel = (cats, id) => (cats.find((c) => c.id === id) || {}).label || 
 const scrollToSection = (id) => {
   const el = document.getElementById(id);
   if (!el) return;
-  el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.scrollIntoView({ behavior: reduce ? 'instant' : 'smooth' });
   el.focus({ preventScroll: true });
+  if (reduce) return;
+  // Lazy images below the fold load during the smooth scroll and grow the page,
+  // pushing the target down so the scroll lands short (e.g. clicking "Impact"
+  // from the top stops at an earlier section). Re-align whenever the document
+  // height changes (an image settled), until it stabilises or the user scrolls.
+  let lastH = document.documentElement.scrollHeight;
+  let ticks = 0;
+  let bail = false;
+  const onUser = () => { bail = true; };
+  window.addEventListener('wheel', onUser, { passive: true });
+  window.addEventListener('touchmove', onUser, { passive: true });
+  const tick = () => {
+    if (bail || ticks > 30) {
+      window.removeEventListener('wheel', onUser);
+      window.removeEventListener('touchmove', onUser);
+      return;
+    }
+    const h = document.documentElement.scrollHeight;
+    if (h !== lastH) { lastH = h; el.scrollIntoView({ behavior: 'smooth' }); }
+    ticks += 1;
+    setTimeout(tick, 100);
+  };
+  setTimeout(tick, 100);
 };
 
 // SecondaryNav — desktop-only vertical list of section links pinned
@@ -3370,12 +3394,23 @@ function Canap({ lang = 'en', isDark }) {
   // hero and hides once you reach the last section).
   useEffect(() => {
     const firstId = sections[0].id;
-    const lastId  = sections[sections.length - 1].id;
+    // Disappear is gated by the LAST SUB-ITEM's anchor (e.g. "Next steps"), not
+    // the section, so the nav stays until you scroll ~50px past that anchor.
+    const lastSection = sections[sections.length - 1];
+    const lastSubId = lastSection.subsections?.length
+      ? lastSection.subsections[lastSection.subsections.length - 1].id
+      : lastSection.id;
     const update = () => {
       const firstEl = document.getElementById(firstId);
-      const lastEl  = document.getElementById(lastId);
-      if (firstEl) setScrolledDown(firstEl.getBoundingClientRect().top < 80);
-      if (lastEl)  setAtBottom(lastEl.getBoundingClientRect().bottom < 700);
+      const lastSubEl = document.getElementById(lastSubId);
+      // First section anchors at top 0 → appear/hide with a 50px buffer.
+      if (firstEl) setScrolledDown(firstEl.getBoundingClientRect().top < 50);
+      // Last sub-item rests at its scroll-margin-top when anchored; hide once it
+      // has scrolled 50px past that (top < scroll-mt − 50).
+      if (lastSubEl) {
+        const smt = parseFloat(getComputedStyle(lastSubEl).scrollMarginTop) || 0;
+        setAtBottom(lastSubEl.getBoundingClientRect().top < smt - 50);
+      }
     };
     update();
     window.addEventListener('scroll', update, { passive: true });

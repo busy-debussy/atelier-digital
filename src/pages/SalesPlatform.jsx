@@ -399,7 +399,7 @@ function Tile({ children, fullWidth = false, bgClass = 'bg-bg-page' }) {
 
 function TileEyebrow({ children, id }) {
   return (
-    <h3 id={id} className="text-h3 font-semibold leading-snug text-fg-primary">
+    <h3 id={id} className="text-h3 font-semibold leading-snug text-fg-primary scroll-mt-28">
       {children}
     </h3>
   );
@@ -1245,7 +1245,7 @@ function ConceptsCarousel({ lang, isDark, showHint = true, onInteract }) {
             <picture>
               <source media="(min-width: 1024px)" srcSet={slide.desktop} />
               <source media="(min-width: 640px)"  srcSet={slide.tablet} />
-              <img src={slide.mobile} alt={lang === 'fr' ? `Concept CGI, diapositive ${i + 1} sur ${slides.length}` : `CGI concept, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto " />
+              <img src={slide.mobile} alt={lang === 'fr' ? `Concept CGI, diapositive ${i + 1} sur ${slides.length}` : `CGI concept, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto aspect-video" />
             </picture>
           </button>
         ))}
@@ -1511,7 +1511,7 @@ function WireframesCarousel({ lang, isDark, showHint = true, onInteract }) {
           <button key={i} tabIndex={-1} onClick={() => { triggerInteract(); setLightboxIndex(i); }} aria-label={lang === 'fr' ? `Agrandir : Maquette filaire ${i + 1}` : `Expand: wireframe ${i + 1}`} className="w-full shrink-0 snap-start cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg-primary">
             <picture>
               <source media="(min-width: 640px)" srcSet={slide.desktop} />
-              <img src={slide.mobile} alt={lang === 'fr' ? `Maquette filaire, diapositive ${i + 1} sur ${slides.length}` : `Wireframe mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto sm:-mb-[0%]" />
+              <img src={slide.mobile} alt={lang === 'fr' ? `Maquette filaire, diapositive ${i + 1} sur ${slides.length}` : `Wireframe mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto aspect-[1480/2560] sm:aspect-[4352/1920] sm:-mb-[0%]" />
             </picture>
           </button>
         ))}
@@ -1736,7 +1736,7 @@ function HifiCarousel({ lang, isDark, showHint = true, onInteract }) {
               <picture>
                 <source media="(min-width: 1024px)" srcSet={slide.desktop} />
                 <source media="(min-width: 640px)" srcSet={slide.tablet} />
-                <img src={slide.mobile} alt={lang === 'fr' ? `Maquette haute-fidélité, diapositive ${i + 1} sur ${slides.length}` : `High-fidelity mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto sm:-mb-[8%] -mb-[18%]" />
+                <img src={slide.mobile} alt={lang === 'fr' ? `Maquette haute-fidélité, diapositive ${i + 1} sur ${slides.length}` : `High-fidelity mock-up, slide ${i + 1} of ${slides.length}`} draggable="false" loading="lazy" className="w-full h-auto aspect-[1376/2384] sm:aspect-[2816/1920] lg:aspect-[4768/2816] sm:-mb-[8%] -mb-[18%]" />
               </picture>
             </button>
           ))}
@@ -1966,8 +1966,33 @@ function EmphasiseContent({ lang }) {
 const scrollToSection = (id) => {
   const el = document.getElementById(id);
   if (!el) return;
-  el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.scrollIntoView({ behavior: reduce ? 'instant' : 'smooth' });
   el.focus({ preventScroll: true });
+  if (reduce) return;
+  // Lazy images below the fold load during the smooth scroll and grow the page,
+  // pushing the target down so the scroll lands short (e.g. clicking "Impact"
+  // from the top stops at the high-fidelity carousel). Re-align whenever the
+  // document height changes (an image settled), until it stabilises or the user
+  // scrolls.
+  let lastH = document.documentElement.scrollHeight;
+  let ticks = 0;
+  let bail = false;
+  const onUser = () => { bail = true; };
+  window.addEventListener('wheel', onUser, { passive: true });
+  window.addEventListener('touchmove', onUser, { passive: true });
+  const tick = () => {
+    if (bail || ticks > 30) {
+      window.removeEventListener('wheel', onUser);
+      window.removeEventListener('touchmove', onUser);
+      return;
+    }
+    const h = document.documentElement.scrollHeight;
+    if (h !== lastH) { lastH = h; el.scrollIntoView({ behavior: 'smooth' }); }
+    ticks += 1;
+    setTimeout(tick, 100);
+  };
+  setTimeout(tick, 100);
 };
 
 // ── Desktop secondary nav ─────────────────────────────────────────────────────
@@ -2233,7 +2258,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
   );
 
   return (
-    <section id={id} aria-labelledby={headingId} className="overflow-hidden">
+    <section id={id} aria-labelledby={headingId} className={`overflow-hidden ${first ? '' : 'scroll-mt-20'}`}>
 
       {/* Header — a collapse/expand toggle only when the secondary nav is hidden
           (< 920px). With the secondary nav shown (≥920px) it's a plain,
@@ -2426,8 +2451,8 @@ function SalesPlatform({ lang, isDark }) {
     const update = () => {
       const firstEl = document.getElementById(firstId);
       const lastEl  = document.getElementById(lastId);
-      if (firstEl) setScrolledDown(firstEl.getBoundingClientRect().top < 80);
-      if (lastEl)  setAtBottom(lastEl.getBoundingClientRect().bottom < 700);
+      if (firstEl) setScrolledDown(firstEl.getBoundingClientRect().top < 20);
+      if (lastEl)  setAtBottom(lastEl.getBoundingClientRect().bottom < 550);
     };
     update();
     window.addEventListener('scroll', update, { passive: true });
