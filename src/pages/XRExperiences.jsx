@@ -89,7 +89,7 @@ const T = {
         eyebrow: 'Our team',
         heading: 'Distributed by design',
         body: [
-          <>Core team of <strong>five</strong> across <strong>four countries</strong> delivering <strong>XR system end-to-end</strong>.</>,
+          <>Core team of <strong>eight</strong> across <strong>four countries</strong> delivering <strong>XR system end-to-end</strong>.</>,
           { type: 'h3', text: 'Delivery model' },
           <><strong>2-week sprints</strong> · <strong>Daily UK-aligned stand-ups</strong><br />→ Fast trade-offs, rapid iteration, early blocker detection</>,
           { type: 'callout', variant: 'gold', label: 'My role', body: <>Sole Senior UX/UI Designer across <strong>6 XR applications</strong>, I led interaction system design and cross-device UX decisions under tight delivery constraints.</>
@@ -306,7 +306,7 @@ const T = {
         eyebrow: "L'équipe",
         heading: 'Sur plusieurs fuseaux',
         body: [
-          <>Équipe de <strong>cinq</strong> personnes répartie dans <strong>quatre pays</strong>, pour livrer le <strong>système XR de bout en bout</strong>.</>,
+          <>Équipe de <strong>huit</strong> personnes répartie dans <strong>quatre pays</strong>, pour livrer le <strong>système XR de bout en bout</strong>.</>,
           { type: 'h3', text: 'Modèle de travail' },
           <><strong>Sprints de 2 semaines</strong> · <strong>Stand-ups quotidiens alignés sur le Royaume-Uni</strong><br />→ Arbitrages rapides, itération accélérée, détection précoce des blocages</>,
           { type: 'callout', variant: 'gold', label: 'Mon rôle', body: <>Seul Senior UX/UI Designer sur <strong>6 applications XR</strong>, j'ai piloté la conception du système d'interaction et les décisions UX multi-appareils dans des délais de livraison serrés.</> },
@@ -1151,7 +1151,7 @@ function SecondaryNav({ sections, activeId, onNavigate, visible, lang }) {
   const onEdgePointerUp = () => { dragStartX.current = null; };
 
   const minimiseLabel = lang === 'fr' ? 'Réduire' : 'Minimise';
-  const expandLabel   = lang === 'fr' ? 'Afficher la navigation' : 'Expand navigation';
+  const expandLabel   = lang === 'fr' ? 'Développer' : 'Expand';
 
   if (collapsed) {
     return (
@@ -1167,7 +1167,7 @@ function SecondaryNav({ sections, activeId, onNavigate, visible, lang }) {
           className="flex items-center justify-center w-9 h-9 backdrop-blur-3 bg-nav-bg rounded-radius-4 shadow-xs ring-1 ring-nav-ring text-fg-muted hover:text-fg-primary hover:bg-nav-active-bg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 7h16M4 12h12M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <path d="M4 5h16M4 12h12M4 19h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </button>
         {tipVisible && (

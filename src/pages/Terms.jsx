@@ -172,7 +172,7 @@ function SecondaryNav({ sections, activeId, onNavigate, lang, visible = true }) 
   const onEdgePointerUp = () => { dragStartX.current = null; };
 
   const minimiseLabel = lang === 'fr' ? 'Réduire' : 'Minimise';
-  const expandLabel   = lang === 'fr' ? 'Afficher la navigation' : 'Expand navigation';
+  const expandLabel   = lang === 'fr' ? 'Développer' : 'Expand';
 
   // Collapsed → fixed pill at the centre-left of the viewport. An empty
   // placeholder keeps the original nav column width so the page content does
@@ -193,7 +193,7 @@ function SecondaryNav({ sections, activeId, onNavigate, lang, visible = true }) 
             className="flex items-center justify-center w-9 h-9 backdrop-blur-3 bg-nav-bg rounded-radius-4 shadow-xs ring-1 ring-nav-ring text-fg-muted hover:text-fg-primary hover:bg-nav-active-bg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 7h16M4 12h12M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <path d="M4 5h16M4 12h12M4 19h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </button>
           {tipVisible && (

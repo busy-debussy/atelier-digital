@@ -35,7 +35,7 @@ export const DEFAULT_LEGEND_GROUPS = [
 const DEFAULT_LEGEND_T = {
   en: {
     headings:       { dev: 'Engineering', design: 'Design', management: 'Management', studio: 'Studio' },
-    labels:         { Designer: 'Designer', Unity: 'Unity', 'Creative Team': 'Creative Team', 'Project Manager': 'Project Manager', 'Product Manager': 'Product Manager', 'Unreal Engine': 'Unreal Engine' },
+    labels:         { Designer: 'UX/UI Designer', Unity: 'Unity Dev', 'Creative Team': '3D Artists', 'Project Manager': 'Project Manager', 'Product Manager': 'Product Manager', 'Unreal Engine': 'Unreal Engine Dev' },
     viewLegend:     'View legend',
     hideLegend:     'Hide legend',
     mapCaption:     'Slide or hover over the map to explore time zones.',
@@ -44,7 +44,7 @@ const DEFAULT_LEGEND_T = {
   },
   fr: {
     headings:       { dev: 'Ingénierie', design: 'Design', management: 'Management', studio: 'Studio' },
-    labels:         { Designer: 'Designer', Unity: 'Unity', 'Creative Team': 'Équipe créative', 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', 'Unreal Engine': 'Unreal Engine' },
+    labels:         { Designer: 'UX/UI Designer', Unity: 'Unity Dev', 'Creative Team': 'Artistes 3D', 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', 'Unreal Engine': 'Unreal Engine Dev' },
     viewLegend:     'Voir la légende',
     hideLegend:     'Masquer la légende',
     mapCaption:     'Survolez la carte pour explorer les fuseaux horaires.',
@@ -67,6 +67,17 @@ export default function WorldMapDots({
 }) {
   const lt = translations[lang] ?? translations.en;
   const flatDots = legendGroups.flatMap(col => teamDots.filter(d => d.group === col.group));
+
+  // Country → translated role labels. Shown in the map tooltip when the legend
+  // is closed, so the map still conveys who's where without the legend open.
+  const rolesByCountry = useMemo(() => {
+    const m = {};
+    teamDots.forEach(d => {
+      const countries = Array.isArray(d.countries) ? d.countries : d.country ? [d.country] : [];
+      countries.forEach(c => { (m[c] ??= []).push(lt.labels[d.label] ?? d.label); });
+    });
+    return m;
+  }, [teamDots, lt]);
 
   const [hovered,        setHovered]       = useState(null);
   const [selected,       setSelected]      = useState(null);
@@ -429,10 +440,22 @@ export default function WorldMapDots({
               style={{ left: `calc(${pos.x}% + ${off?.x ?? 0}px)`, top: `calc(${pos.y}% + ${off?.y ?? 0}px)`, transform: 'translate(-50%, -100%)' }}
             >
               <div
-                className="mb-2 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-tooltip-bg text-fg-primary-inverse transition-opacity duration-150"
+                data-squircle
+                className="mb-2 text-left rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-tooltip-bg text-fg-primary-inverse transition-opacity duration-150"
                 style={{ opacity: (selected?.key ? selected : (hovered ?? selected))?.countries?.includes(country) || (!selected?.key && (hovered ?? selected)?.country === country) ? 1 : 0 }}
               >
-                {country}
+                <span className="whitespace-nowrap">{country}</span>
+                {/* The tooltip carries the country's roles (one per line),
+                    whether or not the legend is open — except when a specific
+                    legend pill is pressed (selected), which highlights one role,
+                    so the full list is suppressed then. */}
+                {!selected?.key && rolesByCountry[country]?.length > 0 && (
+                  <span className="mt-0.5 block font-normal leading-tight opacity-70">
+                    {rolesByCountry[country].map((r, i) => (
+                      <span key={i} className="block whitespace-nowrap">{r}</span>
+                    ))}
+                  </span>
+                )}
               </div>
             </div>
             );

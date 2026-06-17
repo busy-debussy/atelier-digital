@@ -1,6 +1,6 @@
 import { POSTER_PATHS, POSTER_BASE } from '../data/canapPosters';
 
-function PosterRow({ posters, rowIdx }) {
+function PosterRow({ posters, rowIdx, posterGap, posterRadius, base }) {
   const isEven = rowIdx % 2 === 0;
   const duration = '480s';
   const animationName = isEven ? 'canap-card-marquee-left' : 'canap-card-marquee-right';
@@ -8,17 +8,17 @@ function PosterRow({ posters, rowIdx }) {
   return (
     <div className="relative h-[22%] overflow-visible">
       <div
-        className="flex h-full w-max items-center gap-3 will-change-transform"
+        className={`flex h-full w-max items-center ${posterGap} will-change-transform`}
         style={{ animation: `${animationName} ${duration} linear infinite` }}
       >
         {[...posters, ...posters].map((path, i) => (
           <img
             key={`${path}-${i}`}
-            src={`${POSTER_BASE}${path}`}
+            src={`${base}${path}`}
             alt=""
             loading="lazy"
             decoding="async"
-            className="h-full w-auto rounded-2xl object-cover"
+            className={`h-full w-auto ${posterRadius} object-cover`}
             style={{ aspectRatio: '2 / 3' }}
           />
         ))}
@@ -27,7 +27,12 @@ function PosterRow({ posters, rowIdx }) {
   );
 }
 
-export function CanapCardBackdrop() {
+// posterGap / posterRadius / rowGap default to the homepage card's values; the
+// nav mini-card passes smaller ones so the poster wall reads right at ~142px.
+export function CanapCardBackdrop({ posterGap = 'gap-3', posterRadius = 'rounded-2xl', rowGap = 'gap-2', posterSize } = {}) {
+  // Smaller TMDB size for small renders (e.g. the nav mini-card) — the default
+  // w342 is far oversized when each poster paints ~35px wide, so it loads slowly.
+  const base = posterSize ? POSTER_BASE.replace(/\/w\d+$/, `/${posterSize}`) : POSTER_BASE;
   const rowCount = 4;
   const rowSize = Math.max(1, Math.ceil(POSTER_PATHS.length / rowCount));
   const rows = Array.from({ length: rowCount }, (_, i) =>
@@ -51,9 +56,9 @@ export function CanapCardBackdrop() {
         {/* `gap-2` between rows — exact match for the iOS login.
             Tight spacing reads as "wall of posters", not "discrete
             cards floating". */}
-        <div className="flex h-full flex-col justify-center gap-2">
+        <div className={`flex h-full flex-col justify-center ${rowGap}`}>
           {rows.map((rowPosters, rowIdx) => (
-            <PosterRow key={rowIdx} posters={rowPosters} rowIdx={rowIdx} />
+            <PosterRow key={rowIdx} posters={rowPosters} rowIdx={rowIdx} posterGap={posterGap} posterRadius={posterRadius} base={base} />
           ))}
         </div>
       </div>

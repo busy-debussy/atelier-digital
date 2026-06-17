@@ -1,5 +1,52 @@
 # Changelog 
 
+## [2.5.7] — 2026-06-17
+
+### Sales Platform "Problem" tile + secondary-nav polish
+
+#### Sales Platform — "Problem" tile on black
+- The Define section's **Problem** tile now sits on black — `bg-z-1000` (#000) in light mode and the softer elevated `bg-bg-subtle` (#404040) in dark, matching Canap's "Problem" treatment so it reads as a raised statement rather than a void on the dark page
+- `TileEyebrow` / `TileTitle` gained a `dark` variant (on-dark text); the eyebrow + emphasised words ("unbuilt properties", "engaging", "contextual" — and the FR equivalents) are now `fg-on-dark-primary` white over the muted body
+
+#### Sales Platform — team role labels
+- "UX/UI" → **UX/UI Designer**, "Visual" → **Visual Designer** (FR "Designer visuel"), "Developer" → **Developers** (FR "Développeurs") — in the legend and the map tooltips
+
+#### Secondary navigation — collapsed-state polish (all six navs)
+- The collapsed expand-pill icon's three lines were too tight — line spacing widened (`y` 7/12/17 → 5/12/19, ~5px → ~7px gaps)
+- The expand tooltip/label shortened from "Expand navigation" → **"Expand"** (FR "Afficher la navigation" → "Développer"), mirroring the short "Minimise" / "Réduire" label
+
+---
+
+## [2.5.6] — 2026-06-17
+
+### Case-study team-size chips + case-studies nav dropdown rebuilt as mini cards
+
+#### Home — case-study cards: team-size chip
+- Added a `team` chip at the end of each card's chip row — a people glyph + headcount, styled like the secondary tech chips. The solo project (Canap) reads **"Solo"** instead of "1"
+- Counts: web app **40**, XR **8**, digital twins **8**, Canap **Solo**. Screen readers announce the full phrase via `aria-label` ("Team of 40" / "Équipe de 40" … "Solo project" / "Projet en solo")
+- XR case study copy aligned to match: the "Our team / Distributed by design" section now reads "Core team of **eight**" (FR "Équipe de **huit**"), was "five" / "cinq"
+
+#### Main nav — case-studies dropdown rebuilt as mini cards (desktop + tablet)
+- The dropdown is now a row of **four mini case-study cards** (cover image + title), mirroring the homepage cards, replacing the old vertical text list
+- Width capped to the smallest tablet nav width (`sm` = 640px) minus the nav's `px-4` gutters → **608px** (`w-[608px] max-w-[calc(100vw-2rem)]`); a `grid-cols-4` splits that minus the gaps (~142px cards, `aspect-[4/5]` to match the homepage cards' lg proportion). Centred on the viewport via a new `align: 'viewport'` portal mode so it always fits and stays gutter-padded
+- Canap card uses the homepage's tilted, counter-scrolling poster wall (`CanapCardBackdrop`) instead of a static image; the other three use their cover photos. Its posters load at TMDB **`w154`** (not `w342`) since they only paint ~35px wide, with a `preconnect` to `image.tmdb.org` for a fast first load
+- 60% corner smoothing (`data-squircle`); hover lifts the card (`motion-safe:hover:scale-[1.03]`) and shows a blue CTA stroke (`ring-cta-500`)
+- Digital Twins (restricted) card is greyed out — dim layer + `opacity-50` — and fully non-interactive (no hover, no click, `aria-disabled`)
+- Panel edge uses the main nav's stroke token (`ring-1 ring-nav-ring`) — no stroke in light, the nav's subtle stroke in dark
+
+#### Main nav — dropdown dismissal
+- An open dropdown now closes when the nav slides away on scroll-down (open state gated on the nav's `visible` via a new `navVisible` prop)
+- The case-study dropdown now closes when pressing **any other main-nav button** (Résumé, Let's Talk, Language, Dark mode, logo) — previously the whole nav counted as "inside" and kept it open. It now closes on any press that isn't its own button or panel, so the projects and language dropdowns never sit open together (the case-studies button's own toggle is preserved)
+
+#### Extended Reality — team map tooltip
+- The case-study team maps (`WorldMapDots`, used by **XR** and **Sales Platform**) now list each country's **team roles** in the tooltip, one per line, left-aligned (e.g. XR Scotland → UX/UI Designer / Unity Dev / 3D Artists) — so the map conveys the roster whether or not the legend is open. The exception: while a specific legend pill is **pressed** (one role highlighted), the tooltip shows the country name only. Roles derive from each page's existing `teamDots` data and are localised. Tooltips also got 60% corner smoothing (`data-squircle`)
+- Role labels renamed (legend + tooltip, EN + FR): Designer → **UX/UI Designer**, Unity → **Unity Dev**, Unreal Engine → **Unreal Engine Dev**, Creative Team → **3D Artists** (FR "Artistes 3D")
+
+#### CanapCardBackdrop — parameterized
+- `posterGap` / `posterRadius` / `rowGap` / `posterSize` are now props (defaults match the homepage card, so it's unchanged there); the nav mini-card passes tighter values (`gap-1`, `rounded-[6px]`) and a smaller poster size (`w154`) to suit the ~142px size
+
+---
+
 ## [2.5.5] — 2026-06-17
 
 ### Secondary-nav scroll behaviour, anchor offsets, and reliable nav jumps

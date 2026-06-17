@@ -397,17 +397,17 @@ function Tile({ children, fullWidth = false, bgClass = 'bg-bg-page' }) {
   );
 }
 
-function TileEyebrow({ children, id }) {
+function TileEyebrow({ children, id, dark = false }) {
   return (
-    <h3 id={id} className="text-h3 font-semibold leading-snug text-fg-primary scroll-mt-28">
+    <h3 id={id} className={`text-h3 font-semibold leading-snug scroll-mt-28 ${dark ? 'text-fg-on-dark-primary' : 'text-fg-primary'}`}>
       {children}
     </h3>
   );
 }
 
-function TileTitle({ children }) {
+function TileTitle({ children, dark = false }) {
   return (
-    <p className="text-display-2 font-semibold leading-tight text-fg-muted">
+    <p className={`text-display-2 font-semibold leading-tight ${dark ? 'text-fg-on-dark-secondary' : 'text-fg-muted'}`}>
       {children}
     </p>
   );
@@ -594,7 +594,7 @@ const SP_LEGEND_GROUPS = [
 const SP_LEGEND_T = {
   en: {
     headings:       { design: 'Design', studio: 'Studio', dev: 'Engineering', qa: 'QA', marketing: 'Marketing', management: 'Management' },
-    labels:         { 'UX/UI': 'UX/UI', Interaction: 'Interaction', Visual: 'Visual', 'Creative Team': 'Creative Team', '3D Artists': '3D Artists', 'QA Testers': 'QA Testers', Marketing: 'Marketing', 'Project Manager': 'Project Manager', 'Product Manager': 'Product Manager', Developer: 'Developer', Cyprus: 'Cyprus', UAE: 'UAE' },
+    labels:         { 'UX/UI': 'UX/UI Designer', Interaction: 'Interaction', Visual: 'Visual Designer', 'Creative Team': 'Creative Team', '3D Artists': '3D Artists', 'QA Testers': 'QA Testers', Marketing: 'Marketing', 'Project Manager': 'Project Manager', 'Product Manager': 'Product Manager', Developer: 'Developers', Cyprus: 'Cyprus', UAE: 'UAE' },
     viewLegend:     'View legend',
     hideLegend:     'Hide legend',
     mapCaption:     'Slide or hover over the map to explore time zones.',
@@ -603,7 +603,7 @@ const SP_LEGEND_T = {
   },
   fr: {
     headings:       { design: 'Design', studio: 'Studio', dev: 'Ingénierie', qa: 'Qualité', marketing: 'Marketing', management: 'Management' },
-    labels:         { 'UX/UI': 'UX/UI', Interaction: 'Interaction', Visual: 'Visuel', 'Creative Team': 'Équipe créative', '3D Artists': 'Artistes 3D', 'QA Testers': 'Testeurs', Marketing: 'Marketing', 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', Developer: 'Développeur', Cyprus: 'Chypre', UAE: 'EAU' },
+    labels:         { 'UX/UI': 'UX/UI Designer', Interaction: 'Interaction', Visual: 'Designer visuel', 'Creative Team': 'Équipe créative', '3D Artists': 'Artistes 3D', 'QA Testers': 'Testeurs', Marketing: 'Marketing', 'Project Manager': 'Chef de projet', 'Product Manager': 'Product Manager', Developer: 'Développeurs', Cyprus: 'Chypre', UAE: 'EAU' },
     viewLegend:     'Voir la légende',
     hideLegend:     'Masquer la légende',
     mapCaption:     'Survolez la carte pour explorer les fuseaux horaires.',
@@ -801,7 +801,7 @@ const DEFINE = {
   en: {
     challenge: {
       eyebrow: "Problem",
-      body: <>How can we help buyers explore <strong className="text-fg-primary">unbuilt properties</strong> across multiple locations in an <strong className="text-fg-primary">engaging</strong>, <strong className="text-fg-primary">contextual</strong> way?</>,
+      body: <>How can we help buyers explore <strong className="text-fg-on-dark-primary">unbuilt properties</strong> across multiple locations in an <strong className="text-fg-on-dark-primary">engaging</strong>, <strong className="text-fg-on-dark-primary">contextual</strong> way?</>,
       warningCallout: { emoji: '⚠️', label: 'Key constraints', body: <><span className="block"><strong>Technical limitations:</strong> Large 3D datasets made real-time rendering expensive and slow.</span><span className="block mt-6"><strong>Tight deadlines:</strong> The first launch was only <strong>15 weeks away</strong>, leaving limited time for research or feature development.</span><span className="block mt-6"><strong>Client expectations:</strong> The client wanted a <strong>premium, user-friendly experience</strong> and made final decisions on key features.</span></> },
     },
     exploration: {
@@ -836,7 +836,7 @@ const DEFINE = {
   fr: {
     challenge: {
       eyebrow: "Le défi",
-      body: <>Comment pouvons-nous aider des acheteurs immobiliers à se projeter dans des <strong className="text-fg-primary">espaces non-bâtis</strong> de façon <strong className="text-fg-primary">émotionnellement engageante</strong> et <strong className="text-fg-primary">contextuellement pertinente</strong>, dans divers environnements géographiques<strong className="text-fg-primary"> ?</strong></>,
+      body: <>Comment pouvons-nous aider des acheteurs immobiliers à se projeter dans des <strong className="text-fg-on-dark-primary">espaces non-bâtis</strong> de façon <strong className="text-fg-on-dark-primary">émotionnellement engageante</strong> et <strong className="text-fg-on-dark-primary">contextuellement pertinente</strong>, dans divers environnements géographiques<strong className="text-fg-on-dark-primary"> ?</strong></>,
       warningCallout: { emoji: '⚠️', label: 'Contraintes clés', body: <><strong>Limitations techniques :</strong> Les grandes bases de données 3D rendaient le rendu en temps réel coûteux et lent.<br /><strong>Délais serrés :</strong> Le premier lancement n'était qu'à <strong>15 semaines</strong>, laissant peu de temps pour la recherche ou le développement.<br /><strong>Attentes du client :</strong> Le client souhaitait une <strong>expérience premium et intuitive</strong> et prenait les décisions finales sur les fonctionnalités clés.</> },
     },
     exploration: {
@@ -874,9 +874,11 @@ function DefineContent({ lang, isDark }) {
   const d = DEFINE[lang] ?? DEFINE.en;
   return (
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-      <Tile bgClass="bg-bg-surface">
-        <TileEyebrow id="def-challenge">{d.challenge.eyebrow}</TileEyebrow>
-        <TileTitle>{d.challenge.body}</TileTitle>
+      {/* Matches Canap's "Problem" tile: pure black in light, a softer elevated
+          dark (bg-bg-subtle, #404040) in dark mode so it stands out from the page. */}
+      <Tile bgClass="bg-z-1000 dark:bg-bg-subtle">
+        <TileEyebrow id="def-challenge" dark>{d.challenge.eyebrow}</TileEyebrow>
+        <TileTitle dark>{d.challenge.body}</TileTitle>
       </Tile>
 
       {d.challenge.warningCallout && (
@@ -2020,7 +2022,7 @@ function SecondaryNav({ sections, activeId, activeSubId, onNavigate, visible, la
   const onEdgePointerUp = () => { dragStartX.current = null; };
 
   const minimiseLabel = lang === 'fr' ? 'Réduire' : 'Minimise';
-  const expandLabel   = lang === 'fr' ? 'Afficher la navigation' : 'Expand navigation';
+  const expandLabel   = lang === 'fr' ? 'Développer' : 'Expand';
 
   if (collapsed) {
     return (
@@ -2036,7 +2038,7 @@ function SecondaryNav({ sections, activeId, activeSubId, onNavigate, visible, la
           className="flex items-center justify-center w-9 h-9 backdrop-blur-3 bg-nav-bg rounded-radius-4 shadow-xs ring-1 ring-nav-ring text-fg-muted hover:text-fg-primary hover:bg-nav-active-bg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 7h16M4 12h12M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <path d="M4 5h16M4 12h12M4 19h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </button>
         {tipVisible && (

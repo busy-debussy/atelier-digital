@@ -16,6 +16,12 @@ import imgClose        from '../assets/icons/icon-close.svg';
 import imgLinkedIn     from '../assets/icons/icon-linkedin.svg';
 import { trackEvent }  from '../analytics';
 import imgPortrait     from '../assets/photos/portrait.webp';
+// Case-study mini-card art (mirrors the homepage case-study cards). Canap uses
+// an animated poster grid on the homepage; a static home screen stands in here.
+import imgCardSales    from '../assets/photos/photo-cgi-interactive-platform.webp';
+import imgCardXR       from '../assets/photos/photo-xr-experiences.webp';
+import imgCardTwin     from '../assets/photos/photo-digital-twins.webp';
+import { CanapCardBackdrop } from './CanapCardBackdrop';
 
 // Translations
 const T = {
@@ -97,6 +103,10 @@ function usePortalPosition(anchorRef, { offsetTop = 11, align = 'left', offsetX 
         setStyle({ ...base, right: window.innerWidth - r.right });
       } else if (align === 'center') {
         setStyle({ ...base, left: r.left + r.width / 2, transform: 'translateX(-50%)' });
+      } else if (align === 'viewport') {
+        // Centre on the viewport — used by wide dropdowns so they always fit
+        // (and stay gutter-padded) regardless of the anchor's position.
+        setStyle({ ...base, left: '50%', transform: 'translateX(-50%)' });
       } else {
         setStyle({ ...base, left: r.left + offsetX });
       }
@@ -243,14 +253,18 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
   );
 }
 
-// ProjectsDropdown
+// ProjectsDropdown — mini case-study cards (desktop + tablet), mirroring the
+// homepage case-study cards (image + status dot + title). Width is capped to the
+// smallest tablet nav width (sm = 640px) minus the nav's px-4 gutters (608px);
+// the four cards split that width minus the gaps via a 4-col grid. Centred on
+// the viewport so it always fits and stays gutter-padded.
 function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
-  const portalStyle = usePortalPosition(anchorRef, { offsetTop: 11, offsetX: -14 });
+  const portalStyle = usePortalPosition(anchorRef, { offsetTop: 11, align: 'viewport' });
   const items = [
-    { key: 'sales platform',   to: '/case-study/sales-platform', locked: false },
-    { key: 'extended reality', to: '/case-study/xr',             locked: false },
-    { key: 'digital twin',     to: null,                         locked: true  },
-    { key: 'iphone app',       to: '/case-study/canap',          locked: false },
+    { key: 'sales platform',   to: '/case-study/sales-platform', img: imgCardSales },
+    { key: 'extended reality', to: '/case-study/xr',             img: imgCardXR,    tone: 'shipped' },
+    { key: 'digital twin',     to: null,                         img: imgCardTwin,  tone: 'shipped' },
+    { key: 'iphone app',       to: '/case-study/canap',          customBg: 'canap-poster-grid' },
   ];
 
   useEffect(() => {
@@ -260,6 +274,33 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
     return () => clearTimeout(id);
   }, [dropdownRef]);
 
+  // Card face — image, bottom gradient for legibility, status dot, title; a lock
+  // glyph for the restricted (no-link) card.
+  const cardFace = (img, labelKey, locked, customBg) => (
+    <>
+      {customBg === 'canap-poster-grid' ? (
+        // Same tilted, counter-scrolling poster wall the homepage Canap card
+        // uses, with tighter gaps + smaller radii to suit the ~142px mini card.
+        <CanapCardBackdrop posterGap="gap-1" posterRadius="rounded-[6px]" rowGap="gap-1" posterSize="w154" />
+      ) : (
+        <img src={img} alt="" draggable="false" className="absolute inset-0 w-full h-full object-cover" />
+      )}
+      <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
+      {locked && (
+        <>
+          {/* Dimming layer marks the card as restricted (non-interactive). */}
+          <span aria-hidden="true" className="absolute inset-0 bg-black/55" />
+          <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
+            <img src={imgLockIcon} alt="" width={18} height={18} className="brightness-0 invert opacity-90" />
+          </span>
+        </>
+      )}
+      <span className="absolute inset-x-0 bottom-0 p-2 text-xs font-semibold leading-tight text-white">
+        {T[lang][labelKey]}
+      </span>
+    </>
+  );
+
   return createPortal(
     <div
       id="projects-menu"
@@ -267,40 +308,43 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
       aria-label={lang === 'fr' ? 'Études de cas' : 'Case studies'}
       ref={dropdownRef}
       style={portalStyle}
-      className="w-[198px] backdrop-blur-3 bg-nav-bg border border-glass-default rounded-radius-4 overflow-hidden shadow-s"
+      className="w-[608px] max-w-[calc(100vw-2rem)] backdrop-blur-3 bg-nav-bg ring-1 ring-nav-ring rounded-radius-5 shadow-s p-2"
     >
-      <ul role="none" className="p-2 flex flex-col">
-        {items.map(({ key, to, locked }) => (
-          <li key={key} role="none" className={locked ? 'opacity-[0.32]' : ''}>
-            {to ? (
-              <Link
-                data-spring-desktop
-                to={to}
-                onClick={onClose}
-                role="menuitem"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Escape') { e.preventDefault(); onClose(); anchorRef?.current?.querySelector('button')?.focus(); }
-                  else if (e.key === 'Tab') { onClose(); }
-                }}
-                className="flex items-center gap-2 px-3 py-2 rounded-radius-3 hover:bg-nav-hover-bg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
-              >
-                <div className="size-6 shrink-0 flex items-center justify-center">
-                  <img src={imgArrowRight} alt="" width={16} height={16} style={{ transform:'none' }} />
-                </div>
-                <span className="font-medium text-base leading-6 text-fg-primary whitespace-nowrap">{T[lang][key]}</span>
-              </Link>
-            ) : (
-              <div role="menuitem" aria-disabled="true" className="flex items-center gap-2 px-3 py-2 cursor-default">
-                <div className="size-6 shrink-0 flex items-center justify-center">
-                  <img src={imgLockIcon} alt="" width={16} height={16} className="dark:invert" />
-                </div>
-                <span className="font-medium text-base leading-6 text-fg-primary whitespace-nowrap">{T[lang][key]}</span>
-              </div>
-            )}
-          </li>
+      <div role="none" className="grid grid-cols-4 gap-2">
+        {items.map(({ key, to, img, customBg }) => (
+          to ? (
+            <Link
+              key={key}
+              data-spring-desktop
+              data-squircle
+              to={to}
+              onClick={onClose}
+              role="menuitem"
+              aria-label={T[lang][key]}
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') { e.preventDefault(); onClose(); anchorRef?.current?.querySelector('button')?.focus(); }
+                else if (e.key === 'Tab') { onClose(); }
+              }}
+              className="group relative aspect-[4/5] rounded-radius-3 overflow-hidden select-none motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
+            >
+              {cardFace(img, key, false, customBg)}
+              <span aria-hidden="true" className="absolute inset-0 rounded-radius-3 ring-2 ring-inset ring-cta-500/0 group-hover:ring-cta-500 transition-[box-shadow] duration-150" />
+            </Link>
+          ) : (
+            <div
+              key={key}
+              role="menuitem"
+              aria-disabled="true"
+              aria-label={T[lang][key]}
+              data-squircle
+              className="relative aspect-[4/5] rounded-radius-3 overflow-hidden cursor-default select-none opacity-50"
+            >
+              {cardFace(img, key, true, customBg)}
+            </div>
+          )
         ))}
-      </ul>
+      </div>
     </div>,
     document.body
   );
@@ -622,9 +666,15 @@ function LetsTalkButton({ lang, isDark, onOpen }) {
 }
 
 // DesktopTabletNav
-function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onContactOpen }) {
+function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onContactOpen, navVisible = true }) {
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [langOpen,     setLangOpen]     = useState(false);
+
+  // When the main nav slides away on scroll-down, close any open dropdown so it
+  // doesn't linger detached over the page (it's a portal, not a nav child).
+  useEffect(() => {
+    if (!navVisible) { setProjectsOpen(false); setLangOpen(false); }
+  }, [navVisible]);
   const location  = useLocation();
   const navigate  = useNavigate();
   const currentPage = location.pathname;
@@ -642,12 +692,15 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onCo
   useEffect(() => {
     const handler = (e) => {
       const inNav              = navRef.current?.contains(e.target);
+      const inProjectsBtn      = projectsBtnRef.current?.contains(e.target);
       const inProjectsDropdown = projectsDropdownRef.current?.contains(e.target);
       const inLangDropdown     = langDropdownRef.current?.contains(e.target);
-      if (!inNav && !inProjectsDropdown && !inLangDropdown) {
-        setProjectsOpen(false);
-        setLangOpen(false);
-      }
+      // Case-study dropdown closes on any press that isn't its own button or
+      // panel — so pressing another main-nav button (or clicking outside)
+      // dismisses it.
+      if (!inProjectsBtn && !inProjectsDropdown) setProjectsOpen(false);
+      // Language dropdown closes on any press outside the nav or its panel.
+      if (!inNav && !inLangDropdown) setLangOpen(false);
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
@@ -916,10 +969,10 @@ function Nav({ isDark, toggleDark, lang, toggleLang }) {
       style={{ transform: visible ? 'translateY(0)' : 'translateY(-120%)' }}
     >
       <div className="pointer-events-auto hidden lg:flex">
-        <DesktopTabletNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} isTablet={false} onContactOpen={() => setContactOpen(true)} />
+        <DesktopTabletNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} isTablet={false} onContactOpen={() => setContactOpen(true)} navVisible={visible} />
       </div>
       <div className="pointer-events-auto hidden sm:flex lg:hidden">
-        <DesktopTabletNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} isTablet={true} onContactOpen={() => setContactOpen(true)} />
+        <DesktopTabletNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} isTablet={true} onContactOpen={() => setContactOpen(true)} navVisible={visible} />
       </div>
       <div className="pointer-events-auto flex sm:hidden w-full">
         <MobileNav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} onContactOpen={() => setContactOpen(true)} />

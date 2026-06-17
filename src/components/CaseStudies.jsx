@@ -33,6 +33,7 @@ const T = {
         title:        'An interactive platform',
         subtitle:     'supercharging sales by 20%',
         status:       { label: 'Shipped', tone: 'shipped' },
+        team:         { label: '40', aria: 'Team of 40' },
         primaryChip:  { label: 'Web app', icon: imgIconWeb },
         secondaryChips: [{ label: 'React' }],
         tint:         'blue',
@@ -44,6 +45,7 @@ const T = {
         title:        'Shared XR experiences',
         subtitle:     'engaging the public',
         status:       { label: 'Shipped', tone: 'shipped' },
+        team:         { label: '8', aria: 'Team of 8' },
         primaryChip:  { label: 'Augmented Reality', icon: imgIconAR },
         secondaryChips: [{ label: 'Unity' }, { label: 'Unreal' }],
         tint:         'blue',
@@ -55,6 +57,7 @@ const T = {
         title:        'Real-time digital twins',
         subtitle:     'accelerating megaprojects',
         status:       { label: 'Shipped', tone: 'shipped' },
+        team:         { label: '8', aria: 'Team of 8' },
         primaryChip:  { label: 'Digital twin', icon: imgIconTwin },
         secondaryChips: [{ label: 'Unreal Engine' }],
         tint:         null,
@@ -68,6 +71,7 @@ const T = {
         title:        'A native iPhone app',
         subtitle:     'Built from strach',
         status:       { label: 'In alpha', tone: 'alpha' },
+        team:         { label: 'Solo', aria: 'Solo project' },
         primaryChip:  { label: 'iOS 26', icon: imgIconWeb },
         secondaryChips: [{ label: 'SwiftUI' }, { label: 'NDA-free' }],
         tint:         'blue',
@@ -89,6 +93,7 @@ const T = {
         title:        'Une plateforme web',
         subtitle:     'booste les ventes de 20%',
         status:       { label: 'Livré', tone: 'shipped' },
+        team:         { label: '40', aria: 'Équipe de 40' },
         primaryChip:  { label: 'Web app', icon: imgIconWeb },
         secondaryChips: [{ label: 'React' }],
         tint:         'blue',
@@ -100,6 +105,7 @@ const T = {
         title:        'Des expériences XR',
         subtitle:     'engagent le public',
         status:       { label: 'Livré', tone: 'shipped' },
+        team:         { label: '8', aria: 'Équipe de 8' },
         primaryChip:  { label: 'Réalité augmentée', icon: imgIconAR },
         secondaryChips: [{ label: 'Unity' }, { label: 'Unreal' }],
         tint:         'blue',
@@ -111,6 +117,7 @@ const T = {
         title:        'Un jumeau numérique',
         subtitle:     'accélére la macro-ingénierie',
         status:       { label: 'Livré', tone: 'shipped' },
+        team:         { label: '8', aria: 'Équipe de 8' },
         primaryChip:  { label: 'Jumeau numérique', icon: imgIconTwin },
         secondaryChips: [{ label: 'Unreal Engine' }],
         tint:         null,
@@ -124,6 +131,7 @@ const T = {
         title:        'Une app iPhone native',
         subtitle:     'du problème à l’alpha',
         status:       { label: 'En alpha', tone: 'alpha' },
+        team:         { label: 'Solo', aria: 'Projet en solo' },
         primaryChip:  { label: 'iOS · Web', icon: imgIconWeb },
         secondaryChips: [{ label: 'SwiftUI' }, { label: 'Next.js' }, { label: 'sans NDA' }],
         tint:         'blue',
@@ -201,6 +209,18 @@ function CsCard({ card, t }) {
               </span>
             </div>
           ))}
+          {/* Team-size chip — last in the row. People glyph + count; the solo
+              project reads "Solo". */}
+          {card.team && (
+            <div data-squircle aria-label={card.team.aria} className="flex items-center gap-1 px-2 py-1 rounded-radius-3 bg-chip-bg-secondary">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="w-3 h-3 shrink-0 text-fg-on-dark-opacity-64">
+                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+              </svg>
+              <span aria-hidden="true" className="text-chip-xs font-medium text-fg-on-dark-opacity-64 leading-none whitespace-nowrap">
+                {card.team.label}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="flex items-end justify-between gap-2">
