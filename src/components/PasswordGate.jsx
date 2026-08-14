@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { trackEvent } from '../analytics';
 import LogoLoader from './LogoLoader';
 import { assetUrl } from '../utils/protectedAsset';
@@ -12,7 +13,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const L = {
   en: {
     heading: 'Protected case study',
-    requestHeading: 'Password request',
+    requestHeading: 'Access request',
     intro: 'Enter the password to continue.',
     placeholder: 'Password',
     showPw: 'Show password',
@@ -30,14 +31,13 @@ const L = {
     notePlaceholder: 'A quick note',
     sendRequest: 'Send request',
     sending: 'Sending…',
-    responseTime: 'Expect a reply today',
-    requestSent: 'Thanks — you’ll hear from me shortly.',
+    requestSentHeading: 'Request sent',
+    requestSent: 'Thanks, I’ll be in touch soon.',
+    backToHome: 'Back to case studies',
     cancel: 'Cancel',
     back: 'Back',
     requiredLegend: '* Required',
     clear: 'Clear',
-    directEmailLead: 'Prefer email? Write to',
-    directEmailTrail: 'directly.',
   },
   fr: {
     heading: 'Étude de cas protégée',
@@ -59,14 +59,13 @@ const L = {
     notePlaceholder: 'Un petit mot',
     sendRequest: 'Envoyer la demande',
     sending: 'Envoi…',
-    responseTime: 'Réponse attendue le jour même',
-    requestSent: 'Merci — vous aurez de mes nouvelles bientôt.',
+    requestSentHeading: 'Demande envoyée',
+    requestSent: 'Merci, je vous recontacterai bientôt.',
+    backToHome: 'Retour aux études de cas',
     cancel: 'Annuler',
     back: 'Retour',
     requiredLegend: '* Obligatoire',
     clear: 'Effacer',
-    directEmailLead: 'Vous préférez l’email ? Écrivez directement à',
-    directEmailTrail: '.',
   },
 };
 
@@ -235,7 +234,15 @@ export default function PasswordGate({
       style={{ backgroundImage: `url(${imgFacadePattern})` }}
     >
       <form onSubmit={submit} className="w-full max-w-sm text-center backdrop-blur-3 bg-nav-bg ring-1 ring-tw-700 dark:ring-nav-ring rounded-radius-10 shadow-m px-8 pt-8 pb-8">
-        {requestOpen ? (
+        {requestOpen && requestState === 'sent' ? (
+          <h1 className="flex items-center justify-center gap-3 text-h3 font-semibold text-fg-primary mb-4">
+            {l.requestSentHeading}
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="text-fg-primary">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M8 12l3 3 5-6" />
+            </svg>
+          </h1>
+        ) : requestOpen ? (
           <div className="flex items-center gap-4 mb-4">
             <div className="w-10 shrink-0">
               <button
@@ -256,7 +263,6 @@ export default function PasswordGate({
           <h1 className="text-h3 font-semibold text-fg-primary mb-4">{l.heading}</h1>
         )}
         {!requestOpen && <p className="text-copy-s mb-8 text-fg-muted">{l.intro}</p>}
-        {requestOpen && <p className="text-copy-s mb-8 text-fg-muted">{l.responseTime}</p>}
         {!requestOpen && (
           <>
             <div className="relative">
@@ -303,7 +309,7 @@ export default function PasswordGate({
             <button
               type="submit"
               disabled={status === 'checking' || !password.trim()}
-              className="w-full px-6 py-3 rounded-full bg-cta-600 hover:bg-cta-700 text-fg-on-accent-opacity-95 text-btn-m font-medium border border-accent-border transition-colors disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 flex items-center justify-center gap-2"
+              className="w-full px-6 py-3 rounded-full bg-cta-600 enabled:hover:bg-cta-700 text-fg-on-accent-opacity-95 text-btn-m font-medium border border-accent-border transition-colors disabled:opacity-50 disabled:cursor-not-allowed enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 flex items-center justify-center gap-2"
             >
               {status === 'checking' && (
                 <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -327,7 +333,16 @@ export default function PasswordGate({
             </button>
           </p>
         ) : requestState === 'sent' ? (
-          <p className="mt-8 text-copy-s text-fg-muted" role="status">{l.requestSent}</p>
+          <>
+            <p className="mt-8 text-copy-s text-fg-secondary" role="status">{l.requestSent}</p>
+            <Link
+              to="/#case-studies"
+              data-spring
+              className="mt-8 inline-flex w-full items-center justify-center px-6 py-3 rounded-full bg-cta-600 hover:bg-cta-700 text-fg-on-accent-opacity-95 text-btn-m font-medium border border-accent-border transition-colors"
+            >
+              {l.backToHome}
+            </Link>
+          </>
         ) : (
           <div className="mt-8 text-left">
             <div className="relative mb-8">
@@ -453,21 +468,17 @@ export default function PasswordGate({
                 type="button"
                 onClick={submitRequest}
                 disabled={requestState === 'sending' || !requestEmail.trim()}
-                className="flex-1 px-4 py-2 rounded-full bg-cta-600 hover:bg-cta-700 text-fg-on-accent-opacity-95 text-copy-s font-medium border border-accent-border transition-colors disabled:opacity-50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+                className="flex-1 px-4 py-2 rounded-full bg-cta-600 enabled:hover:bg-cta-700 text-fg-on-accent-opacity-95 text-copy-s font-medium border border-accent-border transition-colors disabled:opacity-50 disabled:cursor-not-allowed enabled:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus flex items-center justify-center gap-2"
               >
+                {requestState === 'sending' && (
+                  <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                    <path className="opacity-90" d="M22 12a10 10 0 0 0-10-10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                  </svg>
+                )}
                 {requestState === 'sending' ? l.sending : l.sendRequest}
               </button>
             </div>
-            <p className="mt-4 text-center text-copy-s text-fg-muted">
-              {l.directEmailLead}{' '}
-              <a
-                href="mailto:d@atelierdigital.co.uk"
-                className="text-fg-primary underline underline-offset-2 decoration-1 hover:decoration-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus rounded-radius-1"
-              >
-                d@atelierdigital.co.uk
-              </a>{' '}
-              {l.directEmailTrail}
-            </p>
           </div>
         )}
       </form>

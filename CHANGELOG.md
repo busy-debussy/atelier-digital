@@ -1,12 +1,15 @@
 # Changelog 
 
-## [2.6.1] — 2026-08-14
+## [2.6.2] — 2026-08-14
 
-### Request Access — direct email fallback
+### Digital Twin gate — Request Access flow + password delivery
 
-- `PasswordGate.jsx`'s Request Access sub-flow now shows "Prefer email? Write to `d@atelierdigital.co.uk` directly." under the form's Cancel/Send buttons (EN + FR), so a visitor who'd rather not fill out the form has a one-click `mailto:` alternative. The request-access email itself (sent via Resend once `RESEND_API_KEY`/`RESEND_FROM` were provisioned) already replies-to the visitor's own address, so either path reaches a real inbox on both ends.
-
----
+- **Request Access confirmation screen**: no longer shows the back-arrow header (was always keyboard/click-reachable even though there was nothing to go back to mid-send); title changed to "Request sent" (FR "Demande envoyée") with a checkmark icon; copy shortened to "Thanks, I'll be in touch soon."; new "Back to case studies" CTA (`/#case-studies`), since this gate screen has no nav/footer of its own to otherwise leave from
+- **"Password request" heading renamed to "Access request"** (EN only — FR was already "Demande d'accès")
+- **Notification email you receive** (`api/request-access.js`) rebuilt: labeled Case study / Name / Email / Note / Sent (UK time) fields instead of one run-on sentence, a plain-text fallback alongside the HTML version, and a human-readable case-study name instead of the raw internal `gate:digital-twin` scope key (shown in both the subject and a lookup table for future gated case studies)
+- **New "Send password" approve flow** (`api/approve-access.js`): the notification email now includes a signed, expiring link. Clicking it opens a confirmation page ("Send password to X?") — deliberately a two-step GET-then-POST flow, since email link-scanners can pre-fetch GET links automatically and a same-request send would risk firing without a real click. Confirming sends the visitor a styled password email (monospace callout box) with a link back to the case study
+- **Send request button**: now shows the same spinning-circle loading indicator as the Unlock button while sending
+- **Disabled-button polish**: Unlock and Send Request buttons no longer shift background colour on hover while disabled (`enabled:hover:` scoping) and now show a `not-allowed` cursor instead of the default pointer
 
 ## [2.6.0] — 2026-08-14
 
