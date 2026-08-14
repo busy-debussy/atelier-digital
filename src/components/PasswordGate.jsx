@@ -36,6 +36,8 @@ const L = {
     back: 'Back',
     requiredLegend: '* Required',
     clear: 'Clear',
+    directEmailLead: 'Prefer email? Write to',
+    directEmailTrail: 'directly.',
   },
   fr: {
     heading: 'Étude de cas protégée',
@@ -63,6 +65,8 @@ const L = {
     back: 'Retour',
     requiredLegend: '* Obligatoire',
     clear: 'Effacer',
+    directEmailLead: 'Vous préférez l’email ? Écrivez directement à',
+    directEmailTrail: '.',
   },
 };
 
@@ -454,6 +458,16 @@ export default function PasswordGate({
                 {requestState === 'sending' ? l.sending : l.sendRequest}
               </button>
             </div>
+            <p className="mt-4 text-center text-copy-s text-fg-muted">
+              {l.directEmailLead}{' '}
+              <a
+                href="mailto:d@atelierdigital.co.uk"
+                className="text-fg-primary underline underline-offset-2 decoration-1 hover:decoration-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus rounded-radius-1"
+              >
+                d@atelierdigital.co.uk
+              </a>{' '}
+              {l.directEmailTrail}
+            </p>
           </div>
         )}
       </form>

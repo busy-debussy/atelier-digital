@@ -1,5 +1,13 @@
 # Changelog 
 
+## [2.6.1] — 2026-08-14
+
+### Request Access — direct email fallback
+
+- `PasswordGate.jsx`'s Request Access sub-flow now shows "Prefer email? Write to `d@atelierdigital.co.uk` directly." under the form's Cancel/Send buttons (EN + FR), so a visitor who'd rather not fill out the form has a one-click `mailto:` alternative. The request-access email itself (sent via Resend once `RESEND_API_KEY`/`RESEND_FROM` were provisioned) already replies-to the visitor's own address, so either path reaches a real inbox on both ends.
+
+---
+
 ## [2.6.0] — 2026-08-14
 
 ### Digital Twin case study (password-gated), case-study URL restructure, Hero chat removed, Home + Résumé floating nav
