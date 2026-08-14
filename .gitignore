@@ -23,13 +23,15 @@ dist-ssr
 *.sln
 *.sw?
 
+# Protected case-study assets — paste here, then `npm run upload:assets` pushes
+# them to private Vercel Blob storage. Never committed (they're confidential).
+private-assets
+
 # Environment variables
 .env
 .env.local
 .env.*.local
 
-# Work in progress — not ready to publish
-src/pages/XRExperiences.jsx
 .vercel
 
 *storybook.log

@@ -19,7 +19,6 @@ import imgMenuDropdown from '../assets/case-study/canap/menu-dropdown.webp';
 import imgPosterCardList from '../assets/case-study/canap/poster-card-list.webp';
 import imgUndo from '../assets/case-study/canap/undo.webp';
 
-// Tool logos for the Tools section.
 import imgToolFigma         from '../assets/logos/tools/logo-figma.webp';
 import imgToolPhotoshop     from '../assets/logos/tools/logo-adobe-photoshop.webp';
 import imgToolClaude        from '../assets/logos/tools/logo-claude.svg';
@@ -102,7 +101,6 @@ import imgBehaviourEnDark    from '../assets/case-study/canap/behaviour-paths/en
 import imgBehaviourEnLight   from '../assets/case-study/canap/behaviour-paths/en-light.svg';
 import imgBehaviourFrDark    from '../assets/case-study/canap/behaviour-paths/fr-dark.svg';
 import imgBehaviourFrLight   from '../assets/case-study/canap/behaviour-paths/fr-light.svg';
-// imgCanapForYou is used in the Design opener showcase below.
 import imgCanapIcons       from '../assets/case-study/canap/canap-icons.webp';
 import imgIcons16          from '../assets/case-study/canap/icons-size-16.webp';
 import imgIcons24          from '../assets/case-study/canap/icons-size-24.webp';
@@ -143,7 +141,7 @@ import iconSparkles2       from '../assets/case-study/canap/icon-sparkles-2.svg'
 // `[TODO en]` / `[TODO fr]` so visual proofing works before copy is final.
 const T = {
   en: {
-    pageTitle: 'Canap • Case study',
+    pageTitle: 'iPhone App • Canap',
     hero: {
       category: 'NDA-free side project',
       // The headline angle the audit recommends: cross-platform consumer
@@ -157,8 +155,8 @@ const T = {
     context: {
       header: 'Context',
       eyebrows: ['Origin', 'Pain points', 'Problem statement'],
-      painsIntro: <><p>Finding content worth watching can be more difficult than it should. Especially in group settings.</p><p>Across conversations, clear patterns emerged:</p></>,
-      client: <><p>Many of the projects I worked on are challenging to share publicly due to client ownership and confidentiality agreements.</p><p>To provide a clearer view of how I think and work, I invested the equivalent of <strong>six weeks in designing and building</strong> a product from scratch.</p><p>The project addresses a <strong>recurring problem</strong> observed within my circle, and it highlights my end-to-end approach to <strong>product strategy</strong>, <strong>UX/UI design</strong>, <strong>execution</strong>, and <strong>AI-assisted development</strong>.</p></>,
+      painsIntro: <><p>Finding content worth watching can be challenging. Especially in group settings.</p><p>Across conversations, clear patterns emerged:</p></>,
+      client: <><p>Many of the projects I worked on can't be shared publicly due to client ownership and confidentiality agreements.</p><p>To provide a clearer view of how I think and work, I invested the equivalent of <strong>six weeks in designing and building</strong> a product from scratch.</p><p>The project addresses a <strong>recurring problem</strong> observed within my circle, and it highlights my end-to-end approach to <strong>product strategy</strong>, <strong>UX/UI design</strong>, <strong>execution</strong>, and <strong>AI-assisted development</strong>.</p></>,
       painPoints: [
         <>“Let’s watch a film. Something we haven’t seen yet.” We start discussing, negotiating, <strong>scrolling</strong>. <strong>40 minutes pass.</strong> It's already bedtime.</>,
         <>"We picked something and watched 20 minutes." <strong>Neither of us really wanted it.</strong> We stopped watching.</>,
@@ -167,16 +165,16 @@ const T = {
       ],
       painsOutro: <>These observations highlight frictions around decision-making and coordination.</>,
       problemStatement: 'When people want to watch something together, discovering and agreeing on content can be difficult. Content is fragmented across platforms, turning a simple decision into a time-consuming process that often results in unsatisfying compromises.',
-      constraintLabel: 'Constraint',
+      constraintLabel: 'Why iOS?',
       constraint: [
-        'Designing for iOS narrows the scope to mobile-first content discovery and viewing decisions.',
-        'iOS also offers strong native support for sharing, saving, song recognition, and notifications.',
+        <>I deliberately constrained the scope to iOS, <strong>prioritising depth over breadth</strong>.</>,
+        <>Beyond being the most relevant platform for the target users, this allowed me to take advantage of <strong>native iOS capabilities</strong> that could meaningfully enhance the experience.</>,
       ],
     },
     research: { header: 'Research' },
     appReviews: {
       header: 'App store review analysis',
-      intro: 'To better understand how existing solutions were perceived in practice, reviewing user feedback validated observed pain points beyond my immediate network.',
+      intro: 'To better understand how existing solutions were perceived, reviewing user feedback confirmed observed pain points beyond my immediate network.',
       carouselLabel: 'App Store reviews',
       cardOf: (n, total) => `Review ${n} of ${total}`,
       navPrev: 'View previous review',
@@ -323,7 +321,7 @@ const T = {
       },
       interaction: {
         header: 'Interaction model',
-        intro: 'Posters are the primary interactive element across the app. They keep the 2:3 ratio, which sits naturally on mobile.',
+        intro: 'Posters are the primary interactive element across the app. They keep the international 2:3 ratio of prints, which sits naturally on mobile.',
         posterAlt: 'A poster carrying its status badge, action chip and metadata',
         badgeStatus: 'Watching',
         metaYear: '2013',
@@ -360,7 +358,7 @@ const T = {
       },
       signIn: {
         header: 'Onboarding flow',
-        intro: 'Attention to details was applied throughout the app, including in the onboarding experience, from account creation to profile setup.',
+        intro: 'The flow guides users naturally from account creation to profile setup, carefully balancing the information we needed with a simple and low-friction experience.',
         figmaCta: 'Open the prototype in Figma',
         carousel: {
           carouselLabel: 'Sign-in flow',
@@ -456,7 +454,7 @@ const T = {
       intro: <><p>The product was designed exclusively for dark mode to prioritise content artwork.</p><p>Colour, type, radius and spacing are one token system, defined in Figma as semantic variables, and split into four JSON files in code.</p></>,
       reducedNote: 'Scales are intentionally reduced for presentation purposes.',
       openFigma: 'Open Figma file',
-      dsLabels: { palette: 'Palette', type: 'Type', surfaces: 'Surfaces', icons: 'Icons', radii: 'Radii', iconSizes: 'Icon sizes', spacing: 'Spacing' },
+      dsLabels: { palette: 'Palette', type: 'Type', surfaces: 'Surfaces', icons: 'Iconography', radii: 'Radii', iconSizes: 'Icon sizes', spacing: 'Spacing' },
       categories: [
         { id: 'ds-colour', label: 'Colour' },
         { id: 'ds-type', label: 'Type' },
@@ -575,7 +573,7 @@ const T = {
       nextSteps: {
         eyebrow: 'Next steps',
         body: [
-          'The product is still in active development.',
+          'The product is in active development.',
           'The alpha release on TestFlight opens a series of upcoming tests, aimed at improving the product and validating the ambition behind this case study: building a better way to watch content together.',
         ],
       },
@@ -585,7 +583,7 @@ const T = {
   },
 
   fr: {
-    pageTitle: 'Canap • Étude de cas',
+    pageTitle: 'iPhone App • Canap',
     hero: {
       category: 'Projet perso',
       title: 'Une app média pour mieux choisir',
@@ -1011,7 +1009,7 @@ const T = {
       nextSteps: {
         eyebrow: 'Prochaines étapes',
         body: [
-          'Le produit est encore en développement actif.',
+          'Le produit est en développement actif.',
           'La sortie de l’alpha sur TestFlight ouvre une série de tests à venir, visant à améliorer le produit et à valider l’ambition de cette étude de cas : construire une meilleure façon de regarder du contenu ensemble.',
         ],
       },
@@ -1848,13 +1846,11 @@ function DesignSystemShowcase({ labels }) {
           aligns top-and-bottom with the Type card. Tight 24px gap on desktop;
           normal section rhythm on mobile. */}
       <div className="flex flex-col gap-10 sm:gap-12 lg:gap-6">
-        {/* Palette — colour swatches; each token name reveals on hover / tap. */}
         <DsPalette label={labels.palette} />
 
-        {/* Surfaces — tonal ramp (base → section → sheet) */}
         <div>
           <DsLabel>{labels.surfaces}</DsLabel>
-          <div data-squircle className="max-w-md mx-auto lg:max-w-none lg:mx-0 rounded-radius-6 overflow-hidden ring-1 ring-white/10">
+          <div data-squircle className="max-w-md mx-auto lg:max-w-none lg:mx-0 rounded-radius-6 overflow-hidden border border-white/24">
             {DS_SURFACES_RAMP.map((s, i) => (
               <div key={i} className="h-16 sm:h-[72px] flex items-center px-7 text-copy-m text-white" style={{ backgroundColor: s.c }}>
                 {s.n}
@@ -1900,7 +1896,6 @@ function DesignSystemShowcase({ labels }) {
         </div>
       </div>
 
-      {/* Row 2 · right — Icon sizes: `square.dashed` glyph at S16 → 2XL64 */}
       <div>
         <DsLabel>{labels.iconSizes}</DsLabel>
         <div className="flex justify-center lg:justify-between items-end gap-5 sm:gap-7">
@@ -2083,7 +2078,6 @@ function SecondaryNav({ sections, activeId, activeSubId, onNavigate, visible, la
   }
 
   return (
-    // Secondary nav backdrop blur
     <nav aria-label="Page sections" className={`relative p-2 backdrop-blur-3 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring transition-opacity duration-180 ${visible ? 'opacity-100' : 'opacity-0'}`}>
       <ol className="grid gap-1" style={{ gridTemplateColumns: 'max-content' }}>
         {sections.map((s) => {
@@ -2095,14 +2089,14 @@ function SecondaryNav({ sections, activeId, activeSubId, onNavigate, visible, la
                   one group, so the sub-items read as nested rather than as more
                   top-level links. (Sub-items render for every section here, but
                   only the active section's group gets the background.) */}
-              <div className={isActive && s.subsections?.length > 0 ? 'bg-nav-active-bg rounded-radius-4' : ''}>
+              <div className={`border ${isActive && s.subsections?.length > 0 ? 'bg-bg-page border-black/[0.08] dark:border-white/[0.10] rounded-radius-4' : 'border-transparent'}`}>
               <button
                 onClick={() => onNavigate(s.id)}
                 aria-current={isActive ? 'location' : undefined}
-                className={`relative text-tooltip leading-snug py-2 px-3 rounded-full text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                className={`relative text-tooltip leading-snug py-2 px-3 rounded-full text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus border ${
                   isActive
-                    ? `text-fg-primary font-semibold${s.subsections?.length > 0 ? '' : ' bg-nav-active-bg'}`
-                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
+                    ? `text-fg-primary font-semibold${s.subsections?.length > 0 ? ' border-transparent' : ' bg-bg-page border-black/[0.08] dark:border-white/[0.10]'}`
+                    : 'text-fg-muted font-normal border-transparent hover:text-fg-primary hover:bg-nav-active-bg'
                 }`}
               >
                 <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.title}</span>
@@ -2443,7 +2437,7 @@ function AppCard({ app, lang }) {
   return (
     <li
       data-squircle
-      className="shrink-0 w-[calc(100vw-3rem)] sm:w-[420px] lg:w-[480px] snap-center rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-surface p-6 sm:p-10 lg:p-12"
+      className="shrink-0 w-[calc(100vw-3rem)] sm:w-[420px] lg:w-[480px] snap-center rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-page p-6 sm:p-10 lg:p-12"
     >
       <div className="flex items-start gap-4 mb-6">
         <img
@@ -2506,7 +2500,7 @@ function ReviewCard({ review }) {
   return (
     <li
       data-squircle
-      className="shrink-0 w-[calc(100vw-3rem)] sm:w-[340px] lg:w-[360px] snap-center rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-surface p-6 sm:p-7"
+      className="shrink-0 w-[calc(100vw-3rem)] sm:w-[340px] lg:w-[360px] snap-center rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-page p-6 sm:p-7"
     >
       <div className="flex items-start justify-between gap-4 mb-3">
         <div className="min-w-0">
@@ -2752,13 +2746,12 @@ function FeatureGlyph({ name, className = '' }) {
 // tablet/desktop grid and the mobile carousel so the markup stays in one place.
 function FeatureCard({ f, className = '' }) {
   return (
-    <div data-squircle className={`rounded-radius-6 sm:rounded-radius-8 bg-bg-surface p-6 sm:p-7 ${className}`}>
-      {/* Same icon + title treatment as the Information-architecture cards. */}
-      <div className="flex items-center gap-3 mb-3">
+    <div data-squircle className={`rounded-radius-6 sm:rounded-radius-8 bg-bg-page p-6 sm:p-7 ${className}`}>
+      <div className="flex items-center gap-2 mb-3">
         <FeatureGlyph name={f.icon} className="w-10 h-10 text-fg-primary shrink-0" />
         <h4 className="text-h4 font-semibold text-fg-primary">{f.title}</h4>
       </div>
-      <p className={tileBodyText}>{f.body}</p>
+      <p className="text-copy-s leading-relaxed text-fg-secondary">{f.body}</p>
     </div>
   );
 }
@@ -2769,7 +2762,7 @@ function IaCard({ root, className = '' }) {
   return (
     <div
       data-squircle
-      className={`rounded-radius-6 bg-bg-surface border border-black/[0.06] dark:border-white/[0.08] p-5 ${className}`}
+      className={`rounded-radius-6 bg-bg-page border border-black/[0.08] dark:border-white/[0.10] p-5 ${className}`}
     >
       {/* Tab header — the tab's SF-Symbol glyph with its name to the right
           (same 40px icon as the Core-features cards). */}
@@ -3022,7 +3015,7 @@ function Hero({ lang }) {
             their own gradient overlays that provide contrast). */}
         <h1
           id="hero-heading"
-          className="text-display-1 font-bold leading-tight text-white max-w-3xl transition-opacity duration-700"
+          className="text-display-2 font-semibold leading-tight text-white max-w-3xl transition-opacity duration-700"
           style={{ textShadow: '0 2px 24px rgba(0, 0, 0, 0.7)', opacity: heroReady ? 1 : 0 }}
         >
           {t.title}
@@ -3033,7 +3026,7 @@ function Hero({ lang }) {
             const finalValue = s.decimals > 0 ? s.countTo.toFixed(s.decimals) : s.countTo;
             return (
               <li key={i} className="flex flex-col gap-1">
-                <span className="text-display-2 font-semibold leading-tight text-white tabular-nums whitespace-nowrap">
+                <span className="text-h3 font-semibold leading-snug text-white tabular-nums whitespace-nowrap">
                   {/* Screen readers get the final value directly; the
                       visible AnimatedStat is hidden from AT to avoid
                       reading every interim tick. */}
@@ -3080,7 +3073,7 @@ function SignInFlow({ copy }) {
           <li
             key={i}
             data-squircle
-            className="shrink-0 w-[calc(100vw-3rem)] sm:w-[360px] lg:w-[600px] snap-center list-none rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-surface p-6 sm:p-7 lg:p-8"
+            className="shrink-0 w-[calc(100vw-3rem)] sm:w-[360px] lg:w-[600px] snap-center list-none rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-page border border-black/[0.08] dark:border-white/[0.10] p-6 sm:p-7 lg:p-8"
           >
             {/* Stacked (phone above caption) on mobile/tablet; side-by-side on
                 desktop, where the slide is wide enough to set the two apart.
@@ -3093,7 +3086,7 @@ function SignInFlow({ copy }) {
                 className="block w-[200px] h-auto mx-auto lg:mx-0 shrink-0"
               />
               <div className="lg:flex-1">
-                <p className="text-copy-l font-semibold text-fg-primary mb-2">{b.title}</p>
+                <p className="text-copy-m font-semibold text-fg-primary mb-2">{b.title}</p>
                 <p className="text-copy-m text-fg-secondary">{b.body}</p>
               </div>
             </div>
@@ -3186,9 +3179,8 @@ function UxFlowsCarousel({ copy }) {
             <li
               key={i}
               data-squircle
-              className="shrink-0 w-[calc(100vw-3rem)] sm:w-[428px] lg:w-[460px] snap-center list-none rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-surface p-6 sm:py-7 sm:px-8 lg:px-12"
+              className="shrink-0 w-[calc(100vw-3rem)] sm:w-[428px] lg:w-[460px] snap-center list-none rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-page border border-black/[0.08] dark:border-white/[0.10] p-6 sm:py-7 sm:px-8 lg:px-12"
             >
-              {/* Same icon + title treatment as the Information-architecture cards. */}
               <div className="flex items-center gap-3 mb-5 sm:mb-6">
                 <FeatureGlyph name={s.id} className="w-10 h-10 text-fg-primary shrink-0" />
                 <p className="text-h4 font-semibold text-fg-primary text-left">{s.label}</p>
@@ -3255,18 +3247,14 @@ function IosBuildCarousel({ copy, isDark, lang }) {
         copy={copy.carousel}
         renderItem={(s, i) => {
           const isContent = s.label || s.text || s.bullets || s.diagram || s.aha;
-          // The aha slide's title lives on `aha.label`; treat it like any other
-          // slide title so it sits in the same top slot.
           const title = s.label || s.aha?.label;
           const stepNum = String(i + 1).padStart(2, '0');
-          // Text/bullet bodies stay centred but get extra bottom padding so they
-          // sit a touch above centre; the diagram slide fills the card as-is.
           const hasDiagram = s.diagram === 'behaviourPaths';
           return (
             <li
               key={i}
               data-squircle
-              className={`shrink-0 w-[80vw] sm:w-[360px] snap-center list-none rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-surface px-6 sm:px-7 pb-4 sm:pb-7 ${hasDiagram ? 'pt-3 sm:pt-4' : 'pt-4 sm:pt-7'}`}
+              className={`shrink-0 w-[80vw] sm:w-[360px] snap-center list-none rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-bg-page border border-black/[0.08] dark:border-white/[0.10] px-6 sm:px-7 pb-4 sm:pb-7 ${hasDiagram ? 'pt-3 sm:pt-4' : 'pt-4 sm:pt-7'}`}
             >
               {isContent ? (
                 <div className="flex flex-col h-full">
@@ -3276,7 +3264,7 @@ function IosBuildCarousel({ copy, isDark, lang }) {
                   <p className="text-overline-s font-mono uppercase tracking-widest text-fg-muted mb-2">{stepNum}</p>
                   {title && <p className="text-h4 font-semibold text-fg-primary mb-3">{title}</p>}
                   <div className={`flex-1 flex flex-col justify-center ${hasDiagram ? '' : 'pb-3 sm:pb-10'}`}>
-                    {s.text && <p className="text-copy-l font-medium leading-snug text-fg-primary">{s.text}</p>}
+                    {s.text && <p className="text-copy-m font-medium leading-snug text-fg-primary">{s.text}</p>}
                     {s.diagram === 'behaviourPaths' && (
                       <div className="-mt-3 w-full max-w-[300px] mx-auto"><BehaviourPathsDiagram isDark={isDark} lang={lang} /></div>
                     )}
@@ -3307,10 +3295,6 @@ function IosBuildCarousel({ copy, isDark, lang }) {
     </div>
   );
 }
-
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
 
 function Canap({ lang = 'en', isDark }) {
   const t = T[lang];
@@ -3461,12 +3445,11 @@ function Canap({ lang = 'en', isDark }) {
       <Hero lang={lang} />
 
       <main id="main-content">
-        {/* ---------- CONTEXT --------------------------------------- */}
         <Section
           id="context"
           title={t.context.header}
           lang={lang}
-          bgClass="bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]"
+          bgClass="bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]"
           titleInset
         >
           {/* Three tiles, stacked. Structured as a narrative:
@@ -3476,8 +3459,7 @@ function Canap({ lang = 'en', isDark }) {
               these into half-width tiles would break the reading
               order. */}
           <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-            {/* Origin */}
-            <Tile fullWidth>
+            <Tile fullWidth bgClass="bg-bg-page">
               <TileEyebrow id="ctx-origin">{t.context.eyebrows[0]}</TileEyebrow>
               <TileBody>{t.context.client}</TileBody>
             </Tile>
@@ -3529,7 +3511,6 @@ function Canap({ lang = 'en', isDark }) {
           </div>
         </Section>
 
-        {/* ---------- RESEARCH -------------------------------------- */}
         {/* Raw `<section>` (matching Principles) so the Existing-solutions
             carousel can break out to full viewport while headings + copy
             stay inside the narrow content column. Research is a parent
@@ -3540,7 +3521,7 @@ function Canap({ lang = 'en', isDark }) {
         <section
           id="research"
           aria-labelledby="research-heading"
-          className={researchC.collapsible && !researchC.sectionOpen ? 'bg-bg-page' : 'bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]'}
+          className={researchC.collapsible && !researchC.sectionOpen ? 'bg-bg-page' : 'bg-bg-surface'}
         >
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pt-8 sm:pt-10 lg:pt-12 pb-2 sm:pb-3 md:max-w-2xl lg:max-w-[52rem]">
             <SectionHeading c={researchC} id="research" title={t.research.header} lang={lang} titleInset />
@@ -3642,8 +3623,6 @@ function Canap({ lang = 'en', isDark }) {
           </CollapseBody>
         </section>
 
-        {/* ---------- IDEATE ---------------------------------------- */}
-        {/* ---------- IDEATE ---------------------------------------- */}
         {/* Raw `<section>` (like Research) so the Design-principles carousel
             can break to full viewport while headings + copy stay in the
             narrow column. Sub-sections: Product principles (the guardrails)
@@ -3652,7 +3631,7 @@ function Canap({ lang = 'en', isDark }) {
         <section
           id="ideate"
           aria-labelledby="ideate-heading"
-          className="bg-bg-page"
+          className={ideateC.collapsible && !ideateC.sectionOpen ? 'bg-bg-page' : 'bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]'}
         >
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pt-8 sm:pt-10 lg:pt-12 pb-2 sm:pb-3 md:max-w-2xl lg:max-w-[52rem]">
             <SectionHeading c={ideateC} id="ideate" title={t.ideate.header} lang={lang} titleInset />
@@ -3686,7 +3665,6 @@ function Canap({ lang = 'en', isDark }) {
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem] mt-16 sm:mt-20 lg:mt-24">
             <h3 id="core-features" className={`text-h3 font-semibold text-fg-primary mb-8 sm:mb-10 lg:mb-11 scroll-mt-28 ${introInset}`}>{t.coreFeatures.header}</h3>
 
-            {/* Tablet / desktop (sm+): a 3-column grid. */}
             <div className="hidden sm:grid sm:grid-cols-3 gap-5 lg:gap-6">
               {t.coreFeatures.items.map((f, i) => (
                 <FeatureCard key={i} f={f} />
@@ -3715,7 +3693,7 @@ function Canap({ lang = 'en', isDark }) {
           {/*
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem] mt-16 sm:mt-20 lg:mt-24 mb-10">
             <h3 id="principles" className={`text-h3 font-semibold text-fg-primary mb-8 sm:mb-10 lg:mb-11 scroll-mt-28 ${introInset}`}>{t.principles.header}</h3>
-            <p className={`text-copy-l text-fg-secondary max-w-3xl ${introInset}`}>{t.principles.intro}</p>
+            <p className={`text-copy-m leading-loose text-fg-secondary max-w-3xl ${introInset}`}>{t.principles.intro}</p>
           </div>
 
           <PrinciplesCarousel items={t.principles.items} copy={t.principles} />
@@ -3725,7 +3703,6 @@ function Canap({ lang = 'en', isDark }) {
           </CollapseBody>
         </section>
 
-        {/* ---------- DESIGN ---------------------------------------- */}
         {/* One block per design decision, each backed by its real iOS screen
             in a PhoneFrame (scrollable in place) and tagged with the HIG
             principle it proves. Phone alternates left/right for rhythm. The
@@ -3757,7 +3734,6 @@ function Canap({ lang = 'en', isDark }) {
             </div>
           </div>
 
-          {/* ---------- DESIGN SYSTEM (sub-section of Design) --------- */}
           {/* Foundations rendered live from the real iOS token values (see the
               DS_* specimen components) — not screenshots. Geist-style editorial
               layout: a category strip, then each foundation as a header + mono
@@ -3772,7 +3748,7 @@ function Canap({ lang = 'en', isDark }) {
             className="scroll-mt-28 mt-16 sm:mt-20 lg:mt-24 rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-black p-6 sm:p-12 lg:p-[60px]"
           >
             <h3 className="text-h3 font-semibold text-white mb-8 sm:mb-10 lg:mb-11 scroll-mt-28">{t.designSystem.header}</h3>
-            <div className="text-copy-l text-white/70 max-w-3xl mb-10 sm:mb-12 space-y-6">{t.designSystem.intro}</div>
+            <div className="text-copy-m leading-loose text-white/70 max-w-3xl mb-10 sm:mb-12 space-y-6">{t.designSystem.intro}</div>
             <DesignSystemShowcase labels={t.designSystem.dsLabels} />
             {/* Closing aside about the specimens — fine-print and dimmer, at the
                 end of the section (no longer a hanging-asterisk footnote). */}
@@ -3815,7 +3791,7 @@ function Canap({ lang = 'en', isDark }) {
               carousel. */}
           <div id="user-journey" className="scroll-mt-28 mt-16 sm:mt-20 lg:mt-24">
             <h3 className={`text-h3 font-semibold text-fg-primary mb-3 scroll-mt-28 ${introInset}`}>{t.design.journey.header}</h3>
-            <p className={`text-copy-l text-fg-secondary mb-6 sm:mb-8 max-w-3xl ${introInset}`}>{t.design.journey.intro}</p>
+            <p className={`text-copy-m leading-loose text-fg-secondary mb-6 sm:mb-8 max-w-3xl ${introInset}`}>{t.design.journey.intro}</p>
             {/* No reading-column left inset here (unlike the header/intro): the
                 Section already centres its content, so the diagram sits centred
                 within the symmetric padding. On desktop (lg) it grows slightly
@@ -3846,7 +3822,7 @@ function Canap({ lang = 'en', isDark }) {
               designer's own rationale per beat. */}
           <div id="onboarding-flow" className="scroll-mt-28 mt-16 sm:mt-20 lg:mt-24">
             <h3 className={`text-h3 font-semibold text-fg-primary mb-3 scroll-mt-28 ${introInset}`}>{t.design.signIn.header}</h3>
-            <p className={`text-copy-l text-fg-secondary mb-8 sm:mb-10 max-w-3xl ${introInset}`}>{t.design.signIn.intro}</p>
+            <p className={`text-copy-m leading-loose text-fg-secondary mb-8 sm:mb-10 max-w-3xl ${introInset}`}>{t.design.signIn.intro}</p>
 
             {/* Flow map — an overview of the onboarding before the detailed
                 beats. Centred within the section (no left inset), growing
@@ -3857,12 +3833,10 @@ function Canap({ lang = 'en', isDark }) {
               <SignInFlowGraph isDark={isDark} lang={lang} />
             </div>
 
-            {/* Full-bleed carousel of the five beats at every breakpoint. */}
             <SignInFlow copy={t.design.signIn} />
           </div>
         </Section>
 
-        {/* ---------- PROCESS (Built with AI) ----------------------- */}
         {/* The differentiator: a designer directing an AI collaborator to a
             shipped, coherent result. Five numbered sections, each a tile with
             paragraphs, lead-in bullet lists, labelled sub-groups and the odd
@@ -3873,7 +3847,7 @@ function Canap({ lang = 'en', isDark }) {
               instead of the cramped single-line-height of whitespace-pre-line. */}
           <div className={`mb-10 sm:mb-12 max-w-3xl ${introInset}`}>
             {t.process.intro.split('\n').map((para, i) => (
-              <p key={i} className={`text-copy-l text-fg-secondary ${i > 0 ? 'mt-4' : ''}`}>{para}</p>
+              <p key={i} className={`text-copy-m leading-loose text-fg-secondary ${i > 0 ? 'mt-4' : ''}`}>{para}</p>
             ))}
           </div>
           {/* Each beat as an alternating media + text row: a screenshot /
@@ -3888,7 +3862,7 @@ function Canap({ lang = 'en', isDark }) {
                 <h3 id={s.id} className={`text-h3 font-semibold text-fg-primary mb-3 scroll-mt-28 ${introInset}`}>{s.title}</h3>
                 <div className={`max-w-3xl ${s.carousel ? 'mb-10 sm:mb-14' : 'mb-6 sm:mb-8'} ${introInset}`}>
                   {s.caption.split('\n').map((para, j) => (
-                    <p key={j} className={`text-copy-l text-fg-secondary ${j > 0 ? 'mt-4' : ''}`}>{para}</p>
+                    <p key={j} className={`text-copy-m leading-loose text-fg-secondary ${j > 0 ? 'mt-4' : ''}`}>{para}</p>
                   ))}
                 </div>
                 {s.carousel === 'uxFlows' ? (
@@ -3913,7 +3887,6 @@ function Canap({ lang = 'en', isDark }) {
           </div>
         </Section>
 
-        {/* ---------- IMPACT ---------------------------------------- */}
         <Section
           id="impact"
           title={t.impact.header}
@@ -3930,7 +3903,7 @@ function Canap({ lang = 'en', isDark }) {
                 ))}
               </div>
             </Tile>
-            <Tile>
+            <Tile bgClass="bg-bg-page" className="border border-black/[0.08] dark:border-white/[0.10]">
               <TileEyebrow id="imp-next-steps">{t.impact.nextSteps.eyebrow}</TileEyebrow>
               <div className="space-y-4">
                 {t.impact.nextSteps.body.map((p, i) => (
@@ -3941,7 +3914,6 @@ function Canap({ lang = 'en', isDark }) {
           </div>
         </Section>
 
-        {/* ---------- TOOLS ----------------------------------------- */}
         {/* Centered Tools row matching SalesPlatform + XR. The
             ToolsGrid card supplies its own border / radius / padding;
             this wrapper just gives it the page-level horizontal
@@ -3950,7 +3922,6 @@ function Canap({ lang = 'en', isDark }) {
           <ToolsGrid lang={lang} />
         </div>
 
-        {/* ---------- OUTRO ----------------------------------------- */}
         <div className="py-16 sm:py-20">
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10">
             <Link

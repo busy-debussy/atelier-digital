@@ -11,8 +11,6 @@ import imgFlagGB       from '../assets/icons/icon-flag-gb.svg';
 import imgFlagFR       from '../assets/icons/icon-flag-fr.svg';
 import imgLockIcon     from '../assets/icons/icon-lock-sm.svg';
 import imgArrowRight   from '../assets/icons/icon-arrow-right-accent.svg';
-import imgHamburger    from '../assets/icons/icon-hamburger.svg';
-import imgClose        from '../assets/icons/icon-close.svg';
 import imgLinkedIn     from '../assets/icons/icon-linkedin.svg';
 import { trackEvent }  from '../analytics';
 import imgPortrait     from '../assets/photos/portrait.webp';
@@ -28,12 +26,13 @@ import { POSTER_PATHS, POSTER_BASE } from '../data/canapPosters';
 const T = {
   en: {
     projects:          'case studies',
-    'digital twin':    'digital twins',
+    'digital twin':    'digital twin',
     'sales platform':  'web app',
     'extended reality':'extended reality',
     'iphone app':      'iPhone app',
     holograms:         'holograms',
     résumé:            'résumé',
+    'résumé nav':      'résumé',
     "let's talk":      "let's talk",
     home:              'home',
     'dark mode':       'dark mode',
@@ -45,12 +44,15 @@ const T = {
   },
   fr: {
     projects:          'études de cas',
-    'digital twin':    'digital twins',
+    'digital twin':    'digital twin',
     'sales platform':  'application web',
     'extended reality':'réalité étendue',
     'iphone app':      'app iPhone',
     holograms:         'hologrammes',
     résumé:            'CV interactif',
+    // Desktop/tablet main menu shows the short "CV" so the FR nav width matches
+    // the EN nav (the long "CV interactif" stays on mobile + the tooltip).
+    'résumé nav':      'CV',
     "let's talk":      'coordonnées',
     home:              'accueil',
     'dark mode':       'mode sombre',
@@ -77,7 +79,6 @@ function Flag({ code }) {
   );
 }
 
-// Chevron helper
 function Chevron({ isOpen, isDark }) {
   const useWhite = isDark !== isOpen;
   return (
@@ -92,7 +93,6 @@ function Chevron({ isOpen, isDark }) {
   );
 }
 
-// Portal position hook, calculates fixed coords from an anchor element
 function usePortalPosition(anchorRef, { offsetTop = 11, align = 'left', offsetX = 0 } = {}) {
   const [style, setStyle] = useState({ visibility: 'hidden', position: 'fixed' });
   useLayoutEffect(() => {
@@ -120,7 +120,6 @@ function usePortalPosition(anchorRef, { offsetTop = 11, align = 'left', offsetX 
   return style;
 }
 
-// Tooltip
 function Tooltip({ label, isDark, offset = 8, shortcut }) {
   const bg  = isDark ? '#f6f6f6' : '#1f1f1f';
   const txt = isDark ? '#1f1f1f' : '#f6f6f6';
@@ -128,7 +127,7 @@ function Tooltip({ label, isDark, offset = 8, shortcut }) {
     <div style={{ top: `calc(100% + ${offset}px)` }} className="absolute left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center">
 <div style={{ background: bg, color: txt }} className={`relative z-0 text-tooltip font-light leading-[1.2] pl-2 ${shortcut ? 'pr-[4px]' : 'pr-2'} py-[4px] rounded-radius-2 whitespace-nowrap ring-1 ring-tooltip-ring flex items-center gap-2`}>
         {label}
-        {shortcut && <kbd className="text-tooltip-kbd font-medium w-[18px] h-[18px] flex items-center justify-center rounded-[6px] bg-tooltip-keyboard-shortcut-bg text-tooltip-keyboard-shortcut-fg not-italic">{shortcut}</kbd>}
+        {shortcut && <kbd className="text-tooltip-kbd font-medium w-[18px] h-[18px] flex items-center justify-center rounded-[6px] border border-tooltip-keyboard-shortcut-border text-tooltip-keyboard-shortcut-fg not-italic">{shortcut}</kbd>}
       </div>
     </div>
   );
@@ -149,7 +148,24 @@ function useDelayedTooltip(delay = 600) {
   return [visible, show, hide];
 }
 
-// DarkModeToggle
+const Knob = ({ pressed }) => (
+  <div className="relative shrink-0 flex items-center justify-center" style={{ width: 26, height: 26 }}>
+    <div
+      aria-hidden="true"
+      className="absolute inset-0 rounded-full"
+      style={{
+        background: 'rgba(128,128,128,0.33)',
+        transform: pressed ? 'scale(1.7)' : 'scale(1)',
+        transition: pressed ? 'transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)' : 'transform 300ms ease-out',
+      }}
+    />
+    <div
+      className="absolute inset-0 rounded-full bg-white"
+      style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.30),0 0 0 0.5px rgba(0,0,0,0.08)' }}
+    />
+  </div>
+);
+
 function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
   const buttonRef = useRef(null);
   const [hovered, setHovered]           = useState(false);
@@ -177,31 +193,14 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
       ? { backgroundImage: 'linear-gradient(rgba(0,0,0,0.32),rgba(0,0,0,0.32)),linear-gradient(rgba(0,0,0,0.16),rgba(0,0,0,0.16))' }
       : { backgroundImage: 'linear-gradient(rgba(0,0,0,0.32),rgba(0,0,0,0.32)),linear-gradient(rgba(255,255,255,0.32),rgba(255,255,255,0.32))' };
 
-  const Knob = () => (
-    <div className="relative shrink-0 flex items-center justify-center" style={{ width: 26, height: 26 }}>
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 rounded-full"
-        style={{
-          background: 'rgba(128,128,128,0.33)',
-          transform: pressed ? 'scale(1.7)' : 'scale(1)',
-          transition: pressed ? 'transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)' : 'transform 300ms ease-out',
-        }}
-      />
-      <div
-        className="absolute inset-0 rounded-full bg-white"
-        style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.30),0 0 0 0.5px rgba(0,0,0,0.08)' }}
-      />
-    </div>
-  );
-
   return (
     <div className="relative">
       <button
         ref={buttonRef}
         onPointerDown={() => setPressed(true)}
-        onPointerUp={() => { setPressed(false); handleClick(); }}
+        onPointerUp={() => setPressed(false)}
         onPointerLeave={() => { setPressed(false); hideTip(); }}
+        onClick={handleClick}
         onMouseEnter={() => { setHovered(true);  if (!noTooltip && !suppressRef.current) tryShowTip(); }}
         onMouseLeave={() => { setHovered(false); hideTip(); }}
         onBlur={() => { setHovered(false); hideTip(); }}
@@ -212,11 +211,11 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
         {isDark ? (
           <>
             <img src={imgMoonIcon} alt="" width={16} height={16} className="shrink-0" />
-            <Knob />
+            <Knob pressed={pressed} />
           </>
         ) : (
           <>
-            <Knob />
+            <Knob pressed={pressed} />
             <img src={imgSunIcon} alt="" width={16} height={16} className="shrink-0" />
           </>
         )}
@@ -226,7 +225,21 @@ function DarkModeToggle({ isDark, onToggle, lang = 'en', noTooltip = false }) {
   );
 }
 
-// ProjectsButton
+// StableLabel — keeps a menu slot the same width in EN and FR by reserving the
+// wider language's label as real (invisible) text stacked under the visible one.
+// Because the reservation is text in rem/em, it scales with the user's font size
+// and zoom — unlike a fixed min-width it can never clip when text is enlarged
+// (keeps WCAG 1.4.4 Resize Text / 1.4.10 Reflow intact). The visible label is
+// the only one exposed to assistive tech; the sizer copy is aria-hidden.
+function StableLabel({ en, fr, lang }) {
+  return (
+    <span className="inline-grid justify-items-center">
+      <span aria-hidden={lang !== 'en'} className={`[grid-area:1/1] whitespace-nowrap ${lang !== 'en' ? 'invisible' : ''}`}>{en}</span>
+      <span aria-hidden={lang !== 'fr'} className={`[grid-area:1/1] whitespace-nowrap ${lang !== 'fr' ? 'invisible' : ''}`}>{fr}</span>
+    </span>
+  );
+}
+
 function ProjectsButton({ isOpen, onClick, isDark, lang }) {
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
   return (
@@ -240,12 +253,12 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
         aria-expanded={isOpen}
         aria-controls={isOpen ? 'projects-menu' : undefined}
         aria-label={isOpen ? `Close ${T[lang].projects} menu` : `Open ${T[lang].projects} menu`}
-        className={`flex items-center justify-center gap-2 h-8 px-4 rounded-radius-3 cursor-pointer active:opacity-[0.33] transition-colors ${
+        className={`flex items-center justify-center gap-2 h-8 px-3 rounded-radius-3 cursor-pointer active:opacity-[0.33] transition-colors ${
           isOpen ? 'bg-nav-active-bg-solid' : 'hover:bg-nav-hover-bg'
         }`}
       >
         <span className={`font-medium text-base leading-6 whitespace-nowrap ${isOpen ? 'text-fg-primary-inverse' : 'text-fg-primary'}`}>
-          {T[lang].projects}
+          <StableLabel en={T.en.projects} fr={T.fr.projects} lang={lang} />
         </span>
         <Chevron isOpen={isOpen} isDark={isDark} />
       </button>
@@ -262,10 +275,10 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
 function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
   const portalStyle = usePortalPosition(anchorRef, { offsetTop: 11, align: 'viewport' });
   const items = [
-    { key: 'sales platform',   to: '/case-study/sales-platform', img: imgCardSales },
-    { key: 'extended reality', to: '/case-study/xr',             img: imgCardXR,    tone: 'shipped' },
-    { key: 'digital twin',     to: null,                         img: imgCardTwin,  tone: 'shipped' },
-    { key: 'iphone app',       to: '/case-study/canap',          customBg: 'canap-poster-grid' },
+    { key: 'sales platform',   to: '/case-study/web-app', img: imgCardSales },
+    { key: 'extended reality', to: '/case-study/extended-reality',             img: imgCardXR,    tone: 'shipped' },
+    { key: 'digital twin',     to: '/case-study/digital-twin',   img: imgCardTwin,  tone: 'shipped', protected: true },
+    { key: 'iphone app',       to: '/case-study/iphone-app',          customBg: 'canap-poster-grid' },
   ];
 
   useEffect(() => {
@@ -296,7 +309,7 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
           </span>
         </>
       )}
-      <span className="absolute inset-x-0 bottom-0 p-2 text-xs font-semibold leading-tight text-white">
+      <span className="absolute inset-x-0 bottom-0 p-2 flex items-center gap-1 text-xs font-semibold leading-tight text-white">
         {T[lang][labelKey]}
       </span>
     </>
@@ -309,10 +322,13 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
       aria-label={lang === 'fr' ? 'Études de cas' : 'Case studies'}
       ref={dropdownRef}
       style={portalStyle}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget) && !anchorRef?.current?.contains(e.relatedTarget)) onClose();
+      }}
       className="w-[608px] max-w-[calc(100vw-2rem)] backdrop-blur-3 bg-nav-bg ring-1 ring-nav-ring rounded-radius-5 shadow-s p-2"
     >
       <div role="none" className="grid grid-cols-4 gap-2">
-        {items.map(({ key, to, img, customBg }) => (
+        {items.map(({ key, to, img, customBg }, index) => (
           to ? (
             <Link
               key={key}
@@ -324,13 +340,26 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
               aria-label={T[lang][key]}
               tabIndex={0}
               onKeyDown={(e) => {
-                if (e.key === 'Escape') { e.preventDefault(); onClose(); anchorRef?.current?.querySelector('button')?.focus(); }
-                else if (e.key === 'Tab') { onClose(); }
+                if (e.key === 'Escape') {
+                  e.preventDefault(); onClose(); anchorRef?.current?.querySelector('button')?.focus();
+                } else if (e.key === 'Tab' && !e.shiftKey && index === items.length - 1) {
+                  // Last card — the panel is a portal appended at the end of
+                  // <body>, so a plain Tab would otherwise fall through to
+                  // whatever's last in raw DOM order instead of the nav item
+                  // that visually follows the trigger button.
+                  e.preventDefault();
+                  onClose();
+                  anchorRef?.current?.nextElementSibling?.querySelector('a, button, [tabindex]')?.focus();
+                } else if (e.key === 'Tab' && e.shiftKey && index === 0) {
+                  e.preventDefault();
+                  onClose();
+                  anchorRef?.current?.querySelector('button')?.focus();
+                }
               }}
-              className="group relative aspect-[4/5] rounded-radius-3 overflow-hidden select-none motion-safe:hover:scale-[1.03] motion-safe:transition-transform duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus"
+              className="group relative aspect-[4/5] rounded-radius-3 overflow-hidden select-none motion-safe:hover:scale-[1.03] motion-safe:focus-visible:scale-[1.03] motion-safe:transition-transform duration-200 focus-visible:outline-none"
             >
               {cardFace(img, key, false, customBg)}
-              <span aria-hidden="true" className="absolute inset-0 rounded-radius-3 ring-2 ring-inset ring-cta-500/0 group-hover:ring-cta-500 transition-[box-shadow] duration-150" />
+              <span aria-hidden="true" className="absolute inset-0 rounded-radius-3 ring-2 ring-inset ring-cta-500/0 group-hover:ring-cta-500 group-focus-visible:ring-cta-500 transition-[box-shadow] duration-150" />
             </Link>
           ) : (
             <div
@@ -351,7 +380,6 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
   );
 }
 
-// LanguageDropdown
 function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef }) {
   const portalStyle = usePortalPosition(anchorRef, { offsetTop: 11, align: 'center' });
   const other = lang === 'en' ? 'fr' : 'en';
@@ -395,7 +423,6 @@ function LanguageDropdown({ lang, toggleLang, onClose, dropdownRef, anchorRef })
   );
 }
 
-// LanguageButton
 function LanguageButton({ lang, toggleLang, isDark }) {
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
   const containerRef = useRef(null);
@@ -422,8 +449,7 @@ function LanguageButton({ lang, toggleLang, isDark }) {
   );
 }
 
-// NavLink, pressed state on active page
-function NavLink({ to, label, currentPage, tooltip, shortcut, isDark }) {
+function NavLink({ to, label, labelEn, labelFr, lang, currentPage, tooltip, shortcut, isDark }) {
   const [path, hash] = to.split('#');
   const isActive = currentPage === path && !hash;
   const [tooltipVisible, showTip, hideTip] = useDelayedTooltip(600);
@@ -464,7 +490,7 @@ function NavLink({ to, label, currentPage, tooltip, shortcut, isDark }) {
         }`}
       >
         <span className={`font-medium text-base leading-6 whitespace-nowrap ${isActive ? 'text-fg-primary-inverse' : 'text-fg-primary'}`}>
-          {label}
+          {labelEn && labelFr ? (lang === 'fr' ? labelFr : labelEn) : label}
         </span>
       </Link>
       {tooltipVisible && tooltip && <Tooltip label={tooltip} isDark={isDark} offset={10} shortcut={shortcut} />}
@@ -472,7 +498,6 @@ function NavLink({ to, label, currentPage, tooltip, shortcut, isDark }) {
   );
 }
 
-// ContactModal
 function ContactModal({ lang, onClose }) {
   const closeRef = useRef(null);
   const u = 'd', d = 'AtelierDigital.co.uk';
@@ -513,7 +538,6 @@ function ContactModal({ lang, onClose }) {
       {/* Centering wrapper — flex centering is more reliable than top/left/transform */}
       <div className="fixed inset-0 z-[601] flex items-center justify-center pointer-events-none px-4">
         <div role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" className="pointer-events-auto w-full max-w-[380px] relative">
-          {/* Close button */}
           <button
             ref={closeRef}
             onClick={onClose}
@@ -530,7 +554,6 @@ function ContactModal({ lang, onClose }) {
             className="bg-tooltip-bg rounded-radius-7 shadow-l px-6 pt-6 pb-6"
             style={{ animation: 'modal-card-in 0.35s cubic-bezier(0.22,1,0.36,1) both' }}
           >
-        {/* Header */}
         <div className="flex items-center gap-3 mb-5">
           <img
             src={imgPortrait}
@@ -666,7 +689,6 @@ function LetsTalkButton({ lang, isDark, onOpen }) {
   );
 }
 
-// DesktopTabletNav
 function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onContactOpen, navVisible = true }) {
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [langOpen,     setLangOpen]     = useState(false);
@@ -749,7 +771,7 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onCo
           )}
         </li>
 
-        <NavLink to="/resume"         label={T[lang].résumé}       currentPage={currentPage} tooltip={currentPage === '/resume' ? T[lang]['back to top'] : T[lang]['tip resume']} shortcut="R" isDark={isDark} />
+        <NavLink to="/resume"         labelEn={T.en['résumé nav']} labelFr={T.fr['résumé nav']} lang={lang} currentPage={currentPage} tooltip={currentPage === '/resume' ? T[lang]['back to top'] : T[lang]['tip resume']} shortcut="R" isDark={isDark} />
         <LetsTalkButton lang={lang} isDark={isDark} onOpen={onContactOpen} />
 
         <li className="relative flex items-center gap-2">
@@ -763,7 +785,6 @@ function DesktopTabletNav({ isDark, toggleDark, lang, toggleLang, isTablet, onCo
   );
 }
 
-// MobileNav
 function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
   const [menuOpen,     setMenuOpen]     = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(true);
@@ -785,10 +806,10 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
   ];
 
   const subItems = [
-    { key: 'sales platform',   to: '/case-study/sales-platform', locked: false },
-    { key: 'extended reality', to: '/case-study/xr',             locked: false },
-    { key: 'digital twin',     to: null,                         locked: true  },
-    { key: 'iphone app',       to: '/case-study/canap',          locked: false },
+    { key: 'sales platform',   to: '/case-study/web-app', locked: false },
+    { key: 'extended reality', to: '/case-study/extended-reality',             locked: false },
+    { key: 'digital twin',     to: '/case-study/digital-twin',   locked: false, protected: true },
+    { key: 'iphone app',       to: '/case-study/iphone-app',          locked: false },
   ];
 
   return (
@@ -803,13 +824,16 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
           </div>
         </a>
         <button onClick={() => { const opening = !menuOpen; setMenuOpen(opening); if (opening) setProjectsOpen(true); }} aria-label={menuOpen ? 'Close menu' : 'Open menu'} className="flex-1 flex items-center justify-end p-2 pr-3 rounded-r-[24px]">
-          <span data-spring className="flex items-center justify-center">
-            <img
-              src={menuOpen ? imgClose : imgHamburger}
-              alt=""
-              width={32}
-              height={32}
-              className="shrink-0 dark:invert"
+          <span data-spring className="relative flex items-center justify-center w-8 h-8 shrink-0">
+            <span
+              aria-hidden="true"
+              className="absolute w-[26.8px] h-[3.5px] rounded-full bg-fg-primary transition-transform duration-300 ease-in-out"
+              style={{ transform: menuOpen ? 'translateY(0) rotate(45deg)' : 'translateY(-6.25px) rotate(0deg)' }}
+            />
+            <span
+              aria-hidden="true"
+              className="absolute w-[26.8px] h-[3.5px] rounded-full bg-fg-primary transition-transform duration-300 ease-in-out"
+              style={{ transform: menuOpen ? 'translateY(0) rotate(-45deg)' : 'translateY(6.25px) rotate(0deg)' }}
             />
           </span>
         </button>
@@ -878,7 +902,7 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
                     </button>
                     {projectsOpen && (
                       <div className="pl-4 pt-2 flex flex-col gap-2">
-                        {subItems.map(({ key: sk, to: st, locked }) => (
+                        {subItems.map(({ key: sk, to: st, locked, protected: isProtected }) => (
                           locked ? (
                             <div key={sk} className="flex items-center gap-3 h-12 px-4 rounded-radius-4 opacity-[0.32] cursor-default">
                               <img src={imgLockIcon} alt="" width={20} height={20} className="shrink-0 dark:invert" />
@@ -933,7 +957,6 @@ function MobileNav({ isDark, toggleDark, lang, toggleLang, onContactOpen }) {
   );
 }
 
-// Nav (root)
 function Nav({ isDark, toggleDark, lang, toggleLang }) {
   const [visible, setVisible] = useState(true);
   const [contactOpen, setContactOpen] = useState(false);

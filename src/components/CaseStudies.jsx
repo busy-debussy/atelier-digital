@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import imgChevronLeft from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight from '../assets/icons/icon-chevron-right.svg';
+import imgChevronUp    from '../assets/icons/icon-chevron-up.svg';
 import imgLock         from '../assets/icons/icon-lock.svg';
 import imgArrowRight   from '../assets/icons/icon-arrow-right.svg';
 import imgLockLg       from '../assets/icons/icon-lock-lg.svg';
@@ -13,12 +14,68 @@ import imgBgSales      from '../assets/photos/photo-cgi-interactive-platform.web
 import imgBgXR         from '../assets/photos/photo-xr-experiences.webp';
 import imgBgTwin       from '../assets/photos/photo-digital-twins.webp';
 
-// Nav button styles
 const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-btn-nav-bg-rest enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:!bg-transparent disabled:opacity-20 disabled:cursor-default enabled:cursor-pointer';
 const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 transition-[filter]';
 const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 transition-[filter]';
 
-// Data
+// Collapsible-on-mobile support — opt-in via the `collapsible` prop so Home's
+// non-collapsible usage stays available; same accordion pattern as the case
+// studies / Resume / Collaborations / Contact.
+function useSectionCollapse() {
+  const [open, setOpen] = useState(true);
+  const [hidden, setHidden] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 920px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 920px)');
+    const onChange = () => setIsDesktop(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  const btnRef = useRef(null);
+  const contentRef = useRef(null);
+  const gridRef = useRef(null);
+  const handleToggle = () => {
+    if (open) {
+      if (contentRef.current?.contains(document.activeElement)) btnRef.current?.focus();
+      setOpen(false);
+      const el = gridRef.current;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setHidden(true);
+      } else {
+        const onEnd = (e) => {
+          if (e.propertyName !== 'grid-template-rows') return;
+          el?.removeEventListener('transitionend', onEnd);
+          setHidden(true);
+        };
+        el?.addEventListener('transitionend', onEnd);
+      }
+    } else {
+      setHidden(false);
+      requestAnimationFrame(() => setOpen(true));
+    }
+  };
+  const collapsible = !isDesktop;
+  return { collapsible, open, sectionOpen: collapsible ? open : true, hidden, handleToggle, btnRef, contentRef, gridRef };
+}
+
+function CollapseBody({ active, sc, id, className, children }) {
+  if (!active) return children;
+  const inner = className != null ? <div className={className}>{children}</div> : children;
+  return (
+    <div
+      ref={sc.gridRef}
+      id={`${id}-content`}
+      style={sc.hidden ? { display: 'none' } : undefined}
+      className={`grid [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${sc.sectionOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+      inert={!sc.sectionOpen}
+    >
+      <div ref={sc.contentRef} className="overflow-hidden min-h-0">
+        {inner}
+      </div>
+    </div>
+  );
+}
+
 const T = {
   en: {
     heading:       'Case studies',
@@ -38,7 +95,7 @@ const T = {
         secondaryChips: [{ label: 'React' }],
         tint:         'blue',
         cta:          'go',
-        href:         '/case-study/sales-platform',
+        href:         '/case-study/web-app',
       },
       {
         bg:           imgBgXR,
@@ -50,7 +107,7 @@ const T = {
         secondaryChips: [{ label: 'Unity' }, { label: 'Unreal' }],
         tint:         'blue',
         cta:          'go',
-        href:         '/case-study/xr',
+        href:         '/case-study/extended-reality',
       },
       {
         bg:           imgBgTwin,
@@ -60,10 +117,9 @@ const T = {
         team:         { label: '8', aria: 'Team of 8' },
         primaryChip:  { label: 'Digital twin', icon: imgIconTwin },
         secondaryChips: [{ label: 'Unreal Engine' }],
-        tint:         null,
-        cta:          'locked',
-        href:         null,
-        mailSubject:  'Digital twins — enquiry',
+        tint:         'blue',
+        cta:          'go',
+        href:         '/case-study/digital-twin',
       },
       {
         bg:           null,
@@ -76,7 +132,7 @@ const T = {
         secondaryChips: [{ label: 'SwiftUI' }, { label: 'NDA-free' }],
         tint:         'blue',
         cta:          'go',
-        href:         '/case-study/canap',
+        href:         '/case-study/iphone-app',
       },
     ],
   },
@@ -98,7 +154,7 @@ const T = {
         secondaryChips: [{ label: 'React' }],
         tint:         'blue',
         cta:          'go',
-        href:         '/case-study/sales-platform',
+        href:         '/case-study/web-app',
       },
       {
         bg:           imgBgXR,
@@ -110,7 +166,7 @@ const T = {
         secondaryChips: [{ label: 'Unity' }, { label: 'Unreal' }],
         tint:         'blue',
         cta:          'go',
-        href:         '/case-study/xr',
+        href:         '/case-study/extended-reality',
       },
       {
         bg:           imgBgTwin,
@@ -120,10 +176,9 @@ const T = {
         team:         { label: '8', aria: 'Équipe de 8' },
         primaryChip:  { label: 'Jumeau numérique', icon: imgIconTwin },
         secondaryChips: [{ label: 'Unreal Engine' }],
-        tint:         null,
-        cta:          'locked',
-        href:         null,
-        mailSubject:  "Jumeaux numériques — plus d'infos",
+        tint:         'blue',
+        cta:          'go',
+        href:         '/case-study/digital-twin',
       },
       {
         bg:           null,
@@ -136,13 +191,12 @@ const T = {
         secondaryChips: [{ label: 'SwiftUI' }, { label: 'Next.js' }, { label: 'sans NDA' }],
         tint:         'blue',
         cta:          'go',
-        href:         '/case-study/canap',
+        href:         '/case-study/iphone-app',
       },
     ],
   },
 };
 
-// Card
 function CsCard({ card, t }) {
   const [showRestricted, setShowRestricted] = useState(false);
 
@@ -212,7 +266,7 @@ function CsCard({ card, t }) {
           {/* Team-size chip — last in the row. People glyph + count; the solo
               project reads "Solo". */}
           {card.team && (
-            <div data-squircle aria-label={card.team.aria} className="flex items-center gap-1 px-2 py-1 rounded-radius-3 bg-chip-bg-secondary">
+            <div data-squircle role="img" aria-label={card.team.aria} className="flex items-center gap-1 px-2 py-1 rounded-radius-3 bg-chip-bg-secondary">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="w-3 h-3 shrink-0 text-fg-on-dark-opacity-64">
                 <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
               </svg>
@@ -304,9 +358,10 @@ function CsCard({ card, t }) {
   );
 }
 
-// Section
-function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
+function CaseStudies({ lang, lgAlignWidth, smAlignWidth, collapsible = false }) {
   const t = T[lang] ?? T.en;
+  const sc = useSectionCollapse();
+  const collapsibleActive = collapsible && sc.collapsible;
   const cards = t.cards;
 
   const trackRef             = useRef(null);
@@ -394,14 +449,37 @@ function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
   };
 
   return (
-    <section id="case-studies" aria-labelledby="cs-heading" className="py-16 scroll-mt-24" tabIndex={-1}>
+    <section id="case-studies" aria-labelledby="cs-heading" className={`${collapsibleActive ? '' : 'py-16'} scroll-mt-24`} tabIndex={-1}>
 
-      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem]">
-        <h2 id="cs-heading" className="text-h2 font-bold leading-tight text-fg-primary mb-8">
-          {t.heading}
-        </h2>
+      <div className={`max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem] ${collapsibleActive ? 'pt-8 sm:pt-10 lg:pt-12 pb-4 sm:pb-5' : ''}`}>
+        {collapsibleActive ? (
+          <button
+            ref={sc.btnRef}
+            onClick={sc.handleToggle}
+            aria-label={sc.open ? (lang === 'fr' ? `Réduire ${t.heading}` : `Collapse ${t.heading}`) : (lang === 'fr' ? `Développer ${t.heading}` : `Expand ${t.heading}`)}
+            aria-expanded={sc.open}
+            aria-controls="case-studies-content"
+            className="w-full text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <h2 id="cs-heading" className="text-h2 font-semibold leading-tight text-fg-primary py-6 sm:py-7 lg:py-8">{t.heading}</h2>
+              <div className="group shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-colors hover:bg-btn-nav-bg-hover">
+                <img
+                  src={imgChevronUp}
+                  alt=""
+                  className={`w-5 h-5 sm:w-6 sm:h-6 transition-[filter,transform] duration-300 forced-colors:brightness-[unset] forced-colors:invert-0 ${sc.open ? '' : 'rotate-180'} brightness-0 dark:invert group-hover:invert dark:group-hover:brightness-0 dark:group-hover:invert-0`}
+                />
+              </div>
+            </div>
+          </button>
+        ) : (
+          <h2 id="cs-heading" className={`text-h2 ${collapsible ? 'font-semibold' : 'font-bold'} leading-tight text-fg-primary mb-8`}>
+            {t.heading}
+          </h2>
+        )}
       </div>
 
+      <CollapseBody active={collapsibleActive} sc={sc} id="case-studies" className="pb-16 sm:pb-20 lg:pb-24">
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {t.cards[activeIndex].title}
       </div>
@@ -451,6 +529,7 @@ function CaseStudies({ lang, lgAlignWidth, smAlignWidth }) {
         </div>
       </div>
 
+      </CollapseBody>
     </section>
   );
 }

@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import confetti from 'canvas-confetti';
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { initSpringPress } from './utils/springPress';
 import { initSquircle } from './utils/squircle';
 import { GA_ID, loadGoogleAnalytics, loadClarity, trackPageView, trackEvent } from './analytics';
 import Nav from './components/Nav';
 import ScrollForMore from './components/ScrollForMore';
 import CookieBanner from './components/CookieBanner';
-import ChatBot from './components/ChatBot';
 import Home from './pages/Home';
 import SalesPlatform from './pages/SalesPlatform';
 import XRExperiences from './pages/XRExperiences';
 import Canap from './pages/Canap';
+import DigitalTwin from './pages/DigitalTwin';
 import Resume from './pages/Resume';
 import Cookies from './pages/Cookies';
 import Privacy from './pages/Privacy';
@@ -50,8 +50,6 @@ function AnimatedRoutes({ children, enterDirRef }) {
   );
 }
 
-const PROJECTS = ['/case-study/sales-platform', '/case-study/xr', '/case-study/canap'];
-
 function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -60,8 +58,15 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
   useEffect(() => {
     const handler = (e) => {
       enterDirRef.current = e.detail?.dir ?? null;
-      const idx = PROJECTS.indexOf(pathname);
-      const next = PROJECTS[(idx + 1) % PROJECTS.length];
+      // Cycle list — include the protected Digital Twin only once it's been
+      // unlocked (its gate token is stored), in its natural running order.
+      const list = ['/case-study/web-app', '/case-study/extended-reality'];
+      let unlocked = false;
+      try { unlocked = !!localStorage.getItem('gate:digital-twin'); } catch { /* ignore */ }
+      if (unlocked) list.push('/case-study/digital-twin');
+      list.push('/case-study/iphone-app');
+      const idx = list.indexOf(pathname);
+      const next = list[(idx + 1) % list.length];
       navigate(next);
       setTimeout(() => { enterDirRef.current = null; }, 450);
     };
@@ -87,12 +92,19 @@ function AppShell({ isDark, toggleDark, setIsDark, lang, toggleLang }) {
         {lang === 'fr' ? 'Aller au contenu principal' : 'Skip to main content'}
       </a>
       <Nav isDark={isDark} toggleDark={toggleDark} lang={lang} toggleLang={toggleLang} />
-      {(pathname === '/resume' || pathname === '/case-study/sales-platform' || pathname === '/case-study/xr' || pathname === '/case-study/canap') && <ScrollForMore lang={lang} scrollTarget={pathname === '/resume' ? 'summary-bio' : undefined} />}
+      {(pathname === '/resume' || pathname === '/case-study/web-app' || pathname === '/case-study/extended-reality' || pathname === '/case-study/iphone-app') && <ScrollForMore lang={lang} scrollTarget={pathname === '/resume' ? 'summary-bio' : undefined} />}
       <AnimatedRoutes enterDirRef={enterDirRef}><Routes>
         <Route path="/" element={<Home lang={lang} isDark={isDark} enableDark={() => setIsDark(true)} />} />
-        <Route path="/case-study/sales-platform" element={<SalesPlatform lang={lang} isDark={isDark} />} />
-        <Route path="/case-study/xr" element={<XRExperiences lang={lang} isDark={isDark} />} />
-        <Route path="/case-study/canap" element={<Canap lang={lang} isDark={isDark} />} />
+        <Route path="/case-study/web-app" element={<SalesPlatform lang={lang} isDark={isDark} />} />
+        {/* Old URL kept as a permanent redirect so shared/indexed links survive. */}
+        <Route path="/case-study/sales-platform" element={<Navigate to="/case-study/web-app" replace />} />
+        <Route path="/case-study/extended-reality" element={<XRExperiences lang={lang} isDark={isDark} />} />
+        {/* Old URL kept as a permanent redirect so shared/indexed links survive. */}
+        <Route path="/case-study/xr" element={<Navigate to="/case-study/extended-reality" replace />} />
+        <Route path="/case-study/iphone-app" element={<Canap lang={lang} isDark={isDark} />} />
+        {/* Old URL kept as a permanent redirect so shared/indexed links survive. */}
+        <Route path="/case-study/canap" element={<Navigate to="/case-study/iphone-app" replace />} />
+        <Route path="/case-study/digital-twin" element={<DigitalTwin lang={lang} isDark={isDark} />} />
 <Route path="/resume" element={<Resume lang={lang} />} />
         <Route path="/cookies" element={<Cookies lang={lang} />} />
         <Route path="/privacy" element={<Privacy lang={lang} />} />
@@ -176,7 +188,6 @@ function App() {
     return () => window.removeEventListener('keydown', handler);
   }, []);
 
-  const [chatOpen, setChatOpen] = useState(false);
   const [secondaryNavVisible, setSecondaryNavVisible] = useState(false);
   const [scrolledDown, setScrolledDown] = useState(false);
   const toggleDark = () => setIsDark(!isDark);
@@ -218,11 +229,8 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <PageViewTracker />
-      <div inert={chatOpen || undefined}>
-        <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
-        <CookieBanner lang={lang} hideFloating={secondaryNavVisible} />
-      </div>
-      <ChatBot lang={lang} />
+      <AppShell isDark={isDark} toggleDark={toggleDark} setIsDark={setIsDark} lang={lang} toggleLang={toggleLang} />
+      <CookieBanner lang={lang} hideFloating={secondaryNavVisible} />
     </BrowserRouter>
   );
 }

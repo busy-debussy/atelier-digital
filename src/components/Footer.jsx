@@ -1,5 +1,4 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import imgLockIcon   from '../assets/icons/icon-lock-sm.svg';
 import imgArrowRight from '../assets/icons/icon-arrow-right-accent.svg';
 
 function CopyrightTag({ year, tooltip }) {
@@ -70,15 +69,6 @@ const hover     = 'hover:text-fg-primary hover:bg-nav-hover-bg transition-colors
 const row       = 'inline-block text-copy-m leading-normal py-2 whitespace-nowrap';
 const focusRing = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus rounded';
 
-function Locked({ label }) {
-  return (
-    <div className={`inline-flex items-center gap-1 opacity-40 ${muted} ${row}`}>
-      <img src={imgLockIcon} alt="" width={16} height={16} className="shrink-0 dark:invert" />
-      <span>{label}</span>
-    </div>
-  );
-}
-
 function ObfuscatedEmail({ lang }) {
   const u = 'd', d = 'AtelierDigital.co.uk';
   const subject = lang === 'fr' ? 'Prise de contact' : 'Getting in touch';
@@ -94,7 +84,7 @@ function ObfuscatedEmail({ lang }) {
   );
 }
 
-function Footer({ lang }) {
+function Footer({ lang, tightTop = false }) {
   const t = T[lang];
   const year = new Date().getFullYear();
   const { pathname } = useLocation();
@@ -134,10 +124,10 @@ function Footer({ lang }) {
     <footer className="bg-bg-page">
 
       <nav aria-label="Site navigation and contact details">
-        <div className="max-w-5xl mx-auto px-6 py-16 lg:py-28 flex flex-col md:flex-row gap-12 md:gap-24 lg:gap-40">
+        <div className={`max-w-5xl mx-auto px-6 ${tightTop ? 'pt-[45px] sm:pt-[53px] pb-8 min-[920px]:py-16' : 'py-16'} lg:py-28 flex flex-col md:flex-row gap-12 md:gap-24 lg:gap-40`}>
 
           <div>
-            <h2 className={`text-h2 leading-tight font-bold mb-8 sm:mb-12 lg:mb-16 ${strong}`}>
+            <h2 className="text-h2 leading-tight font-semibold text-fg-primary mb-8 sm:mb-12 lg:mb-16">
               {t.sitemap}
             </h2>
             <ul className="flex flex-col sm:flex-row gap-6 sm:gap-10 lg:gap-16">
@@ -154,20 +144,25 @@ function Footer({ lang }) {
                 <span className={`${strong} ${row}`}>{t.projects}</span>
                 <ul className="flex flex-col gap-2">
                   <li>
-                    <Link data-spring tabIndex={0} to="/case-study/sales-platform" onClick={() => { if (pathname === '/case-study/sales-platform') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`inline-flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
+                    <Link data-spring tabIndex={0} to="/case-study/web-app" onClick={() => { if (pathname === '/case-study/web-app') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`inline-flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
                       <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
                       {t.salesPlatform}
                     </Link>
                   </li>
                   <li>
-                    <Link data-spring tabIndex={0} to="/case-study/xr" onClick={() => { if (pathname === '/case-study/xr') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`inline-flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
+                    <Link data-spring tabIndex={0} to="/case-study/extended-reality" onClick={() => { if (pathname === '/case-study/extended-reality') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`inline-flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
                       <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
                       {t.xr}
                     </Link>
                   </li>
-                  <li><Locked label={t.digitalTwins} /></li>
                   <li>
-                    <Link data-spring tabIndex={0} to="/case-study/canap" onClick={() => { if (pathname === '/case-study/canap') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`inline-flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
+                    <Link data-spring tabIndex={0} to="/case-study/digital-twin" onClick={() => { if (pathname === '/case-study/digital-twin') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`inline-flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
+                      <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
+                      {t.digitalTwins}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link data-spring tabIndex={0} to="/case-study/iphone-app" onClick={() => { if (pathname === '/case-study/iphone-app') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className={`inline-flex items-center gap-1 ${muted} ${hover} ${row} ${focusRing}`}>
                       <img src={imgArrowRight} alt="" width={16} height={16} className="shrink-0" />
                       {t.iphoneApp}
                     </Link>
@@ -188,7 +183,7 @@ function Footer({ lang }) {
           </div>
 
           <div id="footer-contact">
-            <h2 className={`text-h2 leading-tight font-bold mb-8 sm:mb-12 lg:mb-16 whitespace-nowrap ${strong}`}>
+            <h2 className="text-h2 leading-tight font-semibold text-fg-primary mb-8 sm:mb-12 lg:mb-16 whitespace-nowrap">
               {t.contact}
             </h2>
             <ul className="flex flex-col gap-2">

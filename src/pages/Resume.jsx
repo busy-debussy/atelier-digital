@@ -6,6 +6,7 @@ import imgLinkedIn     from '../assets/icons/icon-linkedin.svg';
 import imgChevronDown       from '../assets/icons/icon-chevron-down.svg';
 import imgChevronLeft       from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight      from '../assets/icons/icon-chevron-right.svg';
+import imgChevronUp         from '../assets/icons/icon-chevron-up.svg';
 import imgLogoSoluisLight   from '../assets/logos/employers/logo-soluis-light.webp';
 import imgLogoSoluisDark    from '../assets/logos/employers/logo-soluis-dark.webp';
 import imgLogoHoloxica      from '../assets/logos/employers/logo-holoxica-light.webp';
@@ -90,8 +91,8 @@ const T = {
       { name: 'Excellence in Holography',                                            issuer: 'International Hologram Manufacturers Association', icon: imgIconAward,   svgIcon: true },
     ],
     bio: [
-      <>Design is how it works. A background in <B>mechanical engineering</B>, <B>holography</B>, <B>spatial computing</B> and <B>digital twins</B> brings technical depth to every digital experience I craft.</>,
-      <><B>Driving innovation through design</B>, I am proficient at <B>prototyping</B> (in tools like Figma and in code) while <B>collaborating</B> cross-functionally and <B>influencing</B> a design team.</>,
+      <>A background in <B>mechanical engineering</B>, <B>holography</B>, <B>spatial computing</B> and <B>digital twins</B> brings technical depth to every digital experience I craft.</>,
+      <><B>Driving innovation through design</B>, I am proficient at <B>prototyping</B> (in tools like Figma and in code) while <B>collaborating</B> cross-functionally and <B>influencing</B>.</>,
       <>Attentive, empathetic, curious and agile, I am a <B>first-principle</B> thinker with a <B>human-centred</B> approach to problem-solving.</>,
       <>Thriving on new challenges. Dedicated to <B>building better</B>.</>,
     ],
@@ -489,25 +490,289 @@ const T = {
   },
 };
 
+// Secondary nav — flat list, no subsections (unlike the case studies). Ids
+// match the section anchors rendered below. Certifications has its own anchor
+// on the page (inside Top skills) but isn't listed here. Collaborators +
+// Contact are rendered by the shared Collaborations/Contact components.
+const SECTIONS = {
+  en: [
+    { id: 'summary',        title: 'Summary' },
+    { id: 'experience',     title: 'Experience' },
+    { id: 'expertise',      title: 'Expertise' },
+    { id: 'top-skills',     title: 'Top skills' },
+    { id: 'education',      title: 'Education' },
+    { id: 'collaborators',  title: 'Collaborators' },
+    { id: 'contact',        title: 'Get in touch' },
+  ],
+  fr: [
+    { id: 'summary',        title: 'Résumé' },
+    { id: 'experience',     title: 'Expérience' },
+    { id: 'expertise',      title: 'Savoir-faire' },
+    { id: 'top-skills',     title: 'Compétences' },
+    { id: 'education',      title: 'Formation' },
+    { id: 'collaborators',  title: 'Collaborateurs' },
+    { id: 'contact',        title: 'Prenons contact' },
+  ],
+};
+
+const scrollToSection = (id) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  el.focus({ preventScroll: true });
+};
+
+// Collapsible sections — same accordion pattern as the case studies (below
+// 920px, sections collapse behind their heading; at 920px+ always expanded).
+// Summary stays exempt (it has no heading — it plays the Hero role there).
+function useSectionCollapse() {
+  const [open, setOpen] = useState(true);
+  const [hidden, setHidden] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 920px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 920px)');
+    const onChange = () => setIsDesktop(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  const btnRef = useRef(null);
+  const contentRef = useRef(null);
+  const gridRef = useRef(null);
+  const handleToggle = () => {
+    if (open) {
+      if (contentRef.current?.contains(document.activeElement)) btnRef.current?.focus();
+      setOpen(false);
+      const el = gridRef.current;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setHidden(true);
+      } else {
+        const onEnd = (e) => {
+          if (e.propertyName !== 'grid-template-rows') return;
+          el?.removeEventListener('transitionend', onEnd);
+          setHidden(true);
+        };
+        el?.addEventListener('transitionend', onEnd);
+      }
+    } else {
+      setHidden(false);
+      requestAnimationFrame(() => setOpen(true));
+    }
+  };
+  const collapsible = !isDesktop;
+  return { collapsible, open, sectionOpen: collapsible ? open : true, hidden, handleToggle, btnRef, contentRef, gridRef };
+}
+
+const collapseLabel = (open, title, lang) =>
+  open ? (lang === 'fr' ? `Réduire ${title}` : `Collapse ${title}`)
+       : (lang === 'fr' ? `Développer ${title}` : `Expand ${title}`);
+
+function SectionChevron({ open }) {
+  return (
+    <div className="group shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-colors hover:bg-btn-nav-bg-hover">
+      <img
+        src={imgChevronUp}
+        alt=""
+        className={`w-5 h-5 sm:w-6 sm:h-6 transition-[filter,transform] duration-300 forced-colors:brightness-[unset] forced-colors:invert-0 ${open ? '' : 'rotate-180'} brightness-0 dark:invert group-hover:invert dark:group-hover:brightness-0 dark:group-hover:invert-0`}
+      />
+    </div>
+  );
+}
+
+function CollapseBody({ id, c, className, children }) {
+  const inner = className != null ? <div className={className}>{children}</div> : <>{children}</>;
+  if (!c.collapsible) return inner;
+  return (
+    <div
+      ref={c.gridRef}
+      id={`${id}-content`}
+      style={c.hidden ? { display: 'none' } : undefined}
+      className={`grid [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${c.sectionOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+      inert={!c.sectionOpen}
+    >
+      <div ref={c.contentRef} className="overflow-hidden min-h-0">
+        {inner}
+      </div>
+    </div>
+  );
+}
+
+// CollapsibleHeading — an h2 that becomes a collapse/expand toggle button
+// below 920px, and a plain heading at 920px+. Drop in place of a bare <h2>.
+function CollapsibleHeading({ c, id, title, lang, className, spacingClassName = '' }) {
+  // `spacingClassName` (vertical margin) goes on the flex ROW, not the h2
+  // itself — margin on the h2 would inflate its flex-item box and throw off
+  // `items-center`, pulling the chevron out of line with the title text.
+  const heading = (
+    <div className={`flex items-center justify-between gap-4 ${spacingClassName}`}>
+      <h2 id={`${id}-heading`} className={className}>{title}</h2>
+      {c.collapsible && <SectionChevron open={c.open} />}
+    </div>
+  );
+  if (!c.collapsible) return heading;
+  return (
+    <button
+      ref={c.btnRef}
+      onClick={c.handleToggle}
+      aria-label={collapseLabel(c.open, title, lang)}
+      aria-expanded={c.open}
+      aria-controls={`${id}-content`}
+      className="w-full text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary"
+    >
+      {heading}
+    </button>
+  );
+}
+
+// SecondaryNav — floating panel positioned via `fixed` + `right: calc(50% + Nrem)`
+// (no reserved flex column), like the case-study navs, since Experience/
+// Expertise/Education carry full-bleed carousels that a flex-row nav column
+// would constrain. The offsets are the exact ones tuned for the case studies'
+// `md:max-w-2xl lg:max-w-[52rem]` reading column, which Experience/Expertise/
+// Education reuse verbatim, so the nav hugs the same edge here.
+function SecondaryNav({ sections, activeId, onNavigate, lang, visible = true }) {
+  const [collapsed, setCollapsed] = useState(false);
+  const [tipVisible, setTipVisible] = useState(false);
+  const timerRef = useRef(null);
+  const showTip = () => { clearTimeout(timerRef.current); timerRef.current = setTimeout(() => setTipVisible(true), 500); };
+  const hideTip = () => { clearTimeout(timerRef.current); setTipVisible(false); };
+  useEffect(() => () => clearTimeout(timerRef.current), []);
+
+  const dragStartX = useRef(null);
+  const onEdgePointerDown = (e) => { dragStartX.current = e.clientX; e.currentTarget.setPointerCapture?.(e.pointerId); };
+  const onEdgePointerMove = (e) => {
+    if (dragStartX.current == null) return;
+    if (e.clientX - dragStartX.current <= -24) { dragStartX.current = null; setCollapsed(true); hideTip(); }
+  };
+  const onEdgePointerUp = () => { dragStartX.current = null; };
+
+  const minimiseLabel = lang === 'fr' ? 'Réduire' : 'Minimise';
+  const expandLabel   = lang === 'fr' ? 'Développer' : 'Expand';
+
+  if (collapsed) {
+    return (
+      <div className={`hidden min-[920px]:block fixed left-2 top-1/2 -translate-y-1/2 z-10 transition-opacity duration-180 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <button
+          type="button"
+          onClick={() => { setCollapsed(false); hideTip(); }}
+          onMouseEnter={showTip}
+          onMouseLeave={hideTip}
+          onFocus={showTip}
+          onBlur={hideTip}
+          aria-label={expandLabel}
+          className="flex items-center justify-center w-9 h-9 backdrop-blur-3 bg-nav-bg rounded-radius-4 shadow-xs ring-1 ring-nav-ring text-fg-muted hover:text-fg-primary hover:bg-nav-active-bg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 5h16M4 12h12M4 19h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
+        {tipVisible && (
+          <div role="tooltip" className="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-nav-active-bg-solid text-fg-inverse shadow-xs pointer-events-none z-20">
+            {expandLabel}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Fixed position, same for every section — Top skills/Certifications is
+  // wider than the reading column this offset is tuned to, so the nav may
+  // sit slightly over its pills; that's preferred over the nav shifting
+  // left/right as you scroll between sections.
+  return (
+    <div
+      inert={!visible}
+      className={`hidden min-[920px]:block fixed z-10 top-[240px] min-[920px]:right-[calc(50%_+_20.5rem)] lg:right-[calc(50%_+_25.5rem)] ${visible ? '' : 'pointer-events-none'}`}
+    >
+      <nav aria-label="Page sections" className={`relative p-2 backdrop-blur-3 bg-nav-bg rounded-radius-6 shadow-xs ring-1 ring-nav-ring transition-opacity duration-180 ${visible ? 'opacity-100' : 'opacity-0'}`}>
+        <ol className="grid gap-1" style={{ gridTemplateColumns: 'max-content' }}>
+          {sections.map((s) => {
+            const isActive = activeId === s.id;
+            return (
+              <li key={s.id}>
+                <button
+                  onClick={() => onNavigate(s.id)}
+                  aria-current={isActive ? 'location' : undefined}
+                  className={`relative text-tooltip leading-snug py-2 px-3 rounded-full text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                    isActive
+                      ? 'text-fg-primary font-semibold bg-bg-page border border-black/[0.08] dark:border-white/[0.10]'
+                      : 'text-fg-muted font-normal border border-transparent hover:text-fg-primary hover:bg-nav-active-bg'
+                  }`}
+                >
+                  <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.title}</span>
+                  <span className="absolute inset-0 py-2 px-3 whitespace-nowrap">{s.title}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+
+        {/* Right-edge minimise affordance — hovering highlights the edge and
+            reveals a chevron just outside the panel; clicking collapses the nav. */}
+        <button
+          type="button"
+          onClick={() => { setCollapsed(true); hideTip(); }}
+          onPointerDown={onEdgePointerDown}
+          onPointerMove={onEdgePointerMove}
+          onPointerUp={onEdgePointerUp}
+          onFocus={showTip}
+          onBlur={hideTip}
+          aria-label={minimiseLabel}
+          className="group/edge absolute top-0 -right-[3px] h-full w-[15px] cursor-w-resize select-none rounded-r-radius-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-inset"
+        >
+          <span
+            aria-hidden="true"
+            className="absolute inset-y-6 right-[3px] w-[2px] rounded-full bg-fg-muted-inverse dark:bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
+            style={{
+              maskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
+              WebkitMaskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
+            }}
+          />
+          <span aria-hidden="true" onMouseEnter={showTip} onMouseLeave={hideTip} className="absolute left-full top-1/2 -translate-y-1/2 pl-[3px] cursor-pointer text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M14 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
+
+        {tipVisible && (
+          <div role="tooltip" className="absolute left-full top-1/2 -translate-y-1/2 ml-7 whitespace-nowrap rounded-radius-2 px-2 py-1 text-tooltip font-medium bg-nav-active-bg-solid text-fg-inverse shadow-xs pointer-events-none z-20">
+            {minimiseLabel}
+          </div>
+        )}
+      </nav>
+    </div>
+  );
+}
+
 const divider  = '';
-const h2class  = 'text-h2 font-bold leading-tight text-fg-primary mb-8';
+// Case-study titles use font-semibold (DigitalTwin's SectionHeading); matched
+// here for consistency. The h2 also carries its own symmetric py-6/7/8 (on
+// top of the wrapper's own pt-8/pb-2) — that's what gives collapsed headings
+// their taller, more generous padding.
+const h2classNoMargin = 'text-h2 font-semibold leading-tight text-fg-primary py-6 sm:py-7 lg:py-8';
 const bodyMuted = 'text-copy-m font-normal leading-loose text-fg-secondary';
 
 // ── Summary ────────────────────────────────────────────────────────────────────
 
 function SummarySection({ t, lang }) {
-  const btnBase = 'flex items-center justify-center gap-2 px-3 py-2 rounded-radius-4 transition-colors bg-bg-surface md:bg-transparent md:dark:bg-transparent hover:bg-nav-hover-bg';
+  // Bio text only (portrait/name/buttons stay always visible) — collapsible
+  // below 920px like every other section, but the heading itself is mobile-
+  // only (there's no "Summary" title on desktop; the David V. h1 covers it).
+  const c = useSectionCollapse();
+  // md:bg-transparent already clears the resting background at md+ in both
+  // themes; a separate md:dark:bg-transparent would tie specificity with the
+  // hover rule and (emitted later) suppress the dark hover background.
+  const btnBase = 'flex items-center justify-center gap-2 px-3 py-2 rounded-radius-4 transition-colors bg-bg-surface md:bg-transparent hover:bg-nav-hover-bg';
   const btnSquircle = { 'data-squircle': '' };
   const btnLabel = 'font-medium text-btn-m leading-[1.2] text-fg-primary whitespace-nowrap';
 
   return (
-    <section id="summary" className={`${divider} scroll-mt-24 pt-32 pb-16 md:pt-48 md:pb-16`}>
+    <section id="summary" tabIndex={-1} className={`${divider} scroll-mt-24 pt-32 md:pt-48 ${c.collapsible && !c.sectionOpen ? '' : 'pb-16 md:pb-16'} focus-visible:outline-none`}>
       <div className="flex flex-col md:flex-row gap-12 md:gap-20 items-start">
 
         {/* ── Left column: photo + buttons ───────────────────────────── */}
         <div className="flex flex-col items-center gap-6 shrink-0 w-full md:w-auto">
 
-          {/* Photo + name */}
           <div className="flex flex-col items-center gap-4">
             <img
               src={imgPortrait}
@@ -555,9 +820,17 @@ function SummarySection({ t, lang }) {
             David V.
           </h1>
 
+          {c.collapsible && (
+            <div className="-mx-4 pt-8 sm:pt-10 lg:pt-12 pb-4 sm:pb-5">
+              <CollapsibleHeading c={c} id="summary-bio" title={t.title} lang={lang} className={h2classNoMargin} />
+            </div>
+          )}
+
+          <CollapseBody id="summary-bio" c={c}>
           <div id="summary-bio" className={`flex flex-col gap-6 ${bodyMuted}`}>
             {t.bio.map((para, i) => para && <p key={i}>{para}</p>)}
           </div>
+          </CollapseBody>
         </div>
 
       </div>
@@ -646,7 +919,8 @@ function ExperienceCard({ card, cardIdx, openDrawers, onToggle }) {
   );
 }
 
-function ExperienceSection({ t }) {
+function ExperienceSection({ t, lang }) {
+  const c = useSectionCollapse();
   const cards = t.experienceCards;
   const trackRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -735,12 +1009,13 @@ function ExperienceSection({ t }) {
   };
 
   return (
-    <section id="experience" className={`${divider} py-16 scroll-mt-0`}>
+    <section id="experience" tabIndex={-1} className={`${divider} ${c.collapsible && !c.sectionOpen ? 'bg-bg-page' : ''} scroll-mt-0 focus-visible:outline-none`}>
 
-      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem]">
-        <h2 className={h2class}>{t.experience}</h2>
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pt-8 sm:pt-10 lg:pt-12 pb-4 sm:pb-5 md:max-w-2xl lg:max-w-[52rem]">
+        <CollapsibleHeading c={c} id="experience" title={t.experience} lang={lang} className={h2classNoMargin} />
       </div>
 
+      <CollapseBody id="experience" c={c} className="pb-16 sm:pb-20 lg:pb-24">
       <div role="region" aria-roledescription="carousel" aria-label={t.expCarousel}>
         <div aria-live="polite" aria-atomic="true" className="sr-only">
           {t.cardOf(activeIndex + 1, cards.length)} — {cards[activeIndex]?.company}
@@ -811,6 +1086,7 @@ function ExperienceSection({ t }) {
         </div>
       </div>
 
+      </CollapseBody>
     </section>
   );
 }
@@ -883,7 +1159,8 @@ function ExpertiseCard({ card }) {
   );
 }
 
-function ExpertiseSection({ t }) {
+function ExpertiseSection({ t, lang }) {
+  const c = useSectionCollapse();
   const cards = t.expertiseCards;
   const trackRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -947,12 +1224,13 @@ function ExpertiseSection({ t }) {
   };
 
   return (
-    <section id="expertise" className={`${divider} py-16 scroll-mt-24 bg-bg-surface`}>
+    <section id="expertise" tabIndex={-1} className={`${divider} ${c.collapsible && !c.sectionOpen ? 'bg-bg-page' : 'bg-bg-surface'} scroll-mt-24 focus-visible:outline-none`}>
 
-      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem]">
-        <h2 className={h2class}>{t.expertise}</h2>
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pt-8 sm:pt-10 lg:pt-12 pb-4 sm:pb-5 md:max-w-2xl lg:max-w-[52rem]">
+        <CollapsibleHeading c={c} id="expertise" title={t.expertise} lang={lang} className={h2classNoMargin} />
       </div>
 
+      <CollapseBody id="expertise" c={c} className="pb-16 sm:pb-20 lg:pb-24">
       <div role="region" aria-roledescription="carousel" aria-label={t.xpCarousel}>
         <div aria-live="polite" aria-atomic="true" className="sr-only">
           {t.cardOf(activeIndex + 1, cards.length)} — {cards[activeIndex]?.title}
@@ -1010,6 +1288,7 @@ function ExpertiseSection({ t }) {
         </div>
       </div>
 
+      </CollapseBody>
     </section>
   );
 }
@@ -1086,7 +1365,8 @@ function EducationCard({ card, cardIdx, openDrawers, onToggle }) {
   );
 }
 
-function EducationSection({ t }) {
+function EducationSection({ t, lang }) {
+  const c = useSectionCollapse();
   const cards = t.educationCards;
   const trackRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -1175,12 +1455,13 @@ function EducationSection({ t }) {
   };
 
   return (
-    <section id="education" className={`${divider} py-16 scroll-mt-24`}>
+    <section id="education" tabIndex={-1} className={`${divider} ${c.collapsible && !c.sectionOpen ? 'bg-bg-page' : ''} scroll-mt-24 focus-visible:outline-none`}>
 
-      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem]">
-        <h2 className={h2class}>{t.education}</h2>
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pt-8 sm:pt-10 lg:pt-12 pb-4 sm:pb-5 md:max-w-2xl lg:max-w-[52rem]">
+        <CollapsibleHeading c={c} id="education" title={t.education} lang={lang} className={h2classNoMargin} />
       </div>
 
+      <CollapseBody id="education" c={c} className="pb-16 sm:pb-20 lg:pb-24">
       <div role="region" aria-roledescription="carousel" aria-label={t.eduCarousel}>
         <div aria-live="polite" aria-atomic="true" className="sr-only">
           {t.cardOf(activeIndex + 1, cards.length)} — {cards[activeIndex]?.institution}
@@ -1245,6 +1526,7 @@ function EducationSection({ t }) {
         </div>
       </div>
 
+      </CollapseBody>
     </section>
   );
 }
@@ -1294,7 +1576,9 @@ function CertificationCard({ card }) {
   );
 }
 
-function SkillsCertSection({ t }) {
+function SkillsCertSection({ t, lang }) {
+  const topSkillsC = useSectionCollapse();
+  const certC = useSectionCollapse();
   const certs = t.certificationCards;
   const certTrackRef = useRef(null);
   const [activePage, setActivePage] = useState(0);
@@ -1325,12 +1609,13 @@ function SkillsCertSection({ t }) {
   };
 
   return (
-    <section id="top-skills" className={`${divider} pt-16 pb-8 sm:py-16 scroll-mt-24`}>
-      <div className="max-w-5xl mx-auto px-6 flex flex-col lg:flex-row gap-12 lg:gap-20">
+    <section id="top-skills" tabIndex={-1} className={`${divider} scroll-mt-24 focus-visible:outline-none`}>
+      <div className="max-w-5xl mx-auto px-6 flex flex-col lg:flex-row gap-0 lg:gap-20">
 
         {/* ── Left: Top Skills ───────────────────────────────── */}
-        <div className="lg:flex-1">
-          <h2 className={`${h2class} md:pl-14 lg:pl-28`}>{t.topSkills}</h2>
+        <div className={`lg:flex-1 pt-8 sm:pt-10 lg:pt-12 pb-4 sm:pb-5 ${topSkillsC.collapsible && !topSkillsC.sectionOpen ? 'bg-bg-page' : ''}`}>
+          <CollapsibleHeading c={topSkillsC} id="top-skills-heading-group" title={t.topSkills} lang={lang} className={`${h2classNoMargin} md:pl-14 lg:pl-28`} />
+          <CollapseBody id="top-skills-heading-group" c={topSkillsC} className="pb-16 sm:pb-20 lg:pb-24">
           <ul className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-4 lg:mt-16 sm:px-16 lg:px-0 list-none">
             {t.topSkillsList.map((skill, i) => (
               <li
@@ -1341,12 +1626,14 @@ function SkillsCertSection({ t }) {
               </li>
             ))}
           </ul>
+          </CollapseBody>
         </div>
 
         {/* ── Right: Certifications ──────────────────────────── */}
-        <div id="certifications" className="scroll-mt-24 lg:w-[448px]">
-          <h2 className={`${h2class} md:pl-14 lg:pl-0`}>{t.certifications}</h2>
+        <div id="certifications" tabIndex={-1} className={`scroll-mt-24 lg:w-[448px] pt-8 sm:pt-10 lg:pt-12 pb-4 sm:pb-5 focus-visible:outline-none ${certC.collapsible && !certC.sectionOpen ? 'bg-bg-page' : ''}`}>
+          <CollapsibleHeading c={certC} id="certifications-heading-group" title={t.certifications} lang={lang} className={`${h2classNoMargin} md:pl-14 lg:pl-0`} />
 
+          <CollapseBody id="certifications-heading-group" c={certC} className="pb-16 sm:pb-20 lg:pb-24">
           <div className="hidden sm:grid grid-cols-2 gap-4 lg:gap-6 sm:px-16 lg:px-0">
             {certs.map((card, i) => <CertificationCard key={i} card={card} />)}
           </div>
@@ -1415,6 +1702,7 @@ function SkillsCertSection({ t }) {
             </div>
             </div>
           </div>
+          </CollapseBody>
         </div>
 
       </div>
@@ -1429,6 +1717,68 @@ function Resume({ lang }) {
   const fromHome = searchParams.get('from') === 'home';
   const [showBack, setShowBack] = useState(fromHome);
   const footerRef = useRef(null);
+
+  const sections = SECTIONS[lang] ?? SECTIONS.en;
+  const [activeId, setActiveId] = useState('');
+  const [scrolledDown, setScrolledDown] = useState(false);
+  const [atBottom, setAtBottom] = useState(false);
+  const scrollTarget = useRef(null);
+  // Tracks whether the (collapsible) Contact section is actually open, so the
+  // Footer's top spacing can match: full when Contact is open, tighter when
+  // it's collapsed shut — rather than a flat reduction that's wrong either way.
+  const [contactOpen, setContactOpen] = useState(true);
+
+  const handleNavigate = (id) => {
+    setActiveId(id);
+    scrollTarget.current = id;
+    setScrolledDown(true);
+    scrollToSection(id);
+    setTimeout(() => { scrollTarget.current = null; }, 1500);
+  };
+
+  // Active section via IntersectionObserver — same rootMargin shape as the
+  // case-study secondary navs, so the highlight transitions feel identical.
+  useEffect(() => {
+    const observers = sections.map(s => {
+      const el = document.getElementById(s.id);
+      if (!el) return null;
+      const obs = new IntersectionObserver(
+        ([e]) => {
+          if (!e.isIntersecting) return;
+          if (scrollTarget.current) {
+            if (s.id === scrollTarget.current) { scrollTarget.current = null; setActiveId(s.id); }
+          } else {
+            setActiveId(s.id);
+          }
+        },
+        { rootMargin: '-10% 0px -70% 0px' }
+      );
+      obs.observe(el);
+      return obs;
+    });
+    return () => observers.forEach(o => o?.disconnect());
+  }, [lang, sections]);
+
+  // Show/hide the nav based on scroll position relative to the first + last
+  // sections, so it appears once you're past the top and hides at the bottom.
+  // Gated on the SECOND section (Experience), not Summary — Summary carries
+  // the bespoke portrait/CTA layout the floating nav has no clearance for.
+  useEffect(() => {
+    const firstId = sections[1]?.id ?? sections[0].id;
+    const lastId = sections[sections.length - 1].id;
+    const update = () => {
+      const firstEl = document.getElementById(firstId);
+      const lastEl = document.getElementById(lastId);
+      if (firstEl) setScrolledDown(firstEl.getBoundingClientRect().top < 50);
+      if (lastEl) {
+        const smt = parseFloat(getComputedStyle(lastEl).scrollMarginTop) || 0;
+        setAtBottom(lastEl.getBoundingClientRect().top < smt - 50);
+      }
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, [lang, sections]);
 
   useEffect(() => {
     if (!fromHome) return;
@@ -1476,6 +1826,9 @@ function Resume({ lang }) {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-radius-2 focus:ring-2 focus:ring-border-focus focus:bg-white focus:text-fg-primary focus:outline-none">
         {t.skipToMain}
       </a>
+
+      <SecondaryNav sections={sections} activeId={activeId} onNavigate={handleNavigate} visible={scrolledDown && !atBottom} lang={lang} />
+
       <main id="main-content" aria-label={t.title} className="bg-bg-page min-h-screen" tabIndex={-1}>
         <div className="max-w-5xl mx-auto px-6">
 
@@ -1485,22 +1838,22 @@ function Resume({ lang }) {
         </div>
 
         {/* 2. Experience — full browser width for carousel */}
-        <ExperienceSection t={t} />
+        <ExperienceSection t={t} lang={lang} />
 
         {/* 3. Expertise — full browser width for carousel */}
-        <ExpertiseSection t={t} />
+        <ExpertiseSection t={t} lang={lang} />
 
         {/* 4+5. Top skills + Certifications */}
-        <SkillsCertSection t={t} />
+        <SkillsCertSection t={t} lang={lang} />
 
         {/* 6. Education — full browser width for carousel */}
-        <EducationSection t={t} />
+        <EducationSection t={t} lang={lang} />
 
         {/* 7. Key collaborations — reused from home page */}
-        <Collaborations lang={lang} lgAlignWidth={720} smAlignWidth={536} />
+        <Collaborations lang={lang} lgAlignWidth={720} smAlignWidth={536} collapsible />
 
         {/* 8. Get in touch — reused from home page */}
-        <Contact lang={lang} variant="resume" lgAlignWidth={720} smAlignWidth={536} />
+        <Contact lang={lang} variant="resume" lgAlignWidth={720} smAlignWidth={536} collapsible onOpenChange={setContactOpen} />
 
       </main>
 
@@ -1536,7 +1889,7 @@ function Resume({ lang }) {
         </button>
       </div>
 
-      <Footer lang={lang} />
+      <Footer lang={lang} tightTop={!contactOpen} />
     </>
   );
 }

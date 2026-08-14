@@ -7,8 +7,11 @@ function px(value) {
 }
 
 export function updateSquircle(el) {
-  const w = el.offsetWidth;
-  const h = el.offsetHeight;
+  // getBoundingClientRect (not offsetWidth/Height) — flex layout can render
+  // sub-pixel box sizes, and rounding to the nearest integer here leaves the
+  // clip-path narrower than the actual box, clipping a sliver off the
+  // right/bottom border.
+  const { width: w, height: h } = el.getBoundingClientRect();
   if (!w || !h) return;
 
   const cs = getComputedStyle(el);
@@ -17,7 +20,6 @@ export function updateSquircle(el) {
   const br = px(cs.borderBottomRightRadius);
   const bl = px(cs.borderBottomLeftRadius);
 
-  // Skip if no radius
   if (!tl && !tr && !br && !bl) { el.style.clipPath = ''; return; }
 
   // Skip pills — any corner at or beyond half the short dimension
@@ -53,7 +55,6 @@ export function initSquircle() {
 
   const observe = (el) => { updateSquircle(el); ro.observe(el); };
 
-  // Initial synchronous scan
   document.querySelectorAll('[data-squircle]').forEach(observe);
 
   // Watch for newly mounted elements (portals, conditional renders, etc.)

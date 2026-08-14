@@ -1,7 +1,5 @@
 import StyleDictionary from 'style-dictionary';
 
-// ─── Custom transforms ──────────────────────────────────────────────────────
-//
 // Semantic and typography tokens carry a mode prefix in their path that we
 // strip before generating the CSS variable name, e.g.:
 //   ['semantic', 'light', 'bg', 'page']           → bg-page
@@ -19,8 +17,6 @@ StyleDictionary.registerTransform({
       .replace(/\s+/g, '-')
       .replace(/[^a-z0-9-]/g, '-'),
 });
-
-// ─── Custom formats ──────────────────────────────────────────────────────────
 
 // Helper: get the resolved value from a token (SD5 DTCG mode uses $value)
 const val = (token) => token.$value ?? token.value;
@@ -72,15 +68,11 @@ StyleDictionary.registerFormat({
   },
 });
 
-// ─── Transform chains ────────────────────────────────────────────────────────
-
 // CSS: kebab names for base tokens, stripped names for semantic/typography, px kept as-is
 const cssTransforms = ['attribute/cti', 'name/kebab', 'name/strip-mode', 'color/css'];
 
 // JS/JSON: camel names, resolved values
 const jsTransforms  = ['attribute/cti', 'name/kebab', 'name/strip-mode', 'name/camel', 'color/css'];
-
-// ─── Config ──────────────────────────────────────────────────────────────────
 
 export default {
   source: ['tokens.json'],
@@ -89,7 +81,6 @@ export default {
 
   platforms: {
 
-    // ── CSS: primitives (color, spacing, radius) ───────────────────────────
     'css/base': {
       transforms: cssTransforms,
       buildPath: 'src/tokens/',
@@ -101,7 +92,6 @@ export default {
       }],
     },
 
-    // ── CSS: semantic tokens (light + dark in one file) ────────────────────
     'css/semantic': {
       transforms: cssTransforms,
       buildPath: 'src/tokens/',
@@ -113,7 +103,6 @@ export default {
       }],
     },
 
-    // ── CSS: typography (mobile-first responsive) ──────────────────────────
     'css/typography': {
       transforms: cssTransforms,
       buildPath: 'src/tokens/',
@@ -124,7 +113,6 @@ export default {
       }],
     },
 
-    // ── JavaScript ES6 named exports ──────────────────────────────────────
     // Semantic → light only; typography → desktop only (avoid name collisions)
     'js': {
       transforms: cssTransforms,
@@ -140,7 +128,6 @@ export default {
       }],
     },
 
-    // ── Flat JSON ─────────────────────────────────────────────────────────
     // Semantic → light only; typography → desktop only
     'json': {
       transforms: cssTransforms,

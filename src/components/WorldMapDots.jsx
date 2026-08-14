@@ -8,7 +8,6 @@ function extractTz(id) {
   return m ? String(parseFloat(m[1])) : null;
 }
 
-// ── Default team data (XR / Sales Platform shared team) ───────────────────────
 export const DEFAULT_COUNTRY_COLOR_MAP = {
   Scotland: 'var(--map-country-scotland)',
   England:  'var(--map-country-england)',
@@ -53,7 +52,6 @@ const DEFAULT_LEGEND_T = {
   },
 };
 
-// ── Component ─────────────────────────────────────────────────────────────────
 export default function WorldMapDots({
   isDark,
   lang = 'en',
@@ -449,7 +447,7 @@ export default function WorldMapDots({
                     whether or not the legend is open — except when a specific
                     legend pill is pressed (selected), which highlights one role,
                     so the full list is suppressed then. */}
-                {!selected?.key && rolesByCountry[country]?.length > 0 && (
+                {!selected?.key && (hovered ?? selected)?.country === country && rolesByCountry[country]?.length > 0 && (
                   <span className="mt-0.5 block font-normal leading-tight opacity-70">
                     {rolesByCountry[country].map((r, i) => (
                       <span key={i} className="block whitespace-nowrap">{r}</span>

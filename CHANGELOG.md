@@ -1,5 +1,72 @@
 # Changelog 
 
+## [2.6.0] — 2026-08-14
+
+### Digital Twin case study (password-gated), case-study URL restructure, Hero chat removed, Home + Résumé floating nav
+
+#### Digital Twin — new protected case study
+- Added a full fourth case study at **`/case-study/digital-twin`** — a New Murabba / Vision 2030 Unreal Engine digital-twin platform (Saudi Arabia), 8-person team, 6-month duration, 4 stakeholder groups, 19km² city — covering Context, Problem, Users, Scope, Design, three Design Challenges (Scene tools, Understanding structures, Wayfinding system), and Impact, in EN + FR. Structured like Canap: hero, floating scroll-spy `SecondaryNav`, sections collapsible below 920px, `Footer`
+- **Password gate** (`src/components/PasswordGate.jsx`): floating-label password form over a blurred glass card (background: `facade-pattern.webp`), shake + red-ring on error, an inline "Request access" sub-flow (name/email/note) for visitors without the password, `case_study_unlock`/`case_study_access_request` analytics events. Unlock state is a signed token cached in `localStorage` (`gate:digital-twin`) and re-validated server-side on every request
+- **Backend** (new `api/` Vercel serverless functions): `unlock.js` (password check against `DIGITAL_TWIN_PASSWORD` env var, 5 attempts/10min rate limit, fixed 750ms throttle delay on wrong guesses), `digital-twin.js` (Bearer-token-gated content endpoint, `Cache-Control: private, no-store`), `protected-asset.js` (streams private Vercel Blob objects, `pathname` restricted to `digital-twin/`, ETag support), `request-access.js` (emails the site owner via Resend), `_lib.js` (shared CORS/rate-limiter/HMAC-SHA256 token signing). No password or secret is hardcoded — all read from env vars
+- **The case-study text itself is never in the repo**: since this repo is public, the full EN/FR copy lives only in private Vercel Blob (`digital-twin/content.json`, pushed from a gitignored `private-assets/digital-twin/content.json`) and is fetched by `api/digital-twin.js` after verifying the unlock token — it's absent from both git history and the client JS bundle for anyone who hasn't unlocked. Bold emphasis is preserved through the JSON round-trip via a small `**bold**`/`\n` markup convention parsed client-side by a new `richText()` helper in `DigitalTwin.jsx`
+- **Protected-asset pipeline**: `npm run upload:assets` (new `scripts/upload-protected-assets.mjs`, now also handling `.json`) uploads `private-assets/<scope>/` to private Vercel Blob with a sha256 manifest to skip unchanged files. In dev, a new Vite middleware (`privateAssetsDev()` in `vite.config.js`) serves `private-assets/` straight from disk at `/__private/*` so local development never touches Blob's monthly operations cap; production goes through `api/protected-asset.js`. `.gitignore` gained `private-assets` (confidential, never committed)
+- **New interactive components**: `DigitalTwinMenu.jsx` — pixel-accurate recreation of the product's real toolbar (5 tool groups, gamepad-style arrow-key focus, MRU ordering, one-at-a-time tooltips); its 34 base/`-active` icon pairs are private-Blob assets loaded via `assetUrl(token)`, not bundled, since they recreate the real product's UI. `DigitalTwinGizmo.jsx` — draggable 3D transform-gizmo prototype with a live Blender/Maya-style HUD readout and 12 interactive hotspots; `AxisIndicator.jsx` — click-an-axis-to-snap-view widget; `LogoLoader.jsx` — minimal spinner shown during the gate's loading state
+- Design-system showcase panel with real iOS token values (7-colour palette, type-role grid, surfaces ramp, 10-step gray scale, 9-hue colour matrix). Team map (`WorldMapDots`) reused with a new 4-country, 5-role dataset (Scotland/England/UAE/Vietnam)
+- `package.json` gained the `vercel` runtime dependency and the `upload:assets` script; `eslint.config.js` now gives `api/**/*.js` Node globals instead of linting them as browser code
+
+#### Case-study URL restructuring
+- Slugs renamed for clarity, with permanent redirects from the old paths so shared/indexed links survive: `/case-study/sales-platform` → **`/case-study/web-app`**, `/case-study/xr` → **`/case-study/extended-reality`**, `/case-study/canap` → **`/case-study/iphone-app`**. `public/sitemap.xml` updated to match, plus a new `/case-study/digital-twin` entry
+- The homepage card, main-nav dropdown, mobile nav, and Footer sitemap link all route straight to Digital Twin now — the old dimmed, non-interactive `Locked` padlock treatment (Footer, Nav) is gone; the page itself enforces the gate
+
+#### Home + Résumé — floating secondary nav & collapsible sections
+- Both pages now get the same chrome as the case studies: a floating, edge-drag-to-minimise `SecondaryNav` with scroll-spy, and sections collapsible below 920px via the shared accordion pattern
+- **Home**: 3-item nav (Case studies → Collaborators → Get in touch); `CaseStudies`, `Collaborations`, and `Contact` now take a `collapsible` prop; `ScrollForMore` gained a `scrollAmount` prop (`1.0` on Home)
+- **Résumé** (largest diff in this release): 7-item nav (Summary/Experience/Expertise/Top skills/Education/Collaborators/Get in touch), visible once scrolled past Summary. Every section is now a collapsible accordion with a rotating chevron. Bio trimmed: dropped the opening "Design is how it works." sentence and "a design team" → "and influencing."
+- `Contact` gained an `onOpenChange` callback so `Footer` can tighten its top padding (new `tightTop` prop) when Contact is collapsed shut
+
+#### Hero — inline chat removed
+- The homepage Hero's inline AI-chat experience (turn-limited message thread, placeholder-cycling input, "N messages remaining" footer, cookie-policy notice) has been fully removed; the "experienced in" pill card is now always shown instead of being hidden while chat was active
+- The floating `ChatBot` widget is unmounted from `App.jsx` (import, `chatOpen` state, and the `inert`-on-background wrapper all removed) — its component file is left in the tree but no longer rendered anywhere
+
+#### Main navigation — fixes & polish
+- **Dark-mode toggle bug fix**: the `Knob` sub-component was being redefined inside the render body every render (breaking React's reconciliation across the transition) — hoisted to module scope
+- **Keyboard nav for the case-studies dropdown**: `Tab` on the last card now closes the menu and moves focus to the trigger's next sibling instead of falling through to raw DOM order (the panel is a `body`-level portal); `Shift+Tab` on the first card closes and refocuses the trigger. `onBlur` also closes the dropdown when focus leaves both panel and anchor
+- Mobile hamburger icon changed from an image swap to an animated two-bar CSS icon that rotates into an X
+- New `StableLabel` component reserves the wider language's label as invisible stacked text so EN/FR toggling never reflows the Projects button width (previously would need a fixed `min-width`, which breaks WCAG 1.4.4/1.4.10 zoom reflow)
+- FR nav label for Résumé shortened "CV interactif" → "CV" so the FR nav width matches EN; "digital twins" → "digital twin" (singular)
+- Keyboard-shortcut `<kbd>` tooltip pill restyled from a filled chip to an outlined one (see token rename below)
+
+#### Design tokens
+- **`tooltip/keyboard-shortcut-bg` renamed to `tooltip/keyboard-shortcut-border`** and restyled filled → outlined (reflected in `guidelines.json`, `tailwind.config.js`, `semantic.css`)
+- New hand-maintained `feedback-error` semantic set (bg/border/fg, light + dark) — previously only `feedback-warning` existed
+- New hand-maintained `map/country/*` token set (9 colours × 2 themes: scotland, england, uae, vietnam, purple, pink, indigo, pistachio, red) for team-map dots/pills, added as Tailwind color keys
+- New hand-maintained `family.inter`/`family.mono` and `weight.regular/medium/semibold/bold` primitives — these live nowhere else, so a Figma-only regen would previously strip `--family-*`/`--weight-*` from `base.css` and break site fonts
+- Spacing scale renamed `spacing.space-N` → **`spacing.p-N`** (same pixel values) across the codebase
+- `semantic.css`'s `--map-dot-rest` value resynced to the already-correct source token (stale build artifact, not a design change)
+
+#### Case-study copy & style polish (Sales Platform, Canap, Extended Reality)
+- Hero `h1` unified across all three: `text-display-1 font-bold` → `text-display-2 font-semibold`; hero stat values `text-display-2 font-semibold leading-tight` → `text-h3 font-semibold leading-snug`
+- Secondary-nav active item restyled from a filled pill to a bordered one (`bg-bg-page border border-black/[0.08] dark:border-white/[0.10]`) — also applied to Cookies/Privacy/Terms
+- Several card backgrounds flattened from tinted/gradient fills to `bg-bg-page` with an explicit hairline border
+- **Sales Platform**: removed the "Key decisions" callout and its secondary-nav sub-item entirely; fixed `document.title` (was identical for EN/FR — now `'Web App • Sales Platform'`); copy: "engaging, contextual way" → "engaging and contextual way"
+- **Canap**: `pageTitle` unified to `'iPhone App • Canap'` for both languages; several copy edits ("more difficult than it should" → "challenging", "Constraint" section relabelled "Why iOS?", onboarding intro rewritten, "Icons" → "Iconography", "is still in active development" → "is in active development"); design-system swatch stroke `ring-1 ring-white/10` → `border border-white/24`
+- **Extended Reality**: `pageTitle` drops the " • Atelier Digital" suffix; copy: "across 6 XR applications" → "across 6 builds including 3 XR experiences"
+
+#### Contact, Collaborations, Footer
+- Contact card title "Hit my inbox" → **"Reach out"**; LinkedIn card copy no longer references "the QR code above" (layout-dependent phrasing removed)
+- Footer's `Locked` padlock component deleted (no longer used now that Digital Twin links out); new `tightTop` prop tightens top padding when a page's Contact section is collapsed
+
+#### Bug fixes
+- `WorldMapDots` — role labels in the tooltip were rendering for **every** country with roles whenever no legend pill was selected; now gated to only the hovered/selected country
+- `squircle.js` — `updateSquircle` measured elements via `offsetWidth`/`offsetHeight` (integer-rounded), clipping a sub-pixel sliver off the border in flex layouts with fractional sizes; switched to `getBoundingClientRect()`
+
+#### Build & tooling
+- `.storybook/manager.js`/`theme.js` updated to Storybook's newer unprefixed import paths (`storybook/manager-api`, `storybook/theming/create`)
+- `src/assets/case-study/canap/poster-her-size-m.webp` re-encoded, 68.5 KB → 32.0 KB (~53% smaller), continuing the v2.5.8 image-optimisation pass
+- **Local dev fixes for `vercel dev`**: `vercel.json`'s SPA rewrite (`/((?!api/).*) → /index.html`) was catching Vite's own dev-server requests (`/@vite/client`, `/src/main.jsx`, …) under `vercel dev`, breaking the page entirely — scoped to `/((?!api/|@|.*\..*).*)` so it only rewrites real navigation routes. `vite.config.js` gained a `server.proxy` for `/api` → `localhost:3000`, so plain `npm run dev` (`:5173`) can reach a separately-running `vercel dev` instance's serverless functions instead of 404ing
+
+---
+
 ## [2.5.8] — 2026-06-17
 
 ### Canap image performance, iOS Build & Testing carousel rework, shared icon+title cards

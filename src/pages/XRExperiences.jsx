@@ -39,7 +39,7 @@ const GOLD_A11Y   = '#7A5C00'; // light-mode text — 6:1 on white, passes WCAG 
 const T = {
   en: {
     skipToMain:  'Skip to main content',
-    pageTitle:   'XR Experiences • Atelier Digital',
+    pageTitle:   'XR Experiences',
     label:       'Extended Reality',
     title:       'An XR system for revealing megaprojects',
     tagline:     'The architecture of engagement',
@@ -92,7 +92,7 @@ const T = {
           <>Core team of <strong>eight</strong> across <strong>four countries</strong> delivering <strong>XR system end-to-end</strong>.</>,
           { type: 'h3', text: 'Delivery model' },
           <><strong>2-week sprints</strong> · <strong>Daily UK-aligned stand-ups</strong><br />→ Fast trade-offs, rapid iteration, early blocker detection</>,
-          { type: 'callout', variant: 'gold', label: 'My role', body: <>Sole Senior UX/UI Designer across <strong>6 XR applications</strong>, I led interaction system design and cross-device UX decisions under tight delivery constraints.</>
+          { type: 'callout', variant: 'gold', label: 'My role', body: <>Sole Senior UX/UI Designer across 6 builds including <strong>3 XR experiences</strong>, I led interaction system design and cross-device UX decisions under tight delivery constraints.</>
  },
         ],
         map: true,
@@ -256,7 +256,7 @@ const T = {
 
   fr: {
     skipToMain:  'Aller au contenu principal',
-    pageTitle:   'Expériences XR • Atelier Digital',
+    pageTitle:   'Expériences XR',
     label:       'Réalité étendue',
     title:       'Un système XR pour révéler un mégaprojet',
     tagline:     "L'architecture de l'engagement",
@@ -720,7 +720,6 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
       style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.95)', cursor: zoom > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default' }}
       onClick={onClose}
     >
-      {/* Chart */}
       <div
         className="flex items-center justify-center"
         onClick={(e) => e.stopPropagation()}
@@ -734,12 +733,10 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
         dangerouslySetInnerHTML={{ __html: slides[index].lightboxSvg }}
       />
 
-      {/* Counter */}
       <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-tooltip font-medium text-fg-on-dark-opacity-64 tabular-nums pointer-events-none">
         {index + 1} / {slides.length}
       </span>
 
-      {/* Close */}
       <button
         ref={closeButtonRef}
         onClick={onClose}
@@ -750,7 +747,6 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
         <img src={imgClose} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
 
-      {/* Prev */}
       <button
         data-spring
         onClick={(e) => { e.stopPropagation(); go(Math.max(0, index - 1)); }}
@@ -761,7 +757,6 @@ function FlowchartLightbox({ slides, initialIndex, lang, onClose }) {
         <img src={imgChevronLeft} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
 
-      {/* Next */}
       <button
         data-spring
         onClick={(e) => { e.stopPropagation(); go(Math.min(slides.length - 1, index + 1)); }}
@@ -1192,8 +1187,8 @@ function SecondaryNav({ sections, activeId, onNavigate, visible, lang }) {
                   aria-current={isActive ? 'location' : undefined}
                   className={`relative text-tooltip leading-snug py-2 px-3 rounded-full text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                     isActive
-                      ? 'text-fg-primary font-semibold bg-nav-active-bg'
-                      : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
+                      ? 'text-fg-primary font-semibold bg-bg-page border border-black/[0.08] dark:border-white/[0.10]'
+                      : 'text-fg-muted font-normal border border-transparent hover:text-fg-primary hover:bg-nav-active-bg'
                   }`}
                 >
                   <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.navLabel ?? s.eyebrow}</span>
@@ -1429,7 +1424,6 @@ function XRExperiences({ lang, isDark }) {
         className={`bg-bg-surface min-h-screen transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`}
       >
 
-        {/* ── Hero ── */}
         <section
           aria-labelledby="xr-hero-heading"
           className="relative min-h-screen flex flex-col bg-bg-surface overflow-hidden"
@@ -1468,7 +1462,7 @@ function XRExperiences({ lang, isDark }) {
               </span>
               <h1
                 id="xr-hero-heading"
-                className="text-display-1 font-bold leading-tight text-white transition-opacity duration-700"
+                className="text-display-2 font-semibold leading-tight text-white transition-opacity duration-700"
                 style={{ opacity: heroReady ? 1 : 0 }}
               >
                 {t.title}
@@ -1484,7 +1478,7 @@ function XRExperiences({ lang, isDark }) {
               <ul className="flex justify-between gap-x-2 gap-y-6 sm:justify-start sm:flex-wrap sm:gap-x-16 mt-2 transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }} aria-label="Key figures">
                 {t.stats.map((s, i) => (
                   <li key={i} className="flex flex-col gap-1">
-                    <span className="text-display-2 font-semibold leading-tight tabular-nums whitespace-nowrap text-fg-on-dark-primary">
+                    <span className="text-h3 font-semibold leading-snug tabular-nums whitespace-nowrap text-fg-on-dark-primary">
                       <AnimatedStat prefix={s.prefix} countTo={s.countTo} suffix={s.suffix} ready={heroReady} />
                     </span>
                     <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-on-dark-opacity-64">{s.label}</span>
@@ -1495,7 +1489,6 @@ function XRExperiences({ lang, isDark }) {
           </div>
         </section>
 
-        {/* ── Content sections ── */}
         <div className="flex flex-col items-center">
           {/* Centred reading column — same max-width AND horizontal padding as
               Canap + Sales Platform (px-6 sm:px-8 lg:px-10, max-w-[52rem]) so the
@@ -1647,7 +1640,6 @@ function XRExperiences({ lang, isDark }) {
                   )}
 
 
-                  {/* Team table */}
                   {section.team && (
                     <div className="max-w-xl">
                       <TeamTable members={section.team} />
@@ -1655,7 +1647,6 @@ function XRExperiences({ lang, isDark }) {
                   )}
 
 
-                  {/* Event space sketch */}
                   {section.id === 'what' && (
                     <figure className="flex flex-col gap-2 max-w-lg mx-auto">
                       <img
@@ -1668,7 +1659,6 @@ function XRExperiences({ lang, isDark }) {
                     </figure>
                   )}
 
-                  {/* Experience cards grid */}
                   {section.experiences && (
                     <div className="flex flex-col divide-y divide-black/[0.06] dark:divide-white/[0.06] max-w-3xl">
                       {section.experiences.map((exp, i) => (
@@ -1686,14 +1676,12 @@ function XRExperiences({ lang, isDark }) {
 
                 </CollapsibleSection>
               ))}
-              {/* ── Tools row ── */}
               <div className="pb-16 sm:pb-20 flex justify-center">
                 <XRToolsSection label={t.toolsLabel} categories={t.toolCategories} />
               </div>
           </div>
         </div>
 
-        {/* ── Outro ── */}
         <div className="py-16 sm:py-20">
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10">
             <Link

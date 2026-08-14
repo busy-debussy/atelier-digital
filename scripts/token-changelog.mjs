@@ -18,8 +18,6 @@ const SNAPSHOT_PATH = join(ROOT, 'tokens.snapshot.json');
 const CHANGELOG_DIR = join(ROOT, 'src/tokens');
 const CHANGELOG_PATH = join(CHANGELOG_DIR, 'changelog.json');
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
 /** Recursively flatten a nested token tree to a path→{value,type} map. */
 function flatten(obj, prefix = '') {
   const out = {};
@@ -55,8 +53,6 @@ function diff(prev, next) {
   return changes.sort((a, b) => a.path.localeCompare(b.path));
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
-
 const current = JSON.parse(readFileSync(TOKENS_PATH, 'utf8'));
 const flatCurrent = flatten(current);
 
@@ -66,7 +62,6 @@ const flatPrev = existsSync(SNAPSHOT_PATH)
 
 const changes = diff(flatPrev, flatCurrent);
 
-// Load or initialise changelog
 mkdirSync(CHANGELOG_DIR, { recursive: true });
 const changelog = existsSync(CHANGELOG_PATH)
   ? JSON.parse(readFileSync(CHANGELOG_PATH, 'utf8'))
@@ -91,6 +86,5 @@ if (changes.length > 0) {
   console.log('token-changelog: no changes since last snapshot');
 }
 
-// Always refresh snapshot
 writeFileSync(SNAPSHOT_PATH, JSON.stringify(current, null, 2));
 console.log('token-changelog: snapshot updated');

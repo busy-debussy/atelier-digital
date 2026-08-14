@@ -1,4 +1,32 @@
 {
+  "family": {
+    "inter": {
+      "$value": "'Inter', sans-serif",
+      "$type": "fontFamily"
+    },
+    "mono": {
+      "$value": "'Menlo', monospace",
+      "$type": "fontFamily"
+    }
+  },
+  "weight": {
+    "regular": {
+      "$value": 400,
+      "$type": "fontWeight"
+    },
+    "medium": {
+      "$value": 500,
+      "$type": "fontWeight"
+    },
+    "semibold": {
+      "$value": 600,
+      "$type": "fontWeight"
+    },
+    "bold": {
+      "$value": 700,
+      "$type": "fontWeight"
+    }
+  },
   "color": {
     "Z": {
       "0": {
@@ -548,55 +576,55 @@
     }
   },
   "spacing": {
-    "space-1": {
+    "p-1": {
       "$value": "4px",
       "$type": "dimension"
     },
-    "space-2": {
+    "p-2": {
       "$value": "8px",
       "$type": "dimension"
     },
-    "space-3": {
+    "p-3": {
       "$value": "12px",
       "$type": "dimension"
     },
-    "space-4": {
+    "p-4": {
       "$value": "16px",
       "$type": "dimension"
     },
-    "space-5": {
+    "p-5": {
       "$value": "20px",
       "$type": "dimension"
     },
-    "space-6": {
+    "p-6": {
       "$value": "24px",
       "$type": "dimension"
     },
-    "space-7": {
+    "p-7": {
       "$value": "28px",
       "$type": "dimension"
     },
-    "space-8": {
+    "p-8": {
       "$value": "32px",
       "$type": "dimension"
     },
-    "space-10": {
+    "p-10": {
       "$value": "40px",
       "$type": "dimension"
     },
-    "space-12": {
+    "p-12": {
       "$value": "48px",
       "$type": "dimension"
     },
-    "space-16": {
+    "p-16": {
       "$value": "64px",
       "$type": "dimension"
     },
-    "space-20": {
+    "p-20": {
       "$value": "80px",
       "$type": "dimension"
     },
-    "space-24": {
+    "p-24": {
       "$value": "96px",
       "$type": "dimension"
     }
@@ -1281,6 +1309,20 @@
             "$value": "{color.TB.100}",
             "$type": "color"
           }
+        },
+        "error": {
+          "bg": {
+            "$value": "#fff3f3",
+            "$type": "color"
+          },
+          "border": {
+            "$value": "#ffd5d5",
+            "$type": "color"
+          },
+          "fg": {
+            "$value": "#391111",
+            "$type": "color"
+          }
         }
       },
       "accent": {
@@ -1508,12 +1550,12 @@
           "$value": "{color.TW.600}",
           "$type": "color"
         },
-        "keyboard-shortcut-bg": {
-          "$value": "{color.Z.100}",
+        "keyboard-shortcut-border": {
+          "$value": "{color.TW.700}",
           "$type": "color"
         },
         "keyboard-shortcut-fg": {
-          "$value": "{color.Z.800}",
+          "$value": "{color.Z.0}",
           "$type": "color"
         }
       },
@@ -1537,6 +1579,44 @@
         "dot-sea": {
           "$value": "{semantic.light.bg.page}",
           "$type": "color"
+        },
+        "country": {
+          "scotland": {
+            "$value": "#c9a84c",
+            "$type": "color"
+          },
+          "england": {
+            "$value": "#6b9ce8",
+            "$type": "color"
+          },
+          "uae": {
+            "$value": "#e8836b",
+            "$type": "color"
+          },
+          "vietnam": {
+            "$value": "#6bc4a0",
+            "$type": "color"
+          },
+          "purple": {
+            "$value": "#a360d5",
+            "$type": "color"
+          },
+          "pink": {
+            "$value": "#c770b2",
+            "$type": "color"
+          },
+          "indigo": {
+            "$value": "#547bbc",
+            "$type": "color"
+          },
+          "pistachio": {
+            "$value": "#8bab2f",
+            "$type": "color"
+          },
+          "red": {
+            "$value": "#c85b5c",
+            "$type": "color"
+          }
         }
       },
       "lightbox": {
@@ -1785,6 +1865,20 @@
             "$value": "{color.TW.100}",
             "$type": "color"
           }
+        },
+        "error": {
+          "bg": {
+            "$value": "#1b0808",
+            "$type": "color"
+          },
+          "border": {
+            "$value": "#391111",
+            "$type": "color"
+          },
+          "fg": {
+            "$value": "#ffd5d5",
+            "$type": "color"
+          }
         }
       },
       "accent": {
@@ -2012,12 +2106,12 @@
           "$value": "{color.TB.300}",
           "$type": "color"
         },
-        "keyboard-shortcut-bg": {
-          "$value": "{color.Z.600}",
+        "keyboard-shortcut-border": {
+          "$value": "{color.TB.700}",
           "$type": "color"
         },
         "keyboard-shortcut-fg": {
-          "$value": "{color.Z.300}",
+          "$value": "{color.Z.1000}",
           "$type": "color"
         }
       },
@@ -2041,6 +2135,44 @@
         "dot-sea": {
           "$value": "{semantic.dark.bg.page}",
           "$type": "color"
+        },
+        "country": {
+          "scotland": {
+            "$value": "#ffd97d",
+            "$type": "color"
+          },
+          "england": {
+            "$value": "#88ccff",
+            "$type": "color"
+          },
+          "uae": {
+            "$value": "#ffb870",
+            "$type": "color"
+          },
+          "vietnam": {
+            "$value": "#88ee80",
+            "$type": "color"
+          },
+          "purple": {
+            "$value": "#cc88ff",
+            "$type": "color"
+          },
+          "pink": {
+            "$value": "#ffaaee",
+            "$type": "color"
+          },
+          "indigo": {
+            "$value": "#88aaee",
+            "$type": "color"
+          },
+          "pistachio": {
+            "$value": "#b8e050",
+            "$type": "color"
+          },
+          "red": {
+            "$value": "#ff9090",
+            "$type": "color"
+          }
         }
       },
       "lightbox": {

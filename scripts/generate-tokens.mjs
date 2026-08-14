@@ -13,8 +13,6 @@ import { fileURLToPath } from 'url';
 
 const ROOT = join(fileURLToPath(import.meta.url), '../../');
 
-// ─── Load .env.local ──────────────────────────────────────────────────────────
-
 function loadEnvLocal() {
   const envPath = join(ROOT, '.env.local');
   if (!existsSync(envPath)) return;
@@ -29,8 +27,6 @@ function loadEnvLocal() {
   }
 }
 loadEnvLocal();
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function toHex(r, g, b) {
   return '#' + [r, g, b].map(v => Math.round(v * 255).toString(16).padStart(2, '0')).join('');
@@ -66,7 +62,6 @@ function setDeep(obj, path, val) {
   cur[parts[parts.length - 1]] = val;
 }
 
-// ─── Known Figma → canonical name renames ────────────────────────────────────
 // When you rename a variable in Figma, add an entry here so the CSS variable
 // names (and Tailwind short aliases) stay stable.
 // Format:  'figma-variable-name': 'canonical-token-name-in-this-file'
@@ -107,8 +102,6 @@ const FIGMA_RENAMES = {
   'size/brand/logo':          'font-size/brand/logo',
 };
 
-// ─── Figma Variables REST API ────────────────────────────────────────────────
-
 const PRIMITIVE_GROUPS = new Set([
   'Z','TB','TW','red','yellow','orange','pink','purple',
   'sky','indigo','pistachio','green','cta',
@@ -127,7 +120,6 @@ async function fetchFigmaVariables(token, fileKey) {
 function parseFigmaVariables(meta) {
   const { variableCollections, variables } = meta;
 
-  // Build id → variable lookup
   const varById = {};
   for (const v of Object.values(variables)) varById[v.id] = v;
 
@@ -237,7 +229,6 @@ function findModeId(modeByNorm, fragments) {
 
 // Merge Figma data over hardcoded defaults (Figma wins for matching keys)
 function mergeWithDefaults(figma, defaults) {
-  // --- Primitives ---
   const primitives = structuredClone(defaults.primitives);
   for (const [group, shades] of Object.entries(figma.primitives)) {
     if (!primitives[group]) primitives[group] = {};
@@ -246,14 +237,12 @@ function mergeWithDefaults(figma, defaults) {
     }
   }
 
-  // --- Semantic ---
   const semMap = new Map(defaults.semanticRaw.map(s => [s.name, { ...s }]));
   for (const entry of figma.semanticRaw) {
     semMap.set(entry.name, entry);
   }
   const semanticRaw = Array.from(semMap.values());
 
-  // --- Typography ---
   const typography = { desktop: { ...defaults.typography.desktop }, tablet: { ...defaults.typography.tablet }, mobile: { ...defaults.typography.mobile } };
   for (const bp of ['desktop', 'tablet', 'mobile']) {
     for (const [name, val] of Object.entries(figma.typography[bp])) {
@@ -261,13 +250,11 @@ function mergeWithDefaults(figma, defaults) {
     }
   }
 
-  // --- Spacing ---
   const spacing = { ...defaults.spacing };
   for (const [name, val] of Object.entries(figma.spacing)) {
     if (typeof val === 'number') spacing[name] = val;
   }
 
-  // --- Radius ---
   const radius = { ...defaults.radius };
   for (const [name, val] of Object.entries(figma.radius)) {
     if (typeof val === 'number') radius[name] = val;
@@ -276,7 +263,6 @@ function mergeWithDefaults(figma, defaults) {
   return { primitives, semanticRaw, typography, spacing, radius };
 }
 
-// ─── Hardcoded fallback data ──────────────────────────────────────────────────
 // These are used as defaults when Figma is unreachable, or for tokens that
 // aren't (yet) in the Figma file.  Figma values always take precedence.
 
@@ -523,8 +509,8 @@ const semanticRaw = [
   {"name":"tooltip/bg",                   "light":"Z/800",           "dark":"Z/50"},
   {"name":"tooltip/fg",                   "light":"Z/100",           "dark":"Z/800"},
   {"name":"tooltip/ring",                 "light":"TW/600",          "dark":"TB/300"},
-  {"name":"tooltip/keyboard-shortcut-bg", "light":"Z/100",           "dark":"Z/600"},
-  {"name":"tooltip/keyboard-shortcut-fg", "light":"Z/800",           "dark":"Z/300"},
+  {"name":"tooltip/keyboard-shortcut-border", "light":"TW/700",      "dark":"TB/700"},
+  {"name":"tooltip/keyboard-shortcut-fg", "light":"Z/0",             "dark":"Z/1000"},
   {"name":"map/dot-rest",                 "light":"Z/200",           "dark":"Z/600"},
   {"name":"map/dot-inactive",             "light":"Z/100",           "dark":"Z/700"},
   {"name":"map/tz-label-bg",              "light":"TB/100",          "dark":"TW/100"},
@@ -609,8 +595,6 @@ const radiusValues = {
   'radius-18': 72,'radius-full': 9999,
 };
 
-// ─── Fetch from Figma (if credentials are available) ─────────────────────────
-
 const figmaToken   = process.env.FIGMA_TOKEN;
 const figmaFileKey = process.env.FIGMA_FILE_KEY;
 
@@ -651,9 +635,20 @@ if (figmaToken && figmaFileKey) {
   console.log('No FIGMA_TOKEN in .env.local — using hardcoded values.');
 }
 
-// ─── Build tokens object ──────────────────────────────────────────────────────
-
 const tokens = {
+  // Font family + weight are hand-maintained, not Figma variables — inject them
+  // here so a regen never drops them (they live nowhere else, so omitting them
+  // would strip --family-inter / --weight-* from base.css and break site fonts).
+  family: {
+    inter: { $value: "'Inter', sans-serif", $type: 'fontFamily' },
+    mono:  { $value: "'Menlo', monospace",  $type: 'fontFamily' },
+  },
+  weight: {
+    regular:  { $value: 400, $type: 'fontWeight' },
+    medium:   { $value: 500, $type: 'fontWeight' },
+    semibold: { $value: 600, $type: 'fontWeight' },
+    bold:     { $value: 700, $type: 'fontWeight' },
+  },
   color: {},
   spacing: {},
   radius: {},
@@ -661,7 +656,6 @@ const tokens = {
   semantic: { light: {}, dark: {} },
 };
 
-// Color primitives
 for (const [group, shades] of Object.entries(merged.primitives)) {
   tokens.color[group] = {};
   for (const [shade, rgba] of Object.entries(shades)) {
@@ -669,27 +663,63 @@ for (const [group, shades] of Object.entries(merged.primitives)) {
   }
 }
 
-// Spacing
 for (const [name, val] of Object.entries(merged.spacing)) {
   tokens.spacing[name] = { $value: `${val}px`, $type: 'dimension' };
 }
 
-// Radius
 for (const [name, val] of Object.entries(merged.radius)) {
   tokens.radius[name] = { $value: `${val}px`, $type: 'dimension' };
 }
 
-// Typography
 for (const [breakpoint, vars] of Object.entries(merged.typography)) {
   for (const [name, val] of Object.entries(vars)) {
     setDeep(tokens.typography[breakpoint], name, { $value: `${val}px`, $type: 'dimension' });
   }
 }
 
-// Semantic tokens
 for (const { name, light, dark } of merged.semanticRaw) {
   setDeep(tokens.semantic.light, name, { $value: aliasToRef(light, 'light'), $type: 'color' });
   setDeep(tokens.semantic.dark,  name, { $value: aliasToRef(dark,  'dark'),  $type: 'color' });
+}
+
+// Hand-maintained semantic colours that are NOT Figma variables — inject them
+// so a regen can't drop them. feedback-error backs the error callouts; the
+// map-country-* set colours the world/team-map dots and pills. Raw hex (not
+// primitive aliases) by design, matching their original values.
+const EXTRA_SEMANTIC = {
+  light: {
+    'feedback/error/bg': '#fff3f3',
+    'feedback/error/border': '#ffd5d5',
+    'feedback/error/fg': '#391111',
+    'map/country/scotland': '#c9a84c',
+    'map/country/england': '#6b9ce8',
+    'map/country/uae': '#e8836b',
+    'map/country/vietnam': '#6bc4a0',
+    'map/country/purple': '#a360d5',
+    'map/country/pink': '#c770b2',
+    'map/country/indigo': '#547bbc',
+    'map/country/pistachio': '#8bab2f',
+    'map/country/red': '#c85b5c',
+  },
+  dark: {
+    'feedback/error/bg': '#1b0808',
+    'feedback/error/border': '#391111',
+    'feedback/error/fg': '#ffd5d5',
+    'map/country/scotland': '#ffd97d',
+    'map/country/england': '#88ccff',
+    'map/country/uae': '#ffb870',
+    'map/country/vietnam': '#88ee80',
+    'map/country/purple': '#cc88ff',
+    'map/country/pink': '#ffaaee',
+    'map/country/indigo': '#88aaee',
+    'map/country/pistachio': '#b8e050',
+    'map/country/red': '#ff9090',
+  },
+};
+for (const theme of ['light', 'dark']) {
+  for (const [path, value] of Object.entries(EXTRA_SEMANTIC[theme])) {
+    setDeep(tokens.semantic[theme], path, { $value: value, $type: 'color' });
+  }
 }
 
 writeFileSync(join(ROOT, 'tokens.json'), JSON.stringify(tokens, null, 2));

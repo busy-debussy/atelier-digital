@@ -323,7 +323,6 @@ function Hero({ lang }) {
   return (
     <section aria-labelledby="hero-heading" lang={lang} className="relative min-h-screen flex flex-col overflow-hidden" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
 
-      {/* Background image */}
       <picture className="absolute inset-0 w-full h-full">
         <source media="(min-width: 640px)" srcSet={imgHero} />
         <img
@@ -364,7 +363,7 @@ function Hero({ lang }) {
           {h.category}
         </span>
 
-        <h1 id="hero-heading" className="text-display-1 font-bold leading-tight text-white max-w-3xl transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
+        <h1 id="hero-heading" className="text-display-2 font-semibold leading-tight text-white max-w-3xl transition-opacity duration-700" style={{ opacity: heroReady ? 1 : 0 }}>
           {h.title}
         </h1>
 
@@ -373,7 +372,7 @@ function Hero({ lang }) {
             const finalValue = s.decimals > 0 ? s.countTo.toFixed(s.decimals) : s.countTo;
             return (
               <li key={i} className="flex flex-col gap-1">
-                <span className="text-display-2 font-semibold leading-tight text-white tabular-nums whitespace-nowrap">
+                <span className="text-h3 font-semibold leading-snug text-white tabular-nums whitespace-nowrap">
                   <span className="sr-only">{s.prefix}{finalValue}{s.suffix}</span>
                   <span><AnimatedStat prefix={s.prefix} countTo={s.countTo} decimals={s.decimals} suffix={s.suffix} ready={heroReady} /></span>
                 </span>
@@ -505,10 +504,6 @@ const CONTEXT_BODIES = {
         { value: "10 projects", label: "in first year" },
       ],
       body: <ul className="list-disc pl-5 space-y-2"><li>Led <strong>4 designers</strong> across <strong>UX, UI, interaction</strong>, and <strong>visual design</strong>.</li><li>Partnered with <strong>product, engineering</strong>, and <strong>3D studio</strong> to define and deliver <strong>MVP through to launch</strong> and subsequent launches.</li></ul>,
-      keyDecisions: <>
-        <strong>Pre-rendered 3D over real-time</strong><br />→ Faster load, scalable<br />→ Reduced interactivity<br /><br />
-        <strong>Desktop-first MVP</strong><br />→ Enabled reliable launch-day sales<br />→ Delayed mobile optimisation
-      </>,
     },
     fr: {
       stats: [
@@ -516,10 +511,6 @@ const CONTEXT_BODIES = {
         { value: "10 projets",   label: "la premi\u00e8re ann\u00e9e" },
       ],
       body: <ul className="list-disc pl-5 space-y-2"><li>Dirigé <strong>4 designers</strong> couvrant l'<strong>UX, l'UI, l'interaction</strong> et le <strong>design visuel</strong>.</li><li>Collaboration avec <strong>produit, ingénierie</strong> et <strong>studio 3D</strong> pour définir et livrer le <strong>MVP jusqu'au lancement</strong> et les lancements suivants.</li></ul>,
-      keyDecisions: <>
-        <strong>Rendu pré-calculé vs temps réel</strong><br />→ Chargement rapide, scalable<br />→ Interactivité réduite<br /><br />
-        <strong>MVP desktop-first</strong><br />→ Ventes du jour J fiabilisées<br />→ Optimisation mobile différée
-      </>,
     },
   },
   team: {
@@ -653,7 +644,7 @@ function ContextContent({ lang, isDark }) {
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
       {/* Client + Mission + Scope share one card; each subsection groups its
           eyebrow with its body, and the Tile's gap separates the three. */}
-      <Tile bgClass="bg-bg-surface">
+      <Tile bgClass="bg-bg-page">
         {/* Inner wrapper sets the gap BETWEEN subsections (larger), while each
             subsection keeps its eyebrow + body tight. */}
         <div className="flex flex-col gap-8 sm:gap-10">
@@ -670,7 +661,7 @@ function ContextContent({ lang, isDark }) {
         </div>
       </Tile>
 
-      <Tile bgClass="bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]">
+      <Tile bgClass="bg-bg-page">
         <TileEyebrow id="ctx-team">{eyebrows[6]}</TileEyebrow>
         <TileBody>{CONTEXT_BODIES.team[l]}</TileBody>
         <div className="mt-3 max-w-2xl mx-auto w-full">
@@ -693,22 +684,13 @@ function ContextContent({ lang, isDark }) {
         <TileBody>{CONTEXT_BODIES.myRole[l].body}</TileBody>
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 lg:gap-[60px]">
           {CONTEXT_BODIES.myRole[l].stats.map((s, i) => (
-            <div key={i} data-squircle className="flex-1 rounded-radius-4 bg-feedback-neutral-bg border border-feedback-neutral-border px-5 py-4 flex flex-col gap-1">
+            <div key={i} data-squircle className="flex-1 rounded-radius-4 bg-bg-page border border-black/[0.08] dark:border-white/[0.10] px-5 py-4 flex flex-col gap-1">
               <span className="text-h3 font-semibold leading-snug text-fg-primary">{s.value}</span>
               <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted">{s.label}</span>
             </div>
           ))}
         </div>
       </Tile>
-
-      {CONTEXT_BODIES.myRole[l].keyDecisions && (
-        <div id="ctx-decisions" data-squircle className="rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-palette-sky-bg border border-palette-indigo-bg p-6 sm:p-12 lg:p-[60px] flex flex-col gap-4 sm:gap-5 lg:gap-6">
-          <div className="flex items-center gap-2">
-            <h3 className="text-h3 font-semibold leading-snug text-palette-indigo-fg">{l === 'fr' ? 'Décisions clés' : 'Key decisions'}</h3>
-          </div>
-          <div className={tileBodyText}>{CONTEXT_BODIES.myRole[l].keyDecisions}</div>
-        </div>
-      )}
     </div>
   );
 }
@@ -747,7 +729,7 @@ function ImpactContent({ lang }) {
         <TileEyebrow id="imp-outcome">{t.outcome.eyebrow}</TileEyebrow>
         <TileBody>{t.outcome.body}</TileBody>
       </Tile>
-      <Tile bgClass="bg-bg-surface">
+      <Tile bgClass="bg-bg-page border border-black/[0.08] dark:border-white/[0.10]">
         <TileEyebrow id="imp-retrospective">{t.retrospective.eyebrow}</TileEyebrow>
         <TileBody>{t.retrospective.body}</TileBody>
       </Tile>
@@ -801,7 +783,7 @@ const DEFINE = {
   en: {
     challenge: {
       eyebrow: "Problem",
-      body: <>How can we help buyers explore <strong className="text-fg-on-dark-primary">unbuilt properties</strong> across multiple locations in an <strong className="text-fg-on-dark-primary">engaging</strong>, <strong className="text-fg-on-dark-primary">contextual</strong> way?</>,
+      body: <>How can we help buyers explore <strong className="text-fg-on-dark-primary">unbuilt properties</strong> across multiple locations in an <strong className="text-fg-on-dark-primary">engaging</strong> and <strong className="text-fg-on-dark-primary">contextual</strong> way?</>,
       warningCallout: { emoji: '⚠️', label: 'Key constraints', body: <><span className="block"><strong>Technical limitations:</strong> Large 3D datasets made real-time rendering expensive and slow.</span><span className="block mt-6"><strong>Tight deadlines:</strong> The first launch was only <strong>15 weeks away</strong>, leaving limited time for research or feature development.</span><span className="block mt-6"><strong>Client expectations:</strong> The client wanted a <strong>premium, user-friendly experience</strong> and made final decisions on key features.</span></> },
     },
     exploration: {
@@ -1051,7 +1033,6 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
       className="fixed inset-0 z-[600]"
       style={{ animation: 'fade-in 0.2s ease both', background: 'rgba(0,0,0,0.95)' }}
     >
-      {/* Slide track */}
       <div
         ref={trackRef}
         onScroll={handleScroll}
@@ -1079,12 +1060,10 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
         ))}
       </div>
 
-      {/* Counter */}
       <span className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 text-label-s font-medium leading-[1.2] text-fg-on-dark-opacity-64 tabular-nums pointer-events-none">
         {index + 1} / {slides.length}
       </span>
 
-      {/* Close */}
       <button
         ref={closeButtonRef}
         onClick={onClose}
@@ -1095,7 +1074,6 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
         <img src={imgClose} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
 
-      {/* Prev */}
       <button
         data-spring
         onClick={() => scrollToSlide(Math.max(0, index - 1))}
@@ -1106,7 +1084,6 @@ function Lightbox({ slides, initialIndex, lang, onClose }) {
         <img src={imgChevronLeft} alt="" width={20} height={20} className="brightness-0 invert" />
       </button>
 
-      {/* Next */}
       <button
         data-spring
         onClick={() => scrollToSlide(Math.min(slides.length - 1, index + 1))}
@@ -1840,7 +1817,7 @@ function DesignContent({ lang, isDark, carouselHinted, onCarouselInteract }) {
                      : { desktop: imgUserflowDesktopLightEn, tablet: imgUserflowTabletLightEn, mobile: imgUserflowMobileLightEn });
   return (
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-      <Tile bgClass="bg-bg-surface md:bg-bg-page">
+      <Tile bgClass="bg-bg-page border border-black/[0.08] dark:border-white/[0.10]">
         <div className={`${designTextOffset} flex flex-col gap-4 sm:gap-5 lg:gap-6`}>
           <TileEyebrow id="des-flow">{d.userFlow.eyebrow}</TileEyebrow>
           <div className={tileBodyText}>{d.userFlow.body}</div>
@@ -2061,14 +2038,14 @@ function SecondaryNav({ sections, activeId, activeSubId, onNavigate, visible, la
                   background expands to wrap the main item and its sub-items as
                   one group, so the sub-items read as nested rather than as more
                   top-level links. Active-without-subs stays a simple pill. */}
-              <div className={isActive && s.subsections?.length > 0 ? 'bg-nav-active-bg rounded-radius-4' : ''}>
+              <div className={`border ${isActive && s.subsections?.length > 0 ? 'bg-bg-page border-black/[0.08] dark:border-white/[0.10] rounded-radius-4' : 'border-transparent'}`}>
               <button
                 onClick={() => onNavigate(s.id)}
                 aria-current={isActive ? 'location' : undefined}
-                className={`relative text-tooltip leading-snug py-2 px-3 rounded-full text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
+                className={`relative text-tooltip leading-snug py-2 px-3 rounded-full text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus border ${
                   isActive
-                    ? `text-fg-primary font-semibold${s.subsections?.length > 0 ? '' : ' bg-nav-active-bg'}`
-                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
+                    ? `text-fg-primary font-semibold${s.subsections?.length > 0 ? ' border-transparent' : ' bg-bg-page border-black/[0.08] dark:border-white/[0.10]'}`
+                    : 'text-fg-muted font-normal border-transparent hover:text-fg-primary hover:bg-nav-active-bg'
                 }`}
               >
                 <span aria-hidden="true" className="font-semibold invisible block select-none whitespace-nowrap">{s.title}</span>
@@ -2190,7 +2167,7 @@ function MobileSecondaryNav({ sections, activeId, onNavigate }) {
 }
 
 // ── Accordion section ─────────────────────────────────────────────────────────
-function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgClass, openHeaderDark = false, contentBgClass = 'bg-bg-surface', contentInnerBgClass, contentClass = '', first = false }) {
+function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgClass, collapsedBgClass, openHeaderDark = false, contentBgClass = 'bg-bg-surface', contentInnerBgClass, contentClass = '', first = false }) {
   const [open, setOpen] = useState(true);
   const [hidden, setHidden] = useState(false);
   // The collapse/expand accordion is only active when the secondary nav is
@@ -2244,7 +2221,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
   // lands at the identical x as Canap. The chevron only renders when collapsible.
   const headerInner = (
     <div className="w-full md:max-w-2xl lg:max-w-[52rem] md:mx-auto px-6 sm:px-8 lg:px-10 flex items-center justify-between gap-4">
-      <h2 id={headingId} className={`text-h2 font-bold leading-tight pl-6 sm:pl-12 lg:pl-[60px] ${darkHeader ? 'text-white' : 'text-fg-primary'}`}>
+      <h2 id={headingId} className={`text-h2 font-semibold leading-tight pl-6 sm:pl-12 lg:pl-[60px] ${darkHeader ? 'text-white' : 'text-fg-primary'}`}>
         {title}
       </h2>
       {collapsible && (
@@ -2259,13 +2236,25 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
     </div>
   );
 
+  // While collapsing, the header snaps to collapsedBgClass the instant the
+  // toggle fires, but content stays visible (shrinking) for another 300ms —
+  // if it kept its "open" color underneath the now-different header, that
+  // reads as a seam/pop instead of a smooth change. Forcing content to the
+  // same collapsedBgClass for that window (content is fully hidden again
+  // once open, so its own open-state color/gradient is unaffected) mirrors
+  // DigitalTwin's Section, where header and content share one background.
+  const collapsedOverride = collapsible && !open && collapsedBgClass ? collapsedBgClass : null;
+  const headerBgResolved = collapsedOverride ?? (sectionOpen && openHeaderBgClass ? openHeaderBgClass : headerBgClass);
+  const contentBgResolved = collapsedOverride ?? contentBgClass;
+  const contentInnerBgResolved = collapsedOverride ?? (contentInnerBgClass ?? contentBgClass);
+
   return (
     <section id={id} aria-labelledby={headingId} className={`overflow-hidden ${first ? '' : 'scroll-mt-20'}`}>
 
       {/* Header — a collapse/expand toggle only when the secondary nav is hidden
           (< 920px). With the secondary nav shown (≥920px) it's a plain,
           always-expanded heading with no chevron. */}
-      <div className={sectionOpen && openHeaderBgClass ? openHeaderBgClass : headerBgClass}>
+      <div className={headerBgResolved}>
       {collapsible ? (
         <button
           ref={btnRef}
@@ -2276,7 +2265,7 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
           }
           aria-expanded={open}
           aria-controls={`${id}-content`}
-          className={`w-full max-w-5xl mx-auto py-6 sm:py-7 lg:py-8 flex items-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary${first ? ' pt-20 sm:pt-28 lg:pt-36' : ''}`}
+          className={`w-full max-w-5xl mx-auto py-12 sm:py-12 lg:py-8 flex items-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary${first ? ' pt-20 sm:pt-28 lg:pt-36' : ''}`}
         >
           {headerInner}
         </button>
@@ -2291,11 +2280,11 @@ function Section({ id, title, lang, children, headerBgClass = '', openHeaderBgCl
         ref={gridRef}
         id={`${id}-content`}
         style={collapsible && hidden ? { display: 'none' } : undefined}
-        className={`grid overflow-hidden [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${sectionOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} ${contentBgClass}`}
+        className={`grid overflow-hidden [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${sectionOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} ${contentBgResolved}`}
         inert={!sectionOpen}
       >
         <div ref={contentRef} className="overflow-hidden min-h-0">
-          <div className={contentInnerBgClass ?? contentBgClass}>
+          <div className={contentInnerBgResolved}>
             <div className={`max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 ${contentClass}`}>
               {children ?? (
                 <p className="text-fg-muted text-copy-m">Content coming soon.</p>
@@ -2315,7 +2304,6 @@ const SECTIONS = {
     { id: 'context',   title: 'Context',   subsections: [
       { id: 'ctx-team',         title: 'Our team'      },
       { id: 'ctx-role',         title: 'My role'       },
-      { id: 'ctx-decisions',    title: 'Decisions' },
     ]},
     { id: 'emphasise', title: 'Emphasise', subsections: [
       { id: 'emp-audience', title: 'Audience' },
@@ -2342,7 +2330,6 @@ const SECTIONS = {
     { id: 'context',   title: 'Contexte',   subsections: [
       { id: 'ctx-team',         title: 'Notre équipe'      },
       { id: 'ctx-role',         title: 'Mon rôle'          },
-      { id: 'ctx-decisions',    title: 'Décisions'    },
     ]},
     { id: 'emphasise', title: 'Comprendre', subsections: [
       { id: 'emp-audience', title: "L'audience" },
@@ -2397,7 +2384,7 @@ function SalesPlatform({ lang, isDark }) {
   };
 
   useEffect(() => {
-    document.title = lang === 'fr' ? 'Web App • Atelier Digital' : 'Web App • Atelier Digital';
+    document.title = 'Web App • Sales Platform';
     trackEvent('case_study_view', { study: 'sales_platform' });
   }, [lang]);
 
@@ -2500,11 +2487,14 @@ function SalesPlatform({ lang, isDark }) {
               id === 'define'    ? 'bg-bg-surface' : ''
             }
             openHeaderBgClass={
-              id === 'context' ? 'bg-bg-page' :
+              id === 'context' ? 'bg-bg-surface' :
               id === 'impact'  ? 'bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]' : undefined
             }
+            collapsedBgClass={
+              id === 'context' || id === 'emphasise' || id === 'define' || id === 'impact' ? 'bg-bg-page' : undefined
+            }
             contentBgClass={
-              id === 'context' ? 'bg-gradient-to-b from-white to-[#f6f6f6] dark:from-[#141414] dark:to-[#1f1f1f]' :
+              id === 'context' ? 'bg-bg-surface' :
               id === 'define'  ? 'bg-gradient-to-b from-[#f6f6f6] via-white to-[#f6f6f6] dark:from-[#1f1f1f] dark:via-[#141414] dark:to-[#1f1f1f]' :
               id === 'design'  ? 'bg-bg-page' :
               id === 'impact' ? 'bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]' :
@@ -2521,12 +2511,10 @@ function SalesPlatform({ lang, isDark }) {
           </Section>
         ))}
 
-        {/* ── Tools row ── */}
         <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 pt-16 sm:pt-20 pb-16 sm:pb-20 flex justify-center">
           <ToolsGrid lang={lang} />
         </div>
 
-        {/* ── Outro ── */}
         <div className="py-16 sm:py-20">
           <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10">
             <Link

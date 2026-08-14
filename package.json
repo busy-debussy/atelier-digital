@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "upload:assets": "node --env-file=.env.local scripts/upload-protected-assets.mjs",
     "tokens": "node scripts/token-changelog.mjs && node scripts/generate-tokens.mjs && node -e \"import StyleDictionary from 'style-dictionary'; import config from './style-dictionary.config.mjs'; const sd = new StyleDictionary(config); await sd.buildAllPlatforms();\" && node scripts/generate-tailwind-config.mjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -21,7 +22,8 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.2",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.2",
+    "vercel": "^54.14.5"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.1.1",

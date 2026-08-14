@@ -1,5 +1,592 @@
 [
   {
+    "timestamp": "2026-08-08T13:32:09.475Z",
+    "changeCount": 2,
+    "summary": {
+      "added": 0,
+      "modified": 2,
+      "removed": 0
+    },
+    "changes": [
+      {
+        "path": "semantic.dark.tooltip.keyboard-shortcut-border",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.Z.600}",
+        "after": "{color.TB.700}"
+      },
+      {
+        "path": "semantic.light.tooltip.keyboard-shortcut-border",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.Z.100}",
+        "after": "{color.TW.700}"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-08-08T10:06:51.564Z",
+    "changeCount": 30,
+    "summary": {
+      "added": 26,
+      "modified": 2,
+      "removed": 2
+    },
+    "changes": [
+      {
+        "path": "semantic.dark.feedback.error.bg",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#1b0808"
+      },
+      {
+        "path": "semantic.dark.feedback.error.border",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#391111"
+      },
+      {
+        "path": "semantic.dark.feedback.error.fg",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#ffd5d5"
+      },
+      {
+        "path": "semantic.dark.map.country.england",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#88ccff"
+      },
+      {
+        "path": "semantic.dark.map.country.indigo",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#88aaee"
+      },
+      {
+        "path": "semantic.dark.map.country.pink",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#ffaaee"
+      },
+      {
+        "path": "semantic.dark.map.country.pistachio",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#b8e050"
+      },
+      {
+        "path": "semantic.dark.map.country.purple",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#cc88ff"
+      },
+      {
+        "path": "semantic.dark.map.country.red",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#ff9090"
+      },
+      {
+        "path": "semantic.dark.map.country.scotland",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#ffd97d"
+      },
+      {
+        "path": "semantic.dark.map.country.uae",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#ffb870"
+      },
+      {
+        "path": "semantic.dark.map.country.vietnam",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#88ee80"
+      },
+      {
+        "path": "semantic.dark.tooltip.keyboard-shortcut-bg",
+        "type": "color",
+        "change": "removed",
+        "before": "{color.Z.600}",
+        "after": null
+      },
+      {
+        "path": "semantic.dark.tooltip.keyboard-shortcut-border",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.Z.600}"
+      },
+      {
+        "path": "semantic.dark.tooltip.keyboard-shortcut-fg",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.Z.300}",
+        "after": "{color.Z.1000}"
+      },
+      {
+        "path": "semantic.light.feedback.error.bg",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#fff3f3"
+      },
+      {
+        "path": "semantic.light.feedback.error.border",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#ffd5d5"
+      },
+      {
+        "path": "semantic.light.feedback.error.fg",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#391111"
+      },
+      {
+        "path": "semantic.light.map.country.england",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#6b9ce8"
+      },
+      {
+        "path": "semantic.light.map.country.indigo",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#547bbc"
+      },
+      {
+        "path": "semantic.light.map.country.pink",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#c770b2"
+      },
+      {
+        "path": "semantic.light.map.country.pistachio",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#8bab2f"
+      },
+      {
+        "path": "semantic.light.map.country.purple",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#a360d5"
+      },
+      {
+        "path": "semantic.light.map.country.red",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#c85b5c"
+      },
+      {
+        "path": "semantic.light.map.country.scotland",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#c9a84c"
+      },
+      {
+        "path": "semantic.light.map.country.uae",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#e8836b"
+      },
+      {
+        "path": "semantic.light.map.country.vietnam",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "#6bc4a0"
+      },
+      {
+        "path": "semantic.light.tooltip.keyboard-shortcut-bg",
+        "type": "color",
+        "change": "removed",
+        "before": "{color.Z.100}",
+        "after": null
+      },
+      {
+        "path": "semantic.light.tooltip.keyboard-shortcut-border",
+        "type": "color",
+        "change": "added",
+        "before": null,
+        "after": "{color.Z.100}"
+      },
+      {
+        "path": "semantic.light.tooltip.keyboard-shortcut-fg",
+        "type": "color",
+        "change": "modified",
+        "before": "{color.Z.800}",
+        "after": "{color.Z.0}"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-22T09:44:11.647Z",
+    "changeCount": 6,
+    "summary": {
+      "added": 6,
+      "modified": 0,
+      "removed": 0
+    },
+    "changes": [
+      {
+        "path": "family.inter",
+        "type": "fontFamily",
+        "change": "added",
+        "before": null,
+        "after": "'Inter', sans-serif"
+      },
+      {
+        "path": "family.mono",
+        "type": "fontFamily",
+        "change": "added",
+        "before": null,
+        "after": "'Menlo', monospace"
+      },
+      {
+        "path": "weight.bold",
+        "type": "fontWeight",
+        "change": "added",
+        "before": null,
+        "after": 700
+      },
+      {
+        "path": "weight.medium",
+        "type": "fontWeight",
+        "change": "added",
+        "before": null,
+        "after": 500
+      },
+      {
+        "path": "weight.regular",
+        "type": "fontWeight",
+        "change": "added",
+        "before": null,
+        "after": 400
+      },
+      {
+        "path": "weight.semibold",
+        "type": "fontWeight",
+        "change": "added",
+        "before": null,
+        "after": 600
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-22T09:39:49.729Z",
+    "changeCount": 6,
+    "summary": {
+      "added": 0,
+      "modified": 0,
+      "removed": 6
+    },
+    "changes": [
+      {
+        "path": "family.inter",
+        "type": "fontFamily",
+        "change": "removed",
+        "before": "'Inter', sans-serif",
+        "after": null
+      },
+      {
+        "path": "family.mono",
+        "type": "fontFamily",
+        "change": "removed",
+        "before": "'Menlo', monospace",
+        "after": null
+      },
+      {
+        "path": "weight.bold",
+        "type": "fontWeight",
+        "change": "removed",
+        "before": 700,
+        "after": null
+      },
+      {
+        "path": "weight.medium",
+        "type": "fontWeight",
+        "change": "removed",
+        "before": 500,
+        "after": null
+      },
+      {
+        "path": "weight.regular",
+        "type": "fontWeight",
+        "change": "removed",
+        "before": 400,
+        "after": null
+      },
+      {
+        "path": "weight.semibold",
+        "type": "fontWeight",
+        "change": "removed",
+        "before": 600,
+        "after": null
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-22T08:32:10.104Z",
+    "changeCount": 32,
+    "summary": {
+      "added": 19,
+      "modified": 0,
+      "removed": 13
+    },
+    "changes": [
+      {
+        "path": "family.inter",
+        "type": "fontFamily",
+        "change": "added",
+        "before": null,
+        "after": "'Inter', sans-serif"
+      },
+      {
+        "path": "family.mono",
+        "type": "fontFamily",
+        "change": "added",
+        "before": null,
+        "after": "'Menlo', monospace"
+      },
+      {
+        "path": "spacing.p-1",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "4px"
+      },
+      {
+        "path": "spacing.p-10",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "40px"
+      },
+      {
+        "path": "spacing.p-12",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "48px"
+      },
+      {
+        "path": "spacing.p-16",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "64px"
+      },
+      {
+        "path": "spacing.p-2",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "8px"
+      },
+      {
+        "path": "spacing.p-20",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "80px"
+      },
+      {
+        "path": "spacing.p-24",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "96px"
+      },
+      {
+        "path": "spacing.p-3",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "12px"
+      },
+      {
+        "path": "spacing.p-4",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "16px"
+      },
+      {
+        "path": "spacing.p-5",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "20px"
+      },
+      {
+        "path": "spacing.p-6",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "24px"
+      },
+      {
+        "path": "spacing.p-7",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "28px"
+      },
+      {
+        "path": "spacing.p-8",
+        "type": "dimension",
+        "change": "added",
+        "before": null,
+        "after": "32px"
+      },
+      {
+        "path": "spacing.space-1",
+        "type": "dimension",
+        "change": "removed",
+        "before": "4px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-10",
+        "type": "dimension",
+        "change": "removed",
+        "before": "40px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-12",
+        "type": "dimension",
+        "change": "removed",
+        "before": "48px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-16",
+        "type": "dimension",
+        "change": "removed",
+        "before": "64px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-2",
+        "type": "dimension",
+        "change": "removed",
+        "before": "8px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-20",
+        "type": "dimension",
+        "change": "removed",
+        "before": "80px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-24",
+        "type": "dimension",
+        "change": "removed",
+        "before": "96px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-3",
+        "type": "dimension",
+        "change": "removed",
+        "before": "12px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-4",
+        "type": "dimension",
+        "change": "removed",
+        "before": "16px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-5",
+        "type": "dimension",
+        "change": "removed",
+        "before": "20px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-6",
+        "type": "dimension",
+        "change": "removed",
+        "before": "24px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-7",
+        "type": "dimension",
+        "change": "removed",
+        "before": "28px",
+        "after": null
+      },
+      {
+        "path": "spacing.space-8",
+        "type": "dimension",
+        "change": "removed",
+        "before": "32px",
+        "after": null
+      },
+      {
+        "path": "weight.bold",
+        "type": "fontWeight",
+        "change": "added",
+        "before": null,
+        "after": 700
+      },
+      {
+        "path": "weight.medium",
+        "type": "fontWeight",
+        "change": "added",
+        "before": null,
+        "after": 500
+      },
+      {
+        "path": "weight.regular",
+        "type": "fontWeight",
+        "change": "added",
+        "before": null,
+        "after": 400
+      },
+      {
+        "path": "weight.semibold",
+        "type": "fontWeight",
+        "change": "added",
+        "before": null,
+        "after": 600
+      }
+    ]
+  },
+  {
     "timestamp": "2026-04-13T17:02:57.610Z",
     "changeCount": 4,
     "summary": {

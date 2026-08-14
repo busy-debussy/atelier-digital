@@ -40,7 +40,7 @@
     "chip/fg-secondary": "secondary chip text",
     "btn/nav/bg/hover": "hover on nav inverts colour",
     "btn/nav/bg/inactive": "inactive buttons are invisible",
-    "tooltip/keyboard-shortcut-bg": "tooltip keyboard shortcut bg",
+    "tooltip/keyboard-shortcut-border": "tooltip keyboard shortcut stroke",
     "tooltip/keyboard-shortcut-fg": "tooltip keyboard shortcut text",
     "lightbox/bg": "backdrop scrim",
     "lightbox/btn-bg": "close + nav button rest",

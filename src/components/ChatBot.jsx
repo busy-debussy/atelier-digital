@@ -126,10 +126,8 @@ export default function ChatBot({ lang = 'en', onOpenChange }) {
 
   return (
     <>
-      {/* Dismiss overlay */}
       {open && <div className="fixed inset-0 z-[399]" onClick={() => setOpen(false)} aria-hidden="true" />}
 
-      {/* Chat panel */}
       <div
         {...(open ? { role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'chatbot-title', 'aria-live': 'polite' } : {})}
         inert={!open}
@@ -140,7 +138,6 @@ export default function ChatBot({ lang = 'en', onOpenChange }) {
       >
         <div className="bg-tooltip-bg/95 backdrop-blur-4 rounded-radius-7 shadow-m flex flex-col overflow-hidden" style={{ maxHeight: '520px' }}>
 
-          {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 shrink-0">
             <span id="chatbot-title" className="text-h6 font-semibold leading-tight text-fg-primary-inverse">{l.title}</span>
             <button
@@ -159,13 +156,11 @@ export default function ChatBot({ lang = 'en', onOpenChange }) {
             </button>
           </div>
 
-          {/* Cookie notice */}
           <p className="px-5 pb-3 text-fine-print leading-normal text-fg-primary-inverse/40 shrink-0">
             {l.cookieNotice}{' '}
             <a href="/cookies" className="underline text-fg-primary-inverse hover:opacity-70 transition-opacity">{l.cookieLink}</a>.
           </p>
 
-          {/* Messages */}
           <div className={`overflow-y-auto px-4 space-y-3 min-h-0 ${messages.length || loading ? 'flex-1 py-4' : ''}`} style={{ scrollbarWidth: 'none' }}>
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -212,7 +207,6 @@ export default function ChatBot({ lang = 'en', onOpenChange }) {
             <div ref={bottomRef} />
           </div>
 
-          {/* Input */}
           {!atLimit && (
             <div className={`px-4 py-4 shrink-0 flex items-end gap-2 ${messages.length || loading ? 'border-t border-inverted-subtle' : ''}`}>
               <textarea

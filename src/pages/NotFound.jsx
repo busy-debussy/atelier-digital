@@ -31,7 +31,6 @@ export default function NotFound({ lang }) {
       id="main-content"
       className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 pb-24 select-none"
     >
-      {/* Giant 404 */}
       <div className="relative mb-6">
         <span className="sr-only">{t.code}</span>
         <span
@@ -46,22 +45,18 @@ export default function NotFound({ lang }) {
         </span>
       </div>
 
-      {/* Eyebrow */}
       <p className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted mb-4">
         {t.eyebrow}
       </p>
 
-      {/* Heading */}
       <h1 className="text-h2 font-bold leading-tight text-fg-primary mb-4 whitespace-pre-line">
         {t.heading}
       </h1>
 
-      {/* Body */}
       <p className="max-w-sm text-copy-m font-normal leading-loose text-fg-muted mb-10">
         {t.body}
       </p>
 
-      {/* CTA */}
       <Link
         to="/"
         data-spring

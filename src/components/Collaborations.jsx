@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import imgChevronLeft  from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight from '../assets/icons/icon-chevron-right.svg';
+import imgChevronUp    from '../assets/icons/icon-chevron-up.svg';
 import imgClose        from '../assets/icons/icon-close-sm.svg';
 
-// Carousel (big) logos
 import imgGovUkLight  from '../assets/logos/clients/logo-uk-government-light.webp';
 import imgGovUkDark   from '../assets/logos/clients/logo-uk-government-dark.webp';
 import imgLgfLight      from '../assets/logos/clients/logo-lgf-light.webp';
@@ -24,7 +24,6 @@ import imgEdinDark    from '../assets/logos/clients/logo-university-of-edinburgh
 import imgIbm         from '../assets/logos/clients/logo-ibm.webp';
 import imgUke         from '../assets/logos/clients/logo-uke.webp';
 
-// Modal (small) logos
 import imgGovUkSmallLight  from '../assets/logos/clients/logo-uk-government-light-small.webp';
 import imgGovUkSmallDark   from '../assets/logos/clients/logo-uk-government-dark-small.webp';
 import imgDstlSmallLight   from '../assets/logos/clients/logo-dstl-light-small.webp';
@@ -41,7 +40,6 @@ import imgEdinSmallDark    from '../assets/logos/clients/logo-university-of-edin
 import imgIbmSmall         from '../assets/logos/clients/logo-ibm-small.webp';
 import imgUkeSmall         from '../assets/logos/clients/logo-uke-small.webp';
 
-// Logo data
 const logos = [
   { logo: imgGovUkLight, logoDark: imgGovUkDark,  logoSmall: imgGovUkSmallLight,  logoSmallDark: imgGovUkSmallDark  },
   { logo: imgLgfLight,   logoDark: imgLgfDark,    logoSmall: imgLgfSmallLight,    logoSmallDark: imgLgfSmallDark    },
@@ -56,10 +54,10 @@ const logos = [
   { logo: imgUke,        logoDark: null,           logoSmall: imgUkeSmall,         logoSmallDark: null               },
 ];
 
-// Translations
 const T = {
   en: {
     heading:  'Key collaborations',
+    headingShort: 'Collaborations',
     hint:     'Select a logo to learn more',
     close:    'Close',
     navPrev:  'View previous collaborator',
@@ -80,6 +78,7 @@ const T = {
   },
   fr: {
     heading:  'Collaborations clés',
+    headingShort: 'Collaborations',
     hint:     'Sélectionnez un logo pour en savoir plus',
     close:    'Fermer',
     navPrev:  'Voir le collaborateur précédent',
@@ -108,9 +107,68 @@ const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-hover:brightn
 
 const LOGO_W = { mobile: 152, sm: 176, lg: 200 };
 
+// Collapsible-on-mobile support — opt-in via the `collapsible` prop so Home's
+// usage (always expanded) is untouched. Same accordion pattern as the case
+// studies and the Resume page (which is the only caller that opts in).
+function useSectionCollapse() {
+  const [open, setOpen] = useState(true);
+  const [hidden, setHidden] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 920px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 920px)');
+    const onChange = () => setIsDesktop(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  const btnRef = useRef(null);
+  const contentRef = useRef(null);
+  const gridRef = useRef(null);
+  const handleToggle = () => {
+    if (open) {
+      if (contentRef.current?.contains(document.activeElement)) btnRef.current?.focus();
+      setOpen(false);
+      const el = gridRef.current;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setHidden(true);
+      } else {
+        const onEnd = (e) => {
+          if (e.propertyName !== 'grid-template-rows') return;
+          el?.removeEventListener('transitionend', onEnd);
+          setHidden(true);
+        };
+        el?.addEventListener('transitionend', onEnd);
+      }
+    } else {
+      setHidden(false);
+      requestAnimationFrame(() => setOpen(true));
+    }
+  };
+  const collapsible = !isDesktop;
+  return { collapsible, open, sectionOpen: collapsible ? open : true, hidden, handleToggle, btnRef, contentRef, gridRef };
+}
 
-function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
+function CollapseBody({ active, sc, id, className, children }) {
+  if (!active) return children;
+  const inner = className != null ? <div className={className}>{children}</div> : children;
+  return (
+    <div
+      ref={sc.gridRef}
+      id={`${id}-content`}
+      style={sc.hidden ? { display: 'none' } : undefined}
+      className={`grid [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${sc.sectionOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+      inert={!sc.sectionOpen}
+    >
+      <div ref={sc.contentRef} className="overflow-hidden min-h-0">
+        {inner}
+      </div>
+    </div>
+  );
+}
+
+function Collaborations({ lang, lgAlignWidth, smAlignWidth, collapsible = false }) {
   const t = T[lang] ?? T.en;
+  const sc = useSectionCollapse();
+  const collapsibleActive = collapsible && sc.collapsible;
   const collaborators = t.collaborators.map((c, i) => ({ ...c, ...logos[i] }));
 
   const trackRef    = useRef(null);
@@ -155,7 +213,6 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
     return 1;
   };
 
-  // Scroll helpers
   const scrollToIndex = (index) => {
     const track = trackRef.current;
     if (!track) return;
@@ -188,7 +245,6 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
     setActiveIndex(closest);
   };
 
-  // Modal helpers
   const triggerRef          = useRef(null);
   const closeButtonRef      = useRef(null);
   const modalRef            = useRef(null);
@@ -317,18 +373,45 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
     <section
       id="collaborators"
       aria-labelledby="collab-heading"
-      className="scroll-mt-24 py-16"
+      tabIndex={-1}
+      className={`scroll-mt-24 ${collapsibleActive ? '' : 'py-16'} ${collapsibleActive && !sc.open ? 'bg-bg-page' : ''} focus-visible:outline-none`}
     >
-      <div {...(activeModal !== null ? { inert: '' } : {})} className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem] mb-12 sm:mb-14 lg:mb-16">
-        <h2 id="collab-heading" className="text-h2 font-bold leading-tight text-fg-primary">
-          {t.heading}
-        </h2>
+      <div {...(activeModal !== null ? { inert: '' } : {})} className={`max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem] ${collapsibleActive ? 'pt-[45px] sm:pt-[53px] lg:pt-[61px] pb-4 sm:pb-5' : 'mb-12 sm:mb-14 lg:mb-16'}`}>
+        {collapsibleActive ? (
+          <button
+            ref={sc.btnRef}
+            onClick={sc.handleToggle}
+            aria-label={sc.open ? (lang === 'fr' ? `Réduire ${t.heading}` : `Collapse ${t.heading}`) : (lang === 'fr' ? `Développer ${t.heading}` : `Expand ${t.heading}`)}
+            aria-expanded={sc.open}
+            aria-controls="collaborators-content"
+            className="w-full text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <h2 id="collab-heading" className="text-h2 font-semibold leading-tight text-fg-primary py-6 sm:py-7 lg:py-8">
+                <span className="sm:hidden">{t.headingShort}</span>
+                <span className="hidden sm:inline">{t.heading}</span>
+              </h2>
+              <div className="group shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-colors hover:bg-btn-nav-bg-hover">
+                <img
+                  src={imgChevronUp}
+                  alt=""
+                  className={`w-5 h-5 sm:w-6 sm:h-6 transition-[filter,transform] duration-300 forced-colors:brightness-[unset] forced-colors:invert-0 ${sc.open ? '' : 'rotate-180'} brightness-0 dark:invert group-hover:invert dark:group-hover:brightness-0 dark:group-hover:invert-0`}
+                />
+              </div>
+            </div>
+          </button>
+        ) : (
+          <h2 id="collab-heading" className={`text-h2 ${collapsible ? 'font-semibold' : 'font-bold'} leading-tight text-fg-primary`}>
+            <span className="sm:hidden">{t.headingShort}</span>
+            <span className="hidden sm:inline">{t.heading}</span>
+          </h2>
+        )}
       </div>
 
       {/* Carousel area: track + nav stacked; modal overlays both */}
+      <CollapseBody active={collapsibleActive} sc={sc} id="collaborators" className="pb-16 sm:pb-20 lg:pb-24">
       <div className="relative">
 
-        {/* Logo track */}
         <ul
           ref={trackRef}
           onScroll={handleScroll}
@@ -365,12 +448,10 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
           ))}
         </ul>
 
-        {/* Hint caption */}
         <p className={`text-center text-caption text-fg-muted mt-1 transition-opacity duration-200 ${hintDismissed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
           {t.hint}
         </p>
 
-        {/* Normal nav, below track, reduced gap */}
         <div className="grid grid-cols-[1fr_auto_1fr] items-center mt-4 sm:mt-5 px-6 sm:px-28 lg:px-52">
           <div />
           <div className="flex items-center">
@@ -405,7 +486,6 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
           </div>
         </div>
 
-        {/* Modal overlay */}
         {activeModal !== null && (
           <div
             ref={modalRef}
@@ -431,7 +511,6 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
               className="relative flex-1 self-stretch overflow-hidden rounded-radius-8 sm:rounded-radius-10 lg:rounded-radius-12 bg-bg-page dark:bg-bg-surface shadow-m"
               style={{ animation: 'modal-card-in 0.5s cubic-bezier(0.34,1.56,0.64,1) both' }}
             >
-              {/* Close button — sits above the track */}
               <button
                 data-spring
                 ref={closeButtonRef}
@@ -502,6 +581,7 @@ function Collaborations({ lang, lgAlignWidth, smAlignWidth }) {
         )}
 
       </div>
+      </CollapseBody>
     </section>
   );
 }

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-06-17');
+const LAST_UPDATED = new Date('2026-08-14');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -402,8 +402,8 @@ function SecondaryNav({ sections, activeId, onNavigate, lang, visible = true }) 
                 aria-current={isActive ? 'location' : undefined}
                 className={`relative text-tooltip leading-snug py-2 px-3 rounded-full text-left w-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus ${
                   isActive
-                    ? 'text-fg-primary font-semibold bg-nav-active-bg'
-                    : 'text-fg-muted font-normal hover:text-fg-primary hover:bg-nav-active-bg'
+                    ? 'text-fg-primary font-semibold bg-bg-page border border-black/[0.08] dark:border-white/[0.10]'
+                    : 'text-fg-muted font-normal border border-transparent hover:text-fg-primary hover:bg-nav-active-bg'
                 }`}
               >
                 {/* Invisible bold copy locks the button height to its semibold size — prevents 1→2 line reflow on hover */}
@@ -428,7 +428,6 @@ function SecondaryNav({ sections, activeId, onNavigate, lang, visible = true }) 
         aria-label={minimiseLabel}
         className="group/edge absolute top-0 -right-[3px] h-full w-[15px] cursor-w-resize select-none rounded-r-radius-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-inset"
       >
-        {/* edge highlight — only on edge hover/focus */}
         <span
           aria-hidden="true"
           className="absolute inset-y-6 right-[3px] w-[2px] rounded-full bg-fg-muted-inverse dark:bg-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity"
@@ -437,7 +436,6 @@ function SecondaryNav({ sections, activeId, onNavigate, lang, visible = true }) 
             WebkitMaskImage: 'linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent)',
           }}
         />
-        {/* chevron, rendered just outside the nav container */}
         <span aria-hidden="true" onMouseEnter={showTip} onMouseLeave={hideTip} className="absolute left-full top-1/2 -translate-y-1/2 pl-[3px] cursor-pointer text-fg-muted opacity-0 group-hover/edge:opacity-100 group-focus-visible/edge:opacity-100 transition-opacity">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
             <path d="M14 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -531,15 +529,11 @@ function Cookies({ lang }) {
         {t.skipToMain}
       </a>
       <main id="main-content" aria-label={t.title} className={`bg-bg-page dark:bg-bg-surface min-h-screen transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`} tabIndex={-1}>
-        {/* Shared layout wrapper */}
         <div className="px-6 flex flex-col items-center">
           <div className="flex items-start gap-10 w-full max-w-6xl">
-            {/* Secondary nav — left of the content column, matching the case studies */}
             <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} lang={lang} visible={scrolledDown && !atBottom} />
 
-            {/* Main column */}
             <div className="flex-1 min-w-0">
-              {/* Title */}
               <div className="pt-32 pb-4">
                 <p className="text-label-s font-medium leading-[1.2] text-fg-muted mb-3">
                   {t.updated} {formatDate(LAST_UPDATED, lang)}
@@ -550,7 +544,6 @@ function Cookies({ lang }) {
               </div>
 
               <div className="py-8">
-              {/* Intro */}
               <div className="mb-8" style={{ animation: 'fade-in 0.5s cubic-bezier(0.22,1,0.36,1) both', animationDelay: '0.05s' }}>
                 <p className={body}>{t.intro}</p>
               </div>
@@ -560,15 +553,15 @@ function Cookies({ lang }) {
                   <CookieSection key={s.id} s={s} num={i + 1} browserLabel={t.browserLabel} newTabLabel={t.newTabLabel} manageBtn={t.manageBtn} delay={`${0.1 + i * 0.07}s`} />
                 ))}
               </ol>
-            </div>{/* py-8 */}
-            </div>{/* main column */}
-          </div>{/* flex row */}
+            </div>
+            </div>
+          </div>
 
           {/* Outro — outside flex row so sticky nav stops before it */}
           <p className="text-h3 font-semibold leading-snug text-center text-fg-primary py-16">
             {t.outro}
           </p>
-        </div>{/* px-6 */}
+        </div>
 
         {/* Secondary nav is tablet/desktop only — hidden on mobile */}
         <div inert={scrolledDown && !atBottom && !scrollingDown ? undefined : true} className={`hidden fixed bottom-2 left-4 right-4 z-40 flex justify-center pointer-events-none transition-opacity duration-300 ${scrolledDown && !atBottom && !scrollingDown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>

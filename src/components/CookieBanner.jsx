@@ -53,7 +53,6 @@ function CookieBanner({ lang, hideFloating = false }) {
 
   return (
     <>
-      {/* Full banner */}
       <div
         {...(visible && (!hideFloating || explicit) ? { role: 'dialog', 'aria-label': t.label } : {})}
         ref={dialogRef}
@@ -63,7 +62,6 @@ function CookieBanner({ lang, hideFloating = false }) {
           visible && (!hideFloating || explicit) ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
         }`}
       >
-        {/* Left: label + message */}
         <div className="flex flex-col gap-5 md:gap-2 md:flex-1 min-w-0 md:min-w-[320px]">
           <p className="text-h6 font-semibold leading-tight text-fg-primary-inverse flex items-center gap-2">
             <span className="text-copy-m leading-none">🍪</span>
@@ -79,13 +77,11 @@ function CookieBanner({ lang, hideFloating = false }) {
               {t.learnMore}
             </Link>
           </p>
-          {/* Mobile-only full message */}
           <p className="md:hidden text-copy-s leading-relaxed text-fg-muted-inverse line-clamp-3">
             {t.message}
           </p>
         </div>
 
-        {/* Right: buttons */}
         <div className="flex items-center gap-4 md:shrink-0">
           <button
             data-spring

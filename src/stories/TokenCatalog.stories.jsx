@@ -1,13 +1,9 @@
 import tokens from '../../tokens.json';
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
 // Resolve a CSS variable to its computed value in the current document
 function resolveVar(name) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
-
-// ─── Primitives ───────────────────────────────────────────────────────────────
 
 function PrimitiveGroup({ name, shades }) {
   return (
@@ -32,8 +28,6 @@ function PrimitiveGroup({ name, shades }) {
     </div>
   );
 }
-
-// ─── Semantic tokens ──────────────────────────────────────────────────────────
 
 function flattenSemantic(obj, prefix = '') {
   const result = [];
@@ -75,8 +69,6 @@ function SemanticSection({ group, paths }) {
     </div>
   );
 }
-
-// ─── Typography ───────────────────────────────────────────────────────────────
 
 const TYPE_ALIASES = [
   ['display-1',  'Display H1'],
@@ -147,8 +139,6 @@ function TypographyRow({ alias, label }) {
   );
 }
 
-// ─── Spacing ──────────────────────────────────────────────────────────────────
-
 function SpacingRow({ name }) {
   const value = resolveVar(`--spacing-${name}`);
   return (
@@ -159,8 +149,6 @@ function SpacingRow({ name }) {
     </div>
   );
 }
-
-// ─── Radius ───────────────────────────────────────────────────────────────────
 
 function RadiusRow({ name }) {
   const value = resolveVar(`--radius-${name}`);
@@ -176,8 +164,6 @@ function RadiusRow({ name }) {
     </div>
   );
 }
-
-// ─── Shadows ──────────────────────────────────────────────────────────────────
 
 const SHADOWS = ['xs', 's', 's-dark', 'm', 'l'];
 
@@ -195,8 +181,6 @@ function ShadowRow({ name }) {
   );
 }
 
-// ─── Section wrapper ──────────────────────────────────────────────────────────
-
 function Section({ title, children }) {
   return (
     <div style={{ marginBottom: 48 }}>
@@ -205,8 +189,6 @@ function Section({ title, children }) {
     </div>
   );
 }
-
-// ─── Pages ────────────────────────────────────────────────────────────────────
 
 function ColorsPage() {
   const semanticPaths = flattenSemantic(tokens.semantic.light);
@@ -266,8 +248,6 @@ function SpacingPage() {
     </div>
   );
 }
-
-// ─── Stories ──────────────────────────────────────────────────────────────────
 
 export default {
   title: 'Design Tokens/Catalog',

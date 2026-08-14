@@ -1,7 +1,5 @@
 import changelog from '../tokens/changelog.json';
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
 const isColor = (type, value) =>
   type === 'color' || (typeof value === 'string' && /^(#|rgba?)/.test(value));
 
@@ -154,8 +152,6 @@ function ChangelogPage() {
     </div>
   );
 }
-
-// ─── Story ────────────────────────────────────────────────────────────────────
 
 export default {
   title: 'Design Tokens/Changelog',

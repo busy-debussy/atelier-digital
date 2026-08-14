@@ -1,11 +1,7 @@
-//───────────────────────────────────────────────────────────────────────────
 // Design System • Atelier Digital Portfolio
 // Covers: Nav, Footer, Home, Resume, Contact, CaseStudies, Collaborations,
 //         ScrollForMore, and all case study pages (Sales Platform, XR Experiences).
 // All values are Tailwind-compatible.
-//───────────────────────────────────────────────────────────────────────────
-
-// Colour palette──────────────────────────────────────────────────────────
 
 export const color = {
 
@@ -26,7 +22,6 @@ export const color = {
     onDark:       '#d6d6d6',                               // subtitle on dark overlays (case study cards)
   },
 
-  // Borders & glass
   border: {
     subtle:       { light: 'rgba(0,0,0,0.08)',    dark: 'rgba(255,255,255,0.08)'  },  // general borders
     medium:       { light: 'rgba(0,0,0,0.16)',    dark: 'rgba(255,255,255,0.16)'  },  // dropdown/modal borders
@@ -36,13 +31,11 @@ export const color = {
     navRing:      'rgba(255,255,255,0.16)',                                           // dark mode nav ring (dark only)
   },
 
-  // Glass surfaces (backdrop-blur overlays)
   glass: {
     bg:           { light: 'rgba(255,255,255,0.64)', dark: 'rgba(0,0,0,0.64)' },  // nav, dropdowns, modal overlays
     bgHeavy:      { light: 'rgba(255,255,255,0.88)', dark: 'rgba(0,0,0,0.88)' },  // mobile menu
   },
 
-  // Interactive states
   interactive: {
     rest:         { light: '#f6f6f6',  dark: '#2a2a2a' },              // button/icon resting
     hover:        { light: '#1f1f1f',  dark: '#f6f6f6' },              // button/icon hover
@@ -51,7 +44,6 @@ export const color = {
     pressed:      'opacity-[0.33]',                                    // active/tap feedback
   },
 
-  // Accent
   accent: {
     blue:         '#0152EC',  // contact CTA button (primary action)
     blueHover:    '#0142cc',  // contact CTA hover
@@ -91,13 +83,10 @@ export const color = {
   },
 };
 
-// Typography──────────────────────────────────────────────────────────────
 // All responsive sizes follow a mobile → tablet → desktop scale.
 // Breakpoints: sm = 640px (tablet), lg = 1024px (desktop).
 
 export const type = {
-
-  // Site-wide
 
   // Navigation links
   navLink: {
@@ -141,8 +130,6 @@ export const type = {
     weight:       'bold',
     color:        color.text.primary,
   },
-
-  // Tile primitives (case study pages)
 
   // Tile eyebrow, large bold label above content
   eyebrow: {
@@ -191,8 +178,6 @@ export const type = {
     color:        color.text.secondary,
   },
 
-  // Home / case study cards
-
   // CaseStudies card title
   caseStudyCardTitle: {
     size:         ['18px', '20px', '24px'],
@@ -214,15 +199,11 @@ export const type = {
     weight:       'medium',
   },
 
-  // Collaborations modal
-
   // Collaborator modal description
   collaboratorBody: {
     size:         ['15px', '16px', '17px'],
     leading:      ['28px', '30px', '34px'],
   },
-
-  // Contact cards
 
   // Contact card title
   contactCardTitle: {
@@ -236,8 +217,6 @@ export const type = {
     size:         ['20px', '22px', '24px'],
     weight:       'medium',
   },
-
-  // Sales Platform specific
 
   // UI concept card title bar
   uiConceptCardTitle: {
@@ -260,8 +239,6 @@ export const type = {
     color:        color.text.primary,
   },
 };
-
-// Spacing─────────────────────────────────────────────────────────────────
 
 export const spacing = {
 
@@ -298,8 +275,6 @@ export const spacing = {
   footerSitemapGap:    { tablet: '40px', desktop: '64px' },                   // gap-10/16
 };
 
-// Border radius───────────────────────────────────────────────────────────
-
 export const radius = {
 
   // Case study tiles & carousels
@@ -332,8 +307,6 @@ export const radius = {
   footerLegalLink:  '8px',                                                     // rounded-[8px]
 };
 
-// Shadows─────────────────────────────────────────────────────────────────
-
 export const shadow = {
   nav:          '0px 0px 17.1px 0px rgba(0,0,0,0.08)',   // navigation bar
   dropdown:     '0px 0px 4px 1px rgba(0,0,0,0.04)',      // nav/lang dropdowns
@@ -342,23 +315,18 @@ export const shadow = {
   toolIcon:     '1px 1px 8px 0px rgba(0,0,0,0.08)',      // tool icon tiles
 };
 
-// Breakpoints─────────────────────────────────────────────────────────────
-
 export const breakpoint = {
   sm:  '640px',   // tablet 1-col → 2-col, carousels resize, nav switches to tablet layout
   md:  '768px',   // mid tool icon grid switches from 5×2 to 10×1
   lg:  '1024px',  // desktop full multi-column layouts, nav switches to desktop gap
 };
 
-// Responsive images───────────────────────────────────────────────────────
 // Media query thresholds used in <picture><source> elements.
 
 export const imageBreakpoint = {
   desktop:  '(min-width: 1024px)',   // lg 3-size images (hifi carousel, userflow)
   tablet:   '(min-width: 640px)',    // sm 2-size images (wireframes) / 3-size (concepts, hifi)
 };
-
-// Motion──────────────────────────────────────────────────────────────────
 
 export const motion = {
   // Layout transitions
@@ -386,16 +354,12 @@ export const motion = {
   collaboratorModal:'cubic-bezier(0.22,1,0.36,1) 300ms',  // modal-in spring
 };
 
-// Z-index─────────────────────────────────────────────────────────────────
-
 export const zIndex = {
   scrollForMore:  40,    // z-40 above page content, below nav
   nav:            50,    // z-50 site navigation
   tooltip:        20,    // z-20 tool icon tooltips (within stacking context)
   portal:         9999,  // z-[9999] portalled dropdowns (nav projects, language)
 };
-
-// Component tokens────────────────────────────────────────────────────────
 
 export const component = {
 
@@ -472,8 +436,6 @@ export const component = {
     bulletsPosition:  'outside / below the card',
   },
 };
-
-// Layout grid ─────────────────────────────────────────────────────────────
 
 export const grid = {
   maxWidth:       '1024px',   // max-w-5xl constrains all section content

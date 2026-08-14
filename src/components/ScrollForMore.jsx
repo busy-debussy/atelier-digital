@@ -7,7 +7,7 @@ const T = {
   fr: 'Faire défiler',
 };
 
-export default function ScrollForMore({ lang, scrollTarget }) {
+export default function ScrollForMore({ lang, scrollTarget, scrollAmount = 0.9 }) {
   const [visible, setVisible]       = useState(true);
   const [tipVisible, setTipVisible] = useState(false);
 
@@ -45,7 +45,7 @@ export default function ScrollForMore({ lang, scrollTarget }) {
             if (scrollTarget && mobile) {
               document.getElementById(scrollTarget)?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'center' });
             } else {
-              window.scrollBy({ top: window.innerHeight * (mobile ? 1.0 : 0.9), behavior: reduced ? 'instant' : 'smooth' });
+              window.scrollBy({ top: window.innerHeight * (mobile ? 1.0 : scrollAmount), behavior: reduced ? 'instant' : 'smooth' });
             }
           }}
           aria-label={label}

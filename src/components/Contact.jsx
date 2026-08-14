@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import imgChevronLeft  from '../assets/icons/icon-chevron-left.svg';
 import imgChevronRight from '../assets/icons/icon-chevron-right.svg';
+import imgChevronUp    from '../assets/icons/icon-chevron-up.svg';
 import imgSendLight     from '../assets/contact/action-send-email-light.webp';
 import imgSendDark      from '../assets/contact/action-send-email-dark.webp';
 import imgDocLight      from '../assets/contact/action-view-document-light.webp';
@@ -10,12 +11,10 @@ import imgLinkedInLight from '../assets/contact/qr-linkedin-light.webp';
 import imgLinkedInDark  from '../assets/contact/qr-linkedin-dark.webp';
 import imgPortrait      from '../assets/photos/portrait.webp';
 
-// ── Styles ────────────────────────────────────────────────────────────────────
 const navBtnClass = 'group shrink-0 p-2 sm:p-[10px] lg:p-3 rounded-full bg-btn-nav-bg-rest-subtle enabled:hover:bg-btn-nav-bg-hover dark:enabled:hover:bg-btn-nav-bg-hover transition-[opacity,background-color] duration-150 disabled:bg-btn-nav-bg-inactive disabled:cursor-default enabled:cursor-pointer';
 const chevL = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 brightness-0 group-enabled:group-hover:brightness-100 dark:brightness-100 dark:group-enabled:group-hover:brightness-0 group-disabled:opacity-20 transition-[filter,opacity]';
 const chevR = 'w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 group-enabled:group-hover:brightness-0 group-enabled:group-hover:invert dark:brightness-0 dark:invert dark:group-enabled:group-hover:brightness-100 dark:group-enabled:group-hover:invert-0 group-disabled:opacity-20 transition-[filter,opacity]';
 
-// ── Translations ──────────────────────────────────────────────────────────────
 const T = {
   en: {
     heading: 'Get in touch',
@@ -23,7 +22,7 @@ const T = {
     navNext: 'View next card',
     emailCard: {
       icon: imgSendLight, iconDark: imgSendDark,
-      title: 'Hit my inbox',
+      title: 'Reach out',
       description: 'Let’s build great things together.',
       buttonLabel: 'Message',
       action: { type: 'email', href: `mailto:d@AtelierDigital.co.uk?subject=${encodeURIComponent('Getting in touch')}` },
@@ -45,7 +44,7 @@ const T = {
     linkedinCard: {
       icon: imgLinkedInLight, iconDark: imgLinkedInDark,
       title: "Let's connect",
-      description: 'Scan the QR code above, or use the button below to view my profile.',
+      description: 'Scan the QR code, or use the button below to view my profile.',
       buttonLabel: 'LinkedIn',
       action: { type: 'linkedin' },
     },
@@ -78,18 +77,75 @@ const T = {
     linkedinCard: {
       icon: imgLinkedInLight, iconDark: imgLinkedInDark,
       title: 'Connectons',
-      description: 'Scannez le code QR ci-dessus, ou consultez mon profil via le bouton.',
+      description: 'Scannez le code QR, ou consultez mon profil via le bouton.',
       buttonLabel: 'LinkedIn',
       action: { type: 'linkedin' },
     },
   },
 };
 
-// ── Card button ───────────────────────────────────────────────────────────────
 const btnClass = 'block w-full py-3 sm:py-[14px] lg:py-4 rounded-radius-4 sm:rounded-radius-5 lg:rounded-radius-6 bg-cta-600 hover:bg-cta-700 text-white font-medium text-btn-m leading-[1.2] text-center transition-colors border border-accent-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-cta-600';
 const btnProps = { 'data-squircle': '' };
 
 const liHref = () => ['https://www.link','edin.com','/in/','dav','idvi','all','ard'].join('');
+
+// Collapsible-on-mobile support — opt-in via the `collapsible` prop so Home's
+// usage (always expanded) is untouched. Same accordion pattern as the case
+// studies and the Resume page (the only caller that opts in).
+function useSectionCollapse() {
+  const [open, setOpen] = useState(true);
+  const [hidden, setHidden] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 920px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 920px)');
+    const onChange = () => setIsDesktop(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  const btnRef = useRef(null);
+  const contentRef = useRef(null);
+  const gridRef = useRef(null);
+  const handleToggle = () => {
+    if (open) {
+      if (contentRef.current?.contains(document.activeElement)) btnRef.current?.focus();
+      setOpen(false);
+      const el = gridRef.current;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setHidden(true);
+      } else {
+        const onEnd = (e) => {
+          if (e.propertyName !== 'grid-template-rows') return;
+          el?.removeEventListener('transitionend', onEnd);
+          setHidden(true);
+        };
+        el?.addEventListener('transitionend', onEnd);
+      }
+    } else {
+      setHidden(false);
+      requestAnimationFrame(() => setOpen(true));
+    }
+  };
+  const collapsible = !isDesktop;
+  return { collapsible, open, sectionOpen: collapsible ? open : true, hidden, handleToggle, btnRef, contentRef, gridRef };
+}
+
+function CollapseBody({ active, sc, id, className, children }) {
+  if (!active) return children;
+  const inner = className != null ? <div className={className}>{children}</div> : children;
+  return (
+    <div
+      ref={sc.gridRef}
+      id={`${id}-content`}
+      style={sc.hidden ? { display: 'none' } : undefined}
+      className={`grid [overflow-anchor:none] motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-in-out ${sc.sectionOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+      inert={!sc.sectionOpen}
+    >
+      <div ref={sc.contentRef} className="overflow-hidden min-h-0">
+        {inner}
+      </div>
+    </div>
+  );
+}
 
 function CardButton({ action, label }) {
   if (action.type === 'email')
@@ -103,7 +159,6 @@ function CardButton({ action, label }) {
   return <a tabIndex={0} href={action.href} target="_blank" rel="noopener noreferrer" {...btnProps} className={btnClass}>{label}</a>;
 }
 
-// ── Single card ───────────────────────────────────────────────────────────────
 function ContactCard({ card, glass }) {
   const cardBg = glass
     ? 'backdrop-blur-4 bg-nav-bg border border-glass-default shadow-xs'
@@ -145,10 +200,14 @@ function ContactCard({ card, glass }) {
   );
 }
 
-// ── Section ───────────────────────────────────────────────────────────────────
 // variant: 'home' (middle card = link to /resume) | 'resume' (middle card = download PDF)
-function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWidth, showDesktopNav = false }) {
+function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWidth, showDesktopNav = false, collapsible = false, onOpenChange }) {
   const t = T[lang] ?? T.en;
+  const sc = useSectionCollapse();
+  const collapsibleActive = collapsible && sc.collapsible;
+  // Lets the page adjust the Footer's own spacing to match: full padding
+  // when this section is actually open, tighter when it's collapsed shut.
+  useEffect(() => { onOpenChange?.(sc.sectionOpen); }, [sc.sectionOpen]); // eslint-disable-line react-hooks/exhaustive-deps
   const cards = [
     t.emailCard,
     t.linkedinCard,
@@ -243,14 +302,37 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
   };
 
   return (
-    <section id="contact" aria-labelledby="contact-heading" className={`py-16 scroll-mt-24 ${noBg ? '' : 'bg-bg-surface'}`}>
+    <section id="contact" aria-labelledby="contact-heading" tabIndex={-1} className={`${collapsibleActive ? '' : 'py-16'} scroll-mt-24 focus-visible:outline-none ${collapsibleActive && !sc.open ? 'bg-bg-page' : (noBg ? '' : 'bg-bg-surface')}`}>
 
-      <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem]">
-        <h2 id="contact-heading" className="text-h2 font-bold leading-tight text-fg-primary mb-8">
-          {t.heading}
-        </h2>
+      <div className={`max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 md:max-w-2xl lg:max-w-[52rem] ${collapsibleActive ? 'pt-[45px] sm:pt-[53px] lg:pt-[61px] pb-4 sm:pb-5' : ''}`}>
+        {collapsibleActive ? (
+          <button
+            ref={sc.btnRef}
+            onClick={sc.handleToggle}
+            aria-label={sc.open ? (lang === 'fr' ? `Réduire ${t.heading}` : `Collapse ${t.heading}`) : (lang === 'fr' ? `Développer ${t.heading}` : `Expand ${t.heading}`)}
+            aria-expanded={sc.open}
+            aria-controls="contact-content"
+            className="w-full text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fg-primary"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <h2 id="contact-heading" className="text-h2 font-semibold leading-tight text-fg-primary py-6 sm:py-7 lg:py-8">{t.heading}</h2>
+              <div className="group shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-colors hover:bg-btn-nav-bg-hover">
+                <img
+                  src={imgChevronUp}
+                  alt=""
+                  className={`w-5 h-5 sm:w-6 sm:h-6 transition-[filter,transform] duration-300 forced-colors:brightness-[unset] forced-colors:invert-0 ${sc.open ? '' : 'rotate-180'} brightness-0 dark:invert group-hover:invert dark:group-hover:brightness-0 dark:group-hover:invert-0`}
+                />
+              </div>
+            </div>
+          </button>
+        ) : (
+          <h2 id="contact-heading" className={`text-h2 ${collapsible ? 'font-semibold' : 'font-bold'} leading-tight text-fg-primary mb-8`}>
+            {t.heading}
+          </h2>
+        )}
       </div>
 
+      <CollapseBody active={collapsibleActive} sc={sc} id="contact" className="pb-16 sm:pb-20 lg:pb-24">
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {cards[activeIndex].title}
       </div>
@@ -309,6 +391,7 @@ function Contact({ lang, variant = 'home', noBg = false, lgAlignWidth, smAlignWi
         </div>
       </div>
 
+      </CollapseBody>
     </section>
   );
 }
