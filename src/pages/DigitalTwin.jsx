@@ -1060,14 +1060,27 @@ function richText(text, token, hiddenOnMobile = ['A']) {
   if (typeof text !== 'string') return text;
   return text.split(/\{\{([A-Za-z])\}\}/g).flatMap((part, i) => {
     if (i % 2 === 1) {
+      // A wrapping span carries the mobile-responsive visibility (single
+      // dimension, no ambiguity); each inner image carries only the
+      // light/dark toggle — keeping the two independent avoids two classes
+      // both setting `display` at equal specificity on the same element.
+      const respClass = hiddenOnMobile.includes(part) ? 'hidden sm:inline-block' : 'inline-block';
+      const imgClass = 'h-[1em] w-auto align-text-bottom';
       return [
-        <img
-          key={`icon-${i}`}
-          src={assetUrl(`digital-twin/callout-${part}.svg`, token)}
-          alt=""
-          className={`${hiddenOnMobile.includes(part) ? 'hidden sm:inline-block' : 'inline-block'} h-[1em] w-auto align-text-bottom ml-1.5 mr-0.5`}
-          draggable="false"
-        />,
+        <span key={`icon-${i}`} className={`${respClass} ml-1.5 mr-0.5`}>
+          <img
+            src={assetUrl(`digital-twin/callout-${part}.svg`, token)}
+            alt=""
+            className={`${imgClass} dark:hidden`}
+            draggable="false"
+          />
+          <img
+            src={assetUrl(`digital-twin/callout-${part}-dark.svg`, token)}
+            alt=""
+            className={`${imgClass} hidden dark:inline-block`}
+            draggable="false"
+          />
+        </span>,
       ];
     }
     return part.split('\n').flatMap((line, li, arr) => {
@@ -2220,7 +2233,14 @@ function DigitalTwinCaseStudy({ lang = 'en', token, isDark, content }) {
       });
     };
     measure();
+    // Mobile browsers fire `resize` purely from the address bar showing/hiding
+    // while scrolling (viewport height changes, width doesn't) — re-measuring
+    // on those makes the cards flicker/reflow mid-scroll, which reads as the
+    // scroll position glitching. Only re-measure on an actual width change.
+    let lastWidth = window.innerWidth;
     const onResize = () => {
+      if (window.innerWidth === lastWidth) return;
+      lastWidth = window.innerWidth;
       clearTimeout(debounce);
       debounce = setTimeout(measure, 150);
     };
@@ -2410,7 +2430,7 @@ function DigitalTwinCaseStudy({ lang = 'en', token, isDark, content }) {
         {/* Challenge — the pains, then the HMW design challenge on a dark plate. */}
         <Section id="challenge" title={t.challenge.header} lang={lang} bgClass="bg-bg-page" titleInset>
           <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-            <Tile bgClass="bg-z-0 dark:bg-bg-subtle">
+            <Tile bgClass="bg-z-0 dark:bg-bg-page">
               <TileBody><p>{richText(t.challenge.lead)}</p><p className="mt-4">{richText(t.challenge.intro)}</p></TileBody>
               <p className={`${tileBodyText} mt-8 max-w-3xl`}>{richText(t.challenge.painsOutro)}</p>
             </Tile>
@@ -2435,7 +2455,7 @@ function DigitalTwinCaseStudy({ lang = 'en', token, isDark, content }) {
               itemName={(g) => g.title}
               renderItem={(g, i) => (
                 <li key={i} className="shrink-0 w-[82vw] sm:w-[340px] lg:w-[360px] snap-center list-none">
-                  <MiniCard number={String(i + 1).padStart(2, '0')} title={g.title} label={t.users.needsLabel} items={g.needs} bgClass="bg-z-0 dark:bg-bg-subtle" />
+                  <MiniCard number={String(i + 1).padStart(2, '0')} title={g.title} label={t.users.needsLabel} items={g.needs} bgClass="bg-z-0 dark:bg-bg-page" />
                 </li>
               )}
             />
@@ -2454,7 +2474,7 @@ function DigitalTwinCaseStudy({ lang = 'en', token, isDark, content }) {
               itemName={(p) => p.title}
               renderItem={(p, i) => (
                 <li key={i} className="shrink-0 w-[82vw] sm:w-[420px] lg:w-[460px] snap-center list-none">
-                  <div data-squircle className="h-full flex flex-col p-6 sm:p-8 lg:p-10 rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-z-0 dark:bg-bg-subtle">
+                  <div data-squircle className="h-full flex flex-col p-6 sm:p-8 lg:p-10 rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-z-0 dark:bg-bg-page">
                     <div className="flex items-baseline gap-3">
                       <span className="text-h4 font-semibold text-fg-muted tabular-nums">{p.n}</span>
                       <h3 className="text-h4 font-semibold text-fg-primary">{p.title}</h3>

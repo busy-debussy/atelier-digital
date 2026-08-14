@@ -91,7 +91,7 @@ export default async function handler(req, res) {
   const casePath = CASE_STUDY_PATHS[payload.scope] || '/';
   const caseUrl = `https://www.atelierdigital.co.uk${casePath}`;
   const greeting = payload.name ? `Hi ${escapeHtml(payload.name)},` : 'Hi,';
-  const subject = `Your ${caseStudy} case-study password`;
+  const subject = `${caseStudy} password`;
   const html = `
     <p>${greeting}</p>
     <p>Here's the password for the ${escapeHtml(caseStudy)} case study:</p>

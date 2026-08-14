@@ -355,7 +355,7 @@ export default function PasswordGate({
                 placeholder=" "
                 autoComplete="name"
                 maxLength={100}
-                className="peer w-full pl-5 pr-11 pt-6 pb-1.5 rounded-radius-7 bg-bg-surface border border-border-subtle text-fg-primary text-copy-s outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+                className="peer w-full pl-5 pr-11 pt-6 pb-1.5 rounded-radius-7 bg-bg-surface border border-border-subtle text-fg-primary text-[16px] outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
               />
               <label
                 htmlFor="request-name"
@@ -399,7 +399,7 @@ export default function PasswordGate({
                 placeholder=" "
                 autoComplete="email"
                 maxLength={254}
-                className={`peer w-full pl-5 pr-11 pt-6 pb-1.5 rounded-radius-7 bg-bg-surface border text-fg-primary text-copy-s outline-none focus-visible:ring-2 ${requestState === 'error' ? 'border-red-700 dark:border-red-400 focus-visible:ring-red-700 dark:focus-visible:ring-red-400 input-shake' : 'border-border-subtle focus-visible:ring-border-focus'}`}
+                className={`peer w-full pl-5 pr-11 pt-6 pb-1.5 rounded-radius-7 bg-bg-surface border text-fg-primary text-[16px] outline-none focus-visible:ring-2 ${requestState === 'error' ? 'border-red-700 dark:border-red-400 focus-visible:ring-red-700 dark:focus-visible:ring-red-400 input-shake' : 'border-border-subtle focus-visible:ring-border-focus'}`}
               />
               <label
                 htmlFor="request-email"
@@ -431,7 +431,7 @@ export default function PasswordGate({
                 placeholder=" "
                 maxLength={500}
                 rows={2}
-                className="peer w-full pl-5 pr-11 pt-6 pb-1.5 rounded-radius-7 bg-bg-surface border border-border-subtle text-fg-primary text-copy-s outline-none resize-none focus-visible:ring-2 focus-visible:ring-border-focus"
+                className="peer w-full pl-5 pr-11 pt-6 pb-1.5 rounded-radius-7 bg-bg-surface border border-border-subtle text-fg-primary text-[16px] outline-none resize-none focus-visible:ring-2 focus-visible:ring-border-focus"
               />
               <label
                 htmlFor="request-note"

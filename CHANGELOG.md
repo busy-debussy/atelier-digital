@@ -1,5 +1,17 @@
 # Changelog 
 
+## [2.6.3] — 2026-08-14
+
+### Digital Twin — dark-mode polish, mobile fixes, and a nav bug
+
+- **Callout letter icons** (the inline `{{A}}`–`{{G}}` badges in the Design Challenges walkthroughs) now have dark-mode variants — the letter switches from near-black to white, keeping the same green circle outline — toggled via a wrapping span so the mobile-responsive hide and the light/dark toggle stay independent (no conflicting `display` classes on one element)
+- **Card backgrounds darkened**: the Problem tile, the Users stakeholder cards, and the Scope/phase cards now use `dark:bg-bg-page` (matching the page's own black background) instead of the lighter `dark:bg-bg-subtle`
+- **Mobile menu prototype**: "Sim tools" is now also hidden below `sm:` (Settings and Time already were), leaving 3 tool groups visible on narrow viewports instead of 4; dropdown menus are wider on mobile (150px → 190px min-width) so longer tool titles don't get cropped
+- **Scroll glitch fix**: the Design Challenges card-height-measurement effect was re-running on every `resize` event — including the ones mobile browsers fire purely from the address bar showing/hiding while scrolling — causing the cards to flicker/reflow mid-scroll. Now only re-measures on an actual viewport-width change
+- **iOS zoom-on-focus fix**: the Request Access form's Name/Email/Note fields were 14px, under the 16px threshold that makes iOS Safari auto-zoom the viewport on focus; bumped to 16px
+- **Case-studies nav dropdown bug fix**: clicking "Case studies" again while the dropdown was open appeared to do nothing — a blur handler and the trigger button's click-to-toggle were racing each other (Safari/macOS doesn't focus a `<button>` on mouse click, so the dropdown's blur-close fired first, then the toggle flipped the freshly-closed state back open). The blur handler now defers to the outside-click handler when it can't tell where focus actually went
+- Password-delivery email subject shortened: "Your Digital Twin case-study password" → "Digital Twin password"
+
 ## [2.6.2] — 2026-08-14
 
 ### Digital Twin gate — Request Access flow + password delivery

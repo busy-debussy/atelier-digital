@@ -323,6 +323,13 @@ function ProjectsDropdown({ onClose, lang, dropdownRef, anchorRef }) {
       ref={dropdownRef}
       style={portalStyle}
       onBlur={(e) => {
+        // On some browsers (notably Safari/macOS) a mouse click on a <button>
+        // doesn't move focus to it, so relatedTarget is null/ambiguous here —
+        // closing in that case races the trigger button's own click-to-toggle
+        // handler (blur-close fires first, then the toggle flips it back
+        // open). Defer to the mousedown outside-click handler instead when
+        // relatedTarget can't tell us where focus actually went.
+        if (!e.relatedTarget) return;
         if (!e.currentTarget.contains(e.relatedTarget) && !anchorRef?.current?.contains(e.relatedTarget)) onClose();
       }}
       className="w-[608px] max-w-[calc(100vw-2rem)] backdrop-blur-3 bg-nav-bg ring-1 ring-nav-ring rounded-radius-5 shadow-s p-2"

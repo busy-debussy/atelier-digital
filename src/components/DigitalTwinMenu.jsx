@@ -152,7 +152,7 @@ function GroupDropdown({ group, active, onSelect, onClose, suppressFocus = false
       onKeyDown={onKeyDown}
       tabIndex={-1}
       data-squircle
-      className={`absolute top-[calc(100%+8px)] ${align === 'right' ? 'right-0' : 'left-0'} min-w-[150px] p-1.5 rounded-[16px] bg-black/[0.72] backdrop-blur-md shadow-lg ring-1 ring-white/[0.16] z-20 flex flex-col gap-0.5 focus:outline-none`}
+      className={`absolute top-[calc(100%+8px)] ${align === 'right' ? 'right-0' : 'left-0'} min-w-[190px] sm:min-w-[150px] p-1.5 rounded-[16px] bg-black/[0.72] backdrop-blur-md shadow-lg ring-1 ring-white/[0.16] z-20 flex flex-col gap-0.5 focus:outline-none`}
     >
       {tools.map((tool, i) => {
         const isActive = tool.id === active;
@@ -498,10 +498,14 @@ export default function DigitalTwinMenu({ lang = 'en', hint, className = '', tok
           {/* Divider — hidden on mobile and at md (matches settings above) */}
           <span aria-hidden="true" className="hidden sm:block md:hidden lg:block w-0.5 h-7 rounded-full bg-black/50 mx-4" />
 
-          {/* Tool groups — the toggled tool stays in place (centred cluster). */}
+          {/* Tool groups — the toggled tool stays in place (centred cluster).
+              "Sim tools" is hidden on mobile (with Settings/Time already
+              hidden there) so only 3 groups show on narrow viewports. */}
           <div className="flex items-center gap-[14px]">
             {m.groups.filter(group => group.id !== 'time').map(group => (
-              <MenuGroup key={group.id} {...groupProps(group)} />
+              <div key={group.id} className={group.id === 'sim' ? 'hidden sm:flex' : 'flex'}>
+                <MenuGroup {...groupProps(group)} />
+              </div>
             ))}
           </div>
 
