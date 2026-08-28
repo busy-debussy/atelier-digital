@@ -16,6 +16,7 @@
   --fg-on-dark-opacity-64: rgba(255, 255, 255, 0.64);
   --fg-primary-inverse: #fafafa;
   --fg-secondary: #404040;
+  --fg-secondary-inverse: #d4d4d4;
   --fg-muted: #707070;
   --fg-muted-inverse: #a2a2a2;
   --fg-inverse: #ffffff;
@@ -139,6 +140,7 @@
   --fg-on-dark-opacity-64: rgba(255, 255, 255, 0.64);
   --fg-primary-inverse: #1f1f1f;
   --fg-secondary: #adadad;
+  --fg-secondary-inverse: #404040;
   --fg-muted: #a2a2a2;
   --fg-muted-inverse: #404040;
   --fg-inverse: #141414;

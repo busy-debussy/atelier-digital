@@ -253,7 +253,7 @@ function ProjectsButton({ isOpen, onClick, isDark, lang }) {
         aria-expanded={isOpen}
         aria-controls={isOpen ? 'projects-menu' : undefined}
         aria-label={isOpen ? `Close ${T[lang].projects} menu` : `Open ${T[lang].projects} menu`}
-        className={`flex items-center justify-center gap-2 h-8 px-3 rounded-radius-3 cursor-pointer active:opacity-[0.33] transition-colors ${
+        className={`flex items-center justify-center gap-2 h-8 px-3 rounded-radius-3 cursor-pointer active:opacity-[0.33] transition-colors [backface-visibility:hidden] ${
           isOpen ? 'bg-nav-active-bg-solid' : 'hover:bg-nav-hover-bg'
         }`}
       >
@@ -558,6 +558,7 @@ function ContactModal({ lang, onClose }) {
             </svg>
           </button>
           <div
+            data-squircle
             className="bg-tooltip-bg rounded-radius-7 shadow-l px-6 pt-6 pb-6"
             style={{ animation: 'modal-card-in 0.35s cubic-bezier(0.22,1,0.36,1) both' }}
           >

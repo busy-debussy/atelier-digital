@@ -31,6 +31,7 @@ const L = {
     notePlaceholder: 'A quick note',
     sendRequest: 'Send request',
     sending: 'Sending…',
+    responseTime: 'Expect a response today.',
     requestSentHeading: 'Request sent',
     requestSent: 'Thanks, I’ll be in touch soon.',
     backToHome: 'Back to case studies',
@@ -59,6 +60,7 @@ const L = {
     notePlaceholder: 'Un petit mot',
     sendRequest: 'Envoyer la demande',
     sending: 'Envoi…',
+    responseTime: 'Réponse attendue aujourd’hui.',
     requestSentHeading: 'Demande envoyée',
     requestSent: 'Merci, je vous recontacterai bientôt.',
     backToHome: 'Retour aux études de cas',
@@ -96,6 +98,46 @@ export default function PasswordGate({
   const [requestEmail, setRequestEmail] = useState('');
   const [emailFocused, setEmailFocused] = useState(false);
   const [requestNote, setRequestNote] = useState('');
+  const [noteWrapped, setNoteWrapped] = useState(false);
+  const NOTE_MIN_HEIGHT = 80; // matches the natural rows={2} height
+  const NOTE_MAX_LINES = 12; // on top of the 500-char limit — keeps it a "quick" note
+  const [noteHeight, setNoteHeight] = useState(NOTE_MIN_HEIGHT);
+  const noteDragRef = useRef(null);
+  const noteTextareaRef = useRef(null);
+  // Custom drag handle spanning the textarea's full width (native `resize`
+  // only ever gives a small corner grip) — tracks pointer movement to grow
+  // the textarea, floored at its natural height and capped at NOTE_MAX_LINES
+  // worth of height (measured from the textarea's own computed styles, so it
+  // stays correct if font-size/padding ever change).
+  const startNoteResize = useCallback((e) => {
+    e.preventDefault();
+    const cs = noteTextareaRef.current && getComputedStyle(noteTextareaRef.current);
+    const lineHeight = cs ? (parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.2) : 19.2;
+    const padding = cs ? parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) : 30;
+    const maxHeight = lineHeight * NOTE_MAX_LINES + padding;
+    noteDragRef.current = { startY: e.clientY, startHeight: noteHeight, maxHeight };
+    const onMove = (ev) => {
+      if (!noteDragRef.current) return;
+      const { startY, startHeight, maxHeight: max } = noteDragRef.current;
+      const delta = ev.clientY - startY;
+      const newHeight = Math.min(max, Math.max(NOTE_MIN_HEIGHT, startHeight + delta));
+      setNoteHeight(newHeight);
+      // Re-check the label against the height about to be applied (not
+      // el.clientHeight, which still reflects the old height until this
+      // state update commits) — growing the box back past the content's
+      // natural height should bring the label back.
+      if (noteTextareaRef.current) {
+        setNoteWrapped(noteTextareaRef.current.scrollHeight > newHeight + 1);
+      }
+    };
+    const onUp = () => {
+      noteDragRef.current = null;
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+    };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  }, [noteHeight]);
   const [requestState, setRequestState] = useState('idle'); // idle | sending | sent | error
   const [requestErrorMsg, setRequestErrorMsg] = useState('');
   const [dimReady, setDimReady] = useState(false);
@@ -233,7 +275,7 @@ export default function PasswordGate({
       className="min-h-screen flex items-center justify-center bg-bg-page bg-cover bg-center bg-fixed px-6"
       style={{ backgroundImage: `url(${imgFacadePattern})` }}
     >
-      <form onSubmit={submit} className="w-full max-w-sm text-center backdrop-blur-3 bg-nav-bg ring-1 ring-tw-700 dark:ring-nav-ring rounded-radius-10 shadow-m px-8 pt-8 pb-8">
+      <form onSubmit={submit} className="w-full max-w-sm text-center backdrop-blur-3 bg-nav-bg ring-1 ring-tw-900 dark:ring-nav-ring rounded-radius-10 shadow-m px-8 pt-8 pb-8">
         {requestOpen && requestState === 'sent' ? (
           <h1 className="flex items-center justify-center gap-3 text-h3 font-semibold text-fg-primary mb-4">
             {l.requestSentHeading}
@@ -262,7 +304,8 @@ export default function PasswordGate({
         ) : (
           <h1 className="text-h3 font-semibold text-fg-primary mb-4">{l.heading}</h1>
         )}
-        {!requestOpen && <p className="text-copy-s mb-8 text-fg-muted">{l.intro}</p>}
+        {!requestOpen && <p className="text-copy-s mb-8 text-fg-secondary">{l.intro}</p>}
+        {requestOpen && requestState !== 'sent' && <p className="text-copy-s mb-8 text-fg-secondary">{l.responseTime}</p>}
         {!requestOpen && (
           <>
             <div className="relative">
@@ -322,7 +365,7 @@ export default function PasswordGate({
           </>
         )}
         {!requestOpen ? (
-          <p className="mt-8 text-copy-s text-fg-muted">
+          <p className="mt-8 text-copy-s text-fg-secondary">
             {l.noAccess}{' '}
             <button
               type="button"
@@ -422,27 +465,55 @@ export default function PasswordGate({
                 </button>
               )}
             </div>
-            <p className="text-right pr-3.5 text-fine-print text-fg-muted mb-3">{l.requiredLegend}</p>
+            <p className="text-right pr-3.5 text-fine-print text-fg-secondary mb-3">{l.requiredLegend}</p>
             <div className="relative mb-3">
               <textarea
                 id="request-note"
+                ref={noteTextareaRef}
                 value={requestNote}
-                onChange={(e) => setRequestNote(e.target.value)}
+                onChange={(e) => {
+                  // scrollHeight (content's natural height) vs. NOTE_MAX_LINES
+                  // caps the note regardless of box size, on top of the
+                  // character limit.
+                  const el = e.target;
+                  const cs = getComputedStyle(el);
+                  const lineHeight = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.2;
+                  const padding = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+                  const lines = Math.round((el.scrollHeight - padding) / lineHeight);
+                  if (lines > NOTE_MAX_LINES) {
+                    el.value = requestNote; // reject — revert the DOM to the last accepted value
+                    return;
+                  }
+                  setRequestNote(el.value);
+                  // Hide the floating label only when the content actually
+                  // overflows the CURRENT (possibly user-resized) box height —
+                  // typing at the end auto-scrolls the textarea, which would
+                  // otherwise drag text up behind the label. If the box has
+                  // been resized tall enough to fit everything, nothing
+                  // scrolls, so the label can stay.
+                  setNoteWrapped(el.scrollHeight > el.clientHeight + 1);
+                }}
                 placeholder=" "
                 maxLength={500}
                 rows={2}
-                className="peer w-full pl-5 pr-11 pt-6 pb-1.5 rounded-radius-7 bg-bg-surface border border-border-subtle text-fg-primary text-[16px] outline-none resize-none focus-visible:ring-2 focus-visible:ring-border-focus"
+                style={{ height: `${noteHeight}px` }}
+                className="peer w-full pl-5 pr-11 pt-6 pb-1.5 rounded-radius-7 bg-bg-surface border border-border-subtle text-fg-primary text-[16px] outline-none resize-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:ring-2 focus-visible:ring-border-focus"
               />
               <label
                 htmlFor="request-note"
-                className="absolute left-5 top-4 origin-left text-copy-s text-fg-muted transition-transform duration-200 ease-out pointer-events-none peer-focus:-translate-y-3 peer-focus:scale-75 peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:scale-75"
+                className={`absolute left-5 top-4 origin-left text-copy-s text-fg-muted transition-[transform,opacity] duration-200 ease-out pointer-events-none peer-focus:-translate-y-3 peer-focus:scale-75 peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:scale-75 ${noteWrapped ? 'opacity-0' : ''}`}
               >
                 {l.notePlaceholder}
               </label>
+              <div
+                onPointerDown={startNoteResize}
+                aria-hidden="true"
+                className="absolute inset-x-0 -bottom-1 h-3 cursor-ns-resize"
+              />
               {requestNote && (
                 <button
                   type="button"
-                  onClick={() => setRequestNote('')}
+                  onClick={() => { setRequestNote(''); setNoteWrapped(false); }}
                   aria-label={l.clear}
                   className="absolute right-1.5 top-1.5 flex items-center justify-center w-8 h-8 rounded-full bg-glass-subtle text-fg-muted hover:text-fg-primary hover:bg-btn-nav-bg-rest transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
                 >
@@ -460,7 +531,7 @@ export default function PasswordGate({
               <button
                 type="button"
                 onClick={() => { setRequestOpen(false); setRequestState('idle'); }}
-                className="px-4 py-2 rounded-full text-copy-s text-fg-muted hover:text-fg-primary transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+                className="px-4 py-2 rounded-full text-copy-s text-fg-secondary hover:text-fg-primary transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
               >
                 {l.cancel}
               </button>

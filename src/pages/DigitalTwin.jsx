@@ -1883,7 +1883,7 @@ function Hero({ lang, token, content }) {
 
       <div className="relative flex-1 flex flex-col justify-end max-w-5xl mx-auto w-full px-6 sm:px-8 lg:px-10 pb-24 sm:pb-28 lg:pb-32 gap-6 sm:gap-8">
         <span
-          className="inline-flex self-start items-center text-tag-m uppercase tracking-widest font-semibold text-fg-on-dark-opacity-90 bg-inverted-subtle backdrop-blur-sm border border-inverted-subtle px-4 py-1.5 rounded-full transition-opacity duration-700"
+          className="inline-flex self-start items-center -ml-4 text-tag-m uppercase tracking-widest font-semibold text-fg-on-dark-opacity-90 bg-inverted-subtle backdrop-blur-sm border border-inverted-subtle px-4 py-1.5 rounded-full transition-opacity duration-700"
           style={{ opacity: heroReady ? 1 : 0 }}
         >
           {t.category}

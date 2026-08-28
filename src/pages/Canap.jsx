@@ -3003,7 +3003,7 @@ function Hero({ lang }) {
             the hero background is always dark regardless of site
             theme). Same pattern Nav.jsx line 529 already uses. */}
         <span
-          className="inline-flex self-start items-center text-tag-m uppercase tracking-widest font-semibold text-fg-on-dark-opacity-90 bg-inverted-subtle backdrop-blur-sm border border-inverted-subtle px-4 py-1.5 rounded-full transition-opacity duration-700"
+          className="inline-flex self-start items-center -ml-4 text-tag-m uppercase tracking-widest font-semibold text-fg-on-dark-opacity-90 bg-inverted-subtle backdrop-blur-sm border border-inverted-subtle px-4 py-1.5 rounded-full transition-opacity duration-700"
           style={{ opacity: heroReady ? 1 : 0 }}
         >
           {t.category}
@@ -3033,7 +3033,7 @@ function Hero({ lang }) {
                   <span className="sr-only">{s.prefix}{finalValue}{s.suffix}</span>
                   <span aria-hidden="true"><AnimatedStat prefix={s.prefix} countTo={s.countTo} decimals={s.decimals} suffix={s.suffix} ready={heroReady} /></span>
                 </span>
-                <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-on-dark-opacity-64 max-w-[100px] sm:max-w-none">
+                <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-on-dark-opacity-64 max-w-[130px] sm:max-w-none">
                   {s.label}
                 </span>
               </li>
@@ -3804,12 +3804,13 @@ function Canap({ lang = 'en', isDark }) {
 
           {/* Sub-section: Interaction model — the poster as the primary unit
               of information and action. Annotated poster + context sizing +
-              action menu. Sits on a black showcase panel (the iOS app's own
-              #141414) so the dark UI exports read true; all text is on-dark. */}
+              action menu. Sits on a black showcase panel (matching the
+              Design system panel below) so the dark UI exports read true;
+              all text is on-dark. */}
           <div
             id="interaction-model"
             data-squircle
-            className="scroll-mt-28 mt-16 sm:mt-20 lg:mt-24 rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-[#141414] p-6 sm:p-12 lg:p-[60px] pb-12 sm:pb-16 lg:pb-20"
+            className="scroll-mt-28 mt-16 sm:mt-20 lg:mt-24 rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 bg-black p-6 sm:p-12 lg:p-[60px] pb-12 sm:pb-16 lg:pb-20"
           >
             <h3 className="text-h3 font-semibold text-white mb-3 scroll-mt-28">{t.design.interaction.header}</h3>
             <p className="text-copy-m text-white/70 mb-10 sm:mb-12 max-w-3xl">{t.design.interaction.intro}</p>

@@ -73,9 +73,22 @@ export function initSquircle() {
   const onResize = () => document.querySelectorAll('[data-squircle]').forEach(updateSquircle);
   window.addEventListener('resize', onResize, { passive: true });
 
+  // A squircle element inside an entrance animation (e.g. a modal that scales
+  // in) gets measured via getBoundingClientRect while mid-transform — that
+  // returns the transiently *scaled* rendered size, not the element's true
+  // layout size, so the clip-path ends up permanently undersized once the
+  // animation settles (ResizeObserver never fires again, since `transform`
+  // doesn't change layout box dimensions at all). Re-checking every squircle
+  // once any animation/transition finishes anywhere self-corrects this.
+  const onAnimEnd = () => document.querySelectorAll('[data-squircle]').forEach(updateSquircle);
+  document.addEventListener('animationend', onAnimEnd);
+  document.addEventListener('transitionend', onAnimEnd);
+
   return () => {
     ro.disconnect();
     mo.disconnect();
     window.removeEventListener('resize', onResize);
+    document.removeEventListener('animationend', onAnimEnd);
+    document.removeEventListener('transitionend', onAnimEnd);
   };
 }

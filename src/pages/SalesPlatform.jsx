@@ -262,7 +262,6 @@ const HERO = {
     stats: [
       { prefix: '£', countTo: 6.8, decimals: 1, suffix: 'B',  label: 'in sales generated'      },
       { prefix: '+', countTo: 20,  decimals: 0, suffix: '%',   label: 'YoY sales increase'       },
-      { prefix: '',  countTo: 48,  decimals: 0, suffix: 'h',   label: 'to sell out launch 1' },
     ],
   },
   fr: {
@@ -271,7 +270,6 @@ const HERO = {
     stats: [
       { prefix: '',  countTo: 8,  decimals: 0, suffix: ' Mds €', label: 'de ventes générées'           },
       { prefix: '+', countTo: 20, decimals: 0, suffix: ' %',      label: 'en un an' },
-      { prefix: '',  countTo: 48, decimals: 0, suffix: 'h',       label: 'pour tout vendre'  },
     ],
   },
 };
@@ -357,7 +355,7 @@ function Hero({ lang }) {
             for white-at-90% text. Reads as a category tag rather
             than a small eyebrow. */}
         <span
-          className="inline-flex self-start items-center text-tag-m uppercase tracking-widest font-semibold text-fg-on-dark-opacity-90 bg-inverted-subtle backdrop-blur-sm border border-inverted-subtle px-4 py-1.5 rounded-full transition-opacity duration-700"
+          className="inline-flex self-start items-center -ml-4 text-tag-m uppercase tracking-widest font-semibold text-fg-on-dark-opacity-90 bg-inverted-subtle backdrop-blur-sm border border-inverted-subtle px-4 py-1.5 rounded-full transition-opacity duration-700"
           style={{ opacity: heroReady ? 1 : 0 }}
         >
           {h.category}
@@ -388,9 +386,9 @@ function Hero({ lang }) {
 }
 
 // ── Tile primitives ───────────────────────────────────────────────────────────
-function Tile({ children, fullWidth = false, bgClass = 'bg-bg-page' }) {
+function Tile({ children, fullWidth = false, bgClass = 'bg-bg-page', squircle = true }) {
   return (
-    <div data-squircle className={`${bgClass} rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 p-6 sm:p-12 lg:p-[60px] flex flex-col gap-4 sm:gap-5 lg:gap-6${fullWidth ? ' lg:col-span-2' : ''}`}>
+    <div {...(squircle ? { 'data-squircle': true } : {})} className={`${bgClass} rounded-radius-6 sm:rounded-radius-8 lg:rounded-radius-12 p-6 sm:p-12 lg:p-[60px] flex flex-col gap-4 sm:gap-5 lg:gap-6${fullWidth ? ' lg:col-span-2' : ''}`}>
       {children}
     </div>
   );
@@ -642,24 +640,25 @@ function ContextContent({ lang, isDark }) {
   const l = lang in CONTEXT_BODIES.mission ? lang : 'en';
   return (
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-      {/* Client + Mission + Scope share one card; each subsection groups its
-          eyebrow with its body, and the Tile's gap separates the three. */}
-      <Tile bgClass="bg-bg-page">
-        {/* Inner wrapper sets the gap BETWEEN subsections (larger), while each
-            subsection keeps its eyebrow + body tight. */}
-        <div className="flex flex-col gap-8 sm:gap-10">
-          <div className="flex flex-col gap-2 sm:gap-3">
-            <TileEyebrow id="ctx-client">{eyebrows[0]}</TileEyebrow>
-            <TileBody>{lang === 'fr' ? <>Principal promoteur immobilier des <strong>Émirats arabes unis</strong>, en <strong>expansion mondiale</strong>.</> : <><strong>Leading United Arab Emirates</strong> real estate developer expanding <strong>globally</strong>.</>}</TileBody>
-          </div>
-          <div className="flex flex-col gap-2 sm:gap-3">
-            <TileEyebrow id="ctx-mission">{eyebrows[2]}</TileEyebrow><TileBody>{CONTEXT_BODIES.mission[l]}</TileBody>
-          </div>
-          <div className="flex flex-col gap-2 sm:gap-3">
-            <TileEyebrow id="ctx-stakeholders">{eyebrows[3]}</TileEyebrow><TileBody>{CONTEXT_BODIES.stakeholders[l]}</TileBody>
-          </div>
+      {/* Client / Mission / Scope as separate cards: Client + Mission side by
+          side, Scope spans full width below — three-across was too cramped
+          given this section's ~52rem content width. */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
+        <Tile bgClass="bg-bg-page">
+          <TileEyebrow id="ctx-client">{eyebrows[0]}</TileEyebrow>
+          <TileBody>{lang === 'fr' ? <>Principal promoteur immobilier des <strong>Émirats arabes unis</strong>, en <strong>expansion mondiale</strong>.</> : <><strong>Leading United Arab Emirates</strong> real estate developer expanding <strong>globally</strong>.</>}</TileBody>
+        </Tile>
+        <Tile bgClass="bg-bg-page">
+          <TileEyebrow id="ctx-mission">{eyebrows[2]}</TileEyebrow>
+          <TileBody>{CONTEXT_BODIES.mission[l]}</TileBody>
+        </Tile>
+        <div className="sm:col-span-2">
+          <Tile bgClass="bg-bg-page">
+            <TileEyebrow id="ctx-stakeholders">{eyebrows[3]}</TileEyebrow>
+            <TileBody>{CONTEXT_BODIES.stakeholders[l]}</TileBody>
+          </Tile>
         </div>
-      </Tile>
+      </div>
 
       <Tile bgClass="bg-bg-page">
         <TileEyebrow id="ctx-team">{eyebrows[6]}</TileEyebrow>
@@ -700,7 +699,7 @@ const IMPACT = {
   en: {
     outcome: {
       eyebrow: "Outcome",
-      body: <><p>The platform's first two projects <strong>sold out within 48 hours</strong> of launch, demonstrating the immediate effectiveness of the design. By the end of the first year, the platform contributed to a <strong>20% YoY increase in sales</strong>, generating <strong>£6.8 billion in revenue</strong>.</p><p>The strong coordination between design, development, and project teams was key to this success. We maintained momentum through <strong>iterative improvements</strong> and <strong>cross-functional collaboration</strong>, ensuring that the platform scaled with each new project.</p></>,
+      body: <><p>The platform's first two projects <strong>sold out within 48 hours</strong> of launch. By the end of the first year, the platform contributed to a <strong>20% YoY increase in sales</strong>, generating <strong>£6.8 billion in revenue</strong>.</p><p>The strong coordination between design, development, and project teams was key to this success. We maintained momentum through <strong>iterative improvements</strong> and <strong>cross-functional collaboration</strong>, ensuring that the platform scaled with each new project.</p></>,
     },
     retrospective: {
       eyebrow: "Reflections",
@@ -1817,7 +1816,7 @@ function DesignContent({ lang, isDark, carouselHinted, onCarouselInteract }) {
                      : { desktop: imgUserflowDesktopLightEn, tablet: imgUserflowTabletLightEn, mobile: imgUserflowMobileLightEn });
   return (
     <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-      <Tile bgClass="bg-bg-page border border-black/[0.08] dark:border-white/[0.10]">
+      <Tile bgClass="bg-bg-page border border-black/[0.08] dark:border-white/[0.10]" squircle={false}>
         <div className={`${designTextOffset} flex flex-col gap-4 sm:gap-5 lg:gap-6`}>
           <TileEyebrow id="des-flow">{d.userFlow.eyebrow}</TileEyebrow>
           <div className={tileBodyText}>{d.userFlow.body}</div>

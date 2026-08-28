@@ -180,6 +180,7 @@ export default {
       "fg-on-dark-opacity-64": 'var(--fg-on-dark-opacity-64)',
       "fg-primary-inverse": 'var(--fg-primary-inverse)',
       "fg-secondary": 'var(--fg-secondary)',
+      "fg-secondary-inverse": 'var(--fg-secondary-inverse)',
       "fg-muted": 'var(--fg-muted)',
       "fg-muted-inverse": 'var(--fg-muted-inverse)',
       "fg-inverse": 'var(--fg-inverse)',

@@ -33,9 +33,22 @@ html.dark .canap-postit strong {
   color: #171717;
 }
 
+/* …same for the XR "Scale and clarity" cards — bg-surface-inverted flips to a
+   light panel in dark mode, so bold text should inherit the surrounding
+   (dark) copy color instead of flipping to white. */
+html.dark .xr-scale-card strong {
+  color: inherit;
+}
+
 /* Accessible gold — 6:1 on white in light mode, reverts to brand gold in dark mode */
 .gold-text { color: #7A5C00; }
 html.dark .gold-text { color: #C9A84C; }
+
+/* Same gold pair, flipped for surfaces that invert relative to the page
+   theme (e.g. bg-surface-inverted: dark panel in light mode, light panel
+   in dark mode) — so the accent stays legible against the inverted bg. */
+.gold-text-inverse { color: #C9A84C; }
+html.dark .gold-text-inverse { color: #7A5C00; }
 
 body {
   scroll-behavior: smooth;

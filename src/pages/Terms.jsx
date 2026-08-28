@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ── Update this date whenever content changes ──────────────────────────────────
-const LAST_UPDATED = new Date('2026-08-14');
+const LAST_UPDATED = new Date('2026-08-28');
 
 const formatDate = (date, lang) =>
   date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -88,17 +88,20 @@ function TermsSection({ s, num, t, delay }) {
       {s.contact && (
         <address className={`${body} not-italic space-y-3`}>
           <p className={body}>{t.contactIntro}</p>
-          <p className="font-semibold text-fg-primary">David V. — Senior Product Designer</p>
-          <p>
-            <button
-              onClick={() => window.location.href = 'mailto:d@AtelierDigital.co.uk'}
-              className={`${body} ${lnk} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus rounded`}
-              aria-label="Send an email to David"
-            >
-              <span className="obf-email" data-u="d" data-d="AtelierDigital.co.uk" aria-hidden="true" />
-            </button>
-          </p>
-          <p><Link to="/" className={`${body} ${lnk}`}>www.AtelierDigital.co.uk</Link></p>
+          <div data-squircle className="w-fit rounded-radius-5 border border-border-subtle py-5 px-8 space-y-3">
+            <p className="font-semibold text-fg-primary">David V.</p>
+            <p className={body}>Senior Product Designer</p>
+            <p>
+              <button
+                onClick={() => window.location.href = 'mailto:d@AtelierDigital.co.uk'}
+                className={`${body} ${lnk} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus rounded`}
+                aria-label="Send an email to David"
+              >
+                <span className="obf-email" data-u="d" data-d="AtelierDigital.co.uk" aria-hidden="true" />
+              </button>
+            </p>
+            <p><Link to="/" className={`${body} ${lnk}`}>www.AtelierDigital.co.uk</Link></p>
+          </div>
         </address>
       )}
     </li>
@@ -358,7 +361,7 @@ function Terms({ lang }) {
             <SecondaryNav sections={t.sections} activeId={activeId} onNavigate={handleNavigate} lang={lang} visible={scrolledDown && !atBottom} />
 
             {/* Main column */}
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 max-w-3xl">
               <div className="pt-32 pb-4">
                 <p className="text-label-s font-medium leading-[1.2] text-fg-muted mb-3">
                   {t.updated} {formatDate(LAST_UPDATED, lang)}

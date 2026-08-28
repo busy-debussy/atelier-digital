@@ -1,5 +1,44 @@
 # Changelog 
 
+## [2.7.0] — 2026-08-28
+
+### Extended Reality case study rewrite, localized flow diagrams, collapsible-section header redesign, password-gate note field
+
+#### Extended Reality — case study rewrite + new components
+- **Copy overhaul across every section, both languages**: Context, Where, Who, Team, Prioritise, Solve, and Impact all rewritten with more specific, concrete language (e.g. Who now states delegate count and country count; Prioritise explains *why* multiplayer AR and the branded tracker were cut/kept instead of just stating the outcome)
+- **New "My role" section** (`id: 'role'`, EN + FR): a dedicated `roleGrid` breaking responsibilities into three categories — Interaction design, UX, UI — each with its own bullet items, replacing the old single "My role" gold callout buried in the Team section
+- **New `CardCarousel` component**: swipeable 2-up (1-up on mobile) card carousel with dot + arrow nav, used for the "Design constraints" list (AR / Companion app / Map / VR / Digital twin, one card per experience explaining its specific technical/spatial constraint) — replaces a plain bulleted list
+- **New `ScaleCards` component**: image+sentence swipeable cards for "Scale and clarity" (VR Wadis build, AR building-volume overlay), each a fixed height so card size doesn't vary with sentence length
+- **Dark-mode fix**: bold text in `ScaleCards` was going white in dark mode because the cards sit on `bg-surface-inverted`, which flips to a *light* panel in dark mode — the global `html.dark strong { color: #fff }` rule fought the surface flip. Scoped via a new `.xr-scale-card` class + `html.dark .xr-scale-card strong { color: inherit }`, mirroring the existing `.canap-postit strong` exception
+- **French copy brought to parity with English**: added the missing "role" section (was English-only), removed a French-only "what was simplified" paragraph that had no English counterpart, restored facts that had been dropped in translation (the VR Wadis description, the "18 Empire State Buildings" scale comparison), and fixed two captions/callouts that had drifted to describe a different claim than the English original (`tracker` caption was about brand identity instead of delivery speed; the "Live deployment" callout claimed refinements to "pacing and interaction flow" — corrected, in both languages, to describe the real story: on-site technical adjustments made from installation day through the first few days)
+- Dozens of smaller French wording passes: de-anglicised phrasing ("brandé" → "dérivé du logo"), fixed grammar/register (Design UX / Design UI card headings instead of full "Design d'expérience/interface utilisateur"; "en tant que le seul"), added non-breaking spaces before colons throughout, and reordered both the card carousel and the "System decisions" list (in both languages) so Map/Carte interactive sits second rather than first
+- Hero stats simplified from `6 Apps / 3 XR Experiences / 6 weeks` to `6 Experiences / 6 weeks`; new `digitalTwinCta` string (EN/FR) for a Digital Twin cross-link
+
+#### Flow diagrams — SVG runtime translation → static localized images
+- The shared-AR-experience flowchart (initial + shipped) used to ship as raw SVG, translated string-by-string at runtime via a `SVG_FR` lookup table and recoloured for dark mode via a chain of regex replacements on the SVG markup. Replaced with **8 pre-rendered webp images** (initial/shipped × light/dark × en/fr) selected by `lang`/`isDark` — removes the runtime translation table, the regex recolour pipeline, and the two source SVGs entirely, at the cost of no longer being able to theme/translate the diagram without re-exporting it
+- `photo-satellite-development-site.webp` and the flowchart assets consolidated from separate `photo/`/`flowchart/` folders into one `media/` folder; two new renders (`render-communicating-scale-ar`, `screenshot-communicating-scale-vr`) and a map screenshot (`screenshot-communicating-scale-map`) added for the new ScaleCards section
+
+#### Collapsible sections — header redesign (matches Digital Twin)
+- Section headers on mobile now morph in place on collapse: the eyebrow row grows into the collapsed title (crossfading typography rather than swapping elements) and the full heading collapses to zero height via the same grid-rows technique used for the body, instead of the old side-by-side eyebrow+heading-disappears treatment
+- New `headerOpen` state separate from `open` — the header/chevron transitions start immediately on click, while the body's own open-transition still waits a frame after `hidden` clears (needed so the browser doesn't skip the animation when un-hiding and animating in the same frame)
+
+#### Password gate — Request Access note field
+- The note textarea now has a **custom drag handle** to resize it (native `resize` only gives a small corner grip), floored at its natural 2-row height and capped at 12 lines on top of the existing 500-char limit; floating label fades out instead of staying put once content scrolls behind it
+- New "Expect a response today." / "Réponse attendue aujourd'hui." line shown once the request form is open
+- `text-fg-muted` → `text-fg-secondary` on several strings for better contrast; modal ring colour `ring-tw-700` → `ring-tw-900`
+
+#### Sales Platform, Canap, Digital Twin — layout & copy polish
+- **Sales Platform**: Context section's Client/Mission/Scope split from one stacked card into a 2-column grid (Client + Mission side by side, Scope full-width below) — three subsections in one card read too cramped at this section's content width; removed the "48h to sell out launch 1" hero stat (both languages); `Tile` gained a `squircle` prop to opt out of the corner treatment where a card already has its own border; Outcome copy trimmed ("sold out within 48 hours of launch, demonstrating the immediate effectiveness of the design" → "...of launch")
+- **Canap & Digital Twin**: hero category tag nudged left (`-ml-4`) to align with the heading below it; Canap's dark showcase panel background changed from a hardcoded `#141414` to `bg-black` to match the Design-system panel; Canap's hero stat label column widened (100px → 130px) so longer labels don't wrap awkwardly
+- **Terms**: the contact block (David V. / title / email / site link) is now a bordered card instead of plain stacked text; main content column capped at `max-w-3xl` instead of stretching full-width
+
+#### Nav & tokens
+- `ProjectsButton` gained `[backface-visibility:hidden]` (Safari flicker fix on the active/hover background transition); the contact modal card now uses `data-squircle`
+- New `fg-secondary-inverse` token (light `#d4d4d4` / dark `#404040`) and new `.gold-text-inverse` utility (gold pair flipped for surfaces that themselves invert relative to page theme), added to `semantic.css`/`tailwind.config.js`/`index.css`
+- `squircle.js` now also re-measures every `[data-squircle]` element on `animationend`/`transitionend`, not just resize/mutation — a squircle inside an entrance animation (e.g. a modal scaling in) was getting measured mid-transform via `getBoundingClientRect`, capturing the transiently scaled size and leaving the clip-path permanently undersized once the animation settled
+
+---
+
 ## [2.6.3] — 2026-08-14
 
 ### Digital Twin — dark-mode polish, mobile fixes, and a nav bug
