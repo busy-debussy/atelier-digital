@@ -266,9 +266,9 @@ const HERO = {
   },
   fr: {
     category: 'Appli Web Réactive',
-    title: 'Une plateforme de vente sur plan',
+    title: 'Une plateforme immobilière interactive 3D',
     stats: [
-      { prefix: '',  countTo: 8,  decimals: 0, suffix: ' Mds €', label: 'de ventes générées'           },
+      { prefix: '',  countTo: 6.8, decimals: 1, suffix: ' Mds £', label: 'de ventes générées'           },
       { prefix: '+', countTo: 20, decimals: 0, suffix: ' %',      label: 'en un an' },
     ],
   },
@@ -490,10 +490,10 @@ const CONTEXT_INDUSTRY = {
 };
 const CONTEXT_BODIES = {
   // index matches eyebrows array (0 = client, body handled inline, 1 = industry, handled inline)
-  mission:      { en: <>Design a digital platform for exploring <strong>unbuilt properties</strong> and supporting <strong>high-pressure sales launches</strong>.</>, fr: <>Concevoir une <strong>plateforme digitale haut de gamme</strong> permettant aux acheteurs d'explorer des <strong>biens non construits</strong> tout en accompagnant les <strong>lancements commerciaux sous haute pression</strong>.</> },
+  mission:      { en: <>Within <strong>15 weeks</strong>, we had to build a platform for exploring <strong>thousands of unbuilt units</strong>, to support <strong>high-pressure sales launches</strong>.</>, fr: <>En seulement <strong>15 semaines</strong>, nous avons dû construire une plateforme permettant d'explorer des <strong>milliers d'unités non construites</strong>, pour soutenir des <strong>lancements commerciaux sous haute pression</strong>.</> },
   stakeholders: {
-    en: <><strong>Cross-functional delivery</strong> across <strong>product, engineering</strong>, and <strong>3D production</strong> within a fast-paced, launch-driven environment.</>,
-    fr: <><strong>Livraison transversale</strong> entre <strong>produit, ingénierie</strong> et <strong>production 3D</strong> dans un environnement rythmé par les lancements.</>,
+    en: <>That meant a <strong>cross-functional delivery</strong> across <strong>product, engineering</strong>, and <strong>3D production</strong>, inside a fast-paced and launch-driven environment.</>,
+    fr: <>Cela impliquait une <strong>livraison transversale</strong> entre <strong>produit, ingénierie</strong> et <strong>production 3D</strong>, dans un environnement rythmé par les lancements.</>,
   },
   myRole: {
     en: {
@@ -501,19 +501,19 @@ const CONTEXT_BODIES = {
         { value: "15 weeks", label: "to first launch" },
         { value: "10 projects", label: "in first year" },
       ],
-      body: <ul className="list-disc pl-5 space-y-2"><li>Led <strong>4 designers</strong> across <strong>UX, UI, interaction</strong>, and <strong>visual design</strong>.</li><li>Partnered with <strong>product, engineering</strong>, and <strong>3D studio</strong> to define and deliver <strong>MVP through to launch</strong> and subsequent launches.</li></ul>,
+      body: <ul className="list-disc pl-5 space-y-2"><li>I led <strong>4 designers</strong> across <strong>UX, UI, interaction</strong>, and <strong>visual design</strong>.</li><li>I partnered with <strong>product management, engineering, 3D studio</strong> and <strong>Quality Assurance</strong> to define and deliver the <strong>MVP through to launch</strong>.</li></ul>,
     },
     fr: {
       stats: [
         { value: "15 semaines", label: "jusqu'au 1er lancement" },
         { value: "10 projets",   label: "la premi\u00e8re ann\u00e9e" },
       ],
-      body: <ul className="list-disc pl-5 space-y-2"><li>Dirigé <strong>4 designers</strong> couvrant l'<strong>UX, l'UI, l'interaction</strong> et le <strong>design visuel</strong>.</li><li>Collaboration avec <strong>produit, ingénierie</strong> et <strong>studio 3D</strong> pour définir et livrer le <strong>MVP jusqu'au lancement</strong> et les lancements suivants.</li></ul>,
+      body: <ul className="list-disc pl-5 space-y-2"><li>J'ai dirigé <strong>4 designers</strong> couvrant l'<strong>UX, l'UI, l'interaction</strong> et le <strong>design visuel</strong>.</li><li>J'ai collaboré avec <strong>la gestion produit, l'ingénierie, le studio 3D</strong> et l'<strong>assurance qualité</strong> pour définir et livrer le <strong>MVP jusqu'au lancement</strong>.</li></ul>,
     },
   },
   team: {
-    en: <>Distributed team across <strong>4 time zones</strong>.</>,
-    fr: <>Équipe distribuée sur <strong>4 fuseaux horaires</strong>.</>,
+    en: <>We grew the team to about <strong>40 people</strong>, distributed <strong>globally</strong>.</>,
+    fr: <>Nous avons fait grandir l'équipe jusqu'à environ <strong>40 personnes</strong>, réparties dans le <strong>monde entier</strong>.</>,
   },
 };
 
@@ -646,7 +646,7 @@ function ContextContent({ lang, isDark }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
         <Tile bgClass="bg-bg-page">
           <TileEyebrow id="ctx-client">{eyebrows[0]}</TileEyebrow>
-          <TileBody>{lang === 'fr' ? <>Principal promoteur immobilier des <strong>Émirats arabes unis</strong>, en <strong>expansion mondiale</strong>.</> : <><strong>Leading United Arab Emirates</strong> real estate developer expanding <strong>globally</strong>.</>}</TileBody>
+          <TileBody>{lang === 'fr' ? <>C'est l'un des <strong>principaux promoteurs immobiliers</strong> des <strong>Émirats arabes unis</strong>, en <strong>expansion mondiale</strong>.</> : <>They are one of the <strong>leading United Arab Emirates</strong> real estate developers expanding <strong>globally</strong>.</>}</TileBody>
         </Tile>
         <Tile bgClass="bg-bg-page">
           <TileEyebrow id="ctx-mission">{eyebrows[2]}</TileEyebrow>
@@ -681,10 +681,10 @@ function ContextContent({ lang, isDark }) {
       <Tile>
         <TileEyebrow id="ctx-role">{eyebrows[4]}</TileEyebrow>
         <TileBody>{CONTEXT_BODIES.myRole[l].body}</TileBody>
-        <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 lg:gap-[60px]">
+        <div className="flex flex-row gap-3 sm:gap-12 lg:gap-[60px]">
           {CONTEXT_BODIES.myRole[l].stats.map((s, i) => (
-            <div key={i} data-squircle className="flex-1 rounded-radius-4 bg-bg-page border border-black/[0.08] dark:border-white/[0.10] px-5 py-4 flex flex-col gap-1">
-              <span className="text-h3 font-semibold leading-snug text-fg-primary">{s.value}</span>
+            <div key={i} data-squircle className="flex-1 min-w-0 rounded-radius-4 bg-bg-page border border-black/[0.08] dark:border-white/[0.10] px-3 sm:px-5 py-3 sm:py-4 flex flex-col gap-1">
+              <span className="text-h4 sm:text-h3 font-semibold leading-snug text-fg-primary">{s.value}</span>
               <span className="text-label-s font-semibold leading-[1.4] uppercase tracking-wider text-fg-muted">{s.label}</span>
             </div>
           ))}
@@ -699,23 +699,13 @@ const IMPACT = {
   en: {
     outcome: {
       eyebrow: "Outcome",
-      body: <><p>The platform's first two projects <strong>sold out within 48 hours</strong> of launch. By the end of the first year, the platform contributed to a <strong>20% YoY increase in sales</strong>, generating <strong>£6.8 billion in revenue</strong>.</p><p>The strong coordination between design, development, and project teams was key to this success. We maintained momentum through <strong>iterative improvements</strong> and <strong>cross-functional collaboration</strong>, ensuring that the platform scaled with each new project.</p></>,
-    },
-    retrospective: {
-      eyebrow: "Reflections",
-      body: <><p>To meet <strong>aggressive launch timelines</strong>, we prioritised <strong>speed and scalability</strong> over deeper validation.</p><ul className="list-disc list-inside space-y-1"><li><strong>Pre-rendered 3D over real-time</strong> → improved performance, reduced interactivity</li><li><strong>Desktop-first MVP</strong> → supported sales agents, delayed mobile experience</li><li><strong>Structured navigation</strong> → improved clarity, reduced exploration</li></ul><p>These trade-offs enabled a <strong>successful launch</strong> but introduced areas we later refined through <strong>iteration</strong>.</p></>
-,
+      body: <><p>The platform's first two projects <strong>sold out within 48 hours</strong> of launch. By the end of the first year, it contributed to a <strong>20% YoY increase in sales</strong>, generating <strong>£6.8 billion in revenue</strong>.</p><p>The strong coordination between design, development, and project teams was key to this success. We maintained momentum through <strong>iterative improvements</strong> and <strong>cross-functional collaboration</strong>, ensuring that the platform scaled with each new project.</p></>,
     },
   },
   fr: {
     outcome: {
       eyebrow: "Bilan",
-      body: <><p>Les deux premiers projets de la plateforme ont été <strong>vendus en 48 heures</strong> suivant leur lancement, témoignant de l'efficacité immédiate du design. À la fin de la première année, la plateforme a contribué à une <strong>augmentation des ventes de 20 %</strong>, générant <strong>6,8 milliards de livres sterling</strong> de chiffre d'affaires.</p><p>La coordination étroite entre les équipes design, développement et gestion de projet a été essentielle à ce succès. Nous avons maintenu l'élan grâce à des <strong>améliorations itératives</strong> et une <strong>collaboration transversale</strong>, garantissant que la plateforme évolue avec chaque nouveau projet.</p></>,
-    },
-    retrospective: {
-      eyebrow: "Réflexions",
-      body: <><p>Pour respecter des <strong>délais de lancement ambitieux</strong>, nous avons priorisé la <strong>vitesse et la scalabilité</strong> au détriment d'une validation plus approfondie.</p><ul className="list-disc list-inside space-y-1"><li><strong>Rendu pré-calculé plutôt que temps réel</strong> → performance améliorée, interactivité réduite</li><li><strong>MVP desktop-first</strong> → agents commerciaux soutenus, expérience mobile différée</li><li><strong>Navigation structurée</strong> → clarté améliorée, exploration réduite</li></ul><p>Ces compromis ont permis un <strong>lancement réussi</strong>, mais ont introduit des aspects que nous avons ensuite affinés par <strong>itération</strong>.</p></>
-,
+      body: <><p>Les deux premiers projets de la plateforme ont été <strong>vendus en 48 heures</strong> suivant leur lancement. À la fin de la première année, elle a contribué à une <strong>augmentation des ventes de 20 %</strong>, générant <strong>6,8 milliards de livres sterling</strong> de chiffre d'affaires.</p><p>La coordination étroite entre les équipes design, développement et gestion de projet a été essentielle à ce succès. Nous avons maintenu l'élan grâce à des <strong>améliorations itératives</strong> et une <strong>collaboration transversale</strong>, garantissant que la plateforme évolue avec chaque nouveau projet.</p></>,
     },
   },
 };
@@ -727,10 +717,6 @@ function ImpactContent({ lang }) {
       <Tile>
         <TileEyebrow id="imp-outcome">{t.outcome.eyebrow}</TileEyebrow>
         <TileBody>{t.outcome.body}</TileBody>
-      </Tile>
-      <Tile bgClass="bg-bg-page border border-black/[0.08] dark:border-white/[0.10]">
-        <TileEyebrow id="imp-retrospective">{t.retrospective.eyebrow}</TileEyebrow>
-        <TileBody>{t.retrospective.body}</TileBody>
       </Tile>
     </div>
   );
@@ -782,17 +768,15 @@ const DEFINE = {
   en: {
     challenge: {
       eyebrow: "Problem",
-      body: <>How can we help buyers explore <strong className="text-fg-on-dark-primary">unbuilt properties</strong> across multiple locations in an <strong className="text-fg-on-dark-primary">engaging</strong> and <strong className="text-fg-on-dark-primary">contextual</strong> way?</>,
-      warningCallout: { emoji: '⚠️', label: 'Key constraints', body: <><span className="block"><strong>Technical limitations:</strong> Large 3D datasets made real-time rendering expensive and slow.</span><span className="block mt-6"><strong>Tight deadlines:</strong> The first launch was only <strong>15 weeks away</strong>, leaving limited time for research or feature development.</span><span className="block mt-6"><strong>Client expectations:</strong> The client wanted a <strong>premium, user-friendly experience</strong> and made final decisions on key features.</span></> },
+      body: <>How might we help buyers explore <strong className="text-fg-on-dark-primary">unbuilt properties</strong> across multiple locations in an <strong className="text-fg-on-dark-primary">engaging</strong> and <strong className="text-fg-on-dark-primary">contextual</strong> way?</>,
     },
     exploration: {
       eyebrow: "Exploration",
       subsections: [
         {
           h4: "Integrating 3D without compromising performance",
-          body: <>We tested <strong>real-time rendering</strong> using Unreal Engine.</>,
-          errorCallout: { emoji: '🛑', label: 'Issues', body: <ul className="list-disc pl-5 space-y-0"><li>Multi-minute load times</li><li>High streaming costs</li></ul> },
-          callout: { label: 'Decision', body: <><span className="block"><strong>Pre-rendered 3D over real-time</strong></span><span className="block mt-6">→ Faster load, scalable<br />→ Reduced interactivity</span></> },
+          body: <>We tested <strong>real-time</strong> using Unreal Engine, but two main issues emerged:<ul className="list-disc pl-5 mt-2 space-y-1"><li>Multi-minute load times</li><li>High streaming costs</li></ul></>,
+          callout: { label: 'Decision', body: <>We chose <strong>pre-rendered 3D</strong> over real-time for this delivery because it was <strong>faster to load</strong> and <strong>easier to implement and scale</strong>.</> },
         },
       ],
     },
@@ -801,16 +785,16 @@ const DEFINE = {
       subsections: [
         {
           h4: "Constraints",
-          body: <>Tight deadlines driven by high-volume launch-day sales (≈1,000 units per project)</>,
+          body: <>Tight deadlines were driven by <strong>high-volume launch-day sales</strong>, with around <strong>1,000 units</strong> needed to go live per project.</>,
         },
         {
-          callout: { label: 'Decision', body: <><span className="block"><strong>Desktop-first MVP</strong></span><span className="block mt-6">→ Prioritised sales agents<br />→ Deferred mobile optimisation</span></> },
+          callout: { label: 'Decision', body: <>For the first launch, we focused on shipping a <strong>desktop-first MVP</strong>, prioritising <strong>sales agents</strong> first and deferring <strong>mobile</strong> for later.</> },
         },
         {
           h4: "Incremental iterations",
-          body: <>Post-launch, iterated across <strong>10 projects</strong> without delaying releases.</>,
+          body: <>Post-launch, we iterated across <strong>10 projects</strong> without delaying releases.</>,
         },
-        { h4: null, body: null, before: null, after: <>Each of these projects required careful <strong>prioritisation</strong> and <strong>fast-paced iterations</strong> to meet the market's demands. As the platform grew, our <strong>incremental approach</strong> allowed us to continuously improve features and ensure that new projects met both <strong>user and client expectations</strong>.</> },
+        { h4: null, body: null, before: null, after: <>Each of these projects required careful <strong>prioritisation</strong> and <strong>fast-paced iterations</strong> to meet each launch's demands. As the platform grew, our <strong>incremental approach</strong> allowed us to continuously improve features and ensure that new projects met both <strong>user and client expectations</strong>.</> },
       ],
     },
   },
@@ -818,16 +802,14 @@ const DEFINE = {
     challenge: {
       eyebrow: "Le défi",
       body: <>Comment pouvons-nous aider des acheteurs immobiliers à se projeter dans des <strong className="text-fg-on-dark-primary">espaces non-bâtis</strong> de façon <strong className="text-fg-on-dark-primary">émotionnellement engageante</strong> et <strong className="text-fg-on-dark-primary">contextuellement pertinente</strong>, dans divers environnements géographiques<strong className="text-fg-on-dark-primary"> ?</strong></>,
-      warningCallout: { emoji: '⚠️', label: 'Contraintes clés', body: <><strong>Limitations techniques :</strong> Les grandes bases de données 3D rendaient le rendu en temps réel coûteux et lent.<br /><strong>Délais serrés :</strong> Le premier lancement n'était qu'à <strong>15 semaines</strong>, laissant peu de temps pour la recherche ou le développement.<br /><strong>Attentes du client :</strong> Le client souhaitait une <strong>expérience premium et intuitive</strong> et prenait les décisions finales sur les fonctionnalités clés.</> },
     },
     exploration: {
       eyebrow: "Exploration",
       subsections: [
         {
           h4: "Intégration 3D sans compromettre les perfs",
-          body: <>Nous avons testé le <strong>rendu en temps réel</strong> avec Unreal Engine.</>,
-          errorCallout: { emoji: '🛑', label: 'Défis', body: <><strong>Temps de chargement longs :</strong> Les larges ensembles de données 3D causaient des temps de chargement de plusieurs minutes.<br /><strong>Coûts de streaming élevés :</strong> Le coût par utilisateur du streaming 3D à grande échelle était <strong>insoutenable</strong> pour le projet.</> },
-          callout: { label: 'Décision : rendu pré-calculé vs temps réel', body: <>→ Chargement rapide, scalable<br />→ Interactivité réduite</> },
+          body: <>Nous avons testé le <strong>rendu en temps réel</strong> avec Unreal Engine, mais deux problèmes principaux sont apparus :<ul className="list-disc pl-5 mt-2 space-y-1"><li>Temps de chargement de plusieurs minutes</li><li>Coûts de streaming élevés</li></ul></>,
+          callout: { label: 'Décision', body: <>Nous avons choisi le <strong>rendu 3D pré-calculé</strong> plutôt que le temps réel pour cette livraison, car il était <strong>plus rapide à charger</strong> et <strong>plus simple à mettre en œuvre et à faire évoluer</strong>.</> },
         },
       ],
     },
@@ -836,16 +818,16 @@ const DEFINE = {
       subsections: [
         {
           h4: "Échéances strictes",
-          body: <>Compte tenu du <strong>rythme soutenu</strong> du marché immobilier de luxe, les livraisons de projets avaient des <strong>délais stricts</strong>. Le client visait à vendre de grandes quantités de lots dès le jour du lancement, ce qui signifiait que chaque lot (environ <strong>1 000 par projet</strong>) devait être visible dans l'application dès le premier jour.</>,
+          body: <>Les délais serrés étaient dus à un <strong>volume élevé de ventes</strong> le jour du lancement, avec environ <strong>1 000 unités</strong> à mettre en ligne par projet.</>,
         },
         {
-          callout: { label: "Décision : MVP desktop-first pour le cas d'usage critique du lancement", body: <>Avec seulement <strong>15 semaines</strong> et une dépendance directe aux <strong>ventes du jour J</strong>, nous avons priorisé <strong>l'expérience des agents commerciaux</strong> plutôt qu'une plateforme entièrement responsive.<br />→ Cela impliquait de <strong>reporter l'optimisation mobile</strong> pour garantir la fiabilité dans des <strong>environnements de vente sous pression</strong>.</> },
+          callout: { label: 'Décision', body: <>Pour le premier lancement, nous nous sommes concentrés sur la livraison d'un <strong>MVP desktop-first</strong>, en priorisant d'abord les <strong>agents commerciaux</strong> et en reportant le <strong>mobile</strong> à plus tard.</> },
         },
         {
           h4: "Itérations incrémentales",
           body: <>Après le lancement, nous avons itéré rapidement sur <strong>10 projets</strong>, introduisant des fonctionnalités de manière <strong>incrémentale</strong> sans retarder les sorties.</>,
         },
-        { h4: "Chronologie des lancements", body: null, before: null, after: <>Chacun de ces projets nécessitait une <strong>priorisation rigoureuse</strong> et des <strong>itérations rapides</strong> pour répondre aux exigences du marché. Au fil de la croissance de la plateforme, notre <strong>approche incrémentale</strong> nous a permis d'améliorer continuellement les fonctionnalités et de garantir que les nouveaux projets répondent aux <strong>attentes des utilisateurs et du client</strong>.</> },
+        { h4: null, body: null, before: null, after: <>Chacun de ces projets nécessitait une <strong>priorisation rigoureuse</strong> et des <strong>itérations rapides</strong> pour répondre aux exigences de chaque lancement. Au fil de la croissance de la plateforme, notre <strong>approche incrémentale</strong> nous a permis d'améliorer continuellement les fonctionnalités et de garantir que les nouveaux projets répondent aux <strong>attentes des utilisateurs et du client</strong>.</> },
       ],
     },
   },
@@ -862,45 +844,22 @@ function DefineContent({ lang, isDark }) {
         <TileTitle dark>{d.challenge.body}</TileTitle>
       </Tile>
 
-      {d.challenge.warningCallout && (
-        <Tile bgClass="bg-bg-page">
-          <div data-squircle className="rounded-radius-4 bg-feedback-warning-bg border border-feedback-warning-border px-5 py-4 flex flex-col gap-6">
-            <div className="flex items-center gap-2">
-              {d.challenge.warningCallout.emoji && <span aria-hidden="true" className="shrink-0">{d.challenge.warningCallout.emoji}</span>}
-              <span className="text-copy-m font-bold leading-snug text-feedback-warning-fg">{d.challenge.warningCallout.label}</span>
-            </div>
-            <div className={tileBodyText}>{d.challenge.warningCallout.body}</div>
-          </div>
-        </Tile>
-      )}
-      <Tile bgClass="bg-transparent">
+      <Tile bgClass="bg-bg-page">
         <TileEyebrow id="def-exploration">{d.exploration.eyebrow}</TileEyebrow>
         {d.exploration.subsections.map((s, i) => (
           <div key={i} className="flex flex-col gap-4 sm:gap-5 lg:gap-6 pt-2">
             <TileH4>{s.h4}</TileH4>
             <TileBody>{s.body}</TileBody>
-            {s.errorCallout && (
-              <div data-squircle className="mt-4 sm:mt-5 lg:mt-6 rounded-radius-4 bg-feedback-error-bg border border-feedback-error-border px-5 py-4 flex flex-col gap-6">
-                <div className="flex items-center gap-2">
-                  {s.errorCallout.emoji && <span aria-hidden="true" className="shrink-0">{s.errorCallout.emoji}</span>}
-                  <span className="text-copy-m font-bold leading-snug text-feedback-error-fg">{s.errorCallout.label}</span>
-                </div>
-                <div className={tileBodyText}>{s.errorCallout.body}</div>
-              </div>
-            )}
             {s.callout && (
-              <div data-squircle className="mt-4 sm:mt-5 lg:mt-6 rounded-radius-4 bg-palette-sky-bg border border-palette-indigo-bg px-5 py-4 flex flex-col gap-6">
-                <div className="flex items-center gap-2">
-                  {s.callout.emoji && <span aria-hidden="true" className="shrink-0">{s.callout.emoji}</span>}
-                  <span className="text-copy-m font-bold leading-snug text-palette-indigo-fg">{s.callout.label}</span>
-                </div>
+              <div data-squircle className="mt-4 sm:mt-5 lg:mt-6 rounded-radius-4 bg-bg-page border border-black/[0.08] dark:border-white/[0.10] px-5 py-4 flex flex-col gap-3">
+                <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{s.callout.label}</span>
                 <div className={tileBodyText}>{s.callout.body}</div>
               </div>
             )}
           </div>
         ))}
       </Tile>
-      <Tile bgClass="bg-transparent">
+      <Tile bgClass="bg-bg-page">
         <TileEyebrow id="def-strategy">{d.uxStrategy.eyebrow}</TileEyebrow>
         {d.uxStrategy.subsections.map((s, i) => (
           <div key={i} className={`flex flex-col gap-4 sm:gap-5 lg:gap-6 ${i === 0 ? 'pt-2' : 'pt-8 sm:pt-10 lg:pt-12'}`}>
@@ -911,11 +870,8 @@ function DefineContent({ lang, isDark }) {
                 ? <>{s.before && <TileBody>{s.before}</TileBody>}<div className="mt-1 sm:mt-2 mb-8 sm:mb-10"><LaunchesTimeline /></div><TileBody>{s.after}</TileBody></>
                 : null}
             {s.callout && (
-              <div data-squircle className="rounded-radius-4 bg-palette-sky-bg border border-palette-indigo-bg px-5 py-4 flex flex-col gap-6">
-                <div className="flex items-center gap-2">
-                  {s.callout.emoji && <span aria-hidden="true" className="shrink-0">{s.callout.emoji}</span>}
-                  <span className="text-copy-m font-bold leading-snug text-palette-indigo-fg">{s.callout.label}</span>
-                </div>
+              <div data-squircle className="rounded-radius-4 bg-bg-page border border-black/[0.08] dark:border-white/[0.10] px-5 py-4 flex flex-col gap-3">
+                <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{s.callout.label}</span>
                 <div className={tileBodyText}>{s.callout.body}</div>
               </div>
             )}
@@ -1271,26 +1227,26 @@ function ConceptsCarousel({ lang, isDark, showHint = true, onInteract }) {
 // ── UI concept cards data ─────────────────────────────────────────────────────
 const UI_CONCEPTS = {
   en: [
-    { title: "1. Globe view",     palette: "bg-palette-yellow-bg text-palette-yellow-fg",       bullets: ["Flight times", "Breadcrumbs"],        img: imgUiCard01 },
-    { title: "2. Country view",   palette: "bg-palette-orange-bg text-palette-orange-fg",       bullets: ["City cards", "Compass, zoom"],        img: imgUiCard02 },
-    { title: "3. City view",      palette: "bg-palette-red-bg text-palette-red-fg",             bullets: ["Points of interest", "Distances"],    img: imgUiCard03 },
-    { title: "4. Hero view",      palette: "bg-palette-pink-bg text-palette-pink-fg",           bullets: ["Project card", "Live weather"],       img: imgUiCard04 },
-    { title: "5. Project view",   palette: "bg-palette-purple-bg text-palette-purple-fg",       bullets: ["Day/night", "Orbit controls"],        img: imgUiCard05 },
-    { title: "6. Tower view",     palette: "bg-palette-indigo-bg text-palette-indigo-fg",       bullets: ["Floor selector", "Filters"],          img: imgUiCard06 },
-    { title: "7. Floors view",    palette: "bg-palette-sky-bg text-palette-sky-fg",             bullets: ["Unit selector", "Distances"],         img: imgUiCard07 },
-    { title: "8. Unit view",      palette: "bg-palette-green-bg text-palette-green-fg",         bullets: ["Room selector", "Customisation"],     img: imgUiCard08 },
-    { title: "9. Interiors view", palette: "bg-palette-pistachio-bg text-palette-pistachio-fg", bullets: ["Floor selector", "Request callback"], img: imgUiCard09 },
+    { title: "1. Globe view",     titleColor: "text-palette-yellow-fg",     bullets: ["Flight times", "Breadcrumbs"],        img: imgUiCard01 },
+    { title: "2. Country view",   titleColor: "text-palette-orange-fg",     bullets: ["City cards", "Compass, zoom"],        img: imgUiCard02 },
+    { title: "3. City view",      titleColor: "text-palette-red-fg",        bullets: ["Points of interest", "Distances"],    img: imgUiCard03 },
+    { title: "4. Hero view",      titleColor: "text-palette-pink-fg",       bullets: ["Project card", "Live weather"],       img: imgUiCard04 },
+    { title: "5. Project view",   titleColor: "text-palette-purple-fg",     bullets: ["Day/night", "Orbit controls"],        img: imgUiCard05 },
+    { title: "6. Tower view",     titleColor: "text-palette-indigo-fg",     bullets: ["Floor selector", "Filters"],          img: imgUiCard06 },
+    { title: "7. Floors view",    titleColor: "text-palette-sky-fg",        bullets: ["Unit selector", "Distances"],         img: imgUiCard07 },
+    { title: "8. Unit view",      titleColor: "text-palette-green-fg",      bullets: ["Room selector", "Customisation"],     img: imgUiCard08 },
+    { title: "9. Interiors view", titleColor: "text-palette-pistachio-fg",  bullets: ["Floor selector", "Request callback"], img: imgUiCard09 },
   ],
   fr: [
-    { title: "1. Vue Globe",      palette: "bg-palette-yellow-bg text-palette-yellow-fg",       bullets: ["Durées de vol", "Fil d'Ariane"],               img: imgUiCard01 },
-    { title: "2. Vue Pays",       palette: "bg-palette-orange-bg text-palette-orange-fg",       bullets: ["Cartes de ville", "Boussole, zoom"],             img: imgUiCard02 },
-    { title: "3. Vue Ville",      palette: "bg-palette-red-bg text-palette-red-fg",             bullets: ["Points d'intérêt", "Distances"],                 img: imgUiCard03 },
-    { title: "4. Vue Accueil",    palette: "bg-palette-pink-bg text-palette-pink-fg",           bullets: ["Fiche projet", "Météo en direct"],               img: imgUiCard04 },
-    { title: "5. Vue Projet",     palette: "bg-palette-purple-bg text-palette-purple-fg",       bullets: ["Jour/nuit", "Contrôles orbitaux"],               img: imgUiCard05 },
-    { title: "6. Vue Tour",       palette: "bg-palette-indigo-bg text-palette-indigo-fg",       bullets: ["Sélecteur d'étage", "Filtres"],                  img: imgUiCard06 },
-    { title: "7. Vue Étages",     palette: "bg-palette-sky-bg text-palette-sky-fg",             bullets: ["Sélecteur d'unité", "Distances"],                img: imgUiCard07 },
-    { title: "8. Vue Unité",      palette: "bg-palette-green-bg text-palette-green-fg",         bullets: ["Sélecteur de pièce", "Personnalisation"],        img: imgUiCard08 },
-    { title: "9. Vue Intérieurs", palette: "bg-palette-pistachio-bg text-palette-pistachio-fg", bullets: ["Sélecteur d'étage", "Demande de rappel"],        img: imgUiCard09 },
+    { title: "1. Vue Globe",      titleColor: "text-palette-yellow-fg",     bullets: ["Durées de vol", "Fil d'Ariane"],               img: imgUiCard01 },
+    { title: "2. Vue Pays",       titleColor: "text-palette-orange-fg",     bullets: ["Cartes de ville", "Boussole, zoom"],             img: imgUiCard02 },
+    { title: "3. Vue Ville",      titleColor: "text-palette-red-fg",        bullets: ["Points d'intérêt", "Distances"],                 img: imgUiCard03 },
+    { title: "4. Vue Accueil",    titleColor: "text-palette-pink-fg",       bullets: ["Fiche projet", "Météo en direct"],               img: imgUiCard04 },
+    { title: "5. Vue Projet",     titleColor: "text-palette-purple-fg",     bullets: ["Jour/nuit", "Contrôles orbitaux"],               img: imgUiCard05 },
+    { title: "6. Vue Tour",       titleColor: "text-palette-indigo-fg",     bullets: ["Sélecteur d'étage", "Filtres"],                  img: imgUiCard06 },
+    { title: "7. Vue Étages",     titleColor: "text-palette-sky-fg",        bullets: ["Sélecteur d'unité", "Distances"],                img: imgUiCard07 },
+    { title: "8. Vue Unité",      titleColor: "text-palette-green-fg",      bullets: ["Sélecteur de pièce", "Personnalisation"],        img: imgUiCard08 },
+    { title: "9. Vue Intérieurs", titleColor: "text-palette-pistachio-fg",  bullets: ["Sélecteur d'étage", "Demande de rappel"],        img: imgUiCard09 },
   ],
 };
 
@@ -1763,26 +1719,26 @@ function HifiCarousel({ lang, isDark, showHint = true, onInteract }) {
 // ── Design section content ────────────────────────────────────────────────────
 const DESIGN = {
   en: {
-    userFlow: { eyebrow: "User flow", body: <>Principle: <strong>Guided exploration</strong> over free navigation</>, callout: { label: 'Decision', body: <><span className="block"><strong>Hierarchical navigation</strong></span><span className="block mt-6">→ We introduced a <strong>structured, layered flow</strong> to guide users from global to interior views, balancing <strong>exploration with clarity</strong>.</span></> } },
+    userFlow: { eyebrow: "User flow", body: <>We guided users through a <strong>structured path</strong>.</>, callout: { label: 'Decision', body: <>Rather than free navigation through the 3D space, a <strong>hierarchical flow</strong> guided users from macro to micro views, which maintained <strong>clarity</strong>.</> } },
     concepts: {
       eyebrow: "Concepts",
       subsections: [
-        { h4: "Back layer: computer generated images (CGI)", body: <>Dynamic CGI (lighting, day/night cycles) created immersive, real-world property environments.</>, after: "conceptsCarousel" },
-        { h4: "Front layer: user interface", topSpacing: true, body: <>9-step guided journey from <strong>global exploration</strong> to <strong>interior detail</strong>.</>, after: "grid9", callout: { variant: 'success', label: 'Decision', body: <>Structured progression <strong>enabled features</strong> to be <strong>introduced gradually</strong> across views.</> } },
-        { h3: "Wireframes", id: "des-wireframes", body: <>Wireframes aligned teams across <strong>design, 3D</strong>, and <strong>engineering</strong>.</>, after: "wireframesCarousel", topSpacing: true },
-        { h3: "High-fidelity mock-ups", id: "des-hifi", topSpacing: true, body: <><strong>Design system</strong> enabled fast iteration across projects.</>, after: "hifiCarousel" },
+        { h4: "Back layer: CGI", body: <>Working with the 3D team, we defined requirements for a <strong>dynamic CGI back layer</strong>, with day/night cycles, that met the <strong>client's expectations</strong> while being easier to implement than the <strong>full 3D experience</strong> they'd originally wanted.</>, after: "conceptsCarousel" },
+        { h4: "Front layer: UI", topSpacing: true, body: <>Collaborating with the <strong>engineering team</strong>, we defined requirements for the features of each of the <strong>9 steps</strong> taking users from <strong>global exploration</strong> to <strong>interior details</strong> of each unit.</>, after: "grid9" },
+        { h3: "Wireframes", id: "des-wireframes", body: <>Crucial in the early phase of development, wireframes in <strong>Figma</strong> aligned teams across <strong>design, 3D, QA</strong> and <strong>engineering</strong>.</>, after: "wireframesCarousel", topSpacing: true },
+        { h3: "High-fidelity mock-ups", id: "des-hifi", topSpacing: true, body: <>The <strong>design system</strong> enabled <strong>consistency</strong> across projects.</>, after: "hifiCarousel" },
       ],
     },
   },
   fr: {
-    userFlow: { eyebrow: "Flux utilisateur", body: <>Principe : <strong>exploration guidée</strong> plutôt que navigation libre</>, callout: { label: "Décision : navigation hiérarchique plutôt qu'exploration libre", body: <>Nous avons exploré une navigation libre dans l'<strong>espace 3D</strong>, mais elle créait de la <strong>désorientation</strong> et augmentait la <strong>charge cognitive</strong>.<br />→ Nous avons introduit un <strong>flux structuré en couches</strong> pour guider les utilisateurs des vues globales aux vues intérieures, en équilibrant <strong>exploration et clarté</strong>.</> } },
+    userFlow: { eyebrow: "Flux utilisateur", body: <>Nous avons guidé les utilisateurs à travers un <strong>parcours structuré</strong>.</>, callout: { label: 'Décision', body: <>Plutôt qu'une navigation libre dans l'<strong>espace 3D</strong>, un <strong>flux hiérarchique</strong> a guidé les utilisateurs du macro aux vues micro, ce qui a permis de maintenir la <strong>clarté</strong>.</> } },
     concepts: {
       eyebrow: "Conceptualisation",
       subsections: [
-        { h4: "Arrière-plan : images de synthèse", body: <>En collaboration avec l'équipe 3D, nous avons réfléchi à la manière dont chaque vue pourrait intégrer des <strong>éléments CGI dynamiques</strong> pour renforcer l'immersion, tels que des <strong>changements d'éclairage</strong> et des <strong>cycles jour/nuit</strong>. Cette approche nous a permis de simuler des <strong>environnements réels</strong>, offrant aux utilisateurs une <strong>expérience engageante</strong> d'espaces non construits.</>, after: "conceptsCarousel", callout: { emoji: '⚖️', label: 'Compromis : immersion visuelle vs utilisabilité', body: <>Si le <strong>CGI immersif</strong> était central dans l'expérience, nous devions garantir que la <strong>clarté de l'interface</strong> ne soit pas compromise.<br />→ Nous avons séparé l'expérience en un <strong>"arrière-plan" (CGI)</strong> et un <strong>"premier-plan" (UI)</strong>, permettant aux deux de scaler indépendamment.</> } },
-        { h4: "Premier-plan : interface utilisateur", topSpacing: true, body: <>Lors d'une première <strong>séance de brainstorming</strong> avec l'équipe design, nous avons défini les <strong>fonctionnalités clés</strong> pour chacune des <strong>9 vues séquentielles</strong>. Chaque vue introduisait progressivement de nouvelles capacités, permettant aux utilisateurs de naviguer d'une <strong>vue d'ensemble globale</strong> jusqu'aux <strong>espaces intérieurs détaillés</strong>.</>, after: "grid9", callout: { variant: 'success', label: 'Décision : parcours fixe en 9 étapes vs points d\'entrée flexibles', body: <>Nous avons envisagé de permettre aux utilisateurs de <strong>naviguer librement entre les niveaux</strong>, mais cela introduisait de la complexité dans la <strong>gestion des états</strong> et l'<strong>orientation des utilisateurs</strong>.<br />→ Une <strong>progression structurée</strong> a assuré la <strong>cohérence entre les projets</strong> et simplifié le scaling.</> } },
-        { h3: "Maquettes filaires", id: "des-wireframes", body: <>Les maquettes filaires ont aligné les équipes <strong>design, 3D</strong> et <strong>ingénierie</strong>.</>, after: "wireframesCarousel", topSpacing: true },
-        { h3: "Maquettes haute-fidélité", id: "des-hifi", topSpacing: true, body: <>Le <strong>design system</strong> a permis une itération rapide entre les projets.</>, after: "hifiCarousel" },
+        { h4: "Arrière-plan : CGI", body: <>En collaboration avec l'équipe 3D, nous avons défini les exigences d'un <strong>arrière-plan en CGI dynamique</strong>, avec des cycles jour/nuit, qui répondait aux <strong>attentes du client</strong> tout en étant plus simple à mettre en œuvre que l'<strong>expérience 3D complète</strong> initialement souhaitée.</>, after: "conceptsCarousel" },
+        { h4: "Premier-plan : UI", topSpacing: true, body: <>En collaboration avec l'<strong>équipe ingénierie</strong>, nous avons défini les exigences des fonctionnalités pour chacune des <strong>9 étapes</strong> menant les utilisateurs de l'<strong>exploration globale</strong> aux <strong>détails intérieurs</strong> de chaque unité.</>, after: "grid9" },
+        { h3: "Maquettes filaires", id: "des-wireframes", body: <>Cruciales lors de la phase précoce du développement, les maquettes filaires sur <strong>Figma</strong> ont aligné les équipes <strong>design, 3D, QA</strong> et <strong>ingénierie</strong>.</>, after: "wireframesCarousel", topSpacing: true },
+        { h3: "Maquettes haute-fidélité", id: "des-hifi", topSpacing: true, body: <>Le <strong>design system</strong> a permis une <strong>cohérence</strong> entre les projets.</>, after: "hifiCarousel" },
       ],
     },
   },
@@ -1790,15 +1746,15 @@ const DESIGN = {
 
 function UiConceptCard({ card }) {
   return (
-    <div data-squircle className="rounded-radius-3 sm:rounded-radius-4 overflow-hidden">
+    <div data-squircle className="rounded-radius-3 sm:rounded-radius-4 overflow-hidden border border-black/[0.08] dark:border-white/[0.10]">
       <div className="aspect-[8/5] overflow-hidden">
         <img src={card.img} alt={card.title} draggable="false" loading="lazy" className="w-full h-full object-cover" />
       </div>
-      <div className={`flex flex-col gap-2 px-3 py-3 ${card.palette}`}>
-        <h5 className="font-semibold text-tag-m leading-snug">
+      <div className="flex flex-col gap-2 px-3 py-3">
+        <h5 className={`font-semibold text-tag-m leading-snug ${card.titleColor}`}>
           {card.title}
         </h5>
-        <ul className="flex flex-col gap-1 text-fine-print sm:text-chip-s lg:text-copy-s font-normal leading-snug list-disc list-inside">
+        <ul className="flex flex-col gap-1 text-fine-print sm:text-chip-s lg:text-copy-s font-normal leading-snug list-disc list-inside text-fg-primary">
           {card.bullets.filter(Boolean).map((b, k) => <li key={k}>{b}</li>)}
         </ul>
       </div>
@@ -1833,11 +1789,8 @@ function DesignContent({ lang, isDark, carouselHinted, onCarouselInteract }) {
       {d.userFlow.callout && (
         <div className="md:max-w-[39rem] lg:max-w-[49rem] mx-auto w-full -mt-6 sm:-mt-7 lg:-mt-8">
           <Tile bgClass="bg-bg-page">
-            <div data-squircle className="rounded-radius-4 bg-palette-sky-bg border border-palette-indigo-bg px-5 py-4 flex flex-col gap-6">
-              <div className="flex items-center gap-2">
-                {d.userFlow.callout.emoji && <span aria-hidden="true" className="shrink-0">{d.userFlow.callout.emoji}</span>}
-                <span className="text-copy-m font-bold leading-snug text-palette-indigo-fg">{d.userFlow.callout.label}</span>
-              </div>
+            <div data-squircle className="rounded-radius-4 bg-bg-page border border-black/[0.08] dark:border-white/[0.10] px-5 py-4 flex flex-col gap-3">
+              <span className="text-overline-s font-medium leading-[1.4] uppercase tracking-wider text-fg-muted">{d.userFlow.callout.label}</span>
               <div className={tileBodyText}>{d.userFlow.callout.body}</div>
             </div>
           </Tile>
@@ -1887,32 +1840,14 @@ const EMPHASISE = {
     audience: {
       eyebrow: 'Audience',
       title:   null,
-      body: <><p>Designed for <strong>high-pressure sales</strong> and <strong>immersive exploration</strong>.</p><ul className="list-disc list-inside space-y-1"><li><strong>Sales agents:</strong> launch events, logged-in, availability-driven</li><li><strong>Buyers:</strong> global property exploration, callback requests</li></ul></>,
-    },
-    goal: {
-      eyebrow: 'Goal',
-      title:   null,
-      body:    <>Enable <strong>fast-paced property sales</strong> while supporting <strong>immersive exploration</strong> of unbuilt developments.</>,
-    },
-    market: {
-      eyebrow: 'Market',
-      body:    <>Existing platforms were <strong>visually strong</strong> but lacked <strong>interactive 3D exploration</strong> for unbuilt properties.</>,
+      body: <><p>We identified <strong>two distinct user groups</strong>, each with different needs.</p><ul className="list-disc list-inside space-y-1"><li><strong>Sales agents:</strong> launch events, logged-in, availability-driven</li><li><strong>Buyers:</strong> global property exploration, callback requests</li></ul></>,
     },
   },
   fr: {
     audience: {
       eyebrow: "L'audience",
       title:   null,
-      body:    <><p>Conçue pour les <strong>ventes sous pression</strong> et l'<strong>exploration immersive</strong>.</p><ul className="list-disc list-inside space-y-1"><li><strong>Agents commerciaux :</strong> lancements, connectés, pilotés par les disponibilités</li><li><strong>Acheteurs :</strong> exploration mondiale, demandes de rappel</li></ul></>,
-    },
-    goal: {
-      eyebrow: "L'objectif",
-      title:   null,
-      body: <>Permettre des <strong>ventes immobilières rapides</strong> tout en soutenant l'<strong>exploration immersive</strong> de projets non construits.</>,
-    },
-    market: {
-      eyebrow: 'Le marché',
-      body:    <>Les plateformes existantes étaient <strong>visuellement solides</strong> mais manquaient d'<strong>exploration 3D interactive</strong> pour les biens non construits.</>,
+      body:    <><p>Nous avons identifié <strong>deux profils d'utilisateurs distincts</strong>, aux besoins différents.</p><ul className="list-disc list-inside space-y-1"><li><strong>Agents commerciaux :</strong> lancements, connectés, pilotés par les disponibilités</li><li><strong>Acheteurs :</strong> exploration mondiale, demandes de rappel</li></ul></>,
     },
   },
 };
@@ -1925,15 +1860,6 @@ function EmphasiseContent({ lang }) {
         <TileEyebrow id="emp-audience">{d.audience.eyebrow}</TileEyebrow>
         {d.audience.title && <TileTitle>{d.audience.title}</TileTitle>}
         <TileBody>{d.audience.body}</TileBody>
-      </Tile>
-      <Tile>
-        <TileEyebrow id="emp-goal">{d.goal.eyebrow}</TileEyebrow>
-        {d.goal.title && <TileTitle>{d.goal.title}</TileTitle>}
-        <TileBody>{d.goal.body}</TileBody>
-      </Tile>
-      <Tile fullWidth>
-        <TileEyebrow id="emp-market">{d.market.eyebrow}</TileEyebrow>
-        <TileBody>{d.market.body}</TileBody>
       </Tile>
     </div>
   );
@@ -2306,8 +2232,6 @@ const SECTIONS = {
     ]},
     { id: 'emphasise', title: 'Emphasise', subsections: [
       { id: 'emp-audience', title: 'Audience' },
-      { id: 'emp-goal',     title: 'Goal'     },
-      { id: 'emp-market',   title: 'Market'   },
     ]},
     { id: 'define',    title: 'Define',    subsections: [
       { id: 'def-challenge',   title: 'Problem' },
@@ -2322,7 +2246,6 @@ const SECTIONS = {
     ]},
     { id: 'impact',    title: 'Impact',    subsections: [
       { id: 'imp-outcome',       title: 'Outcome'       },
-      { id: 'imp-retrospective', title: 'Reflections' },
     ]},
   ],
   fr: [
@@ -2332,8 +2255,6 @@ const SECTIONS = {
     ]},
     { id: 'emphasise', title: 'Comprendre', subsections: [
       { id: 'emp-audience', title: "L'audience" },
-      { id: 'emp-goal',     title: "L'objectif" },
-      { id: 'emp-market',   title: 'Le marché'  },
     ]},
     { id: 'define',    title: 'Définir',    subsections: [
       { id: 'def-challenge',   title: 'Le défi'       },
@@ -2343,12 +2264,11 @@ const SECTIONS = {
     { id: 'design',    title: 'Concevoir',  subsections: [
       { id: 'des-flow',       title: 'Flux utilisateur'   },
       { id: 'des-concepts',   title: 'Conceptualisation'  },
-      { id: 'des-wireframes', title: 'Maquettes filaires' },
+      { id: 'des-wireframes', title: 'Maquettes' },
       { id: 'des-hifi',       title: 'Hifi'               },
     ]},
     { id: 'impact',    title: 'Impact',     subsections: [
       { id: 'imp-outcome',       title: 'Bilan'         },
-      { id: 'imp-retrospective', title: 'Réflexions' },
     ]},
   ],
 };
@@ -2494,7 +2414,7 @@ function SalesPlatform({ lang, isDark }) {
             }
             contentBgClass={
               id === 'context' ? 'bg-bg-surface' :
-              id === 'define'  ? 'bg-gradient-to-b from-[#f6f6f6] via-white to-[#f6f6f6] dark:from-[#1f1f1f] dark:via-[#141414] dark:to-[#1f1f1f]' :
+              id === 'define'  ? 'bg-bg-surface' :
               id === 'design'  ? 'bg-bg-page' :
               id === 'impact' ? 'bg-gradient-to-b from-[#f6f6f6] to-white dark:from-[#1f1f1f] dark:to-[#141414]' :
               'bg-bg-surface'

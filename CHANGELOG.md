@@ -1,5 +1,39 @@
 # Changelog 
 
+## [2.8.0] — 2026-09-04
+
+### Sales Platform copy overhaul, EN/FR parity fixes, Get in touch CTA wording
+
+#### Sales Platform — Context section rewritten
+- **Client, Mission, Scope, Team, My role** tiles all rewritten from generic/fragment phrasing to specific, first-person copy: Client now states it's one of the leading UAE developers (was a plain descriptor with no "one of" qualifier); Mission now names the actual constraint ("Within 15 weeks, we had to build a platform for exploring thousands of unbuilt units...", was a generic "Design a digital platform..." with no timeframe); Team now gives a headcount ("~40 people, distributed globally", was just "Distributed team across 4 time zones"); My role switched from third-person fragments ("Led 4 designers...") to first-person ("I led...", "I partnered with...") and added Quality Assurance to the partner list
+- **My role stat tiles** ("15 weeks" / "10 projects") now sit side by side on mobile instead of stacking — tightened gap/padding and stepped the value font down a size on small screens so both fit without wrapping
+
+#### Sales Platform — Emphasise & Define sections trimmed
+- **Cut the "Goal" and "Market" tiles** from Emphasise — both were near-duplicates of Mission/Problem stated moments later; Audience's intro line rewritten from a goal-statement ("Designed for high-pressure sales...") to an actual audience-framing sentence ("We identified two distinct user groups...")
+- **Cut the "Key constraints" tile** from Define — two of its three bullets (technical limitations, tight deadlines) were restated in more detail by the Exploration and UX strategy tiles right after it; "Problem" reworded from "How can we" to "How might we"
+- **Exploration & UX strategy Decision callouts rewritten** as plain single-sentence explanations instead of label+arrow fragments, and **restyled to match the neutral "outline" callout** used elsewhere on the site (light bg, subtle border, small uppercase label) — replaces the yellow "Key constraints" warning box and the blue/red Issues & Decision callouts entirely; the red "Issues" callout folded into the Exploration body text as a plain sentence + list
+
+#### Sales Platform — Design section copy + UI concept cards
+- **User flow, Concepts (Back/Front layer), Wireframes, Hifi** bodies rewritten with concrete detail (who was involved, what was decided, why) instead of terse fragments; User flow's Decision callout restyled to match the outline pattern above
+- **9 UI concept cards restyled**: removed the per-card coloured background, added a light border on the container, set bullet/body text to the primary black token — each card's **title** keeps its colour accent as the one remaining colour cue
+
+#### Sales Platform — Impact section trimmed
+- **Cut the "Reflections" tile** — Outcome now stands alone; second sentence de-duplicated ("it contributed to..." instead of repeating "the platform")
+
+#### EN/FR parity fixes (Sales Platform)
+- **Hero stat contradicted itself across languages**: French said "8 Mds €", English said "£6.8B" — French now correctly reads "6.8 Mds £", matching English and the Outcome section's own figure
+- French had an extra "Chronologie des lancements" heading before the launch timeline with no English counterpart — removed to match English's plain flow
+- French Outcome had an added clause ("témoignant de l'efficacité immédiate du design") not present in English — removed
+- French had a French-only "Compromis : immersion visuelle vs utilisabilité" trade-off callout on the Back-layer/CGI tile with no English counterpart — removed
+- French hero title corrected from "Une plateforme de vente sur plan" to "Une plateforme immobilière interactive 3D"; "CV intéractif" typo (extra accent) fixed to "CV interactif"; "Maquettes filaires" nav label shortened to "Maquettes" to match the English nav's shortened "Key constraints" → "Constraints" pattern
+- Define section's content background changed from a gradient (`from-[#f6f6f6] via-white to-[#f6f6f6]`) to the flat `bg-bg-surface` light grey used elsewhere
+
+#### Get in touch carousel + Résumé sidebar — CTA wording
+- Button labels made consistently verb-led instead of a mix of nouns and verbs: `Message` → `Send an email` / `M'écrire`, `LinkedIn` → `Go to LinkedIn` / `Voir mon LinkedIn`, `Interactive CV` → `View interactive CV`, `Download PDF` → `Download the PDF` / `Télécharger le PDF`
+- Same treatment applied to the Résumé page's standalone contact sidebar, which has its own copy of these strings; its French "Connectons" changed to "Voir mon profil" (was going to duplicate the "— LinkedIn" suffix already appended to the button's aria-label)
+
+---
+
 ## [2.7.0] — 2026-08-28
 
 ### Extended Reality case study rewrite, localized flow diagrams, collapsible-section header redesign, password-gate note field
